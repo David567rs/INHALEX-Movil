@@ -1,0 +1,2165 @@
+import { createHash } from 'node:crypto';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, Types } from 'mongoose';
+import { JwtPayload } from '../auth/interfaces/jwt-payload.interface';
+import { NotificationsService } from '../notifications/notifications.service';
+import {
+  CustomerNotificationSeverity,
+  CustomerNotificationType,
+} from '../notifications/schemas/customer-notification.schema';
+import { InventoryMovementType } from '../products/enums/inventory-movement-type.enum';
+import { ProductStatus } from '../products/enums/product-status.enum';
+import {
+  ProductInventoryMovement,
+  ProductInventoryMovementDocument,
+} from '../products/schemas/product-inventory-movement.schema';
+import { Product, ProductDocument } from '../products/schemas/product.schema';
+import { UserStatus } from '../users/enums/user-status.enum';
+import { ShippingAddressResponse } from '../users/schemas/user.schema';
+import { UsersService } from '../users/users.service';
+import { SalesService } from '../sales/sales.service';
+import { ReportsService } from '../reports/reports.service';
+import {
+  CustomerReportPriority,
+  CustomerReportType,
+} from '../reports/schemas/customer-report.schema';
+import { ConfirmOrderDto } from './dto/confirm-order.dto';
+import { CreateOrderDraftDto } from './dto/create-order-draft.dto';
+import { ListAdminOrdersQueryDto } from './dto/list-admin-orders-query.dto';
+import { OrderDraftItemDto } from './dto/order-draft-item.dto';
+import { PreviewOrderDraftDto } from './dto/preview-order-draft.dto';
+import { ReportOrderReceiptDto } from './dto/report-order-receipt.dto';
+import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
+import { OrderStatus } from './enums/order-status.enum';
+import {
+  Order,
+  OrderCustomerReceiptStatus,
+  OrderDocument,
+  OrderIssueSeverity,
+  OrderItemFulfillment,
+  OrderItemSnapshot,
+} from './schemas/order.schema';
+
+export interface DraftOrderIssue {
+  code: string;
+  severity: OrderIssueSeverity;
+  productId?: string;
+  productName?: string;
+  title: string;
+  description: string;
+}
+
+export interface OrderPreviewItem {
+  productId: string;
+  productName: string;
+  productSlug: string;
+  image: string;
+  category: string;
+  presentation: string;
+  origin: string;
+  unitPrice: number;
+  currency: string;
+  requestedQuantity: number;
+  quantity: number;
+  subtotal: number;
+  fulfillment: OrderItemFulfillment;
+  stockAvailable?: number | null;
+  reservedQuantity: number;
+  backorderQuantity: number;
+  inventoryTracked: boolean;
+  allowBackorder: boolean;
+  message?: string;
+}
+
+export interface OrderPreviewResponse {
+  items: OrderPreviewItem[];
+  issues: DraftOrderIssue[];
+  subtotal: number;
+  totalItems: number;
+  currency: string;
+  canCreateDraft: boolean;
+  canConfirmOrder: boolean;
+  needsManualReview: boolean;
+  signature: string;
+}
+
+export interface CreatedDraftOrderResponse extends OrderPreviewResponse {
+  orderId: string;
+  reference: string;
+  status: OrderStatus;
+  createdAt?: string;
+}
+
+export interface ConfirmedOrderResponse extends OrderPreviewResponse {
+  orderId: string;
+  reference: string;
+  status: OrderStatus;
+  createdAt?: string;
+}
+
+export interface AdminOrderStatusNoteResponse {
+  status: OrderStatus;
+  note: string;
+  actorId?: string;
+  actorEmail?: string;
+  createdAt: string;
+}
+
+export interface AdminShippingAddressResponse {
+  id: string;
+  label: string;
+  recipientName: string;
+  phone: string;
+  street: string;
+  exteriorNumber: string;
+  interiorNumber?: string;
+  neighborhood: string;
+  municipality: string;
+  state: string;
+  postalCode: string;
+  references?: string;
+}
+
+export interface AdminOrderListItemResponse {
+  id: string;
+  reference: string;
+  status: OrderStatus;
+  customerReceiptStatus: OrderCustomerReceiptStatus;
+  customerName: string;
+  customerEmail: string;
+  customerPhone: string;
+  totalItems: number;
+  subtotal: number;
+  currency: string;
+  needsManualReview: boolean;
+  createdAt?: string;
+  confirmedAt?: string;
+  cancelledAt?: string;
+  completedAt?: string;
+  customerReceiptRequestedAt?: string;
+  customerReceiptConfirmedAt?: string;
+  customerReceiptIssueReportedAt?: string;
+}
+
+export interface AdminOrderDetailResponse extends AdminOrderListItemResponse {
+  channel: string;
+  customerNotes?: string;
+  customerUserId?: string;
+  customerUserEmail?: string;
+  customerReceiptIssueNote?: string;
+  customerReceiptReportId?: string;
+  shippingAddress?: AdminShippingAddressResponse;
+  items: OrderPreviewItem[];
+  issues: DraftOrderIssue[];
+  statusNotes: AdminOrderStatusNoteResponse[];
+  lastValidatedAt?: string;
+}
+
+export interface CustomerReceiptOrderResponse {
+  id: string;
+  reference: string;
+  status: OrderStatus;
+  customerReceiptStatus: OrderCustomerReceiptStatus;
+  totalItems: number;
+  subtotal: number;
+  currency: string;
+  completedAt?: string;
+  customerReceiptRequestedAt?: string;
+  customerReceiptConfirmedAt?: string;
+  customerReceiptIssueReportedAt?: string;
+  customerReceiptIssueNote?: string;
+  customerReceiptReportId?: string;
+  items: OrderPreviewItem[];
+}
+
+export interface AdminOrdersResponse {
+  items: AdminOrderListItemResponse[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+  summary: Record<OrderStatus, number> & {
+    manualReview: number;
+  };
+}
+
+interface InventoryAvailability {
+  tracked: boolean;
+  available: number;
+  allowBackorder: boolean;
+}
+
+interface ResolvedOrderItemResult {
+  item?: OrderPreviewItem;
+  issue?: DraftOrderIssue;
+}
+
+interface OrderPreviewComputation {
+  items: OrderPreviewItem[];
+  issues: DraftOrderIssue[];
+  subtotal: number;
+  totalItems: number;
+  currency: string;
+  canCreateDraft: boolean;
+  canConfirmOrder: boolean;
+  needsManualReview: boolean;
+}
+
+interface OrderActorSnapshot {
+  userId?: string;
+  email?: string;
+}
+
+interface AppliedInventoryMutation {
+  productId: string;
+  productName: string;
+  quantity: number;
+}
+
+interface CompletionPreparationResult {
+  items: OrderItemSnapshot[];
+  issues: DraftOrderIssue[];
+  newlyReservedMutations: AppliedInventoryMutation[];
+}
+
+@Injectable()
+export class OrdersService {
+  private readonly logger = new Logger(OrdersService.name);
+
+  constructor(
+    @InjectModel(Product.name)
+    private readonly productModel: Model<ProductDocument>,
+    @InjectModel(ProductInventoryMovement.name)
+    private readonly inventoryMovementModel: Model<ProductInventoryMovementDocument>,
+    @InjectModel(Order.name)
+    private readonly orderModel: Model<OrderDocument>,
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+    private readonly salesService: SalesService,
+    private readonly reportsService: ReportsService,
+    private readonly notificationsService?: NotificationsService,
+  ) {}
+
+  async previewDraft(
+    previewOrderDraftDto: PreviewOrderDraftDto,
+  ): Promise<OrderPreviewResponse> {
+    const computed = await this.computePreview(previewOrderDraftDto.items);
+    return this.attachSignature(computed);
+  }
+
+  async createDraft(
+    createOrderDraftDto: CreateOrderDraftDto,
+    authorization?: string,
+  ): Promise<CreatedDraftOrderResponse> {
+    const preview = await this.previewDraft({
+      items: createOrderDraftDto.items,
+    });
+
+    if (!preview.items.length) {
+      throw new BadRequestException(
+        'La bolsa no tiene productos validos para preparar un pedido',
+      );
+    }
+
+    const linkedUser = await this.resolveOrderingUser(authorization);
+    const shippingAddress = await this.resolveShippingAddress(
+      linkedUser,
+      createOrderDraftDto.shippingAddressId,
+    );
+    const order = await this.orderModel.create({
+      reference: this.buildDraftReference(),
+      status: OrderStatus.DRAFT,
+      currency: preview.currency,
+      totalItems: preview.totalItems,
+      subtotal: preview.subtotal,
+      items: preview.items,
+      issues: preview.issues,
+      customer: {
+        name: createOrderDraftDto.customerName.trim(),
+        email: createOrderDraftDto.customerEmail.trim().toLowerCase(),
+        phone: createOrderDraftDto.customerPhone.trim(),
+        notes: createOrderDraftDto.notes?.trim() || undefined,
+      },
+      customerUserId: linkedUser?.userId,
+      customerUserEmail: linkedUser?.email,
+      shippingAddress: this.toOrderShippingAddress(shippingAddress),
+      needsManualReview: preview.needsManualReview,
+      channel: 'web_public',
+      lastValidatedAt: new Date(),
+      statusNotes: [
+        this.buildStatusNote(
+          OrderStatus.DRAFT,
+          'Borrador preparado desde la bolsa publica.',
+          linkedUser ?? undefined,
+        ),
+      ],
+    });
+
+    await this.notifyCustomerOrder(
+      order,
+      'Borrador preparado',
+      `Tu pedido ${order.reference} quedo preparado para revision.`,
+    );
+
+    return {
+      ...preview,
+      orderId: order.id,
+      reference: order.reference,
+      status: order.status,
+      createdAt: order.createdAt?.toISOString(),
+    };
+  }
+
+  async confirmOrder(
+    confirmOrderDto: ConfirmOrderDto,
+    authorization?: string,
+    idempotencyKey?: string,
+  ): Promise<ConfirmedOrderResponse> {
+    const normalizedIdempotencyKey =
+      this.normalizeIdempotencyKey(idempotencyKey);
+    const existingOrder = await this.orderModel
+      .findOne({ idempotencyKey: normalizedIdempotencyKey })
+      .exec();
+
+    if (existingOrder) {
+      return this.mapConfirmedOrder(existingOrder);
+    }
+
+    const preview = await this.previewDraft({ items: confirmOrderDto.items });
+
+    if (!preview.items.length || !preview.canConfirmOrder) {
+      throw new BadRequestException(
+        'La bolsa ya no tiene productos validos para confirmar un pedido',
+      );
+    }
+
+    if (confirmOrderDto.previewSignature !== preview.signature) {
+      throw new ConflictException(
+        'El inventario cambio mientras confirmabas tu pedido. Actualizamos la bolsa para que revises la disponibilidad mas reciente.',
+      );
+    }
+
+    const linkedUser = await this.resolveOrderingUser(authorization);
+    const shippingAddress = await this.resolveShippingAddress(
+      linkedUser,
+      confirmOrderDto.shippingAddressId,
+    );
+    const orderReference = this.buildConfirmedReference();
+    const actor = {
+      userId: linkedUser?.userId,
+      email:
+        linkedUser?.email ?? confirmOrderDto.customerEmail.trim().toLowerCase(),
+    };
+    const reservedMutations: AppliedInventoryMutation[] = [];
+
+    try {
+      for (const item of preview.items) {
+        if (item.reservedQuantity <= 0) {
+          continue;
+        }
+
+        await this.reserveInventoryForItem(item, orderReference, actor);
+        reservedMutations.push({
+          productId: item.productId,
+          productName: item.productName,
+          quantity: item.reservedQuantity,
+        });
+      }
+
+      const order = await this.orderModel.create({
+        reference: orderReference,
+        idempotencyKey: normalizedIdempotencyKey,
+        status: OrderStatus.PENDING_REVIEW,
+        currency: preview.currency,
+        totalItems: preview.totalItems,
+        subtotal: preview.subtotal,
+        items: preview.items,
+        issues: preview.issues,
+        customer: {
+          name: confirmOrderDto.customerName.trim(),
+          email: confirmOrderDto.customerEmail.trim().toLowerCase(),
+          phone: confirmOrderDto.customerPhone.trim(),
+          notes: confirmOrderDto.notes?.trim() || undefined,
+        },
+        customerUserId: linkedUser?.userId,
+        customerUserEmail: linkedUser?.email,
+        shippingAddress: this.toOrderShippingAddress(shippingAddress),
+        needsManualReview: preview.needsManualReview,
+        channel: 'web_public',
+        lastValidatedAt: new Date(),
+        statusNotes: [
+          this.buildStatusNote(
+            OrderStatus.PENDING_REVIEW,
+            preview.needsManualReview
+              ? 'Pedido confirmado desde la web y enviado a revision manual.'
+              : 'Pedido confirmado desde la web y pendiente de revision comercial.',
+            actor,
+          ),
+        ],
+      });
+
+      await this.inventoryMovementModel
+        .updateMany(
+          { orderReference, orderId: { $exists: false } },
+          { $set: { orderId: order.id } },
+        )
+        .exec();
+
+      await this.notifyCustomerOrder(
+        order,
+        'Pedido recibido',
+        `Tu pedido ${order.reference} fue recibido y esta en revision.`,
+      );
+
+      return this.mapConfirmedOrder(order);
+    } catch (error) {
+      if (reservedMutations.length > 0) {
+        await this.rollbackReservedInventory(
+          reservedMutations,
+          orderReference,
+          actor,
+        );
+      }
+
+      if (this.isDuplicateKeyError(error)) {
+        const duplicatedOrder = await this.orderModel
+          .findOne({ idempotencyKey: normalizedIdempotencyKey })
+          .exec();
+
+        if (duplicatedOrder) {
+          return this.mapConfirmedOrder(duplicatedOrder);
+        }
+      }
+
+      throw error;
+    }
+  }
+
+  async listAdminOrders(
+    query: ListAdminOrdersQueryDto,
+  ): Promise<AdminOrdersResponse> {
+    const page = query.page ?? 1;
+    const limit = query.limit ?? 20;
+    const skip = (page - 1) * limit;
+    const filters = this.buildAdminOrderFilters(query);
+
+    const [orders, total, statusCounts, manualReview] = await Promise.all([
+      this.orderModel
+        .find(filters)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .exec(),
+      this.orderModel.countDocuments(filters).exec(),
+      this.orderModel.aggregate<{ _id: OrderStatus; count: number }>([
+        { $match: filters },
+        { $group: { _id: '$status', count: { $sum: 1 } } },
+      ]),
+      this.orderModel
+        .countDocuments({ ...filters, needsManualReview: true })
+        .exec(),
+    ]);
+
+    const countsByStatus = new Map(
+      statusCounts.map((item) => [item._id, item.count]),
+    );
+
+    return {
+      items: orders.map((order) => this.mapAdminOrderListItem(order)),
+      total,
+      page,
+      limit,
+      totalPages: Math.max(1, Math.ceil(total / limit)),
+      summary: {
+        [OrderStatus.DRAFT]: countsByStatus.get(OrderStatus.DRAFT) ?? 0,
+        [OrderStatus.PENDING_REVIEW]:
+          countsByStatus.get(OrderStatus.PENDING_REVIEW) ?? 0,
+        [OrderStatus.CONFIRMED]: countsByStatus.get(OrderStatus.CONFIRMED) ?? 0,
+        [OrderStatus.CANCELLED]: countsByStatus.get(OrderStatus.CANCELLED) ?? 0,
+        [OrderStatus.COMPLETED]: countsByStatus.get(OrderStatus.COMPLETED) ?? 0,
+        manualReview,
+      },
+    };
+  }
+
+  async getAdminOrder(id: string): Promise<AdminOrderDetailResponse> {
+    const order = await this.findOrderOrThrow(id);
+    return this.mapAdminOrderDetail(order);
+  }
+
+  async updateOrderStatus(
+    id: string,
+    updateOrderStatusDto: UpdateOrderStatusDto,
+    actor: JwtPayload,
+  ): Promise<AdminOrderDetailResponse> {
+    const order = await this.findOrderOrThrow(id);
+    const targetStatus = updateOrderStatusDto.status;
+    const actorSnapshot = this.toOrderActorSnapshot(actor);
+
+    this.assertOrderTransition(order.status, targetStatus);
+
+    switch (targetStatus) {
+      case OrderStatus.CONFIRMED:
+        return this.confirmReviewedOrder(
+          order,
+          updateOrderStatusDto.note,
+          actorSnapshot,
+        );
+      case OrderStatus.CANCELLED:
+        return this.cancelOrder(order, updateOrderStatusDto.note, actorSnapshot);
+      case OrderStatus.COMPLETED:
+        return this.completeOrder(
+          order,
+          updateOrderStatusDto.note,
+          actorSnapshot,
+        );
+      default:
+        throw new BadRequestException(
+          'Este cambio de estado no esta permitido',
+        );
+    }
+  }
+
+  async listReceiptConfirmationOrders(
+    user: JwtPayload,
+  ): Promise<CustomerReceiptOrderResponse[]> {
+    const orders = await this.orderModel
+      .find({
+        status: OrderStatus.COMPLETED,
+        ...this.buildCustomerOrderFilters(user),
+      })
+      .sort({
+        customerReceiptRequestedAt: -1,
+        completedAt: -1,
+        createdAt: -1,
+      })
+      .limit(12)
+      .exec();
+
+    return orders.map((order) => this.mapCustomerReceiptOrder(order));
+  }
+
+  async confirmCustomerReceipt(
+    id: string,
+    user: JwtPayload,
+  ): Promise<CustomerReceiptOrderResponse> {
+    const order = await this.findOwnedCompletedOrderOrThrow(id, user);
+    const receiptStatus = this.getEffectiveCustomerReceiptStatus(order);
+
+    if (receiptStatus === OrderCustomerReceiptStatus.CONFIRMED) {
+      return this.mapCustomerReceiptOrder(order);
+    }
+
+    if (receiptStatus === OrderCustomerReceiptStatus.ISSUE_REPORTED) {
+      throw new ConflictException(
+        'Este pedido ya tiene una incidencia de entrega registrada. El equipo la revisara desde reportes.',
+      );
+    }
+
+    const now = new Date();
+    const updatedOrder = await this.orderModel
+      .findOneAndUpdate(
+        {
+          _id: order._id,
+          status: OrderStatus.COMPLETED,
+          ...this.buildCustomerOrderFilters(user),
+        },
+        {
+          $set: {
+            customerReceiptStatus: OrderCustomerReceiptStatus.CONFIRMED,
+            customerReceiptConfirmedAt: now,
+          },
+          $push: {
+            statusNotes: this.buildStatusNote(
+              OrderStatus.COMPLETED,
+              'Cliente confirmo la recepcion del pedido.',
+              this.toOrderActorSnapshot(user),
+            ),
+          },
+        },
+        {
+          returnDocument: 'after',
+          runValidators: true,
+        },
+      )
+      .exec();
+
+    if (!updatedOrder) {
+      throw new ConflictException(
+        'No pudimos confirmar la recepcion porque el pedido cambio. Recarga la cuenta e intenta de nuevo.',
+      );
+    }
+
+    await this.notifyCustomerOrder(
+      updatedOrder,
+      'Recepcion confirmada',
+      `Gracias por confirmar que recibiste el pedido ${updatedOrder.reference}.`,
+      CustomerNotificationSeverity.SUCCESS,
+    );
+
+    return this.mapCustomerReceiptOrder(updatedOrder);
+  }
+
+  async reportCustomerReceiptIssue(
+    id: string,
+    user: JwtPayload,
+    reportOrderReceiptDto: ReportOrderReceiptDto,
+  ): Promise<CustomerReceiptOrderResponse> {
+    const order = await this.findOwnedCompletedOrderOrThrow(id, user);
+    const receiptStatus = this.getEffectiveCustomerReceiptStatus(order);
+
+    if (receiptStatus === OrderCustomerReceiptStatus.CONFIRMED) {
+      throw new ConflictException(
+        'Este pedido ya fue confirmado como recibido. Si necesitas ayuda, envia un reporte desde tu cuenta.',
+      );
+    }
+
+    if (receiptStatus === OrderCustomerReceiptStatus.ISSUE_REPORTED) {
+      return this.mapCustomerReceiptOrder(order);
+    }
+
+    const message =
+      reportOrderReceiptDto.note?.trim() ||
+      `El cliente reporto un problema con la entrega del pedido ${order.reference}.`;
+
+    const report = await this.reportsService.create(user, {
+      type: CustomerReportType.DELIVERY,
+      title: `Problema con entrega ${order.reference}`,
+      message,
+      orderReference: order.reference,
+      priority: CustomerReportPriority.HIGH,
+    });
+
+    const now = new Date();
+    const updatedOrder = await this.orderModel
+      .findOneAndUpdate(
+        {
+          _id: order._id,
+          status: OrderStatus.COMPLETED,
+          ...this.buildCustomerOrderFilters(user),
+        },
+        {
+          $set: {
+            customerReceiptStatus:
+              OrderCustomerReceiptStatus.ISSUE_REPORTED,
+            customerReceiptIssueReportedAt: now,
+            customerReceiptIssueNote: message,
+            customerReceiptReportId: report.id,
+          },
+          $push: {
+            statusNotes: this.buildStatusNote(
+              OrderStatus.COMPLETED,
+              'Cliente reporto un problema con la entrega.',
+              this.toOrderActorSnapshot(user),
+            ),
+          },
+        },
+        {
+          returnDocument: 'after',
+          runValidators: true,
+        },
+      )
+      .exec();
+
+    if (!updatedOrder) {
+      throw new ConflictException(
+        'El reporte se envio, pero no pudimos enlazarlo al pedido. El equipo ya podra revisarlo desde reportes.',
+      );
+    }
+
+    return this.mapCustomerReceiptOrder(updatedOrder);
+  }
+
+  private async confirmReviewedOrder(
+    order: OrderDocument,
+    note: string | undefined,
+    actor: OrderActorSnapshot,
+  ): Promise<AdminOrderDetailResponse> {
+    const updatedOrder = await this.orderModel
+      .findOneAndUpdate(
+        { _id: order._id, status: OrderStatus.PENDING_REVIEW },
+        {
+          $set: {
+            status: OrderStatus.CONFIRMED,
+            confirmedAt: new Date(),
+          },
+          $push: {
+            statusNotes: this.buildStatusNote(
+              OrderStatus.CONFIRMED,
+              note?.trim() || 'Pedido revisado y confirmado por el equipo.',
+              actor,
+            ),
+          },
+        },
+        {
+          returnDocument: 'after',
+          runValidators: true,
+        },
+      )
+      .exec();
+
+    if (!updatedOrder) {
+      throw new ConflictException(
+        'El pedido cambio de estado mientras lo estabas actualizando. Recarga la lista e intenta de nuevo.',
+      );
+    }
+
+    await this.notifyCustomerOrder(
+      updatedOrder,
+      'Pedido confirmado',
+      `Tu pedido ${updatedOrder.reference} fue confirmado por el equipo.`,
+      CustomerNotificationSeverity.SUCCESS,
+    );
+
+    return this.mapAdminOrderDetail(updatedOrder);
+  }
+
+  private async cancelOrder(
+    order: OrderDocument,
+    note: string | undefined,
+    actor: OrderActorSnapshot,
+  ): Promise<AdminOrderDetailResponse> {
+    const releasableItems =
+      order.status === OrderStatus.DRAFT
+        ? []
+        : order.items
+            .filter((item) => item.reservedQuantity > 0)
+            .map((item) => ({
+              productId: item.productId,
+              productName: item.productName,
+              quantity: item.reservedQuantity,
+            }));
+
+    const releasedMutations: AppliedInventoryMutation[] = [];
+
+    try {
+      for (const item of releasableItems) {
+        await this.releaseInventoryQuantity(
+          item.productId,
+          item.productName,
+          item.quantity,
+          {
+            type: InventoryMovementType.RELEASE,
+            orderId: order.id,
+            orderReference: order.reference,
+            note: `Liberacion por cancelacion del pedido ${order.reference}.`,
+            actor,
+          },
+        );
+        releasedMutations.push(item);
+      }
+
+      const updatedOrder = await this.orderModel
+        .findOneAndUpdate(
+          { _id: order._id, status: order.status },
+          {
+            $set: {
+              status: OrderStatus.CANCELLED,
+              cancelledAt: new Date(),
+            },
+            $push: {
+              statusNotes: this.buildStatusNote(
+                OrderStatus.CANCELLED,
+                note?.trim() || 'Pedido cancelado por el equipo.',
+                actor,
+              ),
+            },
+          },
+          {
+            returnDocument: 'after',
+            runValidators: true,
+          },
+        )
+        .exec();
+
+      if (!updatedOrder) {
+        await this.reReserveReleasedInventory(
+          releasedMutations,
+          order.reference,
+          actor,
+        );
+        throw new ConflictException(
+          'El pedido cambio de estado mientras lo estabas cancelando. Recarga la lista e intenta de nuevo.',
+        );
+      }
+
+      await this.notifyCustomerOrder(
+        updatedOrder,
+        'Pedido cancelado',
+        `Tu pedido ${updatedOrder.reference} fue cancelado. Si tienes dudas, contactanos desde reportes.`,
+        CustomerNotificationSeverity.WARNING,
+      );
+
+      return this.mapAdminOrderDetail(updatedOrder);
+    } catch (error) {
+      if (releasedMutations.length > 0) {
+        await this.reReserveReleasedInventory(
+          releasedMutations,
+          order.reference,
+          actor,
+        );
+      }
+      throw error;
+    }
+  }
+
+  private async completeOrder(
+    order: OrderDocument,
+    note: string | undefined,
+    actor: OrderActorSnapshot,
+  ): Promise<AdminOrderDetailResponse> {
+    const prepared = await this.prepareOrderForCompletion(order, actor);
+    let workingOrder = order;
+
+    if (prepared.newlyReservedMutations.length > 0) {
+      const reconciledOrder = await this.orderModel
+        .findOneAndUpdate(
+          { _id: order._id, status: order.status },
+          {
+            $set: {
+              items: prepared.items,
+              issues: prepared.issues,
+              lastValidatedAt: new Date(),
+              needsManualReview: false,
+            },
+          },
+          {
+            returnDocument: 'after',
+            runValidators: true,
+          },
+        )
+        .exec();
+
+      if (!reconciledOrder) {
+        await this.rollbackReservedInventory(
+          prepared.newlyReservedMutations,
+          order.reference,
+          actor,
+        );
+        throw new ConflictException(
+          'El pedido cambio mientras preparabamos el inventario para completarlo. Recarga la lista e intenta de nuevo.',
+        );
+      }
+
+      workingOrder = reconciledOrder;
+    }
+
+    const committedMutations = workingOrder.items
+      .filter((item) => item.reservedQuantity > 0)
+      .map((item) => ({
+        productId: item.productId,
+        productName: item.productName,
+        quantity: item.reservedQuantity,
+      }));
+
+    const completedMutations: AppliedInventoryMutation[] = [];
+
+    try {
+      for (const item of committedMutations) {
+        await this.commitReservedInventory(
+          item.productId,
+          item.productName,
+          item.quantity,
+          {
+            orderId: order.id,
+            orderReference: order.reference,
+            actor,
+          },
+        );
+        completedMutations.push(item);
+      }
+
+      const completedAt = new Date();
+      const updatedOrder = await this.orderModel
+        .findOneAndUpdate(
+          { _id: workingOrder._id, status: workingOrder.status },
+          {
+            $set: {
+              status: OrderStatus.COMPLETED,
+              completedAt,
+              needsManualReview: false,
+              lastValidatedAt: completedAt,
+              customerReceiptStatus: OrderCustomerReceiptStatus.PENDING,
+              customerReceiptRequestedAt: completedAt,
+            },
+            $push: {
+              statusNotes: this.buildStatusNote(
+                OrderStatus.COMPLETED,
+                note?.trim() || 'Pedido marcado como entregado por el equipo.',
+                actor,
+              ),
+            },
+          },
+          {
+            returnDocument: 'after',
+            runValidators: true,
+          },
+        )
+        .exec();
+
+      if (!updatedOrder) {
+        await this.restoreCommittedInventory(
+          completedMutations,
+          workingOrder.reference,
+          actor,
+        );
+        throw new ConflictException(
+          'El pedido cambio de estado mientras lo estabas completando. Recarga la lista e intenta de nuevo.',
+        );
+      }
+
+      await this.recordCompletedOrderSales(updatedOrder);
+
+      await this.notifyCustomerOrder(
+        updatedOrder,
+        'Confirma tu entrega',
+        `Tu pedido ${updatedOrder.reference} fue marcado como entregado. En tu cuenta puedes confirmar la recepcion o reportar un problema.`,
+        CustomerNotificationSeverity.SUCCESS,
+      );
+
+      return this.mapAdminOrderDetail(updatedOrder);
+    } catch (error) {
+      if (completedMutations.length > 0) {
+        await this.restoreCommittedInventory(
+          completedMutations,
+          workingOrder.reference,
+          actor,
+        );
+      }
+      throw error;
+    }
+  }
+
+  private async recordCompletedOrderSales(order: OrderDocument): Promise<void> {
+    try {
+      await this.salesService.recordCompletedOrder(order);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      this.logger.warn(
+        `El pedido ${order.reference} fue completado, pero no se pudo registrar en ventas_agregadas: ${message}`,
+      );
+    }
+  }
+
+  private async computePreview(
+    items: OrderDraftItemDto[],
+  ): Promise<OrderPreviewComputation> {
+    const normalizedRequests = this.mergeRequestedItems(items);
+    const requestedIds = normalizedRequests.map((item) => item.productId);
+
+    const products = await this.productModel
+      .find({
+        _id: { $in: requestedIds },
+        status: ProductStatus.ACTIVE,
+      })
+      .select(
+        'name slug image category presentation origin price promoActive promoPrice promoEndsAt currency inStock stockAvailable allowBackorder',
+      )
+      .exec();
+
+    const productsById = new Map(
+      products.map((product) => [product.id, product]),
+    );
+    const issues: DraftOrderIssue[] = [];
+    const previewItems: OrderPreviewItem[] = [];
+
+    for (const request of normalizedRequests) {
+      const product = productsById.get(request.productId);
+      if (!product) {
+        issues.push({
+          code: 'product_not_found',
+          severity: OrderIssueSeverity.ERROR,
+          productId: request.productId,
+          title: 'Producto no disponible',
+          description:
+            'Uno de los productos ya no esta disponible en el catalogo publico y fue retirado de la bolsa.',
+        });
+        continue;
+      }
+
+      const result = this.resolveRequestedItem(product, request.quantity);
+      if (result.item) {
+        previewItems.push(result.item);
+      }
+      if (result.issue) {
+        issues.push(result.issue);
+      }
+    }
+
+    return {
+      items: previewItems,
+      issues,
+      subtotal: previewItems.reduce((sum, item) => sum + item.subtotal, 0),
+      totalItems: previewItems.reduce((sum, item) => sum + item.quantity, 0),
+      currency: previewItems[0]?.currency ?? 'MXN',
+      canCreateDraft: previewItems.length > 0,
+      canConfirmOrder: previewItems.length > 0,
+      needsManualReview: previewItems.some(
+        (item) =>
+          item.fulfillment === OrderItemFulfillment.BACKORDER ||
+          item.fulfillment === OrderItemFulfillment.MANUAL,
+      ),
+    };
+  }
+
+  private attachSignature(
+    preview: OrderPreviewComputation,
+  ): OrderPreviewResponse {
+    return {
+      ...preview,
+      signature: this.buildPreviewSignature(preview),
+    };
+  }
+
+  private mapConfirmedOrder(order: OrderDocument): ConfirmedOrderResponse {
+    const preview = this.attachSignature({
+      items: order.items.map((item) => ({
+        productId: item.productId,
+        productName: item.productName,
+        productSlug: item.productSlug,
+        image: item.image,
+        category: item.category,
+        presentation: item.presentation,
+        origin: item.origin,
+        unitPrice: item.unitPrice,
+        currency: item.currency,
+        requestedQuantity: item.requestedQuantity,
+        quantity: item.quantity,
+        subtotal: item.subtotal,
+        fulfillment: item.fulfillment,
+        stockAvailable: item.stockAvailable,
+        reservedQuantity: item.reservedQuantity,
+        backorderQuantity: item.backorderQuantity,
+        inventoryTracked: item.inventoryTracked,
+        allowBackorder: item.allowBackorder,
+        message: item.message,
+      })),
+      issues: order.issues.map((issue) => ({
+        code: issue.code,
+        severity: issue.severity,
+        productId: issue.productId,
+        productName: issue.productName,
+        title: issue.title,
+        description: issue.description,
+      })),
+      subtotal: order.subtotal,
+      totalItems: order.totalItems,
+      currency: order.currency,
+      canCreateDraft: true,
+      canConfirmOrder: true,
+      needsManualReview: order.needsManualReview,
+    });
+
+    return {
+      ...preview,
+      orderId: order.id,
+      reference: order.reference,
+      status: order.status,
+      createdAt: order.createdAt?.toISOString(),
+    };
+  }
+
+  private mergeRequestedItems(items: OrderDraftItemDto[]): OrderDraftItemDto[] {
+    const quantityById = new Map<string, number>();
+
+    for (const item of items) {
+      if (!Types.ObjectId.isValid(item.productId)) {
+        throw new BadRequestException(
+          'Uno de los productos enviados es invalido',
+        );
+      }
+
+      quantityById.set(
+        item.productId,
+        (quantityById.get(item.productId) ?? 0) + item.quantity,
+      );
+    }
+
+    return Array.from(quantityById.entries()).map(([productId, quantity]) => ({
+      productId,
+      quantity: Math.min(quantity, 25),
+    }));
+  }
+
+  private resolveRequestedItem(
+    product: ProductDocument,
+    requestedQuantity: number,
+  ): ResolvedOrderItemResult {
+    const inventory = this.readAvailability(product);
+    let quantity = requestedQuantity;
+    let fulfillment = OrderItemFulfillment.AVAILABLE;
+    let message: string | undefined;
+    let issue: DraftOrderIssue | undefined;
+    let reservedQuantity = 0;
+    let backorderQuantity = 0;
+
+    if (!inventory.tracked) {
+      if (!product.inStock && !inventory.allowBackorder) {
+        return {
+          issue: {
+            code: 'out_of_stock',
+            severity: OrderIssueSeverity.ERROR,
+            productId: product.id,
+            productName: product.name,
+            title: 'Producto sin existencias',
+            description: `${product.name} ya no esta disponible y fue retirado de la bolsa.`,
+          },
+        };
+      }
+
+      fulfillment = OrderItemFulfillment.MANUAL;
+      message =
+        'Este aroma aun no tiene stock inicializado y sera confirmado manualmente por el equipo.';
+      issue = {
+        code: 'manual_inventory_review',
+        severity: OrderIssueSeverity.INFO,
+        productId: product.id,
+        productName: product.name,
+        title: 'Validacion manual',
+        description: `${product.name} aun no tiene existencias inicializadas. El pedido se puede confirmar, pero requiere revision manual.`,
+      };
+    } else if (inventory.available <= 0) {
+      if (inventory.allowBackorder) {
+        fulfillment = OrderItemFulfillment.BACKORDER;
+        backorderQuantity = requestedQuantity;
+        message =
+          'Disponible bajo pedido. El equipo confirmara tiempos antes de finalizar la compra.';
+        issue = {
+          code: 'backorder_only',
+          severity: OrderIssueSeverity.WARNING,
+          productId: product.id,
+          productName: product.name,
+          title: 'Disponible bajo pedido',
+          description: `${product.name} no tiene existencias inmediatas, pero puede prepararse bajo pedido.`,
+        };
+      } else {
+        return {
+          issue: {
+            code: 'out_of_stock',
+            severity: OrderIssueSeverity.ERROR,
+            productId: product.id,
+            productName: product.name,
+            title: 'Producto sin existencias',
+            description: `${product.name} ya no tiene existencias disponibles y fue retirado de la bolsa.`,
+          },
+        };
+      }
+    } else if (requestedQuantity > inventory.available) {
+      if (inventory.allowBackorder) {
+        fulfillment = OrderItemFulfillment.BACKORDER;
+        reservedQuantity = inventory.available;
+        backorderQuantity = requestedQuantity - inventory.available;
+        message = `Reservaremos ${inventory.available} unidades de inmediato. El resto quedara bajo pedido.`;
+        issue = {
+          code: 'partial_backorder',
+          severity: OrderIssueSeverity.WARNING,
+          productId: product.id,
+          productName: product.name,
+          title: 'Parte del pedido sera bajo pedido',
+          description: `${product.name} solo tiene ${inventory.available} unidades disponibles ahora. El resto se considera bajo pedido.`,
+        };
+      } else {
+        quantity = inventory.available;
+        reservedQuantity = inventory.available;
+        fulfillment = OrderItemFulfillment.ADJUSTED;
+        message = `Ajustamos la cantidad a ${inventory.available} unidades por inventario real.`;
+        issue = {
+          code: 'quantity_adjusted',
+          severity: OrderIssueSeverity.WARNING,
+          productId: product.id,
+          productName: product.name,
+          title: 'Cantidad ajustada',
+          description: `${product.name} solo tiene ${inventory.available} unidades disponibles. Ajustamos la bolsa automaticamente.`,
+        };
+      }
+    } else {
+      reservedQuantity = requestedQuantity;
+    }
+
+    const unitPrice = this.resolveUnitPrice(product);
+
+    return {
+      item: {
+        productId: product.id,
+        productName: product.name,
+        productSlug: product.slug,
+        image: product.image,
+        category: product.category,
+        presentation: product.presentation,
+        origin: product.origin,
+        unitPrice,
+        currency: product.currency,
+        requestedQuantity,
+        quantity,
+        subtotal: quantity * unitPrice,
+        fulfillment,
+        stockAvailable: inventory.tracked ? inventory.available : null,
+        reservedQuantity,
+        backorderQuantity,
+        inventoryTracked: inventory.tracked,
+        allowBackorder: inventory.allowBackorder,
+        message,
+      },
+      issue,
+    };
+  }
+
+  private readAvailability(product: ProductDocument): InventoryAvailability {
+    const tracked = typeof product.stockAvailable === 'number';
+    return {
+      tracked,
+      available: tracked ? Math.max(product.stockAvailable ?? 0, 0) : 0,
+      allowBackorder: Boolean(product.allowBackorder),
+    };
+  }
+
+  private resolveUnitPrice(product: ProductDocument): number {
+    const promoEndsAt = product.promoEndsAt?.getTime();
+    const promoIsCurrent =
+      !promoEndsAt || Number.isNaN(promoEndsAt) || promoEndsAt >= Date.now();
+
+    if (
+      product.promoActive &&
+      promoIsCurrent &&
+      typeof product.promoPrice === 'number' &&
+      product.promoPrice > 0 &&
+      product.promoPrice < product.price
+    ) {
+      return product.promoPrice;
+    }
+
+    return product.price;
+  }
+
+  private buildPreviewSignature(preview: OrderPreviewComputation): string {
+    return createHash('sha256')
+      .update(
+        JSON.stringify({
+          items: preview.items,
+          issues: preview.issues,
+          subtotal: preview.subtotal,
+          totalItems: preview.totalItems,
+          currency: preview.currency,
+          needsManualReview: preview.needsManualReview,
+        }),
+      )
+      .digest('hex');
+  }
+
+  private buildDraftReference(): string {
+    const now = new Date();
+    const stamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(
+      2,
+      '0',
+    )}${String(now.getDate()).padStart(2, '0')}`;
+    const random = Math.random().toString(36).slice(2, 8).toUpperCase();
+    return `BOR-${stamp}-${random}`;
+  }
+
+  private buildConfirmedReference(): string {
+    const now = new Date();
+    const stamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(
+      2,
+      '0',
+    )}${String(now.getDate()).padStart(2, '0')}`;
+    const random = Math.random().toString(36).slice(2, 8).toUpperCase();
+    return `PED-${stamp}-${random}`;
+  }
+
+  private normalizeIdempotencyKey(idempotencyKey?: string): string {
+    const normalized = idempotencyKey?.trim() ?? '';
+    if (!/^[a-zA-Z0-9_-]{16,100}$/.test(normalized)) {
+      throw new BadRequestException('Idempotency-Key invalida o ausente');
+    }
+
+    return normalized;
+  }
+
+  private isDuplicateKeyError(error: unknown): boolean {
+    return (
+      typeof error === 'object' &&
+      error !== null &&
+      'code' in error &&
+      error.code === 11000
+    );
+  }
+
+  private async resolveOrderingUser(
+    authorization?: string,
+  ): Promise<OrderActorSnapshot | null> {
+    const token = authorization?.startsWith('Bearer ')
+      ? authorization.slice('Bearer '.length).trim()
+      : '';
+
+    if (!token) {
+      return null;
+    }
+
+    try {
+      const payload = this.jwtService.verify<JwtPayload>(token);
+      const user = await this.usersService.findById(payload.sub);
+
+      if (!user || user.status !== UserStatus.ACTIVE) {
+        return null;
+      }
+
+      return {
+        userId: user.id,
+        email: user.email,
+      };
+    } catch {
+      return null;
+    }
+  }
+
+  private async resolveShippingAddress(
+    linkedUser: OrderActorSnapshot | null,
+    shippingAddressId?: string,
+  ): Promise<ShippingAddressResponse | undefined> {
+    if (!shippingAddressId) {
+      return undefined;
+    }
+
+    if (!linkedUser?.userId) {
+      throw new BadRequestException(
+        'Inicia sesion para seleccionar una direccion guardada',
+      );
+    }
+
+    const address = await this.usersService.findShippingAddressById(
+      linkedUser.userId,
+      shippingAddressId,
+    );
+    if (!address) {
+      throw new BadRequestException('La direccion seleccionada ya no existe');
+    }
+
+    return address;
+  }
+
+  private toOrderShippingAddress(address?: ShippingAddressResponse) {
+    if (!address) {
+      return undefined;
+    }
+
+    const { id, isDefault: _isDefault, ...snapshot } = address;
+    return {
+      sourceAddressId: id,
+      ...snapshot,
+    };
+  }
+
+  private buildStatusNote(
+    status: OrderStatus,
+    note: string,
+    actor?: OrderActorSnapshot,
+  ) {
+    return {
+      status,
+      note,
+      actorId: actor?.userId,
+      actorEmail: actor?.email,
+      createdAt: new Date(),
+    };
+  }
+
+  private async notifyCustomerOrder(
+    order: OrderDocument,
+    title: string,
+    message: string,
+    severity = CustomerNotificationSeverity.INFO,
+  ): Promise<void> {
+    await this.notificationsService?.createForUser({
+      userId: order.customerUserId,
+      userEmail: order.customerUserEmail ?? order.customer.email,
+      title,
+      message,
+      type: CustomerNotificationType.ORDER,
+      severity,
+      metadata: {
+        orderId: order.id,
+        reference: order.reference,
+        status: order.status,
+      },
+    });
+  }
+
+  private buildAdminOrderFilters(
+    query: ListAdminOrdersQueryDto,
+  ): Record<string, unknown> {
+    const filters: Record<string, unknown> = {};
+
+    if (query.status) {
+      filters.status = query.status;
+    }
+
+    if (query.search?.trim()) {
+      const regex = new RegExp(query.search.trim(), 'i');
+      filters.$or = [
+        { reference: regex },
+        { 'customer.name': regex },
+        { 'customer.email': regex },
+        { 'customer.phone': regex },
+      ];
+    }
+
+    return filters;
+  }
+
+  private buildCustomerOrderFilters(user: JwtPayload): Record<string, unknown> {
+    const email = user.email.trim().toLowerCase();
+
+    return {
+      $or: [
+        { customerUserId: user.sub },
+        { customerUserEmail: email },
+        { 'customer.email': email },
+      ],
+    };
+  }
+
+  private async findOrderOrThrow(id: string): Promise<OrderDocument> {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new BadRequestException('Invalid order id');
+    }
+
+    const order = await this.orderModel.findById(id).exec();
+    if (!order) {
+      throw new NotFoundException('Order not found');
+    }
+
+    return order;
+  }
+
+  private async findOwnedCompletedOrderOrThrow(
+    id: string,
+    user: JwtPayload,
+  ): Promise<OrderDocument> {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new BadRequestException('Invalid order id');
+    }
+
+    const order = await this.orderModel
+      .findOne({
+        _id: new Types.ObjectId(id),
+        status: OrderStatus.COMPLETED,
+        ...this.buildCustomerOrderFilters(user),
+      })
+      .exec();
+
+    if (!order) {
+      throw new NotFoundException(
+        'No encontramos una entrega completada para esta cuenta.',
+      );
+    }
+
+    return order;
+  }
+
+  private assertOrderTransition(
+    currentStatus: OrderStatus,
+    nextStatus: OrderStatus,
+  ): void {
+    const transitions: Record<OrderStatus, OrderStatus[]> = {
+      [OrderStatus.DRAFT]: [OrderStatus.CANCELLED],
+      [OrderStatus.PENDING_REVIEW]: [
+        OrderStatus.CONFIRMED,
+        OrderStatus.CANCELLED,
+      ],
+      [OrderStatus.CONFIRMED]: [OrderStatus.CANCELLED, OrderStatus.COMPLETED],
+      [OrderStatus.CANCELLED]: [],
+      [OrderStatus.COMPLETED]: [],
+    };
+
+    if (!transitions[currentStatus].includes(nextStatus)) {
+      throw new BadRequestException(
+        `No puedes cambiar un pedido en estado ${currentStatus} a ${nextStatus}.`,
+      );
+    }
+  }
+
+  private getEffectiveCustomerReceiptStatus(
+    order: OrderDocument,
+  ): OrderCustomerReceiptStatus {
+    if (order.status !== OrderStatus.COMPLETED) {
+      return OrderCustomerReceiptStatus.NOT_REQUIRED;
+    }
+
+    if (
+      order.customerReceiptStatus &&
+      order.customerReceiptStatus !== OrderCustomerReceiptStatus.NOT_REQUIRED
+    ) {
+      return order.customerReceiptStatus;
+    }
+
+    return OrderCustomerReceiptStatus.PENDING;
+  }
+
+  private mapAdminOrderListItem(
+    order: OrderDocument,
+  ): AdminOrderListItemResponse {
+    return {
+      id: order.id,
+      reference: order.reference,
+      status: order.status,
+      customerReceiptStatus: this.getEffectiveCustomerReceiptStatus(order),
+      customerName: order.customer.name,
+      customerEmail: order.customer.email,
+      customerPhone: order.customer.phone,
+      totalItems: order.totalItems,
+      subtotal: order.subtotal,
+      currency: order.currency,
+      needsManualReview: order.needsManualReview,
+      createdAt: order.createdAt?.toISOString(),
+      confirmedAt: order.confirmedAt?.toISOString(),
+      cancelledAt: order.cancelledAt?.toISOString(),
+      completedAt: order.completedAt?.toISOString(),
+      customerReceiptRequestedAt:
+        order.customerReceiptRequestedAt?.toISOString(),
+      customerReceiptConfirmedAt:
+        order.customerReceiptConfirmedAt?.toISOString(),
+      customerReceiptIssueReportedAt:
+        order.customerReceiptIssueReportedAt?.toISOString(),
+    };
+  }
+
+  private mapCustomerReceiptOrder(
+    order: OrderDocument,
+  ): CustomerReceiptOrderResponse {
+    return {
+      id: order.id,
+      reference: order.reference,
+      status: order.status,
+      customerReceiptStatus: this.getEffectiveCustomerReceiptStatus(order),
+      totalItems: order.totalItems,
+      subtotal: order.subtotal,
+      currency: order.currency,
+      completedAt: order.completedAt?.toISOString(),
+      customerReceiptRequestedAt:
+        order.customerReceiptRequestedAt?.toISOString() ??
+        order.completedAt?.toISOString(),
+      customerReceiptConfirmedAt:
+        order.customerReceiptConfirmedAt?.toISOString(),
+      customerReceiptIssueReportedAt:
+        order.customerReceiptIssueReportedAt?.toISOString(),
+      customerReceiptIssueNote: order.customerReceiptIssueNote,
+      customerReceiptReportId: order.customerReceiptReportId,
+      items: order.items.map((item) => ({
+        productId: item.productId,
+        productName: item.productName,
+        productSlug: item.productSlug,
+        image: item.image,
+        category: item.category,
+        presentation: item.presentation,
+        origin: item.origin,
+        unitPrice: item.unitPrice,
+        currency: item.currency,
+        requestedQuantity: item.requestedQuantity,
+        quantity: item.quantity,
+        subtotal: item.subtotal,
+        fulfillment: item.fulfillment,
+        stockAvailable: item.stockAvailable,
+        reservedQuantity: item.reservedQuantity,
+        backorderQuantity: item.backorderQuantity,
+        inventoryTracked: item.inventoryTracked,
+        allowBackorder: item.allowBackorder,
+        message: item.message,
+      })),
+    };
+  }
+
+  private mapAdminOrderDetail(order: OrderDocument): AdminOrderDetailResponse {
+    return {
+      ...this.mapAdminOrderListItem(order),
+      channel: order.channel,
+      customerNotes: order.customer.notes,
+      customerUserId: order.customerUserId,
+      customerUserEmail: order.customerUserEmail,
+      customerReceiptIssueNote: order.customerReceiptIssueNote,
+      customerReceiptReportId: order.customerReceiptReportId,
+      shippingAddress: order.shippingAddress
+        ? {
+            id: order.shippingAddress.sourceAddressId,
+            label: order.shippingAddress.label,
+            recipientName: order.shippingAddress.recipientName,
+            phone: order.shippingAddress.phone,
+            street: order.shippingAddress.street,
+            exteriorNumber: order.shippingAddress.exteriorNumber,
+            interiorNumber: order.shippingAddress.interiorNumber,
+            neighborhood: order.shippingAddress.neighborhood,
+            municipality: order.shippingAddress.municipality,
+            state: order.shippingAddress.state,
+            postalCode: order.shippingAddress.postalCode,
+            references: order.shippingAddress.references,
+          }
+        : undefined,
+      items: order.items.map((item) => ({
+        productId: item.productId,
+        productName: item.productName,
+        productSlug: item.productSlug,
+        image: item.image,
+        category: item.category,
+        presentation: item.presentation,
+        origin: item.origin,
+        unitPrice: item.unitPrice,
+        currency: item.currency,
+        requestedQuantity: item.requestedQuantity,
+        quantity: item.quantity,
+        subtotal: item.subtotal,
+        fulfillment: item.fulfillment,
+        stockAvailable: item.stockAvailable,
+        reservedQuantity: item.reservedQuantity,
+        backorderQuantity: item.backorderQuantity,
+        inventoryTracked: item.inventoryTracked,
+        allowBackorder: item.allowBackorder,
+        message: item.message,
+      })),
+      issues: order.issues.map((issue) => ({
+        code: issue.code,
+        severity: issue.severity,
+        productId: issue.productId,
+        productName: issue.productName,
+        title: issue.title,
+        description: issue.description,
+      })),
+      statusNotes: (order.statusNotes ?? []).map((note) => ({
+        status: note.status,
+        note: note.note,
+        actorId: note.actorId,
+        actorEmail: note.actorEmail,
+        createdAt: note.createdAt.toISOString(),
+      })),
+      lastValidatedAt: order.lastValidatedAt?.toISOString(),
+    };
+  }
+
+  private async reserveInventoryForItem(
+    item: OrderPreviewItem,
+    orderReference: string,
+    actor: OrderActorSnapshot,
+    options?: {
+      orderId?: string;
+      note?: string;
+      conflictMessage?: string;
+    },
+  ): Promise<{
+    nextAvailable: number;
+    nextReserved: number;
+  }> {
+    const updatedProduct = await this.productModel
+      .findOneAndUpdate(
+        {
+          _id: item.productId,
+          status: ProductStatus.ACTIVE,
+          stockAvailable: { $gte: item.reservedQuantity },
+        },
+        [
+          {
+            $set: {
+              stockAvailable: {
+                $subtract: [
+                  { $ifNull: ['$stockAvailable', 0] },
+                  item.reservedQuantity,
+                ],
+              },
+              stockReserved: {
+                $add: [
+                  { $ifNull: ['$stockReserved', 0] },
+                  item.reservedQuantity,
+                ],
+              },
+              inStock: {
+                $gt: [
+                  {
+                    $subtract: [
+                      { $ifNull: ['$stockAvailable', 0] },
+                      item.reservedQuantity,
+                    ],
+                  },
+                  0,
+                ],
+              },
+            },
+          },
+        ],
+        {
+          returnDocument: 'after',
+          updatePipeline: true,
+        },
+      )
+      .select('stockAvailable stockReserved')
+      .exec();
+
+    if (!updatedProduct) {
+      throw new ConflictException(
+        options?.conflictMessage ??
+          `El inventario de ${item.productName} cambio mientras confirmabas tu pedido. Actualizamos la bolsa para que revises la disponibilidad actual.`,
+      );
+    }
+
+    const nextAvailable = updatedProduct.stockAvailable ?? 0;
+    const nextReserved = updatedProduct.stockReserved ?? 0;
+
+    await this.inventoryMovementModel.create({
+      productId: new Types.ObjectId(item.productId),
+      productName: item.productName,
+      type: InventoryMovementType.RESERVE,
+      quantity: item.reservedQuantity,
+      previousAvailable: nextAvailable + item.reservedQuantity,
+      nextAvailable,
+      previousReserved: Math.max(0, nextReserved - item.reservedQuantity),
+      nextReserved,
+      note:
+        options?.note ?? `Reserva automatica por el pedido ${orderReference}.`,
+      orderId: options?.orderId,
+      orderReference,
+      actorId: actor.userId,
+      actorEmail: actor.email,
+    });
+
+    return {
+      nextAvailable,
+      nextReserved,
+    };
+  }
+
+  private async rollbackReservedInventory(
+    reservedMutations: AppliedInventoryMutation[],
+    orderReference: string,
+    actor: OrderActorSnapshot,
+  ): Promise<void> {
+    for (const item of [...reservedMutations].reverse()) {
+      try {
+        await this.releaseInventoryQuantity(
+          item.productId,
+          item.productName,
+          item.quantity,
+          {
+            type: InventoryMovementType.RELEASE,
+            orderReference,
+            note: `Rollback de reserva por fallo al confirmar el pedido ${orderReference}.`,
+            actor,
+          },
+        );
+      } catch {
+        // Best effort rollback to avoid masking original error.
+      }
+    }
+  }
+
+  private async reReserveReleasedInventory(
+    releasedMutations: AppliedInventoryMutation[],
+    orderReference: string,
+    actor: OrderActorSnapshot,
+  ): Promise<void> {
+    for (const item of [...releasedMutations].reverse()) {
+      try {
+        await this.reAddReservation(
+          item.productId,
+          item.productName,
+          item.quantity,
+          {
+            orderReference,
+            note: `Rollback de liberacion para conservar la reserva del pedido ${orderReference}.`,
+            actor,
+          },
+        );
+      } catch {
+        // Best effort rollback to avoid masking original error.
+      }
+    }
+  }
+
+  private async restoreCommittedInventory(
+    committedMutations: AppliedInventoryMutation[],
+    orderReference: string,
+    actor: OrderActorSnapshot,
+  ): Promise<void> {
+    for (const item of [...committedMutations].reverse()) {
+      try {
+        await this.reAddReservation(
+          item.productId,
+          item.productName,
+          item.quantity,
+          {
+            orderReference,
+            note: `Rollback de cierre para restaurar la reserva del pedido ${orderReference}.`,
+            actor,
+          },
+        );
+      } catch {
+        // Best effort rollback to avoid masking original error.
+      }
+    }
+  }
+
+  private async releaseInventoryQuantity(
+    productId: string,
+    productName: string,
+    quantity: number,
+    options: {
+      type: InventoryMovementType;
+      orderId?: string;
+      orderReference: string;
+      note: string;
+      actor: OrderActorSnapshot;
+    },
+  ): Promise<void> {
+    const updatedProduct = await this.productModel
+      .findOneAndUpdate(
+        {
+          _id: productId,
+          stockReserved: { $gte: quantity },
+        },
+        [
+          {
+            $set: {
+              stockAvailable: {
+                $add: [{ $ifNull: ['$stockAvailable', 0] }, quantity],
+              },
+              stockReserved: {
+                $subtract: [{ $ifNull: ['$stockReserved', 0] }, quantity],
+              },
+              inStock: {
+                $gt: [
+                  {
+                    $add: [{ $ifNull: ['$stockAvailable', 0] }, quantity],
+                  },
+                  0,
+                ],
+              },
+            },
+          },
+        ],
+        {
+          returnDocument: 'after',
+          updatePipeline: true,
+        },
+      )
+      .select('stockAvailable stockReserved')
+      .exec();
+
+    if (!updatedProduct) {
+      throw new ConflictException(
+        `No se pudo liberar la reserva de ${productName} porque el inventario ya no coincide con el pedido.`,
+      );
+    }
+
+    const nextAvailable = updatedProduct.stockAvailable ?? 0;
+    const nextReserved = updatedProduct.stockReserved ?? 0;
+
+    await this.inventoryMovementModel.create({
+      productId: new Types.ObjectId(productId),
+      productName,
+      type: options.type,
+      quantity,
+      previousAvailable: Math.max(0, nextAvailable - quantity),
+      nextAvailable,
+      previousReserved: nextReserved + quantity,
+      nextReserved,
+      note: options.note,
+      orderId: options.orderId,
+      orderReference: options.orderReference,
+      actorId: options.actor.userId,
+      actorEmail: options.actor.email,
+    });
+  }
+
+  private async commitReservedInventory(
+    productId: string,
+    productName: string,
+    quantity: number,
+    options: {
+      orderId?: string;
+      orderReference: string;
+      actor: OrderActorSnapshot;
+    },
+  ): Promise<void> {
+    const updatedProduct = await this.productModel
+      .findOneAndUpdate(
+        {
+          _id: productId,
+          stockReserved: { $gte: quantity },
+        },
+        [
+          {
+            $set: {
+              stockReserved: {
+                $subtract: [{ $ifNull: ['$stockReserved', 0] }, quantity],
+              },
+              inStock: {
+                $gt: [{ $ifNull: ['$stockAvailable', 0] }, 0],
+              },
+            },
+          },
+        ],
+        {
+          returnDocument: 'after',
+          updatePipeline: true,
+        },
+      )
+      .select('stockAvailable stockReserved')
+      .exec();
+
+    if (!updatedProduct) {
+      throw new ConflictException(
+        `No se pudo cerrar la reserva de ${productName} porque el inventario reservado ya no coincide con el pedido.`,
+      );
+    }
+
+    const nextAvailable = updatedProduct.stockAvailable ?? 0;
+    const nextReserved = updatedProduct.stockReserved ?? 0;
+
+    await this.inventoryMovementModel.create({
+      productId: new Types.ObjectId(productId),
+      productName,
+      type: InventoryMovementType.COMMIT_RESERVED,
+      quantity,
+      previousAvailable: nextAvailable,
+      nextAvailable,
+      previousReserved: nextReserved + quantity,
+      nextReserved,
+      note: `Consumo definitivo de reserva por cierre del pedido ${options.orderReference}.`,
+      orderId: options.orderId,
+      orderReference: options.orderReference,
+      actorId: options.actor.userId,
+      actorEmail: options.actor.email,
+    });
+  }
+
+  private async reAddReservation(
+    productId: string,
+    productName: string,
+    quantity: number,
+    options: {
+      orderReference: string;
+      note: string;
+      actor: OrderActorSnapshot;
+    },
+  ): Promise<void> {
+    const updatedProduct = await this.productModel
+      .findOneAndUpdate(
+        { _id: productId, stockAvailable: { $gte: quantity } },
+        [
+          {
+            $set: {
+              stockAvailable: {
+                $subtract: [{ $ifNull: ['$stockAvailable', 0] }, quantity],
+              },
+              stockReserved: {
+                $add: [{ $ifNull: ['$stockReserved', 0] }, quantity],
+              },
+              inStock: {
+                $gt: [
+                  {
+                    $subtract: [{ $ifNull: ['$stockAvailable', 0] }, quantity],
+                  },
+                  0,
+                ],
+              },
+            },
+          },
+        ],
+        {
+          returnDocument: 'after',
+          updatePipeline: true,
+        },
+      )
+      .select('stockAvailable stockReserved')
+      .exec();
+
+    if (!updatedProduct) {
+      throw new ConflictException(
+        `No se pudo restaurar la reserva de ${productName} despues de un rollback.`,
+      );
+    }
+
+    const nextAvailable = updatedProduct.stockAvailable ?? 0;
+    const nextReserved = updatedProduct.stockReserved ?? 0;
+
+    await this.inventoryMovementModel.create({
+      productId: new Types.ObjectId(productId),
+      productName,
+      type: InventoryMovementType.RESERVE,
+      quantity,
+      previousAvailable: nextAvailable + quantity,
+      nextAvailable,
+      previousReserved: Math.max(0, nextReserved - quantity),
+      nextReserved,
+      note: options.note,
+      orderReference: options.orderReference,
+      actorId: options.actor.userId,
+      actorEmail: options.actor.email,
+    });
+  }
+
+  private async prepareOrderForCompletion(
+    order: OrderDocument,
+    actor: OrderActorSnapshot,
+  ): Promise<CompletionPreparationResult> {
+    const items = order.items.map((item) => ({
+      productId: item.productId,
+      productName: item.productName,
+      productSlug: item.productSlug,
+      image: item.image,
+      category: item.category,
+      presentation: item.presentation,
+      origin: item.origin,
+      unitPrice: item.unitPrice,
+      currency: item.currency,
+      requestedQuantity: item.requestedQuantity,
+      quantity: item.quantity,
+      subtotal: item.subtotal,
+      fulfillment: item.fulfillment,
+      stockAvailable: item.stockAvailable,
+      reservedQuantity: item.reservedQuantity,
+      backorderQuantity: item.backorderQuantity,
+      inventoryTracked: item.inventoryTracked,
+      allowBackorder: item.allowBackorder,
+      message: item.message,
+    }));
+    const newlyReservedMutations: AppliedInventoryMutation[] = [];
+    const resolvedProductIds = new Set<string>();
+
+    try {
+      for (const [index, item] of items.entries()) {
+        const missingQuantity = Math.max(
+          0,
+          item.quantity - item.reservedQuantity,
+        );
+        if (missingQuantity <= 0) {
+          continue;
+        }
+
+        const product = await this.productModel
+          .findById(item.productId)
+          .select('name status stockAvailable allowBackorder inStock')
+          .exec();
+
+        if (!product || product.status !== ProductStatus.ACTIVE) {
+          throw new ConflictException(
+            `${item.productName} ya no esta activo en el catalogo. No puedes completar este pedido hasta revisarlo.`,
+          );
+        }
+
+        const inventory = this.readAvailability(product);
+
+        if (!inventory.tracked) {
+          throw new ConflictException(
+            `${item.productName} aun no tiene inventario inicializado. Carga existencias o ajusta el pedido antes de marcarlo como completado.`,
+          );
+        }
+
+        if (inventory.available < missingQuantity) {
+          throw new ConflictException(
+            `${item.productName} solo tiene ${inventory.available} piezas libres y faltan ${missingQuantity} para completar el pedido.`,
+          );
+        }
+
+        const reservation = await this.reserveInventoryForItem(
+          {
+            ...item,
+            reservedQuantity: missingQuantity,
+          },
+          order.reference,
+          actor,
+          {
+            orderId: order.id,
+            note: `Reserva complementaria para completar el pedido ${order.reference}.`,
+            conflictMessage: `El inventario de ${item.productName} cambio mientras preparabamos este pedido para completarlo. Recarga el detalle y vuelve a intentarlo.`,
+          },
+        );
+
+        newlyReservedMutations.push({
+          productId: item.productId,
+          productName: item.productName,
+          quantity: missingQuantity,
+        });
+        resolvedProductIds.add(item.productId);
+
+        items[index] = {
+          ...item,
+          stockAvailable: reservation.nextAvailable,
+          reservedQuantity: item.reservedQuantity + missingQuantity,
+          backorderQuantity: 0,
+          inventoryTracked: true,
+          fulfillment:
+            item.fulfillment === OrderItemFulfillment.ADJUSTED
+              ? OrderItemFulfillment.ADJUSTED
+              : OrderItemFulfillment.AVAILABLE,
+          message:
+            item.fulfillment === OrderItemFulfillment.ADJUSTED
+              ? item.message
+              : undefined,
+        };
+      }
+    } catch (error) {
+      if (newlyReservedMutations.length > 0) {
+        await this.rollbackReservedInventory(
+          newlyReservedMutations,
+          order.reference,
+          actor,
+        );
+      }
+      throw error;
+    }
+
+    const issues = order.issues
+      .filter(
+        (issue) =>
+          !(
+            issue.productId &&
+            resolvedProductIds.has(issue.productId) &&
+            ['manual_inventory_review', 'backorder_only', 'partial_backorder'].includes(
+              issue.code,
+            )
+          ),
+      )
+      .map((issue) => ({
+        code: issue.code,
+        severity: issue.severity,
+        productId: issue.productId,
+        productName: issue.productName,
+        title: issue.title,
+        description: issue.description,
+      }));
+
+    return {
+      items,
+      issues,
+      newlyReservedMutations,
+    };
+  }
+
+  private toOrderActorSnapshot(
+    actor?: JwtPayload | OrderActorSnapshot | null,
+  ): OrderActorSnapshot {
+    if (!actor) {
+      return {};
+    }
+
+    if ('sub' in actor) {
+      return {
+        userId: actor.sub,
+        email: actor.email,
+      };
+    }
+
+    if ('userId' in actor || 'email' in actor) {
+      return {
+        userId: actor.userId,
+        email: actor.email,
+      };
+    }
+
+    return {};
+  }
+}

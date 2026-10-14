@@ -2,7 +2,7 @@
 
 Reinicio de la aplicación móvil de INHALEX con un repositorio independiente, arquitectura MVVM y Repository, y colaboración entre David y Zenaida mediante ramas y pull requests.
 
-Estado: preparación del repositorio. Los acuerdos están guardados en [el plan de trabajo](docs/PLAN-DE-TRABAJO.md). El backend y la base móvil se incorporarán mediante sus ramas y PR hacia `develop`.
+Estado de esta rama: recuperación del backend en `feature/backend-base`, para revisión mediante PR hacia `develop`. Los acuerdos están guardados en [el plan de trabajo](docs/PLAN-DE-TRABAJO.md) y el origen de la API en [la recuperación del backend](docs/RECUPERACION-BACKEND.md). La base móvil se incorporará después mediante `feature/mobile-bootstrap`.
 
 ## Carpeta de trabajo
 
@@ -27,3 +27,17 @@ INHALEX-Movil/
 3. Incorporar el backend mediante `feature/backend-base` y un PR hacia `develop`.
 4. Incorporar la base móvil mediante `feature/mobile-bootstrap` y un PR hacia `develop`.
 5. Comenzar las actividades funcionales con Registro de usuario.
+
+## Backend recuperado
+
+Instala sus dependencias con `npm ci --prefix Server`. Consulta [Server/README.md](Server/README.md) para configurar el entorno y ejecutar la API.
+
+Desde la raíz puedes verificarlo con:
+
+```bash
+npm run build:server
+npm run test:server
+npm run test:e2e:server
+```
+
+El CI del backend ejecuta esos controles con Node.js 24 y una base simulada en las pruebas. Los escenarios reales contra MongoDB se comprueban en la etapa de integración.

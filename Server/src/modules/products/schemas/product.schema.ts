@@ -1,0 +1,111 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
+import { ProductStatus } from '../enums/product-status.enum';
+
+export type ProductDocument = HydratedDocument<Product>;
+
+@Schema({ timestamps: true, versionKey: false, collection: 'productos' })
+export class Product {
+  @Prop({ required: true, trim: true, minlength: 2, maxlength: 120 })
+  name: string;
+
+  @Prop({ required: true, unique: true, trim: true, lowercase: true, index: true })
+  slug: string;
+
+  @Prop({ required: true, trim: true, minlength: 10, maxlength: 500 })
+  description: string;
+
+  @Prop({ trim: true, maxlength: 3000 })
+  longDescription?: string;
+
+  @Prop({ required: true, min: 0 })
+  price: number;
+
+  @Prop({ default: false, index: true })
+  promoActive?: boolean;
+
+  @Prop({ trim: true, maxlength: 80 })
+  promoLabel?: string;
+
+  @Prop({ trim: true, maxlength: 200 })
+  promoDescription?: string;
+
+  @Prop({ min: 0 })
+  promoPrice?: number;
+
+  @Prop({ type: Date })
+  promoEndsAt?: Date;
+
+  @Prop({ required: true, trim: true, uppercase: true, default: 'MXN', maxlength: 5 })
+  currency: string;
+
+  @Prop({ required: true, trim: true })
+  image: string;
+
+  @Prop({ type: String, required: true, trim: true, lowercase: true, index: true })
+  category: string;
+
+  @Prop({ type: [String], default: [] })
+  benefits: string[];
+
+  @Prop({ type: [String], default: [] })
+  aromas: string[];
+
+  @Prop({ required: true, trim: true, default: '10ml' })
+  presentation: string;
+
+  @Prop({ required: true, trim: true, default: '100% Natural' })
+  origin: string;
+
+  @Prop({ trim: true, maxlength: 160 })
+  rawMaterialName?: string;
+
+  @Prop({ min: 0 })
+  rawMaterialInitialStockMl?: number;
+
+  @Prop({ min: 0 })
+  rawMaterialConsumptionPerBatchMl?: number;
+
+  @Prop({ min: 1 })
+  rawMaterialBatchYieldUnits?: number;
+
+  @Prop({ min: 0, index: true })
+  stockAvailable?: number;
+
+  @Prop({ min: 0, default: 0 })
+  stockReserved?: number;
+
+  @Prop({ min: 0, default: 0 })
+  stockMin?: number;
+
+  @Prop({ default: false })
+  allowBackorder?: boolean;
+
+  @Prop({ default: true })
+  inStock: boolean;
+
+  @Prop({ type: String, enum: ProductStatus, default: ProductStatus.DRAFT, index: true })
+  status: ProductStatus;
+
+  @Prop({ min: 0, max: 5 })
+  rating?: number;
+
+  @Prop({ min: 0, default: 0 })
+  reviews?: number;
+
+  @Prop({ min: 1, default: 9999, index: true })
+  sortOrder?: number;
+
+  createdAt?: Date;
+
+  updatedAt?: Date;
+}
+
+export const ProductSchema = SchemaFactory.createForClass(Product);
+
+ProductSchema.index({
+  name: 'text',
+  description: 'text',
+  longDescription: 'text',
+  aromas: 'text',
+});
