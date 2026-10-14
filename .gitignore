@@ -6,6 +6,7 @@ coverage/
 .expo/
 .next/
 *.tsbuildinfo
+expo-env.d.ts
 
 # Configuración privada
 .env

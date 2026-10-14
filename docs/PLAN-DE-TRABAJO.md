@@ -2,6 +2,8 @@
 
 Acuerdos del 14 de octubre de 2026 para reiniciar la aplicación móvil con un repositorio independiente, aprovechar el backend y el código anterior, y documentar el flujo de trabajo del profesor desde el inicio.
 
+El esquema de versiones y el flujo acordado están en [VERSIONAMIENTO.md](VERSIONAMIENTO.md).
+
 David tiene once actividades funcionales y Zenaida cuatro. Cada actividad tendrá su propia rama, PR y evidencia de funcionamiento. Avisos será una bandeja dentro de la app.
 
 ## Ubicación y estructura
@@ -96,4 +98,4 @@ La vinculación de EAS, credenciales de firma y configuración de Google Play se
 
 ## Siguiente bloque de trabajo
 
-Preparar el repositorio y su documentación inicial, validar e incorporar el backend, y después incorporar la base móvil. La primera actividad funcional será Registro de usuario.
+El repositorio y el backend ya están integrados y verificados. El siguiente bloque incorpora la base móvil mediante feature/mobile-bootstrap y un PR hacia develop. La primera actividad funcional será Registro de usuario.

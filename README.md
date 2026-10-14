@@ -2,7 +2,7 @@
 
 Reinicio de la aplicación móvil de INHALEX con un repositorio independiente, arquitectura MVVM y Repository, y colaboración entre David y Zenaida mediante ramas y pull requests.
 
-Estado de esta rama: recuperación del backend en `feature/backend-base`, para revisión mediante PR hacia `develop`. Los acuerdos están guardados en [el plan de trabajo](docs/PLAN-DE-TRABAJO.md) y el origen de la API en [la recuperación del backend](docs/RECUPERACION-BACKEND.md). La base móvil se incorporará después mediante `feature/mobile-bootstrap`.
+El backend ya está integrado en `develop` mediante el [PR #1](https://github.com/David567rs/INHALEX-Movil/pull/1), aprobado por Zenaida y con CI satisfactorio. Esta rama incorpora la base móvil en `feature/mobile-bootstrap` para su propia revisión hacia `develop`. Los acuerdos están en [el plan](docs/PLAN-DE-TRABAJO.md), [la arquitectura](docs/ARCHITECTURE.md) y [el versionamiento](docs/VERSIONAMIENTO.md).
 
 ## Carpeta de trabajo
 
@@ -41,3 +41,14 @@ npm run test:e2e:server
 ```
 
 El CI del backend ejecuta esos controles con Node.js 24 y una base simulada en las pruebas. Los escenarios reales contra MongoDB se comprueban en la etapa de integración.
+
+## Base móvil
+
+El proyecto Expo ejecutable está directamente en `Mobile/`. Recupera la identidad visual y la navegación de cinco pestañas; las quince actividades funcionales se incorporarán después, cada una mediante su rama y PR.
+
+```bash
+npm ci --prefix Mobile
+npm run dev:mobile
+```
+
+El segundo comando abre Expo en el puerto 8082 para poder probar la app en Expo Go. Consulta [Mobile/README.md](Mobile/README.md) para los comandos de Git Bash y CMD, la configuración pública de la API y los controles del PR. El origen y las adaptaciones están en [la recuperación móvil](docs/RECUPERACION-MOVIL.md).

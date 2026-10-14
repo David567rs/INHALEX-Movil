@@ -12,11 +12,13 @@ David coordina los PR de preparación y Zenaida los revisa. Estas tareas de infr
 
 ## Permisos e identidades
 
-David567rs conserva la propiedad y administración del repositorio. ZenaidaGR está invitada como colaboradora con escritura. Su acceso de escritura se activa cuando acepta la invitación desde su cuenta.
+David567rs conserva la propiedad y administración del repositorio. ZenaidaGR aceptó la invitación y tiene escritura, sin administración.
 
 La regla [Main solo David mediante PR](https://github.com/David567rs/INHALEX-Movil/rules/25061419) restringe las actualizaciones de `main` a David mediante PR. Zenaida puede trabajar en ramas de funcionalidades, participar en `develop` mediante PR y revisar la release, pero no puede actualizar ni fusionar `main` ni editar sus reglas. La protección clásica conserva los checks, la revisión y la prohibición de force push y borrado, también para David. Como el repositorio es público, todos pueden leer `main`.
 
 Cada integrante utiliza su propia copia local y configura la identidad Git en esa copia. La sesión del editor, el autor del commit y la cuenta autenticada para subir cambios son configuraciones separadas. Las instrucciones están en [Cuentas y permisos](docs/CUENTAS-Y-PERMISOS.md).
+
+El versionamiento semántico y Android acordado está en [VERSIONAMIENTO.md](docs/VERSIONAMIENTO.md). Se conserva el flujo del diagrama del profesor basado en GitFlow.
 
 ## Ramas e incorporación inicial
 

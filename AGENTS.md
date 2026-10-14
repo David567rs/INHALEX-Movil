@@ -8,13 +8,13 @@ Lee `docs/PLAN-DE-TRABAJO.md` para conocer el reparto y las dependencias acordad
 
 ## Orden de trabajo
 
-El usuario organizó el plan antes de la implementación y ya autorizó iniciar la recuperación del código y los diseños existentes. La fase actual es preparación del repositorio e incorporación del backend. Reutiliza los recursos por actividad siguiendo las ramas y PR del plan.
+El usuario organizó el plan antes de la implementación y ya autorizó iniciar la recuperación del código y los diseños existentes. El backend se integró mediante el PR #1; la fase actual es incorporación de la base móvil en feature/mobile-bootstrap. El nuevo proyecto Expo se ejecuta desde Mobile/, mientras que la app fuente se conserva en Mobile/inhalex-app/. Reutiliza los recursos por actividad siguiendo las ramas y PR del plan.
 
 El flujo acordado para la ejecución es documentación inicial en `main`, creación de `develop`, PR de base del backend, PR de base móvil y PR por actividad funcional. El nuevo historial debe mostrar ese flujo desde el inicio. Recupera el código mediante importaciones y adaptaciones declaradas en sus PR; inicia Git en esta raíz sin copiar la carpeta `.git` del proyecto anterior.
 
 Las ramas funcionales parten de `develop` y sus PR apuntan a `develop`. David y Zenaida revisan los PR del otro desde sus cuentas. Las ramas y responsables detallados están en el plan; no reasignes actividades por conveniencia técnica.
 
-David567rs es el propietario y administrador. ZenaidaGR está invitada con escritura, sin administración. La regla activa de `main` permite integraciones solo a David mediante PR y mantiene las comprobaciones y revisión obligatorias. Zenaida puede revisar PR hacia `main`, pero no actualizar ni fusionar esa rama. Consulta `docs/CUENTAS-Y-PERMISOS.md` para preparar la identidad Git y la autenticación de cada copia; no cambies la configuración global ni crees commits o revisiones en nombre del otro integrante.
+David567rs es el propietario y administrador. ZenaidaGR aceptó la invitación y tiene escritura, sin administración. La regla activa de `main` permite integraciones solo a David mediante PR y mantiene las comprobaciones y revisión obligatorias. Zenaida puede revisar PR hacia `main`, pero no actualizar ni fusionar esa rama. Consulta `docs/CUENTAS-Y-PERMISOS.md` para preparar la identidad Git y la autenticación de cada copia; no cambies la configuración global ni crees commits o revisiones en nombre del otro integrante.
 
 ## Arquitectura
 
