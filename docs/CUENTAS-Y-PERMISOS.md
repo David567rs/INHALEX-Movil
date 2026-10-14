@@ -13,7 +13,7 @@ David usa su carpeta en Devin o Codex. Zenaida abre su carpeta en VS Code. La se
 
 ## Permisos del repositorio
 
-David567rs es el propietario y administrador. ZenaidaGR recibe una invitación con permiso de escritura que debe aceptar desde su cuenta en [las invitaciones del repositorio](https://github.com/David567rs/INHALEX-Movil/invitations).
+David567rs es el propietario y administrador. ZenaidaGR aceptó la invitación y tiene permiso de escritura, sin administración.
 
 La regla activa [Main solo David mediante PR](https://github.com/David567rs/INHALEX-Movil/rules/25061419) restringe la actualización de `main`. Solo David puede integrar un PR hacia esa rama; Zenaida puede revisar el PR, pero no fusionarlo ni actualizar `main`. Las protecciones existentes siguen exigiendo CI y revisión también a David. El repositorio público permite leer `main`.
 
@@ -35,11 +35,11 @@ git config --local --get credential.https://github.com.username
 git remote -v
 ```
 
-Zenaida debe aceptar la invitación y completar su propia autenticación cuando Git Credential Manager solicite iniciar sesión. Tener una sesión de navegador o de VS Code abierta no confirma que el gestor de credenciales del sistema ya tenga acceso con esa cuenta.
+Zenaida ya aceptó la invitación y debe completar su propia autenticación cuando Git Credential Manager solicite iniciar sesión. Tener una sesión de navegador o de VS Code abierta no confirma que el gestor de credenciales del sistema ya tenga acceso con esa cuenta.
 
 ## Revisión inicial y comienzo de actividades
 
-La copia de Zenaida se prepara en `feature/backend-base` para revisar [el PR del backend](https://github.com/David567rs/INHALEX-Movil/pull/1). Esa rama corresponde a David; Zenaida la utiliza para consultar y verificar la base. La copia no contiene el `.env` ni las dependencias instaladas de David.
+El [PR del backend](https://github.com/David567rs/INHALEX-Movil/pull/1) ya se integró con la aprobación de Zenaida y CI satisfactorio. Ambos clones tienen su propio Server/.env local, ignorado por Git, y sus dependencias instaladas. El siguiente PR prepara la base móvil en feature/mobile-bootstrap; la revisión funcional de cada PR corresponde al compañero.
 
 Después de integrar la base del backend en `develop`, Zenaida cambia a esa rama y actualiza su copia:
 

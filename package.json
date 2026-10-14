@@ -7,6 +7,13 @@
     "build:server": "npm --prefix Server run build",
     "test:server": "npm --prefix Server run test -- --runInBand",
     "test:e2e:server": "npm --prefix Server run test:e2e -- --runInBand",
-    "lint:server": "npm --prefix Server run lint:check"
+    "lint:server": "npm --prefix Server run lint:check",
+    "dev:mobile": "npm --prefix Mobile run start -- --port 8082",
+    "web:mobile": "npm --prefix Mobile run web -- --port 8082",
+    "typecheck:mobile": "npm --prefix Mobile run typecheck",
+    "lint:mobile": "npm --prefix Mobile run lint",
+    "test:mobile": "npm --prefix Mobile test",
+    "doctor:mobile": "npm --prefix Mobile run doctor",
+    "export:mobile": "npm --prefix Mobile run export:android"
   }
 }
