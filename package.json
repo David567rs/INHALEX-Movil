@@ -1,0 +1,12 @@
+{
+  "name": "inhalex-movil",
+  "private": true,
+  "scripts": {
+    "start:server": "npm --prefix Server run start",
+    "dev:server": "npm --prefix Server run start:dev",
+    "build:server": "npm --prefix Server run build",
+    "test:server": "npm --prefix Server run test -- --runInBand",
+    "test:e2e:server": "npm --prefix Server run test:e2e -- --runInBand",
+    "lint:server": "npm --prefix Server run lint:check"
+  }
+}
