@@ -29,5 +29,6 @@
   },
   "checks": { "mobileTests": 50, "typecheck": "passed", "lint": "passed", "androidExport": "passed", "webExport": "passed" },
   "expoGo": { "evidenceSource": "Confirmacion del usuario en el chat", "createdAccount": true, "duplicateEmailNotice": true },
-  "pending": ["Interrupcion de conexion y lector de pantalla Android", "Revision real de Zenaida en PR hacia develop"]
+  "review": { "pr": 3, "reviewer": "ZenaidaGR", "state": "APPROVED", "mergedBy": "David567rs", "base": "develop", "mergeCommit": "7d308e351999eb9a1dfb8e36a5f331f050f8ce61" },
+  "pending": ["Interrupcion de conexion y lector de pantalla Android"]
 }

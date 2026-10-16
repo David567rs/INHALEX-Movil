@@ -96,9 +96,9 @@ La actividad queda terminada cuando funciona integrada con la API, satisface su 
 
 La vinculación de EAS, credenciales de firma y configuración de Google Play se realizará antes de la entrega correspondiente. Compilar el AAB y publicarlo son operaciones distintas.
 
-## Siguiente bloque de trabajo
+## Registro de usuario integrado
 
-El backend y la base móvil se integraron mediante los PR #1 y #2. Registro de usuario continúa en `feature/registro-usuario`, con un solo PR previsto para la actividad completa. El usuario aprobó el diseño y las validaciones en Expo Go y autorizó la conexión a la API el 16 de octubre de 2026.
+El backend y la base móvil se integraron mediante los PR #1 y #2. Registro se completó en `feature/registro-usuario` y se integró mediante el [PR #3](https://github.com/David567rs/INHALEX-Movil/pull/3), con aprobación de ZenaidaGR y merge de David567rs a `develop` en `7d308e351999eb9a1dfb8e36a5f331f050f8ce61`. Backend CI y Mobile CI pasaron. El usuario aprobó el diseño, las validaciones y la conexión de Registro en Expo Go.
 
 Estado de los criterios de la tarjeta de Registro:
 
@@ -111,7 +111,7 @@ Estado de los criterios de la tarjeta de Registro:
 - [x] Manejar registro correcto: confirmación solo después de respuesta válida y limpieza del formulario.
 - [x] Mostrar mensajes de error: validación local, correo duplicado y fallos de API/conexión.
 - [x] Probar la funcionalidad de registro: el usuario confirmó en Expo Go creación de cuenta y aviso de correo duplicado.
-- [ ] Revisar el código mediante el PR y la revisión real de Zenaida.
+- [x] Revisar el código mediante el PR y la revisión real de ZenaidaGR; aprobado e integrado.
 
 Las reglas puras permanecen en el dominio y el estado del formulario en el ViewModel. Correo utiliza la misma versión de `validator` que el backend; nombre, teléfono y contraseña siguen las reglas del DTO, sin recortar contraseñas. El caso de uso revalida los datos normalizados antes de enviarlos y excluye la confirmación de contraseña.
 
@@ -125,7 +125,7 @@ Comprobaciones de esta etapa:
 - Interfaz web a 393 px contra esa API: éxito, carga con campos bloqueados, doble toque con una sola petición, 409 en correo, limpieza del error al corregirlo y salida durante la espera. Los estados y la conexión interrumpida tienen evidencia en `docs/evidencias/registro-usuario/`.
 - Expo Go: el usuario confirmó que crea la cuenta y muestra el aviso de correo duplicado. La evidencia es su confirmación en el chat; las capturas del repositorio corresponden a web.
 
-Los primeros cinco criterios ya fueron marcados por el usuario en Trello. Con la conexión implementada y la prueba confirmada en Expo Go, los primeros nueve criterios están satisfechos (9/10). El estado de Trello lo actualiza el usuario. Mantener la tarjeta «En revisión / pruebas» mientras Zenaida revisa el PR hacia `develop`; la revisión automática no sustituye esa revisión humana.
+Los diez criterios están satisfechos (10/10). La tarjeta de Registro puede quedar «Terminado»; el estado de Trello lo actualiza el usuario. La evidencia de aprobación humana es la revisión de ZenaidaGR en el PR #3.
 
 Comprobaciones de referencia, desde la copia de David y usando Git Bash o CMD:
 
@@ -135,6 +135,30 @@ Comprobaciones de referencia, desde la copia de David y usando Git Bash o CMD:
 4. Probar una interrupción de conexión y verificar el mensaje sin cierre de la app ni reenvío automático. La creación puede haber llegado al servidor aunque se pierda la respuesta.
 5. Verificar teclado, desplazamiento y lectura accesible en Android. La comprobación con lector de pantalla y la interrupción de conexión en Android siguen sin evidencia específica.
 
-El siguiente paso acordado es abrir el único PR de Registro hacia `develop` y solicitar a ZenaidaGR su revisión desde su propia cuenta. La aprobación humana y la integración permanecen pendientes.
+La revisión humana y la integración de Registro quedaron completadas mediante el PR #3.
 
 Si Expo usa un túnel o el host LAN no se detecta, configurar únicamente `EXPO_PUBLIC_API_URL=http://<IPv4-de-la-laptop>:3200/api` en `Mobile/.env` y reiniciar Metro. Conservar las credenciales en `Server/.env`.
+
+## Inicio de sesión: etapa de diseño
+
+El usuario autorizó actualizar ambas copias con `develop` y empezar solo el diseño de Inicio de sesión. La copia de David y la de Zenaida se actualizaron a `7d308e3`. En Zenaida se preservó el archivo local generado `Mobile/.gitignore` en un stash identificado como «respaldo local antes de actualizar develop»; la versión integrada ya contiene ese archivo. Su copia queda en `develop`, con dependencias móviles actualizadas. La copia de David continúa en `feature/inicio-sesion`, creada desde ese mismo commit.
+
+Se adapta la presentación de `Proyecto-INHALEX/Mobile/inhalex-app/src/features/auth/presentation/screens/LoginScreen.tsx`, revisión `526a21e11da1cd1e3f6edea350c7731f90e205bf`: título «Bienvenido», correo, contraseña con mostrar/ocultar, botón «Entrar» y enlace «Crear cuenta». Se reutilizan `AuthScaffold` y `FormField` ya integrados; no se importa el ViewModel original ni su contexto de sesión.
+
+La ruta es `/sign-in`. Cuenta ofrece «Iniciar sesión» y «Crear cuenta»; Registro enlaza a Inicio de sesión. Los enlaces entre los formularios usan `replace` para evitar acumular pantallas. El nuevo ViewModel solo administra los textos de los dos campos. «Entrar» está deshabilitado con un aviso de disponibilidad futura. En esta etapa no hay reglas de validación, llamadas de login, Repository de login, sesión ni persistencia.
+
+Estado de la tarjeta de Inicio de sesión (el usuario actualiza Trello):
+
+- [ ] Diseñar pantalla de inicio de sesión: implementada; pendiente de aprobación visual en Expo Go.
+- [ ] Agregar campos de usuario/correo y contraseña: implementados como correo y contraseña; pendiente de revisión visual del usuario.
+- [ ] Validar campos obligatorios.
+- [ ] Conectar con la API de INHALEX.
+- [ ] Manejar inicio de sesión correcto.
+- [ ] Mostrar mensaje cuando las credenciales sean incorrectas.
+- [ ] Guardar la sesión de forma segura, coordinado con la actividad propia de Persistencia.
+- [ ] Probar la funcionalidad completa.
+- [ ] Revisar el código mediante el PR y la revisión del compañero.
+
+Verificación de diseño: TypeScript, lint, las 50 pruebas existentes, Expo Doctor 21/21 y exportaciones web/Android aprobados. Se comprobó en web a 393 y 320 px: edición de campos, máscara y alternancia de contraseña, botón deshabilitado, navegación Cuenta → Inicio de sesión ↔ Registro → Cuenta y desplazamiento sin desbordamiento horizontal. La comprobación visual es web; teclado y lector de pantalla Android requieren revisión en dispositivo. Las capturas están en `docs/evidencias/inicio-sesion/`.
+
+El siguiente paso es que el usuario abra Cuenta → Iniciar sesión en Expo Go y apruebe el diseño. Después se incorporarán las validaciones en esta misma rama, y más adelante la conexión a la API. El único PR de Inicio de sesión se abrirá al completar la actividad.
