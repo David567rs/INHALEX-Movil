@@ -1,6 +1,6 @@
 # INHALEX: base móvil
 
-Proyecto Expo SDK 57 con React Native, TypeScript y Expo Router. Esta base recupera la identidad visual, Inicio, Experiencia y las cinco pestañas. Registro e Inicio de sesión están integrados y Cuenta muestra el usuario de la sesión actual. Persistencia de sesión está implementada en `feature/persistencia-sesion`, con reapertura y cierre aceptados en Expo Go; faltan el reintento ante fallo de conexión, el PR y la revisión de ZenaidaGR. Catálogo, Favoritos y Bolsa muestran su estado de preparación: sus actividades se integrarán en los PR del [plan](../docs/PLAN-DE-TRABAJO.md).
+Proyecto Expo SDK 57 con React Native, TypeScript y Expo Router. Esta base recupera la identidad visual, Inicio, Experiencia y las cinco pestañas. Registro e Inicio de sesión están integrados y Cuenta muestra el usuario de la sesión actual. Persistencia de sesión está lista para PR en `feature/persistencia-sesion`, con reapertura, cierre y reintento aceptados en Expo Go; queda la revisión real de ZenaidaGR. Catálogo, Favoritos y Bolsa muestran su estado de preparación: sus actividades se integrarán en los PR del [plan](../docs/PLAN-DE-TRABAJO.md).
 
 ## Abrir el proyecto
 
@@ -62,9 +62,9 @@ El 16 de octubre de 2026 el usuario confirmó en Expo Go que apareció el aviso 
 
 Inicio de sesión completó 9/9 criterios y se integró mediante el [PR #4](https://github.com/David567rs/INHALEX-Movil/pull/4): aprobación de ZenaidaGR sobre `1b95841`, Backend CI y Mobile CI correctos y merge de David567rs a `develop` en `1031e00`, el 16 de octubre de 2026. La [evidencia de integración](../docs/evidencias/inicio-sesion/integracion-pr4.json) conserva los identificadores completos. La exportación Android comprueba el bundle JavaScript y los recursos: el AAB firmado se generará en la etapa de release.
 
-## Persistencia de sesión: aceptación parcial
+## Persistencia de sesión: lista para PR
 
-La rama de David es `feature/persistencia-sesion`, creada desde `1031e00`; la copia de Zenaida permanece en `develop` actualizado. Hay 7/9 criterios aceptados: guardado seguro, SecureStore, restauración al abrir, validación del token, navegación según estado, eliminación al salir y cierre/reapertura. El usuario confirmó que recupera la sesión al reabrir y que después de salir ya no vuelve a Cuenta. La [respuesta exacta](../docs/evidencias/persistencia-sesion/expo-go-aceptacion.json) procede del chat. La validación reúne la implementación, las pruebas automatizadas de 401 y la restauración válida aceptada; no se atribuye al usuario una prueba de token caducado en Android. Solo quedan abiertos errores/reintento ante fallo de conexión y revisión real de ZenaidaGR. Aún no hay PR y el usuario actualiza Trello.
+La rama de David es `feature/persistencia-sesion`, creada desde `1031e00`; la copia de Zenaida permanece en `develop` actualizado. Hay 8/9 criterios aceptados: guardado seguro, SecureStore, restauración al abrir, validación del token, navegación según estado, eliminación al salir, errores/reintento y cierre/reapertura. El usuario confirmó recuperación al reabrir, estado anónimo después de salir y recuperación mediante Reintentar sin introducir correo ni contraseña tras restablecer la API local. Las [respuestas exactas](../docs/evidencias/persistencia-sesion/expo-go-aceptacion.json) proceden del chat; el agente no observó directamente el dispositivo. La validación reúne la implementación, las pruebas automatizadas de 401 y la restauración válida aceptada; no se atribuye al usuario una prueba de token caducado en Android. Solo queda la revisión real de ZenaidaGR mediante el PR único hacia `develop`, cuya apertura autorizó el usuario. El usuario actualiza Trello.
 
 `SessionTokenStore` ofrece `get`, `set` y `clear`. El provider inicia una restauración idempotente: lee el token y ejecuta `VerifySessionAction → SessionRepository → ApiSessionRepository → GET /auth/me`. Un cliente dedicado utiliza el token candidato, sin publicarlo como sesión actual. El mapeador transforma el perfil plano de la API en los cinco datos públicos del usuario. El snapshot que recibe la presentación contiene estado, usuario público y mensaje: `checking`, `anonymous`, `authenticated` o `recovery-error`; nunca incluye el JWT.
 
@@ -72,15 +72,15 @@ Cuenta e Inicio de sesión muestran carga, error y reintento según el estado. U
 
 Las comprobaciones finales de esta rama pasaron: 146 pruebas móviles, TypeScript global, lint sin advertencias, Expo Doctor 21/21 y exportaciones Android (1378 módulos) y web (926 módulos). También pasaron la API aislada y siete fases del coordinador en Node con HTTP real y almacenamiento simulado. Los resultados se documentan en [verificacion.json](../docs/evidencias/persistencia-sesion/verificacion.json), [api-verificacion-aislada.json](../docs/evidencias/persistencia-sesion/api-verificacion-aislada.json) y [coordinator-real-http.json](../docs/evidencias/persistencia-sesion/coordinator-real-http.json).
 
-La QA web utilizó componentes de la aplicación y la API real, con lectura, escritura y borrado simulados mediante una ruta temporal de prueba. Sus capturas se identifican como web con almacenamiento simulado: no demuestran persistencia real del navegador ni SecureStore en Android. Esa ruta se eliminó antes de las exportaciones finales. La confirmación posterior de Expo Go acepta restauración y cierre/reapertura, pero no incluye reintento sin conexión, token caducado en dispositivo, TalkBack ni inspección directa del almacenamiento. El [plan](../docs/PLAN-DE-TRABAJO.md) mantiene los nueve criterios y la evidencia pendiente.
+La QA web utilizó componentes de la aplicación y la API real, con lectura, escritura y borrado simulados mediante una ruta temporal de prueba. Sus capturas se identifican como web con almacenamiento simulado: no demuestran persistencia real del navegador ni SecureStore en Android. Esa ruta se eliminó antes de las exportaciones finales. La confirmación posterior de Expo Go acepta restauración, cierre/reapertura y aviso/reintento tras un fallo de la API local; no incluye token caducado en dispositivo, TalkBack ni inspección directa del almacenamiento. El [plan](../docs/PLAN-DE-TRABAJO.md) mantiene los nueve criterios y la revisión pendiente.
 
 ## Versión
 
 La base comienza en `0.1.0`, con `versionCode: 1`. El [esquema de versiones](../docs/VERSIONAMIENTO.md) conserva `0.y.z` durante desarrollo y `1.0.0` para la primera entrega estable. Firma y vinculación EAS se configurarán antes de esa entrega.
 
-## Verificación pendiente en Expo Go
+## Comprobación en Expo Go aceptada
 
-La restauración al reabrir y el estado anónimo después de salir y reabrir ya fueron aceptados. El siguiente caso es el reintento cuando falle la conexión con la API; la forma de interrumpirla se adaptará a si la API actual es local o remota, conservando la configuración existente.
+El usuario aceptó restauración al reabrir, estado anónimo tras salir y reabrir, y el siguiente recorrido con la API local de su laptop: fallo de conexión → aviso → servidor restablecido → Reintentar → Cuenta recuperada sin correo ni contraseña. La confirmación es textual y no una observación directa del agente. Estos pasos permiten repetir el recorrido manteniendo la configuración existente.
 
 Trabaja desde la copia de David. En Git Bash:
 
@@ -102,4 +102,4 @@ Conserva la configuración existente de la API y mantén Metro accesible para el
 2. Fuerza el cierre de Expo Go. Interrumpe solo la conexión con la API, manteniendo Metro accesible, y reabre: debe mostrar un aviso con reintento y permitir abrir Login, sin dar por validada la sesión.
 3. Restablece la conexión con la API y reintenta: debe recuperar la cuenta sin pedir la contraseña.
 
-La aceptación de este caso de error/reintento sigue pendiente. Después se preparará el PR único de Persistencia hacia `develop`, con revisión real de ZenaidaGR. La prueba de lector de pantalla o TalkBack no está marcada como realizada.
+El usuario autorizó abrir el PR único de Persistencia hacia `develop`; la revisión real de ZenaidaGR es el único criterio pendiente. La prueba de lector de pantalla o TalkBack no está marcada como realizada.

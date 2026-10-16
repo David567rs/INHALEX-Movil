@@ -3,7 +3,7 @@
   "date": "2026-10-16",
   "branch": "feature/persistencia-sesion",
   "base": "1031e001b8d79dde662497ceed5f803549e48d20",
-  "status": "native-reopen-accepted-awaiting-connection-retry-and-review",
+  "status": "ready-for-pr-awaiting-human-review",
   "architecture": "MVVM, Repository, domain session coordinator and bootstrap dependency injection",
   "automated": {
     "mobileTests": { "passed": 146, "failed": 0 },
@@ -72,15 +72,16 @@
     "limitations": "Web screenshots and simulated storage do not demonstrate native SecureStore or a physical Android reopen. TalkBack and the native keyboard were not tested."
   },
   "nativeAcceptance": {
-    "status": "partial-user-acceptance",
+    "status": "functional-cases-accepted-by-user",
     "evidence": "expo-go-aceptacion.json",
     "acceptedCases": [
       "Login, fully close Expo Go, reopen project, recover Account without password",
-      "Logout, fully close and reopen, remain anonymous"
+      "Logout, fully close and reopen, remain anonymous",
+      "Local API unavailable, recovery notice shown, local server restored, Retry recovers Account without email or password"
     ],
-    "pendingCases": [
-      "Interrupt only API connectivity while Metro remains reachable, reopen, see recovery error, reconnect and retry"
-    ],
+    "pendingCases": [],
+    "evidenceType": "human_chat_confirmation",
+    "agentObservedPhysicalDevice": false,
     "rawStorageInspectionPerformed": false,
     "expiredTokenOnPhysicalDeviceTested": false,
     "talkBackTested": false,
@@ -88,15 +89,16 @@
   },
   "trello": {
     "updatedBy": "user",
-    "acceptedCriteria": 7,
+    "acceptedCriteria": 8,
     "totalCriteria": 9,
     "accepted": [
       "Guardar token seguro", "Utilizar Expo SecureStore", "Restaurar al abrir",
-      "Validar token", "Redirigir según estado", "Eliminar al cerrar sesión", "Probar cerrar/abrir"
+      "Validar token", "Redirigir según estado", "Eliminar al cerrar sesión",
+      "Errores de restauración y reintento", "Probar cerrar/abrir"
     ],
-    "remaining": "Native connection-error and retry acceptance; code review through the activity PR and ZenaidaGR"
+    "remaining": "Real ZenaidaGR review through the activity PR"
   },
-  "pullRequest": { "status": "not-opened", "target": "develop", "humanReview": "pending" },
+  "pullRequest": { "status": "ready-for-pr", "target": "develop", "humanReview": "pending" },
   "scope": {
     "backendSourceChanged": false,
     "dependenciesAdded": false,
