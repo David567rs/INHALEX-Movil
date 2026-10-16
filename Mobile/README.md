@@ -28,15 +28,15 @@ Escanea el QR con Expo Go en Android. Para LAN, el teléfono y la laptop deben e
 
 El `.env` del servidor permanece en `Server/`. Para configurar la URL pública de la móvil, copia `Mobile/.env.example` a `Mobile/.env` y adapta `EXPO_PUBLIC_API_URL`. El valor inicial es `http://localhost:3200/api`; en desarrollo Android se sustituye el host de loopback por el host LAN privado de Metro o por `10.0.2.2` para el emulador. Con un teléfono físico y un túnel, usa explícitamente la dirección LAN del servidor o una URL HTTPS accesible.
 
-La URL conserva el puerto de la API y su prefijo `/api`. La distribución exige una URL HTTPS explícita. La app base se abre sin arrancar el servidor; las funciones que consumen datos se incorporarán y probarán después.
+La URL conserva el puerto de la API y su prefijo `/api`. La distribución exige una URL HTTPS explícita. La navegación se abre sin arrancar el servidor; para crear una cuenta el backend debe estar accesible.
 
 Los valores `EXPO_PUBLIC_*` son visibles en la aplicación compilada. La móvil solo necesita la dirección pública de la API; las credenciales MongoDB, JWT, respaldos y llaves de servicio pertenecen al backend.
 
 ## Arquitectura
 
-Las rutas están en `src/app`. `src/shared` contiene componentes reutilizados y movimiento accesible; `core` contiene tema, configuración y transporte HTTP. `bootstrap/createApplicationServices.ts` compone los servicios bajo demanda para que los siguientes PR construyan repositorios a través de contratos del dominio. La base no inicializa sesión ni repositorios de actividades futuras.
+Las rutas están en `src/app`. `src/shared` contiene componentes reutilizados y movimiento accesible; `core` contiene tema, configuración y transporte HTTP. `bootstrap/createApplicationServices.ts` compone los servicios bajo demanda e inyecta `RegisterUser` en la pantalla de Registro. La app no inicializa sesión ni repositorios de actividades futuras.
 
-Cada actividad agregará sus entidades y contratos en `domain`, adaptadores y repositorios en `data`, y Views/ViewModels en `presentation`. El dominio será independiente de Expo y HTTP. Las pantallas de esta base son contenido estático y navegación.
+Registro contiene entidades, contrato, caso de uso y errores en `domain`, Repository y mapeador en `data`, y View/ViewModel en `presentation`. El dominio es independiente de Expo y HTTP. El POST público `/auth/register` envía cinco campos y descarta el token de la respuesta; Inicio de sesión y Persistencia se implementarán en sus actividades. El [plan de trabajo](../docs/PLAN-DE-TRABAJO.md) registra la evidencia y los pasos de aceptación en Expo Go.
 
 ## Comprobaciones
 
@@ -50,7 +50,7 @@ npm run doctor:mobile
 npm run export:mobile
 ```
 
-Las pruebas usan Node 24, TypeScript ya instalado y transporte simulado. Comprueban URL, destino, errores, timeout, cancelación y JSON; no acceden a MongoDB ni al servidor real. La exportación Android comprueba el bundle JavaScript y los recursos: el AAB firmado se generará en la etapa de release.
+Las pruebas usan Node 24, TypeScript ya instalado y transporte simulado. Comprueban URL, destino, errores, timeout, cancelación, JSON, reglas de Registro y Repository; no acceden a MongoDB ni al servidor real. La comprobación HTTP con Nest/MongoDB aislados está documentada por separado en el plan. La exportación Android comprueba el bundle JavaScript y los recursos: el AAB firmado se generará en la etapa de release.
 
 ## Versión
 
