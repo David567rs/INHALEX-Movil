@@ -15,12 +15,14 @@ export interface FormFieldProps extends TextInputProps {
   label: string;
   icon: keyof typeof Ionicons.glyphMap;
   isPassword?: boolean;
+  error?: string;
 }
 
 export const FormField = forwardRef<TextInput, FormFieldProps>(function FormField({
   label,
   icon,
   isPassword = false,
+  error,
   secureTextEntry,
   autoCapitalize,
   autoCorrect,
@@ -38,11 +40,12 @@ export const FormField = forwardRef<TextInput, FormFieldProps>(function FormFiel
 
   return (
     <View style={styles.group}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[styles.label, !!error && styles.errorLabel]}>{label}</Text>
       <View style={[
         styles.inputContainer,
         isPassword && styles.passwordContainer,
         isFocused && styles.inputContainerFocused,
+        !!error && styles.inputContainerError,
       ]}>
         <Ionicons
           accessible={false}
@@ -54,6 +57,7 @@ export const FormField = forwardRef<TextInput, FormFieldProps>(function FormFiel
           {...inputProps}
           ref={ref}
           accessibilityLabel={inputProps.accessibilityLabel ?? label}
+          accessibilityHint={error ?? inputProps.accessibilityHint}
           autoCapitalize={isPassword ? 'none' : autoCapitalize}
           autoCorrect={isPassword ? false : autoCorrect}
           spellCheck={isPassword ? false : spellCheck}
@@ -90,6 +94,7 @@ export const FormField = forwardRef<TextInput, FormFieldProps>(function FormFiel
           </Pressable>
         ) : null}
       </View>
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
     </View>
   );
 });
@@ -109,6 +114,9 @@ const styles = StyleSheet.create({
   },
   passwordContainer: { paddingRight: 6 },
   inputContainerFocused: { backgroundColor: '#F9FBF7', borderColor: colors.primary },
+  inputContainerError: { backgroundColor: colors.dangerSoft, borderColor: colors.danger },
+  errorLabel: { color: colors.danger },
+  errorText: { color: colors.danger, fontSize: 12, lineHeight: 18, marginTop: 6 },
   input: {
     color: colors.text,
     flex: 1,

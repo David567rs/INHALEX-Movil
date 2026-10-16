@@ -1,17 +1,38 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useRef } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Keyboard, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { colors } from '@/core/theme/colors';
 import { AuthScaffold } from '../components/AuthScaffold';
 import { FormField } from '../components/FormField';
+import { PasswordRequirements } from '../components/PasswordRequirements';
+import { useRegisterViewModel } from '../viewModels/useRegisterViewModel';
+import type { RegistrationField } from '../../domain/validation/registrationValidation';
 
-/** Registration presentation only; validation and submission are later steps. */
+/** Registration form and local validation; API submission is a later step. */
 export function RegisterScreen() {
+  const viewModel = useRegisterViewModel();
+  const firstNameInput = useRef<TextInput>(null);
   const lastNameInput = useRef<TextInput>(null);
   const emailInput = useRef<TextInput>(null);
   const phoneInput = useRef<TextInput>(null);
   const passwordInput = useRef<TextInput>(null);
   const confirmationInput = useRef<TextInput>(null);
+  const [focusRequest, setFocusRequest] = useState<{ field: RegistrationField } | null>(null);
+
+  useEffect(() => {
+    if (!focusRequest) return;
+    const inputs = { firstName: firstNameInput, lastName: lastNameInput, email: emailInput, phone: phoneInput, password: passwordInput, confirmPassword: confirmationInput };
+    inputs[focusRequest.field].current?.focus();
+  }, [focusRequest]);
+
+  function validateForm() {
+    const firstInvalidField = viewModel.validateForm();
+    if (firstInvalidField) setFocusRequest({ field: firstInvalidField });
+    else {
+      setFocusRequest(null);
+      Keyboard.dismiss();
+    }
+  }
 
   return (
     <AuthScaffold
@@ -27,56 +48,78 @@ export function RegisterScreen() {
       }
     >
       <FormField
-        label="Nombre" icon="person-outline" placeholder="Tu nombre"
+        ref={firstNameInput} label="Nombre" icon="person-outline" placeholder="Tu nombre"
+        value={viewModel.form.firstName} error={viewModel.errors.firstName}
+        onChangeText={(value) => viewModel.updateField('firstName', value)} onBlur={() => viewModel.touchField('firstName')}
         autoCapitalize="words" autoComplete="given-name" textContentType="givenName"
         returnKeyType="next" submitBehavior="submit" onSubmitEditing={() => lastNameInput.current?.focus()}
       />
       <FormField
         ref={lastNameInput} label="Apellido" icon="person-outline" placeholder="Tu apellido"
+        value={viewModel.form.lastName} error={viewModel.errors.lastName}
+        onChangeText={(value) => viewModel.updateField('lastName', value)} onBlur={() => viewModel.touchField('lastName')}
         autoCapitalize="words" autoComplete="family-name" textContentType="familyName"
         returnKeyType="next" submitBehavior="submit" onSubmitEditing={() => emailInput.current?.focus()}
       />
       <FormField
         ref={emailInput} label="Correo electrónico" icon="mail-outline" placeholder="tu@email.com"
+        value={viewModel.form.email} error={viewModel.errors.email}
+        onChangeText={(value) => viewModel.updateField('email', value)} onBlur={() => viewModel.touchField('email')}
         autoCapitalize="none" autoCorrect={false} autoComplete="email" textContentType="emailAddress" keyboardType="email-address"
         returnKeyType="next" submitBehavior="submit" onSubmitEditing={() => phoneInput.current?.focus()}
       />
       <FormField
         ref={phoneInput} label="Número telefónico" icon="call-outline" placeholder="5512345678"
+        value={viewModel.form.phone} error={viewModel.errors.phone}
+        onChangeText={(value) => viewModel.updateField('phone', value)} onBlur={() => viewModel.touchField('phone')}
         autoComplete="tel" textContentType="telephoneNumber" keyboardType="phone-pad"
         returnKeyType="next" submitBehavior="submit" onSubmitEditing={() => passwordInput.current?.focus()}
       />
       <FormField
         ref={passwordInput} label="Contraseña" icon="lock-closed-outline" placeholder="Tu contraseña" isPassword
+        value={viewModel.form.password} error={viewModel.errors.password}
+        onChangeText={(value) => viewModel.updateField('password', value)} onBlur={() => viewModel.touchField('password')}
         autoComplete="new-password" textContentType="newPassword"
         returnKeyType="next" submitBehavior="submit" onSubmitEditing={() => confirmationInput.current?.focus()}
       />
-      <View style={styles.passwordHint}>
-        <Ionicons accessible={false} name="information-circle-outline" color={colors.textMuted} size={16} />
-        <Text style={styles.passwordHintText}>Usa al menos 8 caracteres, una mayúscula, un número y un símbolo.</Text>
-      </View>
+      <PasswordRequirements checks={viewModel.checks} hasValue={viewModel.form.password.length > 0} />
       <FormField
         ref={confirmationInput} label="Confirmar contraseña" icon="shield-checkmark-outline" placeholder="Repítela" isPassword
+        value={viewModel.form.confirmPassword} error={viewModel.errors.confirmPassword}
+        onChangeText={(value) => viewModel.updateField('confirmPassword', value)} onBlur={() => viewModel.touchField('confirmPassword')}
         autoComplete="new-password" textContentType="newPassword" returnKeyType="done"
       />
+      {viewModel.validationResult ? (
+        <View
+          accessibilityLiveRegion="polite"
+          style={[styles.notice, viewModel.validationResult === 'valid' ? styles.validNotice : styles.invalidNotice]}
+        >
+          <Ionicons accessible={false} name={viewModel.validationResult === 'valid' ? 'checkmark-circle-outline' : 'alert-circle-outline'} size={19} color={viewModel.validationResult === 'valid' ? colors.success : colors.danger} />
+          <Text style={[styles.noticeLabel, { color: viewModel.validationResult === 'valid' ? colors.success : colors.danger }]}>
+            {viewModel.validationResult === 'valid' ? 'Los datos cumplen las reglas del formulario.' : 'Revisa los campos señalados.'}
+          </Text>
+        </View>
+      ) : null}
       <Pressable
-        accessibilityLabel="Crear cuenta"
+        accessibilityLabel="Validar datos"
         accessibilityRole="button"
-        accessibilityState={{ disabled: true }}
-        disabled
-        style={styles.createButton}
+        onPress={validateForm}
+        style={({ pressed }) => [styles.createButton, pressed && styles.pressed]}
       >
-        <Text style={styles.createLabel}>Crear cuenta</Text>
-        <Ionicons accessible={false} name="arrow-forward" color={colors.white} size={19} />
+        <Text style={styles.createLabel}>Validar datos</Text>
+        <Ionicons accessible={false} name="checkmark" color={colors.white} size={19} />
       </Pressable>
     </AuthScaffold>
   );
 }
 
 const styles = StyleSheet.create({
-  passwordHint: { alignItems: 'flex-start', flexDirection: 'row', gap: 7, marginBottom: 20, marginTop: -6 },
-  passwordHintText: { color: colors.textMuted, flex: 1, fontSize: 12, lineHeight: 18 },
-  createButton: { alignItems: 'center', backgroundColor: colors.primaryDark, borderRadius: 16, flexDirection: 'row', gap: 9, justifyContent: 'center', minHeight: 56, opacity: 0.7, paddingHorizontal: 16, paddingVertical: 14 },
+  notice: { alignItems: 'flex-start', borderRadius: 12, flexDirection: 'row', gap: 8, marginBottom: 16, padding: 12 },
+  validNotice: { backgroundColor: colors.surfaceSoft },
+  invalidNotice: { backgroundColor: colors.dangerSoft },
+  noticeLabel: { flex: 1, fontSize: 13, lineHeight: 19 },
+  createButton: { alignItems: 'center', backgroundColor: colors.primaryDark, borderRadius: 16, flexDirection: 'row', gap: 9, justifyContent: 'center', minHeight: 56, paddingHorizontal: 16, paddingVertical: 14 },
+  pressed: { opacity: 0.8 },
   createLabel: { color: colors.white, fontSize: 16, fontWeight: '700' },
   footer: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 5, justifyContent: 'center' },
   footerText: { color: colors.textMuted, fontSize: 13 },

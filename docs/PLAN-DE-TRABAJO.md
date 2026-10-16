@@ -98,4 +98,21 @@ La vinculación de EAS, credenciales de firma y configuración de Google Play se
 
 ## Siguiente bloque de trabajo
 
-El repositorio y el backend ya están integrados y verificados. El siguiente bloque incorpora la base móvil mediante feature/mobile-bootstrap y un PR hacia develop. La primera actividad funcional será Registro de usuario.
+El backend y la base móvil se integraron mediante los PR #1 y #2. Registro de usuario continúa en `feature/registro-usuario`, con un solo PR previsto para la actividad completa. El usuario aprobó el diseño en Expo Go y autorizó avanzar con las validaciones locales el 16 de octubre de 2026.
+
+Estado de los criterios de la tarjeta de Registro:
+
+- [x] Diseñar pantalla de registro: aprobado en Expo Go.
+- [x] Agregar campos requeridos: nombre, apellido, correo, teléfono, contraseña y confirmación.
+- [x] Validar campos obligatorios.
+- [x] Validar formato de correo.
+- [x] Validar contraseña y su confirmación exacta.
+- [ ] Conectar con la API de INHALEX.
+- [ ] Manejar registro correcto.
+- [ ] Mostrar mensajes de error: la validación local ya los muestra; faltan los errores de la API.
+- [ ] Probar la funcionalidad completa de registro.
+- [ ] Revisar el código mediante el PR y la revisión real de Zenaida.
+
+Esta etapa separa las reglas puras en el dominio y el estado del formulario en el ViewModel. El botón «Validar datos» comprueba el formulario sin crear cuentas. Correo utiliza la misma versión de `validator` que el backend; nombre, teléfono y contraseña siguen las reglas del DTO, sin recortar contraseñas. Las comprobaciones locales incluyen 33 pruebas (13 nuevas de Registro), TypeScript, lint y Expo Doctor. La comprobación web cubre campos vacíos, formatos inválidos, corrección de errores, requisitos de contraseña, confirmación, resultado local válido y distribución a 393/320 px. La prueba del teclado y del lector de pantalla en Android sigue pendiente de verificación manual.
+
+La tarjeta permanece «En progreso». El siguiente paso es comprobar estas validaciones en Expo Go y, cuando el usuario indique avanzar, incorporar el Repository y la conexión de Registro con la API.
