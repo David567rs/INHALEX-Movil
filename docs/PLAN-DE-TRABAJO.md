@@ -110,7 +110,7 @@ Estado de los criterios de la tarjeta de Registro:
 - [x] Conectar con la API de INHALEX: POST `/api/auth/register`, probado con componentes Nest y MongoDB reales en entorno aislado.
 - [x] Manejar registro correcto: confirmación solo después de respuesta válida y limpieza del formulario.
 - [x] Mostrar mensajes de error: validación local, correo duplicado y fallos de API/conexión.
-- [ ] Probar la funcionalidad completa de registro.
+- [x] Probar la funcionalidad de registro: el usuario confirmó en Expo Go creación de cuenta y aviso de correo duplicado.
 - [ ] Revisar el código mediante el PR y la revisión real de Zenaida.
 
 Las reglas puras permanecen en el dominio y el estado del formulario en el ViewModel. Correo utiliza la misma versión de `validator` que el backend; nombre, teléfono y contraseña siguen las reglas del DTO, sin recortar contraseñas. El caso de uso revalida los datos normalizados antes de enviarlos y excluye la confirmación de contraseña.
@@ -123,15 +123,18 @@ Comprobaciones de esta etapa:
 - TypeScript, lint y exportaciones web y Android aprobados. Expo Doctor ya pasó 21/21 en la etapa de validaciones; esta etapa no añade dependencias.
 - Nest con `AuthController`, `AuthService`, `UsersService` y `UserSchema` reales, MongoDB temporal separado de la instancia del usuario: 201, 409, 400, persistencia única y contraseña verificada con bcrypt (coste 12). No se cargó `AppModule` ni el `.env` del usuario.
 - Interfaz web a 393 px contra esa API: éxito, carga con campos bloqueados, doble toque con una sola petición, 409 en correo, limpieza del error al corregirlo y salida durante la espera. Los estados y la conexión interrumpida tienen evidencia en `docs/evidencias/registro-usuario/`.
+- Expo Go: el usuario confirmó que crea la cuenta y muestra el aviso de correo duplicado. La evidencia es su confirmación en el chat; las capturas del repositorio corresponden a web.
 
-Los primeros cinco criterios ya fueron marcados por el usuario en Trello. Se pueden marcar los tres siguientes (8/10). Mantener la tarjeta «En progreso» hasta completar la prueba de conexión desde Expo Go y el PR con revisión de Zenaida. La revisión automática no sustituye esa revisión humana.
+Los primeros cinco criterios ya fueron marcados por el usuario en Trello. Con la conexión implementada y la prueba confirmada en Expo Go, los primeros nueve criterios están satisfechos (9/10). El estado de Trello lo actualiza el usuario. Mantener la tarjeta «En revisión / pruebas» mientras Zenaida revisa el PR hacia `develop`; la revisión automática no sustituye esa revisión humana.
 
-Siguiente comprobación manual, desde la copia de David y usando Git Bash o CMD:
+Comprobaciones de referencia, desde la copia de David y usando Git Bash o CMD:
 
 1. Arrancar el backend habitual con `npm run dev:server` y la app con `npm run dev:mobile` en otra terminal, desde la raíz del repositorio.
 2. Con teléfono y laptop en la misma red, abrir Cuenta → Crear cuenta. Usar un correo de prueba nuevo y confirmar que aparece «Tu cuenta está lista».
 3. Repetir con el mismo correo: debe señalar que ya está registrado y permitir corregirlo sin perder el resto del formulario.
 4. Probar una interrupción de conexión y verificar el mensaje sin cierre de la app ni reenvío automático. La creación puede haber llegado al servidor aunque se pierda la respuesta.
-5. Verificar teclado, desplazamiento y lectura accesible en Android; después preparar el único PR de Registro hacia `develop` para revisión real de Zenaida.
+5. Verificar teclado, desplazamiento y lectura accesible en Android. La comprobación con lector de pantalla y la interrupción de conexión en Android siguen sin evidencia específica.
+
+El siguiente paso acordado es abrir el único PR de Registro hacia `develop` y solicitar a ZenaidaGR su revisión desde su propia cuenta. La aprobación humana y la integración permanecen pendientes.
 
 Si Expo usa un túnel o el host LAN no se detecta, configurar únicamente `EXPO_PUBLIC_API_URL=http://<IPv4-de-la-laptop>:3200/api` en `Mobile/.env` y reiniciar Metro. Conservar las credenciales en `Server/.env`.

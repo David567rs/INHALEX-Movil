@@ -28,5 +28,6 @@
     "tokenStoredByRegistration": false
   },
   "checks": { "mobileTests": 50, "typecheck": "passed", "lint": "passed", "androidExport": "passed", "webExport": "passed" },
-  "pending": ["Conexion completa desde Expo Go en telefono", "Teclado y lector de pantalla Android", "PR hacia develop con revision real de Zenaida"]
+  "expoGo": { "evidenceSource": "Confirmacion del usuario en el chat", "createdAccount": true, "duplicateEmailNotice": true },
+  "pending": ["Interrupcion de conexion y lector de pantalla Android", "Revision real de Zenaida en PR hacia develop"]
 }
