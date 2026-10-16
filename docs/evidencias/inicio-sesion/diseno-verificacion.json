@@ -15,5 +15,6 @@
     "scrollToFooterAt320": true
   },
   "checks": { "typecheck": "passed", "lint": "passed", "existingMobileTests": 50, "expoDoctor": "21/21", "androidExport": "passed", "webExport": "passed" },
-  "pending": ["Aprobacion visual en Expo Go", "Teclado y lector de pantalla Android", "Validaciones y conexion a API en siguientes pasos de la misma rama"]
+  "userReview": { "designApproved": true, "evidenceSource": "Confirmacion del usuario en el chat" },
+  "pending": ["Teclado y lector de pantalla Android", "Conexion a API en siguientes pasos de la misma rama"]
 }

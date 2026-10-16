@@ -139,19 +139,21 @@ La revisión humana y la integración de Registro quedaron completadas mediante 
 
 Si Expo usa un túnel o el host LAN no se detecta, configurar únicamente `EXPO_PUBLIC_API_URL=http://<IPv4-de-la-laptop>:3200/api` en `Mobile/.env` y reiniciar Metro. Conservar las credenciales en `Server/.env`.
 
-## Inicio de sesión: etapa de diseño
+## Inicio de sesión: validaciones locales
 
 El usuario autorizó actualizar ambas copias con `develop` y empezar solo el diseño de Inicio de sesión. La copia de David y la de Zenaida se actualizaron a `7d308e3`. En Zenaida se preservó el archivo local generado `Mobile/.gitignore` en un stash identificado como «respaldo local antes de actualizar develop»; la versión integrada ya contiene ese archivo. Su copia queda en `develop`, con dependencias móviles actualizadas. La copia de David continúa en `feature/inicio-sesion`, creada desde ese mismo commit.
 
 Se adapta la presentación de `Proyecto-INHALEX/Mobile/inhalex-app/src/features/auth/presentation/screens/LoginScreen.tsx`, revisión `526a21e11da1cd1e3f6edea350c7731f90e205bf`: título «Bienvenido», correo, contraseña con mostrar/ocultar, botón «Entrar» y enlace «Crear cuenta». Se reutilizan `AuthScaffold` y `FormField` ya integrados; no se importa el ViewModel original ni su contexto de sesión.
 
-La ruta es `/sign-in`. Cuenta ofrece «Iniciar sesión» y «Crear cuenta»; Registro enlaza a Inicio de sesión. Los enlaces entre los formularios usan `replace` para evitar acumular pantallas. El nuevo ViewModel solo administra los textos de los dos campos. «Entrar» está deshabilitado con un aviso de disponibilidad futura. En esta etapa no hay reglas de validación, llamadas de login, Repository de login, sesión ni persistencia.
+La ruta es `/sign-in`. Cuenta ofrece «Iniciar sesión» y «Crear cuenta»; Registro enlaza a Inicio de sesión. Los enlaces entre los formularios usan `replace` para evitar acumular pantallas. El usuario aprobó el diseño y autorizó continuar con la validación local.
+
+Las reglas de `domain/validation/loginValidation.ts` comprueban correo y contraseña obligatorios, correo válido con la misma biblioteca del backend y longitud de contraseña de 8 a 128 caracteres según `LoginDto`. La longitud se verifica con `validator/isLength`, incluyendo su tratamiento de Unicode; no se limita el input por unidades UTF-16 ni se recorta la contraseña. Una contraseña totalmente blanca se considera obligatoria como prevalidación adicional al DTO; los espacios de cualquier contraseña no blanca se conservan. No se exigen mayúsculas, números o símbolos para iniciar sesión. `useLoginViewModel` administra valores, campos visitados y resultado de validación. La pantalla muestra errores por campo, solicita foco al primero inválido después de renderizar y permite corregirlos. El botón «Validar datos» solo comprueba el formato; no verifica credenciales ni cambia la sesión.
 
 Estado de la tarjeta de Inicio de sesión (el usuario actualiza Trello):
 
-- [ ] Diseñar pantalla de inicio de sesión: implementada; pendiente de aprobación visual en Expo Go.
-- [ ] Agregar campos de usuario/correo y contraseña: implementados como correo y contraseña; pendiente de revisión visual del usuario.
-- [ ] Validar campos obligatorios.
+- [x] Diseñar pantalla de inicio de sesión: aprobado por el usuario.
+- [x] Agregar campos de usuario/correo y contraseña: correo y contraseña aprobados por el usuario.
+- [x] Validar campos obligatorios: implementado junto con formato de correo y longitud de contraseña; pendiente de comprobación en Expo Go.
 - [ ] Conectar con la API de INHALEX.
 - [ ] Manejar inicio de sesión correcto.
 - [ ] Mostrar mensaje cuando las credenciales sean incorrectas.
@@ -161,4 +163,6 @@ Estado de la tarjeta de Inicio de sesión (el usuario actualiza Trello):
 
 Verificación de diseño: TypeScript, lint, las 50 pruebas existentes, Expo Doctor 21/21 y exportaciones web/Android aprobados. Se comprobó en web a 393 y 320 px: edición de campos, máscara y alternancia de contraseña, botón deshabilitado, navegación Cuenta → Inicio de sesión ↔ Registro → Cuenta y desplazamiento sin desbordamiento horizontal. La comprobación visual es web; teclado y lector de pantalla Android requieren revisión en dispositivo. Las capturas están en `docs/evidencias/inicio-sesion/`.
 
-El siguiente paso es que el usuario abra Cuenta → Iniciar sesión en Expo Go y apruebe el diseño. Después se incorporarán las validaciones en esta misma rama, y más adelante la conexión a la API. El único PR de Inicio de sesión se abrirá al completar la actividad.
+Verificación de validaciones: 61 pruebas aprobadas (11 nuevas de Login), TypeScript, lint, Expo Doctor 21/21 y exportaciones web/Android. La comprobación web cubrió campos vacíos, errores al salir del campo, correo inválido, contraseña corta, corrección progresiva, foco al primer inválido, resultado válido con contraseña sin reglas fuertes y eliminación del resultado anterior al editar. Enter ejecuta la validación y conserva el foco si la contraseña no es válida; el caso web utiliza compatibilidad de `blurOnSubmit` porque React Native Web todavía no aplica `submitBehavior`. En Android se utiliza `submitBehavior` y queda pendiente la prueba del teclado en dispositivo. Se comprobó ausencia de desbordamiento horizontal en los tamaños de teléfono usados, y la navegación a Registro reinicia los valores y errores de Login. La evidencia está en `validacion-verificacion.json` y las capturas de la misma carpeta.
+
+El siguiente paso es comprobar las validaciones en Expo Go: campos vacíos, correo inválido, contraseña corta, corrección y resultado local válido. Después se incorporará la conexión a la API en esta misma rama cuando el usuario indique avanzar. El único PR de Inicio de sesión se abrirá al completar la actividad. La tarjeta permanece «En progreso»; el usuario puede marcar el tercer criterio tras probar las validaciones.
