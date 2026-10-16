@@ -139,9 +139,9 @@ La revisión humana y la integración de Registro quedaron completadas mediante 
 
 Si Expo usa un túnel o el host LAN no se detecta, configurar únicamente `EXPO_PUBLIC_API_URL=http://<IPv4-de-la-laptop>:3200/api` en `Mobile/.env` y reiniciar Metro. Conservar las credenciales en `Server/.env`.
 
-## Inicio de sesión: preparación del PR
+## Inicio de sesión integrado
 
-El usuario autorizó actualizar ambas copias con `develop` y empezar solo el diseño de Inicio de sesión. La copia de David y la de Zenaida se actualizaron a `7d308e3`. En Zenaida se preservó el archivo local generado `Mobile/.gitignore` en un stash identificado como «respaldo local antes de actualizar develop»; la versión integrada ya contiene ese archivo. Su copia queda en `develop`, con dependencias móviles actualizadas. La copia de David continúa en `feature/inicio-sesion`, creada desde ese mismo commit.
+El usuario autorizó actualizar ambas copias con `develop` y empezar solo el diseño de Inicio de sesión. La copia de David y la de Zenaida se actualizaron a `7d308e3`. En Zenaida se preservó el archivo local generado `Mobile/.gitignore` en un stash identificado como «respaldo local antes de actualizar develop»; la versión integrada ya contiene ese archivo. David desarrolló la actividad en `feature/inicio-sesion`, creada desde ese mismo commit. La actividad se integró después mediante el PR #4; el estado actual de las copias se recoge en la preparación de Persistencia.
 
 Se adapta la presentación de `Proyecto-INHALEX/Mobile/inhalex-app/src/features/auth/presentation/screens/LoginScreen.tsx`, revisión `526a21e11da1cd1e3f6edea350c7731f90e205bf`: título «Bienvenido», correo, contraseña con mostrar/ocultar, botón «Entrar» y enlace «Crear cuenta». Se reutilizan `AuthScaffold` y `FormField` ya integrados; no se importa el ViewModel original ni su contexto de sesión.
 
@@ -163,7 +163,7 @@ Estado de la tarjeta de Inicio de sesión (el usuario actualiza Trello):
 - [x] Mostrar mensaje cuando las credenciales sean incorrectas: el usuario confirmó el aviso con contraseña incorrecta en Expo Go.
 - [x] Guardar la sesión de forma segura: adaptador SecureStore con pruebas automatizadas y recorrido nativo de escritura/eliminación esperadas aceptado sin errores reportados. No se inspeccionó el almacenamiento; la restauración al arrancar corresponde a Persistencia.
 - [x] Probar la funcionalidad completa: QA web aprobada y confirmación del usuario en Expo Go de contraseña incorrecta, acceso correcto y cierre de sesión sin errores.
-- [ ] Revisar el código mediante el único PR de la actividad y la revisión real de Zenaida.
+- [x] Revisar el código mediante el PR #4: ZenaidaGR aprobó el HEAD `1b95841b3058c91a90bda4b69ea715e9eef86e1f`; David567rs integró el PR con ambas CI correctas.
 
 Verificación de diseño: TypeScript, lint, las 50 pruebas existentes, Expo Doctor 21/21 y exportaciones web/Android aprobados. Se comprobó en web a 393 y 320 px: edición de campos, máscara y alternancia de contraseña, botón deshabilitado, navegación Cuenta → Inicio de sesión ↔ Registro → Cuenta y desplazamiento sin desbordamiento horizontal. La comprobación visual es web; teclado y lector de pantalla Android requieren revisión en dispositivo. Las capturas están en `docs/evidencias/inicio-sesion/`.
 
@@ -185,4 +185,24 @@ Aceptación humana en Expo Go, 16 de octubre de 2026:
 
 El recorrido nativo implementado espera `SecureStore.setItemAsync` antes de publicar la sesión y `SecureStore.deleteItemAsync` al cerrarla. La aceptación confirma ese flujo sin errores reportados; no acredita inspección directa del token almacenado, lectura o restauración al reiniciar, ni revocación del JWT en el backend. La restauración sigue reservada para Persistencia de sesión. Teclado y lector de pantalla en Android siguen sin evidencia específica y no se atribuyen a esta respuesta.
 
-Los primeros ocho criterios quedan aceptados (8/9). Se prepara ahora un único PR de toda la actividad desde `feature/inicio-sesion` hacia `develop`; la CI remota y la revisión real de Zenaida están pendientes. La tarjeta permanece «En progreso» hasta completar la revisión y el merge. El usuario actualiza su estado en Trello; no se da por integrada la actividad.
+Los nueve criterios están satisfechos (9/9). El [PR #4](https://github.com/David567rs/INHALEX-Movil/pull/4), desde `feature/inicio-sesion` hacia `develop`, quedó cerrado y fusionado por David567rs el 16 de octubre de 2026. ZenaidaGR aprobó el HEAD `1b95841b3058c91a90bda4b69ea715e9eef86e1f` y las comprobaciones `Backend verification` y `Mobile verification` concluyeron con `success`. El merge commit es `1031e001b8d79dde662497ceed5f803549e48d20`, con padres `7d308e351999eb9a1dfb8e36a5f331f050f8ce61` y `1b95841b3058c91a90bda4b69ea715e9eef86e1f`. La evidencia está en [integracion-pr4.json](evidencias/inicio-sesion/integracion-pr4.json). La tarjeta de Login puede quedar «Terminado»; el usuario actualiza Trello.
+
+## Persistencia de sesión: preparación
+
+Ambas copias se actualizaron por fast-forward al merge `1031e00`. Zenaida permanece en `develop`, con el stash `81196109270f00fa7edf03a8a8ec6f8bdc963131` conservado y su `.env` presente e ignorado. David creó `feature/persistencia-sesion` desde ese commit en `C:\Users\David\Documents\INHALEX-Movil`. Esta etapa prepara contratos y comprobaciones; todavía no implementa restauración al arrancar.
+
+Estado de los nueve criterios de la tarjeta de Persistencia:
+
+- [x] Guardar token seguro: se reutiliza el guardado privado aceptado en Login, con escritura esperada antes de publicar la sesión.
+- [x] Utilizar Expo SecureStore: adaptador nativo integrado, con pruebas automatizadas y flujo de Login/cierre aceptado en Expo Go.
+- [ ] Restaurar al abrir: pendiente de lectura inicial y recuperación de la sesión.
+- [ ] Validar token: pendiente de GET `/api/auth/me` con Bearer y mapeo del perfil devuelto.
+- [ ] Redirigir según estado: pendiente de navegación coherente con la restauración y su resultado.
+- [ ] Eliminar al cerrar sesión: ya implementado y aceptado en Login; en esta tarjeta se verificará su interacción con la restauración antes de marcarlo.
+- [ ] Errores de restauración: pendiente de distinguir token rechazado, falta de conexión y errores de almacenamiento.
+- [ ] Probar cerrar/abrir: pendiente de comprobar en Android físico la reapertura, token válido/rechazado, conexión interrumpida y cierre local.
+- [ ] Revisar código: pendiente del PR propio de Persistencia y revisión real de Zenaida.
+
+La preparación conserva 2/9 criterios satisfechos por reutilización. El contrato de almacenamiento añadirá lectura (`get`) sin exponer el token en vistas, registros ni mensajes. La operación de validación consultará GET `/auth/me` mediante el cliente HTTP y transformará su respuesta en el usuario público del dominio. El coordinador distinguirá el arranque en curso, la sesión validada, la ausencia de sesión y el error recuperable; la presentación consumirá ese estado para navegar sin mostrar acceso autenticado antes de validar.
+
+La política prevista ante 401 es eliminar el token guardado y regresar al estado anónimo. Ante falta de conexión se conservará el token para permitir reintentar, sin considerar validada una sesión que la API no confirmó. Estos contratos y comportamientos están pendientes de implementación y pruebas. La restauración no se atribuye a las pruebas anteriores de Login ni a su aceptación de SecureStore. No se ha abierto un PR de Persistencia.

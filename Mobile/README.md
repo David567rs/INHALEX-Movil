@@ -1,6 +1,6 @@
 # INHALEX: base móvil
 
-Proyecto Expo SDK 57 con React Native, TypeScript y Expo Router. Esta base recupera la identidad visual, Inicio, Experiencia y las cinco pestañas. Registro está integrado; Inicio de sesión está en desarrollo conectado a la API y Cuenta muestra el usuario de la sesión actual. Catálogo, Favoritos y Bolsa muestran su estado de preparación: sus actividades se integrarán en los PR del [plan](../docs/PLAN-DE-TRABAJO.md).
+Proyecto Expo SDK 57 con React Native, TypeScript y Expo Router. Esta base recupera la identidad visual, Inicio, Experiencia y las cinco pestañas. Registro e Inicio de sesión están integrados y Cuenta muestra el usuario de la sesión actual. Persistencia de sesión está en preparación. Catálogo, Favoritos y Bolsa muestran su estado de preparación: sus actividades se integrarán en los PR del [plan](../docs/PLAN-DE-TRABAJO.md).
 
 ## Abrir el proyecto
 
@@ -60,7 +60,13 @@ Por separado se comprobó Login con componentes Nest y MongoDB reales en un ento
 
 El 16 de octubre de 2026 el usuario confirmó en Expo Go que apareció el aviso con contraseña incorrecta, pudo entrar con la correcta y cerrar sesión sin errores. La [aceptación registrada](../docs/evidencias/inicio-sesion/expo-go-aceptacion.json) procede del chat; no incluye imágenes nativas. El flujo nativo espera las operaciones de escritura y eliminación de SecureStore: se aceptó su recorrido sin errores reportados, sin inspeccionar el almacenamiento ni probar restauración. Teclado y lector de pantalla en Android siguen sin evidencia específica.
 
-La actividad tiene 8/9 criterios aceptados y permanece «En progreso». Se prepara un único PR `feature/inicio-sesion` → `develop`; faltan la CI remota, la revisión real de Zenaida y el merge. La exportación Android comprueba el bundle JavaScript y los recursos: el AAB firmado se generará en la etapa de release.
+Inicio de sesión completó 9/9 criterios y se integró mediante el [PR #4](https://github.com/David567rs/INHALEX-Movil/pull/4): aprobación de ZenaidaGR sobre `1b95841`, Backend CI y Mobile CI correctos y merge de David567rs a `develop` en `1031e00`, el 16 de octubre de 2026. La [evidencia de integración](../docs/evidencias/inicio-sesion/integracion-pr4.json) conserva los identificadores completos. La exportación Android comprueba el bundle JavaScript y los recursos: el AAB firmado se generará en la etapa de release.
+
+## Persistencia de sesión: preparación
+
+La rama de David es `feature/persistencia-sesion`, creada desde `1031e00`; la copia de Zenaida permanece en `develop` actualizado. Se reutilizan el guardado seguro del token y Expo SecureStore aceptados en Login (2/9 criterios). La eliminación al cerrar sesión ya existe y se comprobará de nuevo al integrarla con la restauración.
+
+La preparación contempla ampliar el contrato del store con lectura y validar el token mediante GET `/auth/me` con Bearer. La política prevista elimina credenciales rechazadas con 401 y conserva el token si no hay conexión, mostrando un error que permita reintentar. Aún no se implementan lectura al arrancar, restauración ni redirección por su resultado. El [plan](../docs/PLAN-DE-TRABAJO.md) detalla los nueve criterios y sus comprobaciones pendientes.
 
 ## Versión
 
