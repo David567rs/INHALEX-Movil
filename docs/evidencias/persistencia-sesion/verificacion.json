@@ -3,7 +3,7 @@
   "date": "2026-10-16",
   "branch": "feature/persistencia-sesion",
   "base": "1031e001b8d79dde662497ceed5f803549e48d20",
-  "status": "ready-for-pr-awaiting-human-review",
+  "status": "open-pr-awaiting-human-review",
   "architecture": "MVVM, Repository, domain session coordinator and bootstrap dependency injection",
   "automated": {
     "mobileTests": { "passed": 146, "failed": 0 },
@@ -98,7 +98,21 @@
     ],
     "remaining": "Real ZenaidaGR review through the activity PR"
   },
-  "pullRequest": { "status": "ready-for-pr", "target": "develop", "humanReview": "pending" },
+  "pullRequest": {
+    "number": 5,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/5",
+    "title": "Implementar Persistencia de sesión con MVVM y Repository",
+    "author": "David567rs",
+    "head": "feature/persistencia-sesion",
+    "base": "develop",
+    "headCommitAtOpen": "ecc289d1f0dd6de2423bae5f0ae7aef5095e58a9",
+    "status": "open",
+    "draft": false,
+    "reviewRequestedFrom": ["ZenaidaGR"],
+    "humanReview": "pending",
+    "remoteCiAtOpening": "pending",
+    "merged": false
+  },
   "scope": {
     "backendSourceChanged": false,
     "dependenciesAdded": false,

@@ -2,7 +2,7 @@
 
 Reinicio de la aplicación móvil de INHALEX con un repositorio independiente, arquitectura MVVM y Repository, y colaboración entre David y Zenaida mediante ramas y pull requests.
 
-El backend, la base móvil, Registro e Inicio de sesión están integrados en `develop` mediante los PR #1 a #4. Esta rama incorpora Persistencia de sesión en `feature/persistencia-sesion`: recuperación al reabrir, cierre y reintento tras un fallo de conexión aceptados por el usuario en Expo Go. Su integración requiere el PR hacia `develop`, CI y revisión de Zenaida. Los acuerdos están en [el plan](docs/PLAN-DE-TRABAJO.md), [la arquitectura](docs/ARCHITECTURE.md) y [el versionamiento](docs/VERSIONAMIENTO.md).
+El backend, la base móvil, Registro e Inicio de sesión están integrados en `develop` mediante los PR #1 a #4. Esta rama incorpora Persistencia de sesión en `feature/persistencia-sesion`: recuperación al reabrir, cierre y reintento tras un fallo de conexión aceptados por el usuario en Expo Go. El [PR #5](https://github.com/David567rs/INHALEX-Movil/pull/5) apunta a `develop` y tiene solicitada la revisión de Zenaida; la integración requiere CI y su aprobación. Los acuerdos están en [el plan](docs/PLAN-DE-TRABAJO.md), [la arquitectura](docs/ARCHITECTURE.md) y [el versionamiento](docs/VERSIONAMIENTO.md).
 
 ## Carpeta de trabajo
 

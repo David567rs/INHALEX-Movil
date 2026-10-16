@@ -51,8 +51,22 @@
     "acceptedCriteria": 8,
     "totalCriteria": 9,
     "remainingCriteria": ["Revisión real de ZenaidaGR mediante PR"],
-    "taskStatus": "Listo para PR",
+    "taskStatus": "En revisión/pruebas",
     "trelloUpdatedByAgent": false
   },
-  "pullRequest": { "status": "ready-for-pr", "target": "develop", "humanReview": "pending" }
+  "pullRequest": {
+    "number": 5,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/5",
+    "title": "Implementar Persistencia de sesión con MVVM y Repository",
+    "author": "David567rs",
+    "head": "feature/persistencia-sesion",
+    "base": "develop",
+    "headCommitAtOpen": "ecc289d1f0dd6de2423bae5f0ae7aef5095e58a9",
+    "status": "open",
+    "draft": false,
+    "reviewRequestedFrom": ["ZenaidaGR"],
+    "humanReview": "pending",
+    "remoteCiAtOpening": "pending",
+    "merged": false
+  }
 }

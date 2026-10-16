@@ -187,9 +187,9 @@ El recorrido nativo implementado espera `SecureStore.setItemAsync` antes de publ
 
 Los nueve criterios están satisfechos (9/9). El [PR #4](https://github.com/David567rs/INHALEX-Movil/pull/4), desde `feature/inicio-sesion` hacia `develop`, quedó cerrado y fusionado por David567rs el 16 de octubre de 2026. ZenaidaGR aprobó el HEAD `1b95841b3058c91a90bda4b69ea715e9eef86e1f` y las comprobaciones `Backend verification` y `Mobile verification` concluyeron con `success`. El merge commit es `1031e001b8d79dde662497ceed5f803549e48d20`, con padres `7d308e351999eb9a1dfb8e36a5f331f050f8ce61` y `1b95841b3058c91a90bda4b69ea715e9eef86e1f`. La evidencia está en [integracion-pr4.json](evidencias/inicio-sesion/integracion-pr4.json). La tarjeta de Login puede quedar «Terminado»; el usuario actualiza Trello.
 
-## Persistencia de sesión: lista para PR
+## Persistencia de sesión: PR abierto en revisión
 
-Ambas copias se actualizaron por fast-forward al merge `1031e00`. Zenaida permanece en `develop`, con el stash `81196109270f00fa7edf03a8a8ec6f8bdc963131` conservado y su `.env` presente e ignorado. David trabaja en `feature/persistencia-sesion`, creada desde ese commit en `C:\Users\David\Documents\INHALEX-Movil`. La lectura, restauración y verificación ya están implementadas y las comprobaciones finales de esta rama pasaron. El usuario aceptó en Expo Go recuperación al reabrir, estado anónimo después de salir y aviso/reintento tras fallar y restablecerse la API local. Autorizó abrir el PR único hacia `develop`; solo queda pendiente la revisión real de ZenaidaGR. El usuario actualiza Trello.
+Ambas copias se actualizaron por fast-forward al merge `1031e00`. Zenaida permanece en `develop`, con el stash `81196109270f00fa7edf03a8a8ec6f8bdc963131` conservado y su `.env` presente e ignorado. David trabaja en `feature/persistencia-sesion`, creada desde ese commit en `C:\Users\David\Documents\INHALEX-Movil`. La lectura, restauración y verificación ya están implementadas y las comprobaciones locales finales de esta rama pasaron. El usuario aceptó en Expo Go recuperación al reabrir, estado anónimo después de salir y aviso/reintento tras fallar y restablecerse la API local. El [PR #5](https://github.com/David567rs/INHALEX-Movil/pull/5) está abierto por David567rs hacia `develop`, con revisión solicitada a ZenaidaGR. CI estaba pendiente al abrir el PR. No está fusionado ni aprobado; solo queda pendiente la revisión real. El usuario actualiza Trello.
 
 Estado de los nueve criterios de la tarjeta de Persistencia:
 
@@ -201,9 +201,9 @@ Estado de los nueve criterios de la tarjeta de Persistencia:
 - [x] Eliminar al cerrar sesión: el usuario confirmó que salir y reabrir mantiene la aplicación fuera de Cuenta; la coordinación de borrado tiene pruebas automatizadas. No se inspeccionó el almacenamiento directamente.
 - [x] Errores de restauración: token rechazado, red, timeout, servicio y almacenamiento cubiertos por pruebas automatizadas; el usuario confirmó en Expo Go el aviso con la API local inaccesible y la recuperación mediante Reintentar al restablecer el servidor, sin pedir correo ni contraseña.
 - [x] Probar cerrar/abrir: recuperación de la sesión válida y estado anónimo tras cerrar sesión aceptados por el usuario en Expo Go; la interrupción de conexión se verifica en el criterio de errores.
-- [ ] Revisar código: pendiente del PR propio de Persistencia y revisión real de Zenaida.
+- [ ] Revisar código: PR #5 abierto y revisión solicitada a ZenaidaGR; aprobación real pendiente. CI estaba pendiente al abrir el PR.
 
-Hay 8/9 criterios aceptados. Solo permanece abierta la revisión real de ZenaidaGR mediante el PR de esta actividad, listo para abrir hacia `develop`. Las confirmaciones de reapertura y reintento proceden del usuario, separadas de las pruebas de Node y de la aceptación anterior de Login.
+Hay 8/9 criterios aceptados. Solo permanece abierta la revisión real de ZenaidaGR mediante el PR #5, desde `feature/persistencia-sesion` hacia `develop`. Las confirmaciones de reapertura y reintento proceden del usuario, separadas de las pruebas de Node y de la aceptación anterior de Login.
 
 Contratos y recorrido implementados:
 
@@ -220,7 +220,7 @@ Verificación disponible de esta rama:
 - API real aislada y siete fases del coordinador en Node con HTTP real y almacenamiento simulado aprobadas. Son pruebas del contrato y de la coordinación, sin acreditar almacenamiento nativo ni reapertura de Expo Go.
 - QA web mediante componentes reales y API real, con `get/set/clear` simulados en una ruta temporal `src/app/session-qa.tsx`. Las capturas se rotulan como web con almacenamiento simulado; no prueban persistencia del navegador ni Android físico. La ruta se eliminó antes de las exportaciones finales.
 
-La evidencia se documenta en [verificacion.json](evidencias/persistencia-sesion/verificacion.json), [api-verificacion-aislada.json](evidencias/persistencia-sesion/api-verificacion-aislada.json) y [coordinator-real-http.json](evidencias/persistencia-sesion/coordinator-real-http.json). El PR de Persistencia está listo para abrir, sin asignar todavía un número en esta evidencia; la aprobación real de ZenaidaGR queda pendiente. TalkBack y lector de pantalla en Android siguen sin comprobación específica.
+La evidencia se documenta en [verificacion.json](evidencias/persistencia-sesion/verificacion.json), [api-verificacion-aislada.json](evidencias/persistencia-sesion/api-verificacion-aislada.json) y [coordinator-real-http.json](evidencias/persistencia-sesion/coordinator-real-http.json). El [PR #5](https://github.com/David567rs/INHALEX-Movil/pull/5), «Implementar Persistencia de sesión con MVVM y Repository», está abierto, sin borrador, por David567rs. El HEAD registrado al abrir es `ecc289d1f0dd6de2423bae5f0ae7aef5095e58a9`; los cambios documentales posteriores pueden actualizarlo. La revisión está solicitada a ZenaidaGR; no hay aprobación ni merge. CI estaba pendiente al abrir el PR. TalkBack y lector de pantalla en Android siguen sin comprobación específica.
 
 Aceptación funcional reportada por el usuario en Expo Go, 16 de octubre de 2026:
 
@@ -237,4 +237,4 @@ Recorrido aceptado de reintento, reproducible desde la copia de David:
 2. Entrar en Cuenta e iniciar sesión si hace falta. Forzar el cierre de Expo Go e interrumpir solo la conexión con la API local antes de reabrir, manteniendo Metro accesible y conservando la configuración existente.
 3. Comprobar aviso, opción de Login y reintento; restablecer la conexión y recuperar la sesión sin contraseña.
 
-La [guía móvil](../Mobile/README.md#comprobación-en-expo-go-aceptada) incluye los comandos para ambas terminales y la configuración LAN. Se conserva el entorno existente y las credenciales del servidor. El usuario autorizó abrir el PR único hacia `develop`; después se realizará la revisión real de ZenaidaGR y la integración. El usuario actualizará la tarjeta.
+La [guía móvil](../Mobile/README.md#comprobación-en-expo-go-aceptada) incluye los comandos para ambas terminales y la configuración LAN. Se conserva el entorno existente y las credenciales del servidor. El PR #5 está abierto hacia `develop`; la integración requiere CI aprobado y revisión real de ZenaidaGR. El usuario actualizará la tarjeta.
