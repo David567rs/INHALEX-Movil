@@ -35,6 +35,7 @@
     "serverJwtRevocationOnLocalLogout": false,
     "registrationStartsSession": false
   },
-  "pending": ["Login acceptance in Expo Go", "SecureStore write/delete on physical Android", "Android keyboard and screen-reader acceptance", "Zenaida human PR review and CI"],
+  "pendingAtCapture": ["Login acceptance in Expo Go", "SecureStore write/delete on physical Android", "Android keyboard and screen-reader acceptance", "Zenaida human PR review and CI"],
+  "acceptanceFollowUp": "expo-go-aceptacion.json",
   "privateDataIncluded": false
 }

@@ -40,7 +40,7 @@ Registro e Inicio de sesión contienen entidades, contratos, casos de uso y erro
 
 Inicio de sesión usa POST `/auth/login`. Normaliza el correo sin modificar la contraseña; presenta carga, bloquea nuevos envíos y edición durante la espera, y cancela la espera al abandonar la vista. Los errores 401 no distinguen correo desconocido de contraseña incorrecta; 429 muestra un mensaje de demasiados intentos. Tras una respuesta válida, Cuenta muestra los datos públicos del usuario y permite cerrar sesión.
 
-El JWT queda privado en el coordinador y se escribe en nativo mediante SecureStore: clave `inhalex.auth.access-token`, servicio `inhalex.auth.session`. En web se conserva solo en memoria. La aplicación todavía no lee ni restaura credenciales al arrancar; esa tarea corresponde a Persistencia de sesión. El cierre de sesión limpia el estado local e intenta eliminar el JWT guardado, e informa si no puede confirmar la eliminación. No revoca el JWT en el backend. No se guardan contraseñas. El [plan de trabajo](../docs/PLAN-DE-TRABAJO.md) registra la evidencia y la aceptación pendiente en Expo Go y Android físico.
+El JWT queda privado en el coordinador y se escribe en nativo mediante SecureStore: clave `inhalex.auth.access-token`, servicio `inhalex.auth.session`. En web se conserva solo en memoria. La aplicación todavía no lee ni restaura credenciales al arrancar; esa tarea corresponde a Persistencia de sesión. El cierre de sesión limpia el estado local e intenta eliminar el JWT guardado, e informa si no puede confirmar la eliminación. No revoca el JWT en el backend. No se guardan contraseñas. El [plan de trabajo](../docs/PLAN-DE-TRABAJO.md) registra la aceptación funcional en Expo Go y los límites de su evidencia.
 
 ## Comprobaciones
 
@@ -56,7 +56,11 @@ npm run export:mobile
 
 Las 105 pruebas móviles aprobadas usan Node 24, TypeScript ya instalado, transporte y almacenamiento simulados. Cubren URL, destino, errores, timeout, cancelación, JSON, validación y Repositories de Registro/Login, sesión actual y contrato del adaptador de almacenamiento; no acceden a MongoDB ni al servidor real. TypeScript, lint, Expo Doctor 21/21 y exportaciones Android/web pasaron en esta etapa.
 
-Por separado se comprobó Login con componentes Nest y MongoDB reales en un entorno temporal aislado: 201, 401 equivalente para correo desconocido o contraseña incorrecta, 400, 429 y GET `/auth/me` con Bearer. La QA web pasó acceso, errores, carga, doble toque, cancelación y cierre local; su evidencia está en `docs/evidencias/inicio-sesion/`. No sustituye la prueba actual de Login en Expo Go ni la comprobación de SecureStore en Android físico, ambas pendientes. La exportación Android comprueba el bundle JavaScript y los recursos: el AAB firmado se generará en la etapa de release.
+Por separado se comprobó Login con componentes Nest y MongoDB reales en un entorno temporal aislado: 201, 401 equivalente para correo desconocido o contraseña incorrecta, 400, 429 y GET `/auth/me` con Bearer. La QA web pasó acceso, errores, carga, doble toque, cancelación, cierre local y conexión interrumpida; su evidencia está en `docs/evidencias/inicio-sesion/`.
+
+El 16 de octubre de 2026 el usuario confirmó en Expo Go que apareció el aviso con contraseña incorrecta, pudo entrar con la correcta y cerrar sesión sin errores. La [aceptación registrada](../docs/evidencias/inicio-sesion/expo-go-aceptacion.json) procede del chat; no incluye imágenes nativas. El flujo nativo espera las operaciones de escritura y eliminación de SecureStore: se aceptó su recorrido sin errores reportados, sin inspeccionar el almacenamiento ni probar restauración. Teclado y lector de pantalla en Android siguen sin evidencia específica.
+
+La actividad tiene 8/9 criterios aceptados y permanece «En progreso». Se prepara un único PR `feature/inicio-sesion` → `develop`; faltan la CI remota, la revisión real de Zenaida y el merge. La exportación Android comprueba el bundle JavaScript y los recursos: el AAB firmado se generará en la etapa de release.
 
 ## Versión
 

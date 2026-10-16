@@ -139,7 +139,7 @@ La revisión humana y la integración de Registro quedaron completadas mediante 
 
 Si Expo usa un túnel o el host LAN no se detecta, configurar únicamente `EXPO_PUBLIC_API_URL=http://<IPv4-de-la-laptop>:3200/api` en `Mobile/.env` y reiniciar Metro. Conservar las credenciales en `Server/.env`.
 
-## Inicio de sesión: conexión a la API en progreso
+## Inicio de sesión: preparación del PR
 
 El usuario autorizó actualizar ambas copias con `develop` y empezar solo el diseño de Inicio de sesión. La copia de David y la de Zenaida se actualizaron a `7d308e3`. En Zenaida se preservó el archivo local generado `Mobile/.gitignore` en un stash identificado como «respaldo local antes de actualizar develop»; la versión integrada ya contiene ese archivo. Su copia queda en `develop`, con dependencias móviles actualizadas. La copia de David continúa en `feature/inicio-sesion`, creada desde ese mismo commit.
 
@@ -158,11 +158,11 @@ Estado de la tarjeta de Inicio de sesión (el usuario actualiza Trello):
 - [x] Diseñar pantalla de inicio de sesión: aprobado por el usuario.
 - [x] Agregar campos de usuario/correo y contraseña: correo y contraseña aprobados por el usuario.
 - [x] Validar campos obligatorios: formato de correo y longitud de contraseña aprobados por el usuario en la etapa local.
-- [ ] Conectar con la API de INHALEX: implementado y probado con Nest/MongoDB aislados; pendiente de aceptación en Expo Go.
-- [ ] Manejar inicio de sesión correcto: implementado con sesión actual en Cuenta; pendiente de aceptación en Expo Go.
-- [ ] Mostrar mensaje cuando las credenciales sean incorrectas: 401 genérico implementado; pendiente de aceptación en Expo Go.
-- [ ] Guardar la sesión de forma segura: adaptador SecureStore implementado y probado con almacenamiento simulado; pendiente de comprobación en Android físico. La restauración al arrancar corresponde a Persistencia.
-- [ ] Probar la funcionalidad completa: QA web aprobada; recorrido en Expo Go/Android pendiente.
+- [x] Conectar con la API de INHALEX: comprobado con Nest/MongoDB aislados y aceptado por el usuario en Expo Go.
+- [x] Manejar inicio de sesión correcto: el usuario confirmó que pudo entrar con la contraseña correcta en Expo Go.
+- [x] Mostrar mensaje cuando las credenciales sean incorrectas: el usuario confirmó el aviso con contraseña incorrecta en Expo Go.
+- [x] Guardar la sesión de forma segura: adaptador SecureStore con pruebas automatizadas y recorrido nativo de escritura/eliminación esperadas aceptado sin errores reportados. No se inspeccionó el almacenamiento; la restauración al arrancar corresponde a Persistencia.
+- [x] Probar la funcionalidad completa: QA web aprobada y confirmación del usuario en Expo Go de contraseña incorrecta, acceso correcto y cierre de sesión sin errores.
 - [ ] Revisar el código mediante el único PR de la actividad y la revisión real de Zenaida.
 
 Verificación de diseño: TypeScript, lint, las 50 pruebas existentes, Expo Doctor 21/21 y exportaciones web/Android aprobados. Se comprobó en web a 393 y 320 px: edición de campos, máscara y alternancia de contraseña, botón deshabilitado, navegación Cuenta → Inicio de sesión ↔ Registro → Cuenta y desplazamiento sin desbordamiento horizontal. La comprobación visual es web; teclado y lector de pantalla Android requieren revisión en dispositivo. Las capturas están en `docs/evidencias/inicio-sesion/`.
@@ -177,4 +177,12 @@ Verificación de la conexión a la API y la sesión actual:
 - La prueba aislada no cargó `AppModule` ni el `.env` del usuario, ni utilizó su instancia MongoDB o cuentas reales. Sus resultados no acreditan almacenamiento en Android físico.
 - QA web aprobada contra esa API: formulario vacío sin petición, carga con campos bloqueados, 401 con contraseña borrada, 201 con Cuenta autenticada, doble toque con una sola petición, cierre local, salida durante la petición sin sesión tardía, 429 a 320 px sin desbordamiento y mensaje al detener la API. Evidencia: `docs/evidencias/inicio-sesion/api-verificacion.json`, `api-verificacion-aislada.json` y capturas de esa carpeta.
 
-El siguiente paso es comprobar en Expo Go el envío, acceso correcto, credenciales incorrectas, estado de Cuenta y cierre local. Desde la raíz de David, arrancar el backend con `npm run dev:server` si no está activo y recargar la app ya abierta con Metro en 8082. Probar la cuenta creada en Registro con contraseña incorrecta y después correcta; verificar Cuenta y «Cerrar sesión». El guardado y la eliminación con SecureStore requieren prueba en Android físico; también quedan pendientes teclado y lector de pantalla en dispositivo. La prueba completa y la revisión real de Zenaida no se consideran realizadas. El único PR de Inicio de sesión se abrirá al completar la actividad. La tarjeta permanece «En progreso» con los primeros tres criterios aceptados; los restantes solo se marcarán al confirmar su aceptación correspondiente.
+Aceptación humana en Expo Go, 16 de octubre de 2026:
+
+- Pregunta: «¿En Expo Go apareció el aviso con contraseña incorrecta, pudiste entrar con la correcta y cerrar sesión sin errores?».
+- Respuesta textual del usuario: «Sí, los tres casos funcionaron».
+- Evidencia: [expo-go-aceptacion.json](evidencias/inicio-sesion/expo-go-aceptacion.json), basada en la confirmación del chat. No hay imágenes nativas; las capturas de la carpeta corresponden a web.
+
+El recorrido nativo implementado espera `SecureStore.setItemAsync` antes de publicar la sesión y `SecureStore.deleteItemAsync` al cerrarla. La aceptación confirma ese flujo sin errores reportados; no acredita inspección directa del token almacenado, lectura o restauración al reiniciar, ni revocación del JWT en el backend. La restauración sigue reservada para Persistencia de sesión. Teclado y lector de pantalla en Android siguen sin evidencia específica y no se atribuyen a esta respuesta.
+
+Los primeros ocho criterios quedan aceptados (8/9). Se prepara ahora un único PR de toda la actividad desde `feature/inicio-sesion` hacia `develop`; la CI remota y la revisión real de Zenaida están pendientes. La tarjeta permanece «En progreso» hasta completar la revisión y el merge. El usuario actualiza su estado en Trello; no se da por integrada la actividad.

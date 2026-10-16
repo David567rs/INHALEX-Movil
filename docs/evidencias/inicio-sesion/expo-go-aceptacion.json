@@ -1,0 +1,54 @@
+{
+  "activity": "Inicio de sesión",
+  "date": "2026-10-16",
+  "platform": "Expo Go en Android",
+  "evidenceType": "human_chat_confirmation",
+  "question": "¿En Expo Go apareció el aviso con contraseña incorrecta, pudiste entrar con la correcta y cerrar sesión sin errores?",
+  "userResponse": "Sí, los tres casos funcionaron",
+  "acceptedCases": [
+    {
+      "case": "incorrect_password_notice",
+      "description": "Apareció el aviso con contraseña incorrecta.",
+      "result": "accepted_by_user"
+    },
+    {
+      "case": "correct_password_login",
+      "description": "Pudo entrar con la contraseña correcta.",
+      "result": "accepted_by_user"
+    },
+    {
+      "case": "logout_without_errors",
+      "description": "Pudo cerrar sesión sin errores.",
+      "result": "accepted_by_user"
+    }
+  ],
+  "nativeStorageAcceptance": {
+    "basis": "El flujo implementado espera la escritura de SecureStore antes de publicar la sesión y la eliminación al cerrarla. El usuario aceptó el recorrido sin errores reportados.",
+    "rawStorageInspectionPerformed": false,
+    "startupReadImplemented": false,
+    "startupRestorationImplemented": false,
+    "backendJwtRevocationImplemented": false
+  },
+  "limitations": [
+    "La evidencia es la respuesta del usuario en el chat; no hay imágenes nativas.",
+    "Las capturas de la carpeta de evidencia corresponden a web.",
+    "La respuesta no acredita lectura, inspección directa o restauración del token almacenado.",
+    "La restauración al arrancar pertenece a la siguiente actividad: Persistencia de sesión.",
+    "No existe evidencia específica de teclado o lector de pantalla en Android."
+  ],
+  "checklist": {
+    "acceptedCriteria": 8,
+    "totalCriteria": 9,
+    "remainingCriterion": "Revisión real de Zenaida mediante PR",
+    "taskStatus": "En progreso",
+    "trelloUpdatedByAgent": false
+  },
+  "pullRequest": {
+    "head": "feature/inicio-sesion",
+    "base": "develop",
+    "status": "preparation",
+    "remoteCi": "pending",
+    "humanReview": "pending",
+    "merged": false
+  }
+}
