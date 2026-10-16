@@ -1,0 +1,187 @@
+{
+  "fixture": "isolated-login",
+  "snapshotAt": "2026-10-16T08:40:50.6824290Z",
+  "origin": "http://127.0.0.1:3211",
+  "status": "passed",
+  "envFilesRead": false,
+  "fullAppModuleLoaded": false,
+  "components": [
+    "AuthController",
+    "AuthService",
+    "UsersService",
+    "UserSchema",
+    "JwtService",
+    "AuthSecurityService",
+    "JwtStrategy",
+    "JwtAuthGuard"
+  ],
+  "checks": {
+    "registrationStatus": 201,
+    "syntheticAccountsCreated": 4,
+    "realMongoPersistence": true,
+    "bcryptMatches": true,
+    "bcryptRounds": 12,
+    "loginStatus": 201,
+    "caseInsensitiveEmail": true,
+    "lastLoginAtUpdated": true,
+    "accessTokenPresent": true,
+    "loginResponseOmitsHash": true,
+    "httpOnlyCookie": true,
+    "bearerProfileStatus": 200,
+    "profileResponseOmitsHash": true,
+    "profilePrivateNoStore": true,
+    "anonymousProfileStatus": 401,
+    "wrongPasswordStatus": 401,
+    "unknownEmailStatus": 401,
+    "sameCredentialsErrorMessage": true,
+    "invalidPayloadStatus": 400,
+    "rateLimitStatuses": [
+      401,
+      401,
+      401,
+      401,
+      401,
+      429
+    ],
+    "rateLimitedStatus": 429,
+    "browserAccountReadyStatus": 201
+  },
+  "fixtureDelayMs": 2000,
+  "isolation": "Temporary database and synthetic accounts. No full backend, usual service, real account, or production storage used.",
+  "loginMetrics": {
+    "fixture": "isolated-login",
+    "delayMs": 2000,
+    "startedAt": "2026-10-16T08:30:28.364Z",
+    "totalLoginRequests": 15,
+    "byEmail": {
+      "login.smoke@example.test": 2,
+      "login.unknown@example.test": 1,
+      "<non-test-email>": 1,
+      "login.rate@example.test": 7,
+      "login.browser.qa@example.test": 3,
+      "login.browser.cancel@example.test": 1
+    },
+    "requests": [
+      {
+        "id": 1,
+        "emailTag": "login.smoke@example.test",
+        "startedAt": "2026-10-16T08:31:10.007Z",
+        "status": 201,
+        "elapsedMs": 2279,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 2,
+        "emailTag": "login.smoke@example.test",
+        "startedAt": "2026-10-16T08:31:12.307Z",
+        "status": 401,
+        "elapsedMs": 2263,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 3,
+        "emailTag": "login.unknown@example.test",
+        "startedAt": "2026-10-16T08:31:14.574Z",
+        "status": 401,
+        "elapsedMs": 2021,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 4,
+        "emailTag": "<non-test-email>",
+        "startedAt": "2026-10-16T08:31:16.601Z",
+        "status": 400,
+        "elapsedMs": 2003,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 5,
+        "emailTag": "login.rate@example.test",
+        "startedAt": "2026-10-16T08:31:18.609Z",
+        "status": 401,
+        "elapsedMs": 2262,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 6,
+        "emailTag": "login.rate@example.test",
+        "startedAt": "2026-10-16T08:31:20.874Z",
+        "status": 401,
+        "elapsedMs": 2269,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 7,
+        "emailTag": "login.rate@example.test",
+        "startedAt": "2026-10-16T08:31:23.146Z",
+        "status": 401,
+        "elapsedMs": 2227,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 8,
+        "emailTag": "login.rate@example.test",
+        "startedAt": "2026-10-16T08:31:25.376Z",
+        "status": 401,
+        "elapsedMs": 2218,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 9,
+        "emailTag": "login.rate@example.test",
+        "startedAt": "2026-10-16T08:31:27.595Z",
+        "status": 401,
+        "elapsedMs": 2223,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 10,
+        "emailTag": "login.rate@example.test",
+        "startedAt": "2026-10-16T08:31:29.82Z",
+        "status": 429,
+        "elapsedMs": 2011,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 11,
+        "emailTag": "login.browser.qa@example.test",
+        "startedAt": "2026-10-16T08:31:31.834Z",
+        "status": 201,
+        "elapsedMs": 2292,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 12,
+        "emailTag": "login.browser.qa@example.test",
+        "startedAt": "2026-10-16T08:37:02.546Z",
+        "status": 401,
+        "elapsedMs": 2353,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 13,
+        "emailTag": "login.browser.qa@example.test",
+        "startedAt": "2026-10-16T08:37:43.164Z",
+        "status": 201,
+        "elapsedMs": 2306,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 14,
+        "emailTag": "login.browser.cancel@example.test",
+        "startedAt": "2026-10-16T08:38:50.781Z",
+        "status": null,
+        "elapsedMs": 311,
+        "connectionClosedBeforeResponse": true
+      },
+      {
+        "id": 15,
+        "emailTag": "login.rate@example.test",
+        "startedAt": "2026-10-16T08:39:37.349Z",
+        "status": 429,
+        "elapsedMs": 2017,
+        "connectionClosedBeforeResponse": false
+      }
+    ]
+  }
+}

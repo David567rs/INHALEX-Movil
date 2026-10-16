@@ -1,16 +1,17 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { Keyboard, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Keyboard, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { colors } from '@/core/theme/colors';
 import { AuthScaffold } from '../components/AuthScaffold';
 import { FormField } from '../components/FormField';
 import { useLoginViewModel } from '../viewModels/useLoginViewModel';
 import type { LoginField } from '../../domain/validation/loginValidation';
+import type { AuthSession } from '../../domain/session/AuthSession';
 
-/** Renders local validation state; credential verification belongs to the API stage. */
-export function LoginScreen() {
-  const viewModel = useLoginViewModel();
+/** Renders the ViewModel; the composition root supplies the sign-in operation. */
+export function LoginScreen({ signIn }: { signIn: AuthSession['signIn'] }) {
+  const viewModel = useLoginViewModel(signIn);
   const emailInput = useRef<TextInput>(null);
   const passwordInput = useRef<TextInput>(null);
   const [focusRequest, setFocusRequest] = useState<{ field: LoginField } | null>(null);
@@ -21,13 +22,12 @@ export function LoginScreen() {
     inputs[focusRequest.field].current?.focus();
   }, [focusRequest]);
 
-  function validateForm() {
-    const firstInvalidField = viewModel.validateForm();
+  async function submit() {
+    setFocusRequest(null);
+    const pending = viewModel.submit();
+    Keyboard.dismiss();
+    const firstInvalidField = await pending;
     if (firstInvalidField) setFocusRequest({ field: firstInvalidField });
-    else {
-      setFocusRequest(null);
-      Keyboard.dismiss();
-    }
   }
 
   return (
@@ -39,6 +39,8 @@ export function LoginScreen() {
           <Text style={styles.footerText}>¿Aún no tienes una cuenta?</Text>
           <Pressable
             accessibilityRole="button"
+            accessibilityState={{ disabled: viewModel.isSubmitting }}
+            disabled={viewModel.isSubmitting}
             onPress={() => router.replace('/register')}
             style={({ pressed }) => [styles.registerLink, pressed && styles.pressed]}
           >
@@ -50,6 +52,7 @@ export function LoginScreen() {
       <FormField
         ref={emailInput} label="Correo electrónico" icon="mail-outline" placeholder="tu@email.com"
         value={viewModel.form.email} error={viewModel.errors.email}
+        editable={!viewModel.isSubmitting}
         onChangeText={(value) => viewModel.updateField('email', value)} onBlur={() => viewModel.touchField('email')}
         autoCapitalize="none" autoCorrect={false} autoComplete="username"
         textContentType="username" keyboardType="email-address"
@@ -58,30 +61,33 @@ export function LoginScreen() {
       <FormField
         ref={passwordInput} label="Contraseña" icon="lock-closed-outline" placeholder="Tu contraseña" isPassword
         value={viewModel.form.password} error={viewModel.errors.password}
+        editable={!viewModel.isSubmitting}
         onChangeText={(value) => viewModel.updateField('password', value)} onBlur={() => viewModel.touchField('password')}
         autoComplete="current-password" textContentType="password"
         returnKeyType="done" submitBehavior="submit"
-        blurOnSubmit={Platform.OS === 'web' ? false : undefined} onSubmitEditing={validateForm}
+        blurOnSubmit={Platform.OS === 'web' ? false : undefined} onSubmitEditing={submit}
       />
-      {viewModel.validationResult ? (
+      {viewModel.message ? (
         <View
           accessibilityLiveRegion="polite"
-          style={[styles.notice, viewModel.validationResult === 'valid' ? styles.validNotice : styles.invalidNotice]}
+          style={[styles.notice, styles.invalidNotice]}
         >
-          <Ionicons accessible={false} name={viewModel.validationResult === 'valid' ? 'checkmark-circle-outline' : 'alert-circle-outline'} size={19} color={viewModel.validationResult === 'valid' ? colors.success : colors.danger} />
-          <Text style={[styles.noticeLabel, { color: viewModel.validationResult === 'valid' ? colors.success : colors.danger }]}>
-            {viewModel.validationResult === 'valid' ? 'Los campos cumplen el formato requerido.' : 'Revisa los campos señalados.'}
+          <Ionicons accessible={false} name="alert-circle-outline" size={19} color={colors.danger} />
+          <Text style={[styles.noticeLabel, { color: colors.danger }]}>
+            {viewModel.message}
           </Text>
         </View>
       ) : null}
       <Pressable
         accessibilityRole="button"
-        accessibilityLabel="Validar datos"
-        onPress={validateForm}
-        style={({ pressed }) => [styles.loginButton, pressed && styles.pressed]}
+        accessibilityLabel={viewModel.isSubmitting ? 'Iniciando sesión' : 'Iniciar sesión'}
+        accessibilityState={{ disabled: viewModel.isSubmitting, busy: viewModel.isSubmitting }}
+        disabled={viewModel.isSubmitting}
+        onPress={submit}
+        style={({ pressed }) => [styles.loginButton, (pressed || viewModel.isSubmitting) && styles.pressed]}
       >
-        <Text style={styles.loginLabel}>Validar datos</Text>
-        <Ionicons accessible={false} name="checkmark" color={colors.white} size={19} />
+        <Text style={styles.loginLabel}>{viewModel.isSubmitting ? 'Iniciando sesión…' : 'Iniciar sesión'}</Text>
+        {viewModel.isSubmitting ? <ActivityIndicator color={colors.white} size="small" /> : <Ionicons accessible={false} name="arrow-forward" color={colors.white} size={19} />}
       </Pressable>
     </AuthScaffold>
   );
@@ -89,7 +95,6 @@ export function LoginScreen() {
 
 const styles = StyleSheet.create({
   notice: { alignItems: 'flex-start', borderRadius: 12, flexDirection: 'row', gap: 8, marginBottom: 16, padding: 12 },
-  validNotice: { backgroundColor: colors.surfaceSoft },
   invalidNotice: { backgroundColor: colors.dangerSoft },
   noticeLabel: { flex: 1, fontSize: 13, lineHeight: 19 },
   loginButton: { alignItems: 'center', backgroundColor: colors.primaryDark, borderRadius: 16, flexDirection: 'row', gap: 9, justifyContent: 'center', minHeight: 56, paddingHorizontal: 16, paddingVertical: 14 },
