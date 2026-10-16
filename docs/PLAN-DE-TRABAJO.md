@@ -98,4 +98,43 @@ La vinculación de EAS, credenciales de firma y configuración de Google Play se
 
 ## Siguiente bloque de trabajo
 
-El repositorio y el backend ya están integrados y verificados. El siguiente bloque incorpora la base móvil mediante feature/mobile-bootstrap y un PR hacia develop. La primera actividad funcional será Registro de usuario.
+El backend y la base móvil se integraron mediante los PR #1 y #2. Registro de usuario continúa en `feature/registro-usuario`, con un solo PR previsto para la actividad completa. El usuario aprobó el diseño y las validaciones en Expo Go y autorizó la conexión a la API el 16 de octubre de 2026.
+
+Estado de los criterios de la tarjeta de Registro:
+
+- [x] Diseñar pantalla de registro: aprobado en Expo Go.
+- [x] Agregar campos requeridos: nombre, apellido, correo, teléfono, contraseña y confirmación.
+- [x] Validar campos obligatorios.
+- [x] Validar formato de correo.
+- [x] Validar contraseña y su confirmación exacta.
+- [x] Conectar con la API de INHALEX: POST `/api/auth/register`, probado con componentes Nest y MongoDB reales en entorno aislado.
+- [x] Manejar registro correcto: confirmación solo después de respuesta válida y limpieza del formulario.
+- [x] Mostrar mensajes de error: validación local, correo duplicado y fallos de API/conexión.
+- [x] Probar la funcionalidad de registro: el usuario confirmó en Expo Go creación de cuenta y aviso de correo duplicado.
+- [ ] Revisar el código mediante el PR y la revisión real de Zenaida.
+
+Las reglas puras permanecen en el dominio y el estado del formulario en el ViewModel. Correo utiliza la misma versión de `validator` que el backend; nombre, teléfono y contraseña siguen las reglas del DTO, sin recortar contraseñas. El caso de uso revalida los datos normalizados antes de enviarlos y excluye la confirmación de contraseña.
+
+El recorrido es `RegisterScreen → useRegisterViewModel → RegisterUser → RegistrationRepository → ApiRegistrationRepository → HttpClient`. `bootstrap` compone las dependencias al primer envío. El mapeador convierte `_id` a `id`, conserva solamente los datos públicos requeridos y descarta el JWT. No se añade sesión ni navegación autenticada. El botón «Crear cuenta» bloquea nuevas pulsaciones y edición durante la petición; al abandonar la vista cancela la espera, sin asumir que el servidor deshizo una operación ya recibida. No hay reintentos automáticos de creación.
+
+Comprobaciones de esta etapa:
+
+- 50 pruebas móviles: URL/transporte, reglas de Registro, normalización, contrato del Repository, DTO, errores HTTP, red, timeout y cancelación.
+- TypeScript, lint y exportaciones web y Android aprobados. Expo Doctor ya pasó 21/21 en la etapa de validaciones; esta etapa no añade dependencias.
+- Nest con `AuthController`, `AuthService`, `UsersService` y `UserSchema` reales, MongoDB temporal separado de la instancia del usuario: 201, 409, 400, persistencia única y contraseña verificada con bcrypt (coste 12). No se cargó `AppModule` ni el `.env` del usuario.
+- Interfaz web a 393 px contra esa API: éxito, carga con campos bloqueados, doble toque con una sola petición, 409 en correo, limpieza del error al corregirlo y salida durante la espera. Los estados y la conexión interrumpida tienen evidencia en `docs/evidencias/registro-usuario/`.
+- Expo Go: el usuario confirmó que crea la cuenta y muestra el aviso de correo duplicado. La evidencia es su confirmación en el chat; las capturas del repositorio corresponden a web.
+
+Los primeros cinco criterios ya fueron marcados por el usuario en Trello. Con la conexión implementada y la prueba confirmada en Expo Go, los primeros nueve criterios están satisfechos (9/10). El estado de Trello lo actualiza el usuario. Mantener la tarjeta «En revisión / pruebas» mientras Zenaida revisa el PR hacia `develop`; la revisión automática no sustituye esa revisión humana.
+
+Comprobaciones de referencia, desde la copia de David y usando Git Bash o CMD:
+
+1. Arrancar el backend habitual con `npm run dev:server` y la app con `npm run dev:mobile` en otra terminal, desde la raíz del repositorio.
+2. Con teléfono y laptop en la misma red, abrir Cuenta → Crear cuenta. Usar un correo de prueba nuevo y confirmar que aparece «Tu cuenta está lista».
+3. Repetir con el mismo correo: debe señalar que ya está registrado y permitir corregirlo sin perder el resto del formulario.
+4. Probar una interrupción de conexión y verificar el mensaje sin cierre de la app ni reenvío automático. La creación puede haber llegado al servidor aunque se pierda la respuesta.
+5. Verificar teclado, desplazamiento y lectura accesible en Android. La comprobación con lector de pantalla y la interrupción de conexión en Android siguen sin evidencia específica.
+
+El siguiente paso acordado es abrir el único PR de Registro hacia `develop` y solicitar a ZenaidaGR su revisión desde su propia cuenta. La aprobación humana y la integración permanecen pendientes.
+
+Si Expo usa un túnel o el host LAN no se detecta, configurar únicamente `EXPO_PUBLIC_API_URL=http://<IPv4-de-la-laptop>:3200/api` en `Mobile/.env` y reiniciar Metro. Conservar las credenciales en `Server/.env`.

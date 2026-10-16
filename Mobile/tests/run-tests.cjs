@@ -7,6 +7,9 @@ const result = spawnSync(process.execPath, [
   '--require', path.join(__dirname, 'register-typescript.cjs'),
   path.join(__dirname, 'resolveApiUrl.test.cjs'),
   path.join(__dirname, 'HttpClient.test.cjs'),
+  path.join(__dirname, 'RegistrationValidation.test.cjs'),
+  path.join(__dirname, 'RegistrationRepository.test.cjs'),
+  path.join(__dirname, 'RegistrationUseCase.test.cjs'),
 ], { stdio: 'inherit' });
 
 if (result.error) console.error(result.error.message);

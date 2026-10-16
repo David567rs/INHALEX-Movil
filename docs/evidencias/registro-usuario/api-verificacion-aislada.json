@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-16",
+  "branch": "feature/registro-usuario",
+  "scope": "Registro de usuario; sin inicio ni persistencia de sesion",
+  "backend": {
+    "components": ["AuthController", "AuthService", "UsersService", "UserSchema", "JwtService", "AuthSecurityService", "JwtStrategy"],
+    "database": "MongoDB temporal aislado en loopback, separado de la instancia habitual",
+    "dotenvLoaded": false,
+    "fullAppModuleLoaded": false,
+    "createdStatus": 201,
+    "duplicateStatus": 409,
+    "invalidStatus": 400,
+    "persistedUsersForSmokeEmail": 1,
+    "bcryptMatches": true,
+    "bcryptRounds": 12,
+    "passwordNotPlaintext": true,
+    "responseOmitsHash": true
+  },
+  "browser": {
+    "mode": "Expo web development, 393x852",
+    "testEmail": "registration.browser.qa@example.test",
+    "doubleClick": { "requests": 1, "status": 201, "successScreen": true },
+    "repeatEmail": { "requests": 1, "status": 409, "fieldError": "email", "correctionClearsError": true },
+    "submittingDisablesInputsAndButton": true,
+    "leaveWhileSubmitting": { "requests": 1, "returnedToAccount": true, "lateSuccessNotDisplayed": true },
+    "apiUnavailable": { "errorDisplayed": true, "buttonEnabledAgain": true },
+    "horizontalOverflowAt320px": false,
+    "tokenStoredByRegistration": false
+  },
+  "checks": { "mobileTests": 50, "typecheck": "passed", "lint": "passed", "androidExport": "passed", "webExport": "passed" },
+  "expoGo": { "evidenceSource": "Confirmacion del usuario en el chat", "createdAccount": true, "duplicateEmailNotice": true },
+  "pending": ["Interrupcion de conexion y lector de pantalla Android", "Revision real de Zenaida en PR hacia develop"]
+}

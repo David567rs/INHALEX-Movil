@@ -4,10 +4,15 @@ const fs = require('node:fs');
 const path = require('node:path');
 const ts = require('typescript');
 
-const sourceRoot = path.resolve(__dirname, '../src/core') + path.sep;
+const sourceRoots = [
+  '../src/core',
+  '../src/features/auth/domain',
+  '../src/features/auth/data',
+].map((directory) => fs.realpathSync(path.resolve(__dirname, directory)) + path.sep);
 require.extensions['.ts'] = (module, filename) => {
-  if (!path.resolve(filename).startsWith(sourceRoot)) {
-    throw new Error('The test loader only compiles this project\'s core TypeScript files.');
+  const sourceFile = fs.realpathSync(filename);
+  if (!sourceRoots.some((directory) => sourceFile.startsWith(directory))) {
+    throw new Error('The test loader only compiles allowed core, auth domain and auth data TypeScript files.');
   }
   const result = ts.transpileModule(fs.readFileSync(filename, 'utf8'), {
     fileName: filename,

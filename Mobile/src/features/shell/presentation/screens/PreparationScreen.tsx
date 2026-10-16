@@ -51,6 +51,16 @@ export function PreparationScreen({ section }: { section: keyof typeof sections 
         description={content.description}
       />
       <View style={styles.actions}>
+        {section === 'cuenta' ? (
+          <SoftPressable
+            accessibilityRole="button"
+            onPress={() => router.push('/register')}
+            style={({ pressed }) => [styles.button, pressed && styles.pressed]}
+          >
+            <Ionicons accessible={false} name="person-add-outline" size={19} color={colors.white} />
+            <Text style={styles.buttonLabel}>Crear cuenta</Text>
+          </SoftPressable>
+        ) : null}
         <SoftPressable
           accessibilityRole="button"
           onPress={() => router.navigate('/(tabs)')}
