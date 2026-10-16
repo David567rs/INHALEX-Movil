@@ -1,0 +1,44 @@
+{
+  "activity": "Persistencia de sesión",
+  "date": "2026-10-16",
+  "branch": "feature/persistencia-sesion",
+  "platform": "Expo Go en Android",
+  "evidenceType": "human_chat_confirmation",
+  "userResponse": "Ya probé en Expo Go, amigo: recupera la sesión al reabrir y, después de cerrar sesión, ya no entra a la cuenta. Sigamos con la prueba del reintento cuando falle la conexión.",
+  "acceptedCases": [
+    {
+      "case": "native_reopen_recovers_session",
+      "description": "Al reabrir Expo Go se recupera la sesión y se accede a Cuenta.",
+      "result": "accepted_by_user"
+    },
+    {
+      "case": "logout_reopen_remains_anonymous",
+      "description": "Después de cerrar sesión y reabrir, la aplicación no vuelve a entrar a la cuenta.",
+      "result": "accepted_by_user"
+    }
+  ],
+  "tokenValidationEvidence": {
+    "validNativeRestoration": "accepted_by_user",
+    "implementation": "La restauración verifica el token mediante GET /auth/me antes de publicar el usuario.",
+    "automatedUnauthorizedAndExpiredTokenEvidence": ["api-verificacion-aislada.json", "coordinator-real-http.json"],
+    "expiredTokenOnPhysicalDeviceTested": false
+  },
+  "pendingCases": [
+    "Interrumpir la conexión con la API, comprobar el aviso, recuperar la conexión y reintentar en Expo Go."
+  ],
+  "limitations": [
+    "La aceptación procede de la respuesta textual del usuario en el chat.",
+    "No acredita inspección directa de SecureStore ni del token almacenado.",
+    "No confirma reintento sin conexión ni prueba de un token caducado en Android físico.",
+    "No hay comprobación específica de TalkBack o lector de pantalla en Android.",
+    "Las capturas web con almacenamiento simulado conservan su alcance separado de esta confirmación humana."
+  ],
+  "checklist": {
+    "acceptedCriteria": 7,
+    "totalCriteria": 9,
+    "remainingCriteria": ["Errores de restauración y reintento", "Revisión real de ZenaidaGR mediante PR"],
+    "taskStatus": "En progreso",
+    "trelloUpdatedByAgent": false
+  },
+  "pullRequest": { "status": "not-opened", "target": "develop", "humanReview": "pending" }
+}

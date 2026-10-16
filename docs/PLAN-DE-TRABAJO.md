@@ -187,23 +187,23 @@ El recorrido nativo implementado espera `SecureStore.setItemAsync` antes de publ
 
 Los nueve criterios están satisfechos (9/9). El [PR #4](https://github.com/David567rs/INHALEX-Movil/pull/4), desde `feature/inicio-sesion` hacia `develop`, quedó cerrado y fusionado por David567rs el 16 de octubre de 2026. ZenaidaGR aprobó el HEAD `1b95841b3058c91a90bda4b69ea715e9eef86e1f` y las comprobaciones `Backend verification` y `Mobile verification` concluyeron con `success`. El merge commit es `1031e001b8d79dde662497ceed5f803549e48d20`, con padres `7d308e351999eb9a1dfb8e36a5f331f050f8ce61` y `1b95841b3058c91a90bda4b69ea715e9eef86e1f`. La evidencia está en [integracion-pr4.json](evidencias/inicio-sesion/integracion-pr4.json). La tarjeta de Login puede quedar «Terminado»; el usuario actualiza Trello.
 
-## Persistencia de sesión: implementación pendiente de aceptación
+## Persistencia de sesión: aceptación parcial
 
-Ambas copias se actualizaron por fast-forward al merge `1031e00`. Zenaida permanece en `develop`, con el stash `81196109270f00fa7edf03a8a8ec6f8bdc963131` conservado y su `.env` presente e ignorado. David trabaja en `feature/persistencia-sesion`, creada desde ese commit en `C:\Users\David\Documents\INHALEX-Movil`. La lectura, restauración y verificación ya están implementadas y las comprobaciones finales de esta rama pasaron. La actividad conserva un único PR futuro hacia `develop`; faltan la aceptación en Expo Go y la revisión real de ZenaidaGR. El usuario actualiza Trello.
+Ambas copias se actualizaron por fast-forward al merge `1031e00`. Zenaida permanece en `develop`, con el stash `81196109270f00fa7edf03a8a8ec6f8bdc963131` conservado y su `.env` presente e ignorado. David trabaja en `feature/persistencia-sesion`, creada desde ese commit en `C:\Users\David\Documents\INHALEX-Movil`. La lectura, restauración y verificación ya están implementadas y las comprobaciones finales de esta rama pasaron. El usuario aceptó en Expo Go la recuperación al reabrir y el estado anónimo después de salir y reabrir. La actividad conserva un único PR futuro hacia `develop`; solo quedan abiertos errores/reintento ante fallo de conexión y revisión real de ZenaidaGR. El usuario actualiza Trello.
 
 Estado de los nueve criterios de la tarjeta de Persistencia:
 
 - [x] Guardar token seguro: se reutiliza el guardado privado aceptado en Login, con escritura esperada antes de publicar la sesión.
 - [x] Utilizar Expo SecureStore: adaptador nativo integrado, con pruebas automatizadas y flujo de Login/cierre aceptado en Expo Go.
-- [ ] Restaurar al abrir: implementado con lectura inicial, verificación y coordinación de concurrencia; pruebas automatizadas aprobadas, pendiente de aceptación en Expo Go.
-- [ ] Validar token: GET `/api/auth/me` con Bearer y mapeo del perfil plano implementados y probados con API aislada; pendiente de aceptar el recorrido en Expo Go.
-- [ ] Redirigir según estado: carga, estado anónimo, Cuenta autenticada, error y acceso a Login implementados; pendiente de verificar navegación al reabrir en Android.
-- [ ] Eliminar al cerrar sesión: interacción con lectura y restauración cubierta por pruebas; pendiente de confirmar en Expo Go que reabrir después de salir permanece anónimo.
+- [x] Restaurar al abrir: lectura inicial y verificación implementadas y probadas; el usuario confirmó recuperación al reabrir Expo Go.
+- [x] Validar token: GET `/api/auth/me` con Bearer y perfil plano, pruebas automatizadas de token rechazado/401 y restauración válida aceptada en Expo Go. No incluye prueba de token caducado en Android físico.
+- [x] Redirigir según estado: el usuario confirmó acceso a Cuenta tras recuperar la sesión y ausencia de acceso después de salir; carga y estados están cubiertos por pruebas automatizadas.
+- [x] Eliminar al cerrar sesión: el usuario confirmó que salir y reabrir mantiene la aplicación fuera de Cuenta; la coordinación de borrado tiene pruebas automatizadas. No se inspeccionó el almacenamiento directamente.
 - [ ] Errores de restauración: token rechazado, red, timeout, servicio y almacenamiento implementados con mensajes y reintento; falta aceptación de la interrupción de conexión en Expo Go.
-- [ ] Probar cerrar/abrir: pendiente de cerrar por completo y reabrir Expo Go en Android físico, con sesión válida, cierre local y recuperación tras una interrupción de conexión.
+- [x] Probar cerrar/abrir: recuperación de la sesión válida y estado anónimo tras cerrar sesión aceptados por el usuario en Expo Go; la interrupción de conexión se verifica en el criterio de errores.
 - [ ] Revisar código: pendiente del PR propio de Persistencia y revisión real de Zenaida.
 
-Solo los dos criterios reutilizados están aceptados (2/9). Los demás permanecen abiertos aunque su implementación y las pruebas automatizadas estén listas: no se atribuye una reapertura en Android a las pruebas de Node ni a la aceptación anterior de Login.
+Hay 7/9 criterios aceptados. Permanecen abiertos errores/reintento ante fallo de conexión y revisión real de ZenaidaGR mediante el PR de esta actividad. La evidencia de reapertura procede de la nueva respuesta del usuario, separada de las pruebas de Node y de la aceptación anterior de Login.
 
 Contratos y recorrido implementados:
 
@@ -222,11 +222,16 @@ Verificación disponible de esta rama:
 
 La evidencia se documenta en [verificacion.json](evidencias/persistencia-sesion/verificacion.json), [api-verificacion-aislada.json](evidencias/persistencia-sesion/api-verificacion-aislada.json) y [coordinator-real-http.json](evidencias/persistencia-sesion/coordinator-real-http.json). No se ha abierto el PR de Persistencia ni hay aprobación de ZenaidaGR para esta rama. TalkBack y lector de pantalla en Android siguen sin comprobación específica.
 
-Aceptación pendiente desde la copia de David:
+Aceptación humana parcial en Expo Go, 16 de octubre de 2026:
 
-1. En Git Bash o CMD, abrir `C:\Users\David\Documents\INHALEX-Movil`. Si el backend no está activo, ejecutar `npm run dev:server`; mantenerlo abierto. Iniciar Metro en otra terminal con `npm run dev:mobile` si hace falta, o pulsar `r` en la terminal de Metro para recargar sin cerrar la sesión desde Cuenta.
-2. Entrar en Cuenta e iniciar sesión. Forzar el cierre de Expo Go desde Android, reabrir el proyecto y comprobar que Cuenta recupera al usuario sin pedir contraseña.
-3. Cerrar sesión, forzar el cierre y reabrir: Cuenta debe permanecer anónima.
-4. Iniciar sesión de nuevo, forzar el cierre e interrumpir solo la conexión con la API antes de reabrir, manteniendo Metro accesible. Comprobar aviso, opción de Login y reintento; restablecer la conexión y recuperar la sesión sin contraseña.
+- Respuesta textual: «Ya probé en Expo Go, amigo: recupera la sesión al reabrir y, después de cerrar sesión, ya no entra a la cuenta. Sigamos con la prueba del reintento cuando falle la conexión.».
+- Evidencia: [expo-go-aceptacion.json](evidencias/persistencia-sesion/expo-go-aceptacion.json), confirmación del chat de recuperación válida y cierre/reapertura sin volver a Cuenta.
+- No confirma reintento sin conexión, token caducado en dispositivo, TalkBack ni inspección directa de SecureStore. El criterio de validación reúne código, pruebas automatizadas de 401 y restauración válida aceptada; no se presenta como una prueba física de caducidad.
 
-La [guía móvil](../Mobile/README.md#verificación-pendiente-en-expo-go) incluye los comandos para ambas terminales y la configuración LAN. Se conserva el entorno local existente y las credenciales del servidor. Tras la aceptación se preparará el PR único hacia `develop`, seguido de la revisión real de ZenaidaGR y la integración; el usuario actualizará la tarjeta.
+Prueba pendiente del reintento desde la copia de David:
+
+1. En Git Bash o CMD, abrir `C:\Users\David\Documents\INHALEX-Movil`. Si se utiliza la API local y el backend no está activo, ejecutar `npm run dev:server`; mantenerlo abierto. Iniciar Metro en otra terminal con `npm run dev:mobile` si hace falta, o pulsar `r` en la terminal de Metro para recargar sin cerrar la sesión desde Cuenta.
+2. Entrar en Cuenta e iniciar sesión si hace falta. Forzar el cierre de Expo Go e interrumpir solo la conexión con la API antes de reabrir, manteniendo Metro accesible. La forma de interrumpirla se adapta a si la API actual es local o remota y conserva la configuración existente.
+3. Comprobar aviso, opción de Login y reintento; restablecer la conexión y recuperar la sesión sin contraseña.
+
+La [guía móvil](../Mobile/README.md#verificación-pendiente-en-expo-go) incluye los comandos para ambas terminales y la configuración LAN. Se conserva el entorno existente y las credenciales del servidor. Tras aceptar el caso de conexión/reintento se preparará el PR único hacia `develop`, seguido de la revisión real de ZenaidaGR y la integración; el usuario actualizará la tarjeta.
