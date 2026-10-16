@@ -1,5 +1,7 @@
-import { PreparationScreen } from '@/features/shell/presentation/screens/PreparationScreen';
+import { AccountScreen } from '@/features/auth/presentation/screens/AccountScreen';
+import { useAuthSession } from '@/features/auth/presentation/context/AuthSessionProvider';
 
 export default function AccountRoute() {
-  return <PreparationScreen section="cuenta" />;
+  const { user, signOut } = useAuthSession();
+  return <AccountScreen user={user} signOut={signOut} />;
 }

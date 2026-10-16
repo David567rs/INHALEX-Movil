@@ -5,6 +5,11 @@ import type { AccessTokenProvider, FetchImplementation } from '../core/network/H
 import { ApiRegistrationRepository } from '../features/auth/data/repositories/ApiRegistrationRepository';
 import { RegistrationError } from '../features/auth/domain/errors/RegistrationError';
 import { createRegisterUser, type RegisterUser } from '../features/auth/domain/useCases/registerUser';
+import { ApiLoginRepository } from '../features/auth/data/repositories/ApiLoginRepository';
+import { createSessionTokenStore } from '../features/auth/data/storage/createSessionTokenStore';
+import { LoginError } from '../features/auth/domain/errors/LoginError';
+import { createAuthSession } from '../features/auth/domain/session/createAuthSession';
+import { createLoginUser, type LoginUserAction } from '../features/auth/domain/useCases/loginUser';
 
 export interface ApplicationServicesOptions {
   environment?: Environment;
@@ -23,7 +28,24 @@ export function createApplicationServices(options: ApplicationServicesOptions = 
     getAccessToken: options.getAccessToken,
   });
   const registerUser = createRegisterUser(new ApiRegistrationRepository(httpClient));
-  return Object.freeze({ environment, httpClient, registerUser });
+  const loginUser = createLoginUser(new ApiLoginRepository(httpClient));
+  return Object.freeze({ environment, httpClient, registerUser, loginUser });
+}
+
+/** One current session per app run. Configuration stays lazy; no startup restore. */
+export function createApplicationAuthSession(options: Omit<ApplicationServicesOptions, 'getAccessToken'> = {}) {
+  let action: LoginUserAction | undefined;
+  const runtime = createAuthSession(async (form, requestOptions) => {
+    if (!action) {
+      try {
+        action = createApplicationServices({ ...options, getAccessToken: runtime.getAccessToken }).loginUser;
+      } catch {
+        throw new LoginError('El acceso no está disponible en este momento. Inténtalo más tarde.', 'configuration');
+      }
+    }
+    return action(form, requestOptions);
+  }, createSessionTokenStore());
+  return runtime.session;
 }
 
 /** Defer configuration until submission so navigation never depends on the API. */

@@ -96,9 +96,9 @@ La actividad queda terminada cuando funciona integrada con la API, satisface su 
 
 La vinculación de EAS, credenciales de firma y configuración de Google Play se realizará antes de la entrega correspondiente. Compilar el AAB y publicarlo son operaciones distintas.
 
-## Siguiente bloque de trabajo
+## Registro de usuario integrado
 
-El backend y la base móvil se integraron mediante los PR #1 y #2. Registro de usuario continúa en `feature/registro-usuario`, con un solo PR previsto para la actividad completa. El usuario aprobó el diseño y las validaciones en Expo Go y autorizó la conexión a la API el 16 de octubre de 2026.
+El backend y la base móvil se integraron mediante los PR #1 y #2. Registro se completó en `feature/registro-usuario` y se integró mediante el [PR #3](https://github.com/David567rs/INHALEX-Movil/pull/3), con aprobación de ZenaidaGR y merge de David567rs a `develop` en `7d308e351999eb9a1dfb8e36a5f331f050f8ce61`. Backend CI y Mobile CI pasaron. El usuario aprobó el diseño, las validaciones y la conexión de Registro en Expo Go.
 
 Estado de los criterios de la tarjeta de Registro:
 
@@ -111,7 +111,7 @@ Estado de los criterios de la tarjeta de Registro:
 - [x] Manejar registro correcto: confirmación solo después de respuesta válida y limpieza del formulario.
 - [x] Mostrar mensajes de error: validación local, correo duplicado y fallos de API/conexión.
 - [x] Probar la funcionalidad de registro: el usuario confirmó en Expo Go creación de cuenta y aviso de correo duplicado.
-- [ ] Revisar el código mediante el PR y la revisión real de Zenaida.
+- [x] Revisar el código mediante el PR y la revisión real de ZenaidaGR; aprobado e integrado.
 
 Las reglas puras permanecen en el dominio y el estado del formulario en el ViewModel. Correo utiliza la misma versión de `validator` que el backend; nombre, teléfono y contraseña siguen las reglas del DTO, sin recortar contraseñas. El caso de uso revalida los datos normalizados antes de enviarlos y excluye la confirmación de contraseña.
 
@@ -125,7 +125,7 @@ Comprobaciones de esta etapa:
 - Interfaz web a 393 px contra esa API: éxito, carga con campos bloqueados, doble toque con una sola petición, 409 en correo, limpieza del error al corregirlo y salida durante la espera. Los estados y la conexión interrumpida tienen evidencia en `docs/evidencias/registro-usuario/`.
 - Expo Go: el usuario confirmó que crea la cuenta y muestra el aviso de correo duplicado. La evidencia es su confirmación en el chat; las capturas del repositorio corresponden a web.
 
-Los primeros cinco criterios ya fueron marcados por el usuario en Trello. Con la conexión implementada y la prueba confirmada en Expo Go, los primeros nueve criterios están satisfechos (9/10). El estado de Trello lo actualiza el usuario. Mantener la tarjeta «En revisión / pruebas» mientras Zenaida revisa el PR hacia `develop`; la revisión automática no sustituye esa revisión humana.
+Los diez criterios están satisfechos (10/10). La tarjeta de Registro puede quedar «Terminado»; el estado de Trello lo actualiza el usuario. La evidencia de aprobación humana es la revisión de ZenaidaGR en el PR #3.
 
 Comprobaciones de referencia, desde la copia de David y usando Git Bash o CMD:
 
@@ -135,6 +135,54 @@ Comprobaciones de referencia, desde la copia de David y usando Git Bash o CMD:
 4. Probar una interrupción de conexión y verificar el mensaje sin cierre de la app ni reenvío automático. La creación puede haber llegado al servidor aunque se pierda la respuesta.
 5. Verificar teclado, desplazamiento y lectura accesible en Android. La comprobación con lector de pantalla y la interrupción de conexión en Android siguen sin evidencia específica.
 
-El siguiente paso acordado es abrir el único PR de Registro hacia `develop` y solicitar a ZenaidaGR su revisión desde su propia cuenta. La aprobación humana y la integración permanecen pendientes.
+La revisión humana y la integración de Registro quedaron completadas mediante el PR #3.
 
 Si Expo usa un túnel o el host LAN no se detecta, configurar únicamente `EXPO_PUBLIC_API_URL=http://<IPv4-de-la-laptop>:3200/api` en `Mobile/.env` y reiniciar Metro. Conservar las credenciales en `Server/.env`.
+
+## Inicio de sesión: preparación del PR
+
+El usuario autorizó actualizar ambas copias con `develop` y empezar solo el diseño de Inicio de sesión. La copia de David y la de Zenaida se actualizaron a `7d308e3`. En Zenaida se preservó el archivo local generado `Mobile/.gitignore` en un stash identificado como «respaldo local antes de actualizar develop»; la versión integrada ya contiene ese archivo. Su copia queda en `develop`, con dependencias móviles actualizadas. La copia de David continúa en `feature/inicio-sesion`, creada desde ese mismo commit.
+
+Se adapta la presentación de `Proyecto-INHALEX/Mobile/inhalex-app/src/features/auth/presentation/screens/LoginScreen.tsx`, revisión `526a21e11da1cd1e3f6edea350c7731f90e205bf`: título «Bienvenido», correo, contraseña con mostrar/ocultar, botón «Entrar» y enlace «Crear cuenta». Se reutilizan `AuthScaffold` y `FormField` ya integrados; no se importa el ViewModel original ni su contexto de sesión.
+
+La ruta es `/sign-in`. Cuenta ofrece «Iniciar sesión» y «Crear cuenta» cuando no hay una sesión actual; Registro enlaza a Inicio de sesión. Los enlaces entre los formularios usan `replace` para evitar acumular pantallas. El usuario aprobó el diseño, los campos y las validaciones locales, y autorizó continuar con la API en esta misma rama.
+
+Las reglas de `domain/validation/loginValidation.ts` comprueban correo y contraseña obligatorios, correo válido con la misma biblioteca del backend y longitud de contraseña de 8 a 128 caracteres según `LoginDto`. La longitud se verifica con `validator/isLength`, incluyendo su tratamiento de Unicode; no se limita el input por unidades UTF-16 ni se recorta la contraseña. Una contraseña totalmente blanca se considera obligatoria como prevalidación adicional al DTO; los espacios de cualquier contraseña no blanca se conservan. No se exigen mayúsculas, números o símbolos para iniciar sesión. La pantalla muestra errores por campo, solicita foco al primero inválido después de renderizar y permite corregirlos. La etapa previa utilizaba «Validar datos» para comprobar el formato; ahora el formulario valida antes de enviar las credenciales a la API.
+
+El recorrido actual es `LoginScreen → useLoginViewModel → AuthSession → LoginUser → LoginRepository → ApiLoginRepository → HttpClient`. El caso de uso recorta y convierte a minúsculas el correo, revalida los datos de salida y conserva la contraseña exacta. El Repository realiza POST `/api/auth/login` y el mapeador acepta solo una respuesta válida con usuario y token. El ViewModel presenta carga, bloquea envíos duplicados y edición durante la petición, y cancela la espera al abandonar la vista. El error 401 muestra el mismo mensaje para correo desconocido o contraseña incorrecta; 429 informa del exceso de intentos. Los errores de conexión y almacenamiento tienen mensajes propios, sin publicar detalles técnicos ni credenciales.
+
+El coordinador conserva el JWT de forma privada y publica solamente los datos públicos del usuario en Cuenta. Antes de publicar la sesión, el adaptador nativo escribe el token en SecureStore con clave `inhalex.auth.access-token` y servicio `inhalex.auth.session`. En web el JWT permanece solo en memoria. Todavía no se leen credenciales ni se restaura la sesión al arrancar: esa implementación pertenece a la actividad siguiente, Persistencia de sesión. No se guardan contraseñas. El cierre de sesión limpia el estado local e intenta eliminar el token guardado; si el borrado falla, informa que no pudo confirmar la eliminación. El cierre local no revoca el JWT emitido por el backend. Registro conserva su comportamiento independiente: crear una cuenta no inicia sesión.
+
+Estado de la tarjeta de Inicio de sesión (el usuario actualiza Trello):
+
+- [x] Diseñar pantalla de inicio de sesión: aprobado por el usuario.
+- [x] Agregar campos de usuario/correo y contraseña: correo y contraseña aprobados por el usuario.
+- [x] Validar campos obligatorios: formato de correo y longitud de contraseña aprobados por el usuario en la etapa local.
+- [x] Conectar con la API de INHALEX: comprobado con Nest/MongoDB aislados y aceptado por el usuario en Expo Go.
+- [x] Manejar inicio de sesión correcto: el usuario confirmó que pudo entrar con la contraseña correcta en Expo Go.
+- [x] Mostrar mensaje cuando las credenciales sean incorrectas: el usuario confirmó el aviso con contraseña incorrecta en Expo Go.
+- [x] Guardar la sesión de forma segura: adaptador SecureStore con pruebas automatizadas y recorrido nativo de escritura/eliminación esperadas aceptado sin errores reportados. No se inspeccionó el almacenamiento; la restauración al arrancar corresponde a Persistencia.
+- [x] Probar la funcionalidad completa: QA web aprobada y confirmación del usuario en Expo Go de contraseña incorrecta, acceso correcto y cierre de sesión sin errores.
+- [ ] Revisar el código mediante el único PR de la actividad y la revisión real de Zenaida.
+
+Verificación de diseño: TypeScript, lint, las 50 pruebas existentes, Expo Doctor 21/21 y exportaciones web/Android aprobados. Se comprobó en web a 393 y 320 px: edición de campos, máscara y alternancia de contraseña, botón deshabilitado, navegación Cuenta → Inicio de sesión ↔ Registro → Cuenta y desplazamiento sin desbordamiento horizontal. La comprobación visual es web; teclado y lector de pantalla Android requieren revisión en dispositivo. Las capturas están en `docs/evidencias/inicio-sesion/`.
+
+Verificación de validaciones: 61 pruebas aprobadas (11 nuevas de Login), TypeScript, lint, Expo Doctor 21/21 y exportaciones web/Android. La comprobación web cubrió campos vacíos, errores al salir del campo, correo inválido, contraseña corta, corrección progresiva, foco al primer inválido, resultado válido con contraseña sin reglas fuertes y eliminación del resultado anterior al editar. Enter ejecuta la validación y conserva el foco si la contraseña no es válida; el caso web utiliza compatibilidad de `blurOnSubmit` porque React Native Web todavía no aplica `submitBehavior`. En Android se utiliza `submitBehavior` y queda pendiente la prueba del teclado en dispositivo. Se comprobó ausencia de desbordamiento horizontal en los tamaños de teléfono usados, y la navegación a Registro reinicia los valores y errores de Login. La evidencia está en `validacion-verificacion.json` y las capturas de la misma carpeta.
+
+Verificación de la conexión a la API y la sesión actual:
+
+- 105 pruebas móviles aprobadas: transporte, validación, normalización, Repositories, mapeadores, errores 401/429, cancelación, coordinación de sesión y adaptador de almacenamiento con implementación simulada.
+- TypeScript, lint, Expo Doctor 21/21 y exportaciones Android/web aprobados.
+- API real con `AuthController`, `AuthService`, `UsersService`, `UserSchema`, JWT y guard de autenticación, conectada a una base MongoDB temporal nueva. Las cuentas sintéticas se crearon mediante el registro real. Se comprobaron login 201, contraseña incorrecta y correo inexistente con 401 y el mismo mensaje, payload inválido 400 y límite de intentos 429. El token permitió GET `/api/auth/me` con 200; sin token devolvió 401. Se verificaron persistencia, bcrypt con coste 12 y actualización de `lastLoginAt`.
+- La prueba aislada no cargó `AppModule` ni el `.env` del usuario, ni utilizó su instancia MongoDB o cuentas reales. Sus resultados no acreditan almacenamiento en Android físico.
+- QA web aprobada contra esa API: formulario vacío sin petición, carga con campos bloqueados, 401 con contraseña borrada, 201 con Cuenta autenticada, doble toque con una sola petición, cierre local, salida durante la petición sin sesión tardía, 429 a 320 px sin desbordamiento y mensaje al detener la API. Evidencia: `docs/evidencias/inicio-sesion/api-verificacion.json`, `api-verificacion-aislada.json` y capturas de esa carpeta.
+
+Aceptación humana en Expo Go, 16 de octubre de 2026:
+
+- Pregunta: «¿En Expo Go apareció el aviso con contraseña incorrecta, pudiste entrar con la correcta y cerrar sesión sin errores?».
+- Respuesta textual del usuario: «Sí, los tres casos funcionaron».
+- Evidencia: [expo-go-aceptacion.json](evidencias/inicio-sesion/expo-go-aceptacion.json), basada en la confirmación del chat. No hay imágenes nativas; las capturas de la carpeta corresponden a web.
+
+El recorrido nativo implementado espera `SecureStore.setItemAsync` antes de publicar la sesión y `SecureStore.deleteItemAsync` al cerrarla. La aceptación confirma ese flujo sin errores reportados; no acredita inspección directa del token almacenado, lectura o restauración al reiniciar, ni revocación del JWT en el backend. La restauración sigue reservada para Persistencia de sesión. Teclado y lector de pantalla en Android siguen sin evidencia específica y no se atribuyen a esta respuesta.
+
+Los primeros ocho criterios quedan aceptados (8/9). Se prepara ahora un único PR de toda la actividad desde `feature/inicio-sesion` hacia `develop`; la CI remota y la revisión real de Zenaida están pendientes. La tarjeta permanece «En progreso» hasta completar la revisión y el merge. El usuario actualiza su estado en Trello; no se da por integrada la actividad.

@@ -32,19 +32,28 @@ const sections = {
     eyebrow: 'Un momento para ti',
     icon: 'person-outline',
     heading: 'Bienvenido a INHALEX',
-    description: 'Estamos preparando el acceso a tu cuenta. Aquí podrás registrarte, iniciar sesión y administrar tu información.',
+    description: 'Inicia sesión para acceder a tu cuenta o regístrate para comenzar tu experiencia con INHALEX.',
   },
 } as const;
 
-export function PreparationScreen({ section }: { section: keyof typeof sections }) {
+export function PreparationScreen({ section, notice, retry, isRetrying = false }: {
+  section: keyof typeof sections;
+  notice?: string | null;
+  retry?: () => void;
+  isRetrying?: boolean;
+}) {
   const content = sections[section];
 
   return (
     <AppScreen title={content.title} eyebrow={content.eyebrow}>
-      <View style={styles.status}>
+      {section !== 'cuenta' ? <View style={styles.status}>
         <View style={styles.statusDot} />
         <Text style={styles.statusLabel}>EN PREPARACIÓN</Text>
-      </View>
+      </View> : null}
+      {notice ? <View accessibilityLiveRegion="polite" style={styles.notice}>
+        <Text style={styles.noticeText}>{notice}</Text>
+        {retry ? <SoftPressable accessibilityRole="button" accessibilityState={{ disabled: isRetrying, busy: isRetrying }} disabled={isRetrying} onPress={retry} style={styles.retry}><Text style={styles.noticeText}>{isRetrying ? 'Eliminando…' : 'Reintentar eliminación'}</Text></SoftPressable> : null}
+      </View> : null}
       <ModuleCard
         icon={<Ionicons accessible={false} color={colors.primary} name={content.icon} size={29} />}
         title={content.heading}
@@ -52,14 +61,24 @@ export function PreparationScreen({ section }: { section: keyof typeof sections 
       />
       <View style={styles.actions}>
         {section === 'cuenta' ? (
-          <SoftPressable
-            accessibilityRole="button"
-            onPress={() => router.push('/register')}
-            style={({ pressed }) => [styles.button, pressed && styles.pressed]}
-          >
-            <Ionicons accessible={false} name="person-add-outline" size={19} color={colors.white} />
-            <Text style={styles.buttonLabel}>Crear cuenta</Text>
-          </SoftPressable>
+          <>
+            <SoftPressable
+              accessibilityRole="button"
+              onPress={() => router.push('/sign-in')}
+              style={({ pressed }) => [styles.button, pressed && styles.pressed]}
+            >
+              <Ionicons accessible={false} name="log-in-outline" size={19} color={colors.white} />
+              <Text style={styles.buttonLabel}>Iniciar sesión</Text>
+            </SoftPressable>
+            <SoftPressable
+              accessibilityRole="button"
+              onPress={() => router.push('/register')}
+              style={({ pressed }) => [styles.secondaryButton, pressed && styles.pressed]}
+            >
+              <Ionicons accessible={false} name="person-add-outline" size={19} color={colors.primaryDark} />
+              <Text style={styles.secondaryLabel}>Crear cuenta</Text>
+            </SoftPressable>
+          </>
         ) : null}
         <SoftPressable
           accessibilityRole="button"
@@ -83,6 +102,9 @@ export function PreparationScreen({ section }: { section: keyof typeof sections 
 }
 
 const styles = StyleSheet.create({
+  notice: { backgroundColor: colors.dangerSoft, borderRadius: 12, marginBottom: 18, padding: 12 },
+  noticeText: { color: colors.danger, fontSize: 13, lineHeight: 20 },
+  retry: { justifyContent: 'center', minHeight: 44 },
   status: { alignItems: 'center', alignSelf: 'flex-start', backgroundColor: colors.surfaceSoft, borderRadius: 14, flexDirection: 'row', gap: 7, marginBottom: 18, paddingHorizontal: 12, paddingVertical: 8 },
   statusDot: { backgroundColor: colors.primary, borderRadius: 4, height: 6, width: 6 },
   statusLabel: { color: colors.primaryDark, fontSize: 10, fontWeight: '700', letterSpacing: 1 },

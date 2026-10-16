@@ -1,0 +1,27 @@
+{
+  "branch": "feature/inicio-sesion",
+  "scope": "Validacion local de formato; sin verificar credenciales ni iniciar sesion",
+  "userReview": { "designApproved": true, "evidenceSource": "Confirmacion del usuario en el chat" },
+  "rules": {
+    "required": ["email", "password"],
+    "email": "validator/isEmail sobre el correo recortado, sin modificar el formulario",
+    "passwordLength": { "min": 8, "max": 128, "validator": "validator/isLength igual a LoginDto, incluyendo Unicode" },
+    "whitespaceOnlyPassword": "Error de obligatorio como prevalidacion adicional al DTO",
+    "passwordPreserved": true,
+    "registrationComplexityNotRequired": true
+  },
+  "browser": {
+    "emptyFormErrors": true,
+    "blurErrors": true,
+    "invalidEmailAndShortPassword": true,
+    "errorsUpdateOnCorrection": true,
+    "firstInvalidFieldFocused": true,
+    "validFormatNotice": true,
+    "editingClearsPreviousResult": true,
+    "enterValidatesAndKeepsInvalidPasswordFocused": true,
+    "noHorizontalOverflowAt393And320": true,
+    "navigationResetsLoginForm": true
+  },
+  "checks": { "mobileTests": 61, "newLoginTests": 11, "typecheck": "passed", "lint": "passed", "expoDoctor": "21/21", "androidExport": "passed", "webExport": "passed" },
+  "pending": ["Comprobar validaciones y teclado en Expo Go", "Lector de pantalla Android", "Conexion a API en el siguiente paso autorizado", "Revision del PR de la actividad completa"]
+}

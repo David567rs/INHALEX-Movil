@@ -59,7 +59,13 @@ export function RegisterScreen({ registerUser }: { registerUser: RegisterUser })
       footer={
         <View style={styles.footer}>
           <Text style={styles.footerText}>¿Ya tienes una cuenta?</Text>
-          <Pressable accessibilityRole="button" accessibilityState={{ disabled: true }} disabled style={styles.loginLink}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityState={{ disabled: viewModel.isSubmitting }}
+            disabled={viewModel.isSubmitting}
+            onPress={() => router.replace('/sign-in')}
+            style={({ pressed }) => [styles.loginLink, pressed && styles.pressed, viewModel.isSubmitting && styles.submitting]}
+          >
             <Text style={styles.loginLabel}>Inicia sesión</Text>
           </Pressable>
         </View>
@@ -154,5 +160,5 @@ const styles = StyleSheet.create({
   footer: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 5, justifyContent: 'center' },
   footerText: { color: colors.textMuted, fontSize: 13 },
   loginLink: { alignItems: 'center', borderRadius: 12, justifyContent: 'center', minHeight: 44, paddingHorizontal: 8 },
-  loginLabel: { color: colors.primary, fontSize: 14, fontWeight: '700', opacity: 0.65 },
+  loginLabel: { color: colors.primary, fontSize: 14, fontWeight: '700' },
 });

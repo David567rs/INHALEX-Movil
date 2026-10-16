@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-16",
+  "branch": "feature/inicio-sesion",
+  "scope": "Login API and current session; startup restoration remains a separate activity",
+  "checks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "mobileTests": { "passed": 105, "failed": 0 },
+    "expoDoctor": "21/21",
+    "androidExport": "passed",
+    "webExport": "passed",
+    "independentStaticReview": "passed after removing late keyboard dismissal on unmount"
+  },
+  "browser": {
+    "platform": "Expo web in Codex in-app browser",
+    "backend": "Real isolated AuthController/AuthService/UsersService and new temporary MongoDB; synthetic accounts only",
+    "viewports": [{ "width": 393, "height": 852 }, { "width": 320, "height": 568 }],
+    "emptyForm": "required errors; focuses email; no login request",
+    "loading": "fields, password toggle, submit and registration link disabled; back remains available",
+    "wrongCredentials": "HTTP401 generic message; email retained and password cleared",
+    "correctCredentials": "HTTP201; redirected to Cuenta, public greeting/email and five tabs; no password input",
+    "doubleClick": "one request: browser account baseline1, wrong credentials1, correct double-click1, total3",
+    "logout": "Cuenta returns to anonymous state",
+    "cancellation": "back while loading; fixture connection closed before response after311ms; remains anonymous after the delayed response window",
+    "rateLimit": "HTTP429 message on320px viewport without horizontal overflow",
+    "networkFailure": "API stopped; readable connection message, fields enabled, password cleared, no automatic retry",
+    "horizontalOverflow": false,
+    "captures": ["api-cargando.png", "api-credenciales-incorrectas.png", "api-sesion-iniciada.png", "api-sesion-cerrada.png", "api-cancelacion.png", "api-limite-intentos-compacta.png", "api-sin-conexion.png"]
+  },
+  "sessionPolicy": {
+    "nativeStorage": "JWT only in Expo SecureStore; write/delete adapter contract covered with a fake storage implementation",
+    "webStorage": "memory only; no localStorage or sessionStorage",
+    "publicState": "public user only; no JWT or password in context or ViewModel",
+    "startupReadOrRestoration": false,
+    "serverJwtRevocationOnLocalLogout": false,
+    "registrationStartsSession": false
+  },
+  "pendingAtCapture": ["Login acceptance in Expo Go", "SecureStore write/delete on physical Android", "Android keyboard and screen-reader acceptance", "Zenaida human PR review and CI"],
+  "acceptanceFollowUp": "expo-go-aceptacion.json",
+  "privateDataIncluded": false
+}

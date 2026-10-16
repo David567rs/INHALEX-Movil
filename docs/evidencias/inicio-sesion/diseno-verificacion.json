@@ -1,0 +1,20 @@
+{
+  "branch": "feature/inicio-sesion",
+  "baseDevelop": "7d308e351999eb9a1dfb8e36a5f331f050f8ce61",
+  "sourceRevision": "526a21e11da1cd1e3f6edea350c7731f90e205bf",
+  "scope": "Solo diseno: campos editables, visibilidad de contrasena y navegacion",
+  "route": "/sign-in",
+  "browser": {
+    "widths": [393, 320],
+    "noHorizontalOverflowAt320": true,
+    "fieldsEditable": true,
+    "passwordMaskedInitially": true,
+    "passwordVisibilityToggle": true,
+    "enterButtonDisabled": true,
+    "navigationAccountLoginRegisterAndBack": true,
+    "scrollToFooterAt320": true
+  },
+  "checks": { "typecheck": "passed", "lint": "passed", "existingMobileTests": 50, "expoDoctor": "21/21", "androidExport": "passed", "webExport": "passed" },
+  "userReview": { "designApproved": true, "evidenceSource": "Confirmacion del usuario en el chat" },
+  "pending": ["Teclado y lector de pantalla Android", "Conexion a API en siguientes pasos de la misma rama"]
+}
