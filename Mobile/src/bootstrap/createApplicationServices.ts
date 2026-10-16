@@ -10,6 +10,9 @@ import { createSessionTokenStore } from '../features/auth/data/storage/createSes
 import { LoginError } from '../features/auth/domain/errors/LoginError';
 import { createAuthSession } from '../features/auth/domain/session/createAuthSession';
 import { createLoginUser, type LoginUserAction } from '../features/auth/domain/useCases/loginUser';
+import { ApiSessionRepository } from '../features/auth/data/repositories/ApiSessionRepository';
+import { SessionError } from '../features/auth/domain/errors/SessionError';
+import { createVerifySession } from '../features/auth/domain/useCases/verifySession';
 
 export interface ApplicationServicesOptions {
   environment?: Environment;
@@ -32,9 +35,24 @@ export function createApplicationServices(options: ApplicationServicesOptions = 
   return Object.freeze({ environment, httpClient, registerUser, loginUser });
 }
 
-/** One current session per app run. Configuration stays lazy; no startup restore. */
+/** Lazy API composition: an empty store never needs environment configuration or HTTP. */
 export function createApplicationAuthSession(options: Omit<ApplicationServicesOptions, 'getAccessToken'> = {}) {
   let action: LoginUserAction | undefined;
+  const verifySession = createVerifySession(new ApiSessionRepository((token) => {
+    try {
+      const environment = options.environment ?? readEnvironment();
+      // This candidate is used only to validate /me; the running session is still anonymous.
+      return new HttpClient({
+        baseUrl: environment.apiUrl,
+        isDevelopment: environment.isDevelopment,
+        requestTimeoutMs: environment.requestTimeoutMs,
+        fetch: options.fetch,
+        getAccessToken: () => token,
+      });
+    } catch {
+      throw new SessionError('La comprobación de sesión no está disponible en este momento. Inténtalo más tarde.', 'configuration');
+    }
+  }));
   const runtime = createAuthSession(async (form, requestOptions) => {
     if (!action) {
       try {
@@ -44,7 +62,7 @@ export function createApplicationAuthSession(options: Omit<ApplicationServicesOp
       }
     }
     return action(form, requestOptions);
-  }, createSessionTokenStore());
+  }, createSessionTokenStore(), verifySession);
   return runtime.session;
 }
 

@@ -10,7 +10,11 @@ import type { LoginField } from '../../domain/validation/loginValidation';
 import type { AuthSession } from '../../domain/session/AuthSession';
 
 /** Renders the ViewModel; the composition root supplies the sign-in operation. */
-export function LoginScreen({ signIn }: { signIn: AuthSession['signIn'] }) {
+export function LoginScreen({ signIn, sessionMessage, retrySession }: {
+  signIn: AuthSession['signIn'];
+  sessionMessage?: string | null;
+  retrySession?: AuthSession['restore'];
+}) {
   const viewModel = useLoginViewModel(signIn);
   const emailInput = useRef<TextInput>(null);
   const passwordInput = useRef<TextInput>(null);
@@ -49,6 +53,10 @@ export function LoginScreen({ signIn }: { signIn: AuthSession['signIn'] }) {
         </View>
       }
     >
+      {sessionMessage && !viewModel.message ? <View accessibilityLiveRegion="polite" style={styles.sessionNotice}>
+        <Text style={styles.sessionNoticeLabel}>{sessionMessage}</Text>
+        {retrySession ? <Pressable accessibilityRole="button" disabled={viewModel.isSubmitting} onPress={retrySession} style={styles.retrySession}><Text style={styles.registerLabel}>Reintentar sesión guardada</Text></Pressable> : null}
+      </View> : null}
       <FormField
         ref={emailInput} label="Correo electrónico" icon="mail-outline" placeholder="tu@email.com"
         value={viewModel.form.email} error={viewModel.errors.email}
@@ -94,6 +102,9 @@ export function LoginScreen({ signIn }: { signIn: AuthSession['signIn'] }) {
 }
 
 const styles = StyleSheet.create({
+  sessionNotice: { backgroundColor: colors.surfaceSoft, borderRadius: 12, marginBottom: 18, padding: 12 },
+  sessionNoticeLabel: { color: colors.textMuted, fontSize: 13, lineHeight: 20 },
+  retrySession: { justifyContent: 'center', minHeight: 44 },
   notice: { alignItems: 'flex-start', borderRadius: 12, flexDirection: 'row', gap: 8, marginBottom: 16, padding: 12 },
   invalidNotice: { backgroundColor: colors.dangerSoft },
   noticeLabel: { flex: 1, fontSize: 13, lineHeight: 19 },

@@ -1,0 +1,555 @@
+{
+  "status": "passed",
+  "startedAt": "2026-10-16T11:19:13.831Z",
+  "completedAt": "2026-10-16T11:19:31.277Z",
+  "scope": "Real HTTP integration using current Mobile domain/data/core and real isolated Nest/Mongo components. Separate new Node processes simulate reopen; native storage is a private-file simulation.",
+  "nativeSecureStoreTested": false,
+  "physicalAndroidTested": false,
+  "webDurableStorageImplemented": false,
+  "actualComponents": [
+    "SecureSessionTokenStore",
+    "createAuthSession",
+    "createLoginUser",
+    "ApiLoginRepository",
+    "createVerifySession",
+    "ApiSessionRepository",
+    "HttpClient"
+  ],
+  "eachPhaseUsedFreshNodeProcess": true,
+  "finalFixtureProfileMode": "real",
+  "phases": [
+    {
+      "status": "passed",
+      "phase": "login",
+      "pid": 20088,
+      "startedAt": "2026-10-16T11:19:14.280Z",
+      "completedAt": "2026-10-16T11:19:14.868Z",
+      "durationMs": 587,
+      "publicFinalState": "authenticated",
+      "publicSnapshotsCredentialFree": true,
+      "checks": {
+        "realLogin201": true,
+        "privateFileWritten": true,
+        "storageWriteAwaitedBeforeAuthentication": true,
+        "normalizedEmail": true
+      },
+      "states": [
+        "checking",
+        "anonymous",
+        "authenticated"
+      ],
+      "events": [
+        "storage-read-completed",
+        "state-anonymous",
+        "http-201",
+        "storage-write-completed",
+        "state-authenticated"
+      ],
+      "storageOperations": [
+        {
+          "method": "getItemAsync",
+          "step": "started",
+          "key": "inhalex.auth.access-token",
+          "options": {
+            "keychainAccessible": 6,
+            "keychainService": "inhalex.auth.session",
+            "requireAuthentication": false
+          }
+        },
+        {
+          "method": "getItemAsync",
+          "step": "completed",
+          "key": "inhalex.auth.access-token"
+        },
+        {
+          "method": "setItemAsync",
+          "step": "started",
+          "key": "inhalex.auth.access-token",
+          "options": {
+            "keychainAccessible": 6,
+            "keychainService": "inhalex.auth.session",
+            "requireAuthentication": false
+          }
+        },
+        {
+          "method": "setItemAsync",
+          "step": "completed",
+          "key": "inhalex.auth.access-token"
+        }
+      ],
+      "http": [
+        {
+          "method": "POST",
+          "path": "/api/auth/login",
+          "status": 201,
+          "durationMs": 331,
+          "aborted": false
+        }
+      ],
+      "fixtureProfileRequestDelta": 0,
+      "fixtureLoginRequestDelta": 1,
+      "storageCoverage": "SecureSessionTokenStore real; getItemAsync/setItemAsync/deleteItemAsync simulated with a private temporary file and awaited delays. No physical SecureStore or device OS tested.",
+      "optionsCoverage": "Same key and options forwarded for every operation. keychainAccessible=6 is the installed SDK symbolic setting; native enforcement is not exercised.",
+      "envFilesRead": false,
+      "webDurableStorageImplemented": false
+    },
+    {
+      "status": "passed",
+      "phase": "restore",
+      "pid": 37776,
+      "startedAt": "2026-10-16T11:19:15.299Z",
+      "completedAt": "2026-10-16T11:19:17.431Z",
+      "durationMs": 2130,
+      "publicFinalState": "authenticated",
+      "publicSnapshotsCredentialFree": true,
+      "checks": {
+        "restoredFromPriorProcessFile": true,
+        "profile200": true,
+        "sameCredentialPreserved": true,
+        "tokenWithheldDuringVerification": true
+      },
+      "states": [
+        "checking",
+        "authenticated"
+      ],
+      "events": [
+        "storage-read-completed",
+        "http-200",
+        "state-authenticated"
+      ],
+      "storageOperations": [
+        {
+          "method": "getItemAsync",
+          "step": "started",
+          "key": "inhalex.auth.access-token",
+          "options": {
+            "keychainAccessible": 6,
+            "keychainService": "inhalex.auth.session",
+            "requireAuthentication": false
+          }
+        },
+        {
+          "method": "getItemAsync",
+          "step": "completed",
+          "key": "inhalex.auth.access-token"
+        }
+      ],
+      "http": [
+        {
+          "method": "GET",
+          "path": "/api/auth/me",
+          "status": 200,
+          "durationMs": 2017,
+          "aborted": false
+        }
+      ],
+      "fixtureProfileRequestDelta": 1,
+      "fixtureLoginRequestDelta": 0,
+      "storageCoverage": "SecureSessionTokenStore real; getItemAsync/setItemAsync/deleteItemAsync simulated with a private temporary file and awaited delays. No physical SecureStore or device OS tested.",
+      "optionsCoverage": "Same key and options forwarded for every operation. keychainAccessible=6 is the installed SDK symbolic setting; native enforcement is not exercised.",
+      "envFilesRead": false,
+      "webDurableStorageImplemented": false
+    },
+    {
+      "status": "passed",
+      "phase": "logout",
+      "pid": 23880,
+      "startedAt": "2026-10-16T11:19:17.874Z",
+      "completedAt": "2026-10-16T11:19:20.075Z",
+      "durationMs": 2200,
+      "publicFinalState": "anonymous",
+      "publicSnapshotsCredentialFree": true,
+      "checks": {
+        "profile200BeforeLogout": true,
+        "storageDeleteAwaited": true,
+        "privateFileRemoved": true,
+        "anonymousAfterLogout": true
+      },
+      "states": [
+        "checking",
+        "authenticated",
+        "anonymous"
+      ],
+      "events": [
+        "storage-read-completed",
+        "http-200",
+        "state-authenticated",
+        "state-anonymous",
+        "storage-delete-completed"
+      ],
+      "storageOperations": [
+        {
+          "method": "getItemAsync",
+          "step": "started",
+          "key": "inhalex.auth.access-token",
+          "options": {
+            "keychainAccessible": 6,
+            "keychainService": "inhalex.auth.session",
+            "requireAuthentication": false
+          }
+        },
+        {
+          "method": "getItemAsync",
+          "step": "completed",
+          "key": "inhalex.auth.access-token"
+        },
+        {
+          "method": "deleteItemAsync",
+          "step": "started",
+          "key": "inhalex.auth.access-token",
+          "options": {
+            "keychainAccessible": 6,
+            "keychainService": "inhalex.auth.session",
+            "requireAuthentication": false
+          }
+        },
+        {
+          "method": "deleteItemAsync",
+          "step": "completed",
+          "key": "inhalex.auth.access-token"
+        }
+      ],
+      "http": [
+        {
+          "method": "GET",
+          "path": "/api/auth/me",
+          "status": 200,
+          "durationMs": 2015,
+          "aborted": false
+        }
+      ],
+      "fixtureProfileRequestDelta": 1,
+      "fixtureLoginRequestDelta": 0,
+      "storageCoverage": "SecureSessionTokenStore real; getItemAsync/setItemAsync/deleteItemAsync simulated with a private temporary file and awaited delays. No physical SecureStore or device OS tested.",
+      "optionsCoverage": "Same key and options forwarded for every operation. keychainAccessible=6 is the installed SDK symbolic setting; native enforcement is not exercised.",
+      "envFilesRead": false,
+      "webDurableStorageImplemented": false
+    },
+    {
+      "status": "passed",
+      "phase": "anonymous",
+      "pid": 20768,
+      "startedAt": "2026-10-16T11:19:20.500Z",
+      "completedAt": "2026-10-16T11:19:20.617Z",
+      "durationMs": 116,
+      "publicFinalState": "anonymous",
+      "publicSnapshotsCredentialFree": true,
+      "checks": {
+        "noFileAfterPriorProcessLogout": true,
+        "freshProcessAnonymous": true,
+        "httpRequests": 0
+      },
+      "states": [
+        "checking",
+        "anonymous"
+      ],
+      "events": [
+        "storage-read-completed",
+        "state-anonymous"
+      ],
+      "storageOperations": [
+        {
+          "method": "getItemAsync",
+          "step": "started",
+          "key": "inhalex.auth.access-token",
+          "options": {
+            "keychainAccessible": 6,
+            "keychainService": "inhalex.auth.session",
+            "requireAuthentication": false
+          }
+        },
+        {
+          "method": "getItemAsync",
+          "step": "completed",
+          "key": "inhalex.auth.access-token"
+        }
+      ],
+      "http": [],
+      "fixtureProfileRequestDelta": 0,
+      "fixtureLoginRequestDelta": 0,
+      "storageCoverage": "SecureSessionTokenStore real; getItemAsync/setItemAsync/deleteItemAsync simulated with a private temporary file and awaited delays. No physical SecureStore or device OS tested.",
+      "optionsCoverage": "Same key and options forwarded for every operation. keychainAccessible=6 is the installed SDK symbolic setting; native enforcement is not exercised.",
+      "envFilesRead": false,
+      "webDurableStorageImplemented": false
+    },
+    {
+      "status": "passed",
+      "phase": "expired",
+      "pid": 31292,
+      "startedAt": "2026-10-16T11:19:21.065Z",
+      "completedAt": "2026-10-16T11:19:23.369Z",
+      "durationMs": 2302,
+      "publicFinalState": "anonymous",
+      "publicSnapshotsCredentialFree": true,
+      "checks": {
+        "signedExpiredToken401": true,
+        "privateFileRemovedAfter401": true,
+        "anonymousAfter401": true
+      },
+      "states": [
+        "checking",
+        "anonymous"
+      ],
+      "events": [
+        "storage-write-completed",
+        "storage-read-completed",
+        "http-401",
+        "storage-delete-completed",
+        "state-anonymous"
+      ],
+      "storageOperations": [
+        {
+          "method": "setItemAsync",
+          "step": "started",
+          "key": "inhalex.auth.access-token",
+          "options": {
+            "keychainAccessible": 6,
+            "keychainService": "inhalex.auth.session",
+            "requireAuthentication": false
+          }
+        },
+        {
+          "method": "setItemAsync",
+          "step": "completed",
+          "key": "inhalex.auth.access-token"
+        },
+        {
+          "method": "getItemAsync",
+          "step": "started",
+          "key": "inhalex.auth.access-token",
+          "options": {
+            "keychainAccessible": 6,
+            "keychainService": "inhalex.auth.session",
+            "requireAuthentication": false
+          }
+        },
+        {
+          "method": "getItemAsync",
+          "step": "completed",
+          "key": "inhalex.auth.access-token"
+        },
+        {
+          "method": "deleteItemAsync",
+          "step": "started",
+          "key": "inhalex.auth.access-token",
+          "options": {
+            "keychainAccessible": 6,
+            "keychainService": "inhalex.auth.session",
+            "requireAuthentication": false
+          }
+        },
+        {
+          "method": "deleteItemAsync",
+          "step": "completed",
+          "key": "inhalex.auth.access-token"
+        }
+      ],
+      "http": [
+        {
+          "method": "GET",
+          "path": "/api/auth/me",
+          "status": 401,
+          "durationMs": 2020,
+          "aborted": false
+        }
+      ],
+      "fixtureProfileRequestDelta": 1,
+      "fixtureLoginRequestDelta": 0,
+      "storageCoverage": "SecureSessionTokenStore real; getItemAsync/setItemAsync/deleteItemAsync simulated with a private temporary file and awaited delays. No physical SecureStore or device OS tested.",
+      "optionsCoverage": "Same key and options forwarded for every operation. keychainAccessible=6 is the installed SDK symbolic setting; native enforcement is not exercised.",
+      "envFilesRead": false,
+      "webDurableStorageImplemented": false
+    },
+    {
+      "status": "passed",
+      "phase": "server-retry",
+      "pid": 32412,
+      "startedAt": "2026-10-16T11:19:23.772Z",
+      "completedAt": "2026-10-16T11:19:28.094Z",
+      "durationMs": 4321,
+      "publicFinalState": "authenticated",
+      "publicSnapshotsCredentialFree": true,
+      "checks": {
+        "fixture503RecoveryError": true,
+        "credentialPreservedAfter503": true,
+        "noAuthenticationOnError": true,
+        "retryWithSameCredential200": true
+      },
+      "states": [
+        "checking",
+        "recovery-error",
+        "checking",
+        "authenticated"
+      ],
+      "events": [
+        "storage-write-completed",
+        "storage-read-completed",
+        "http-503",
+        "state-recovery-error",
+        "state-checking",
+        "storage-read-completed",
+        "http-200",
+        "state-authenticated"
+      ],
+      "storageOperations": [
+        {
+          "method": "setItemAsync",
+          "step": "started",
+          "key": "inhalex.auth.access-token",
+          "options": {
+            "keychainAccessible": 6,
+            "keychainService": "inhalex.auth.session",
+            "requireAuthentication": false
+          }
+        },
+        {
+          "method": "setItemAsync",
+          "step": "completed",
+          "key": "inhalex.auth.access-token"
+        },
+        {
+          "method": "getItemAsync",
+          "step": "started",
+          "key": "inhalex.auth.access-token",
+          "options": {
+            "keychainAccessible": 6,
+            "keychainService": "inhalex.auth.session",
+            "requireAuthentication": false
+          }
+        },
+        {
+          "method": "getItemAsync",
+          "step": "completed",
+          "key": "inhalex.auth.access-token"
+        },
+        {
+          "method": "getItemAsync",
+          "step": "started",
+          "key": "inhalex.auth.access-token",
+          "options": {
+            "keychainAccessible": 6,
+            "keychainService": "inhalex.auth.session",
+            "requireAuthentication": false
+          }
+        },
+        {
+          "method": "getItemAsync",
+          "step": "completed",
+          "key": "inhalex.auth.access-token"
+        }
+      ],
+      "http": [
+        {
+          "method": "GET",
+          "path": "/api/auth/me",
+          "status": 503,
+          "durationMs": 2013,
+          "aborted": false
+        },
+        {
+          "method": "GET",
+          "path": "/api/auth/me",
+          "status": 200,
+          "durationMs": 2022,
+          "aborted": false
+        }
+      ],
+      "fixtureProfileRequestDelta": 2,
+      "fixtureLoginRequestDelta": 0,
+      "storageCoverage": "SecureSessionTokenStore real; getItemAsync/setItemAsync/deleteItemAsync simulated with a private temporary file and awaited delays. No physical SecureStore or device OS tested.",
+      "optionsCoverage": "Same key and options forwarded for every operation. keychainAccessible=6 is the installed SDK symbolic setting; native enforcement is not exercised.",
+      "envFilesRead": false,
+      "webDurableStorageImplemented": false
+    },
+    {
+      "status": "passed",
+      "phase": "logout-during-restore",
+      "pid": 5628,
+      "startedAt": "2026-10-16T11:19:28.501Z",
+      "completedAt": "2026-10-16T11:19:31.181Z",
+      "durationMs": 2678,
+      "publicFinalState": "anonymous",
+      "publicSnapshotsCredentialFree": true,
+      "checks": {
+        "requestReachedRealApi": true,
+        "logoutDuringDelayedProfile": true,
+        "requestAborted": true,
+        "fixtureConnectionClosed": true,
+        "noLateAuthentication": true,
+        "privateFileRemoved": true
+      },
+      "states": [
+        "checking",
+        "anonymous"
+      ],
+      "events": [
+        "storage-write-completed",
+        "storage-read-completed",
+        "state-anonymous",
+        "storage-delete-completed"
+      ],
+      "storageOperations": [
+        {
+          "method": "setItemAsync",
+          "step": "started",
+          "key": "inhalex.auth.access-token",
+          "options": {
+            "keychainAccessible": 6,
+            "keychainService": "inhalex.auth.session",
+            "requireAuthentication": false
+          }
+        },
+        {
+          "method": "setItemAsync",
+          "step": "completed",
+          "key": "inhalex.auth.access-token"
+        },
+        {
+          "method": "getItemAsync",
+          "step": "started",
+          "key": "inhalex.auth.access-token",
+          "options": {
+            "keychainAccessible": 6,
+            "keychainService": "inhalex.auth.session",
+            "requireAuthentication": false
+          }
+        },
+        {
+          "method": "getItemAsync",
+          "step": "completed",
+          "key": "inhalex.auth.access-token"
+        },
+        {
+          "method": "deleteItemAsync",
+          "step": "started",
+          "key": "inhalex.auth.access-token",
+          "options": {
+            "keychainAccessible": 6,
+            "keychainService": "inhalex.auth.session",
+            "requireAuthentication": false
+          }
+        },
+        {
+          "method": "deleteItemAsync",
+          "step": "completed",
+          "key": "inhalex.auth.access-token"
+        }
+      ],
+      "http": [
+        {
+          "method": "GET",
+          "path": "/api/auth/me",
+          "status": null,
+          "durationMs": 199,
+          "aborted": true
+        }
+      ],
+      "fixtureProfileRequestDelta": 1,
+      "fixtureLoginRequestDelta": 0,
+      "storageCoverage": "SecureSessionTokenStore real; getItemAsync/setItemAsync/deleteItemAsync simulated with a private temporary file and awaited delays. No physical SecureStore or device OS tested.",
+      "optionsCoverage": "Same key and options forwarded for every operation. keychainAccessible=6 is the installed SDK symbolic setting; native enforcement is not exercised.",
+      "envFilesRead": false,
+      "webDurableStorageImplemented": false
+    }
+  ]
+}
