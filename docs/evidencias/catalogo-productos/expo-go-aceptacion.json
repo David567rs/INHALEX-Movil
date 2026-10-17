@@ -2,12 +2,14 @@
   "activity": "Catálogo de productos",
   "date": "2026-10-17",
   "branch": "feature/catalogo-productos",
-  "phase": "design-accepted-api-authorized",
+  "phase": "api-happy-path-accepted-error-retry-pending",
   "platform": "Expo Go",
   "evidenceType": "human_chat_confirmation",
   "userResponse": "Ya revisé el Catálogo en Expo Go, amigo, y me gustó. Sigamos con la conexión a la API en la misma rama, manteniendo MVVM y Repository. ¿Qué punto puedo marcar en Trello?",
   "acceptedCriteria": [
-    "Diseñar pantalla de catálogo"
+    "Diseñar pantalla del catálogo",
+    "Obtener productos desde la API",
+    "Mostrar nombre, imagen, precio y datos principales"
   ],
   "designAcceptance": {
     "status": "accepted_by_user",
@@ -19,21 +21,60 @@
     "authorizedByUser": true,
     "branch": "feature/catalogo-productos",
     "architecture": "MVVM y Repository",
-    "status": "in_progress",
-    "results": "pending",
-    "validation": "pending",
-    "acceptedByThisConfirmation": false
+    "status": "happy_path_accepted_by_user",
+    "results": "El usuario confirma productos, fotos, precios y Actualizar catálogo en Expo Go.",
+    "validation": "Prueba física de error y reintento pendiente; carga, vacío y paginación no confirmados por el usuario.",
+    "acceptedByDesignConfirmation": false,
+    "acceptedBySubsequentFunctionalConfirmation": true
+  },
+  "functionalConfirmation": {
+    "date": "2026-10-17",
+    "userResponse": "Ya probé el Catálogo en Expo Go, amigo: aparecen los productos, fotos y precios, y funciona Actualizar catálogo. ¿Qué puntos marco en Trello? Sigamos con la prueba de error y reintento.",
+    "productsVisible": true,
+    "photosVisible": true,
+    "pricesVisible": true,
+    "refreshWorks": true,
+    "agentObservedPhysicalDevice": false,
+    "attachedScreenshot": "Trello checklist; not a native app screenshot"
+  },
+  "checklist": {
+    "acceptedCriteria": 3,
+    "totalCriteria": 9,
+    "remainingCriteria": [
+      "Manejar estado de carga",
+      "Mostrar mensaje cuando no existan productos",
+      "Manejar errores de conexión",
+      "Verificar navegación al detalle del producto",
+      "Probar la funcionalidad",
+      "Revisar el código"
+    ],
+    "detailNavigationDependency": "Pendiente de la actividad feature/detalle-producto, posterior según el plan; no implementada ni aceptada."
+  },
+  "nextNativeTest": {
+    "status": "awaiting_user_result",
+    "backend": "local laptop",
+    "steps": [
+      "Detener solo el backend con Ctrl+C, manteniendo Metro y Expo Go abiertos.",
+      "Tocar Actualizar catálogo y comprobar aviso de conexión conservando productos; la espera puede llegar a 15 segundos.",
+      "Ejecutar npm run dev:server desde la raíz del proyecto y esperar a que Nest esté listo.",
+      "Tocar Actualizar catálogo otra vez y comprobar que desaparece el aviso y se recupera la consulta."
+    ],
+    "retryButtonScope": "Con productos previos el reintento es Actualizar catálogo. Reintentar aparece en el fallo de carga inicial sin productos."
   },
   "trello": {
     "taskStatus": "En progreso",
-    "criterionThatMayBeMarked": "Diseñar pantalla de catálogo",
+    "criteriaThatMayBeMarked": [
+      "Diseñar pantalla del catálogo",
+      "Obtener productos desde la API",
+      "Mostrar nombre, imagen, precio y datos principales"
+    ],
     "updatedByAgent": false,
     "updateResponsibility": "user"
   },
   "limitations": [
     "La evidencia corresponde únicamente a la respuesta textual del usuario en el chat.",
     "No hay capturas nativas ni observación directa del dispositivo por el agente.",
-    "Solo se acepta el diseño; esta respuesta no acredita conexión, datos reales ni otros criterios funcionales de Catálogo.",
+    "La confirmación inicial acepta el diseño; la confirmación funcional posterior acepta consulta, presentación y actualización, sin acreditar todos los criterios de Catálogo.",
     "La evidencia anterior de la vista previa local conserva su alcance y sus precios de demostración.",
     "No confirma pruebas específicas de TalkBack, escalado de fuente nativo o movimiento reducido en dispositivo."
   ],

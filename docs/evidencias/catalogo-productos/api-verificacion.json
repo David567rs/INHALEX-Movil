@@ -4,7 +4,7 @@
   "date": "2026-10-17",
   "branch": "feature/catalogo-productos",
   "designAcceptance": "Accepted by user in Expo Go; exact quote in expo-go-aceptacion.json",
-  "nativeApiAcceptance": "pending-user",
+  "nativeApiAcceptance": "User confirmed products, photos, prices and refresh in Expo Go; native error/retry and remaining checklist pending.",
   "architecture": {
     "flow": "CatalogScreen → useCatalogViewModel/createCatalogController → ListCatalog → CatalogRepository → ApiCatalogRepository → HttpClient",
     "composition": "bootstrap/createCatalogAction",
@@ -122,7 +122,7 @@
     "captureScope": "Capture filenames were reviewed against pixels. Some screenshots lagged one rendered state; incomplete or redundant frames were discarded and retained files are labelled by what they actually show. Final pagination, refresh failure, malformed response and network failure were verified from the rendered DOM, not claimed as captured final states."
   },
   "limits": [
-    "API acceptance on physical Expo Go pending",
+    "Full API checklist on physical Expo Go pending; happy-path listing and refresh accepted by user chat confirmation",
     "HTTP fixture uses simulated Mongo models and does not prove a real database read",
     "Native pull-to-refresh gesture, TalkBack, enlarged fonts and reduced-motion setting not physically exercised",
     "Search,categories,filters,details,favorites,bag remain separate activities"
@@ -130,9 +130,11 @@
   "trello": {
     "updatedBy": "user",
     "acceptedNow": [
-      "Diseñar pantalla de catálogo"
+      "Diseñar pantalla del catálogo",
+      "Obtener productos desde la API",
+      "Mostrar nombre, imagen, precio y datos principales"
     ],
-    "apiCriteria": "pending Expo Go confirmation",
+    "apiCriteria": "3 of 9 criteria accepted by user; native error/retry, loading, empty, detail navigation, full functionality and PR review pending",
     "status": "En progreso",
     "review": "future activity PR"
   },
