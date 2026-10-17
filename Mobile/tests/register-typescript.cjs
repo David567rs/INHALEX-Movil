@@ -8,11 +8,14 @@ const sourceRoots = [
   '../src/core',
   '../src/features/auth/domain',
   '../src/features/auth/data',
+  '../src/features/catalog/domain',
+  '../src/features/catalog/data',
+  '../src/features/catalog/presentation/state',
 ].map((directory) => fs.realpathSync(path.resolve(__dirname, directory)) + path.sep);
 require.extensions['.ts'] = (module, filename) => {
   const sourceFile = fs.realpathSync(filename);
   if (!sourceRoots.some((directory) => sourceFile.startsWith(directory))) {
-    throw new Error('The test loader only compiles allowed core, auth domain and auth data TypeScript files.');
+    throw new Error('The test loader only compiles allowed application TypeScript files.');
   }
   const result = ts.transpileModule(fs.readFileSync(filename, 'utf8'), {
     fileName: filename,

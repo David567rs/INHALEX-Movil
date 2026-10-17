@@ -1,8 +1,8 @@
-import { createCatalogPreview } from '@/bootstrap/createCatalogPreview';
+import { createCatalogAction } from '@/bootstrap/createCatalogAction';
 import { CatalogScreen } from '@/features/catalog/presentation/screens/CatalogScreen';
 
-const readPreview = createCatalogPreview();
+const listCatalog = createCatalogAction();
 
 export default function CatalogRoute() {
-  return <CatalogScreen readPreview={readPreview} />;
+  return <CatalogScreen listCatalog={listCatalog} />;
 }

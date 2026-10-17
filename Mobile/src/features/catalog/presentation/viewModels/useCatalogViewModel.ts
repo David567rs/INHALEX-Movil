@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import type { CatalogPreviewImageKey } from '../../domain/models/CatalogPreviewProduct';
-import type { ReadCatalogPreview } from '../../domain/useCases/readCatalogPreview';
+import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
+import type { ListCatalog } from '../../domain/useCases/listCatalog';
+import { createCatalogController } from '../state/createCatalogController';
 
 export type CatalogLayout = 'grid' | 'list';
 
@@ -9,24 +9,30 @@ export type CatalogProductViewModel = Readonly<{
   name: string;
   aromaNote: string;
   priceLabel: string;
-  imageKey: CatalogPreviewImageKey;
+  originalPriceLabel: string | null;
+  image: string | null;
+  inStock: boolean;
 }>;
 
-const priceFormatter = new Intl.NumberFormat('es-MX', {
-  style: 'currency',
-  currency: 'MXN',
-});
+function priceLabel(price: number, currency: string) {
+  return `${new Intl.NumberFormat('es-MX', { style: 'currency', currency }).format(price)} ${currency}`;
+}
 
-/** Presentation state for the static design preview, with no API or product actions. */
-export function useCatalogViewModel(readPreview: ReadCatalogPreview) {
-  const [products] = useState<readonly CatalogProductViewModel[]>(() => readPreview().map((product) => ({
+export function useCatalogViewModel(listCatalog: ListCatalog) {
+  const [controller] = useState(() => createCatalogController(listCatalog));
+  const state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getSnapshot);
+  useEffect(() => { controller.start(); return controller.stop; }, [controller]);
+  const products = useMemo<readonly CatalogProductViewModel[]>(() => state.products.map((product) => ({
     id: product.id,
     name: product.name,
-    aromaNote: product.aromaNote,
-    priceLabel: `${priceFormatter.format(product.priceMinor / 100)} ${product.currency}`,
-    imageKey: product.imageKey,
-  })));
+    aromaNote: product.aromas.length ? product.aromas.join(' · ') : product.description,
+    priceLabel: priceLabel(product.price, product.currency),
+    originalPriceLabel: product.originalPrice === null ? null : priceLabel(product.originalPrice, product.currency),
+    image: product.image,
+    inStock: product.inStock,
+  })), [state.products]);
   const [layout, setLayout] = useState<CatalogLayout>('grid');
 
-  return { products, total: products.length, layout, setLayout };
+  return { ...state, products, layout, setLayout, refresh: controller.refresh,
+    loadMore: controller.loadMore, hasMore: state.page < state.totalPages };
 }

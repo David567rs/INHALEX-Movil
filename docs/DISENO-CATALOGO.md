@@ -1,6 +1,6 @@
 # Diseño de Catálogo
 
-Estado del 17 de octubre de 2026: diseño local implementado en `feature/catalogo-productos`, creada por David desde el merge de Persistencia `d5171b2510a1ba6a17fa0d95d4e01a61cbbff7fb`. Se recuperó y adaptó la presentación original de INHALEX. La aceptación del diseño en Expo Go está pendiente; la tarjeta sigue «En progreso», con Trello a cargo del usuario. Aún no hay PR, push de esta etapa ni criterios funcionales aceptados de Catálogo.
+Estado del 17 de octubre de 2026: diseño local implementado y aceptado por el usuario en Expo Go en `feature/catalogo-productos`, creada desde el merge de Persistencia `d5171b2510a1ba6a17fa0d95d4e01a61cbbff7fb`. El usuario autorizó continuar con la conexión a la API en la misma rama, manteniendo MVVM y Repository. Solo queda aceptado «Diseñar pantalla de catálogo»; la conexión está implementada, pendiente de aceptación funcional en Expo Go y revisión por PR. Catálogo sigue «En progreso», con Trello a cargo del usuario y sin PR ni push de esta etapa.
 
 ## Origen y recursos
 
@@ -33,9 +33,9 @@ Se recupera la presentación necesaria de la fuente sin importar sus dependencia
 
 El dominio define el contrato y los datos mínimos de la vista previa. Una implementación local del Repository entrega los ejemplos estáticos y sus referencias a imágenes incluidas en la app. El ViewModel recibe la operación del dominio, administra los datos de presentación y la elección cuadrícula/lista. La View muestra ese estado y comunica acciones; `bootstrap` compone e inyecta las dependencias concretas.
 
-El catálogo de diseño no utiliza HTTP, el backend ni MongoDB y no se conecta a Repositories de productos de la app anterior. La restauración de sesión ya integrada conserva su propio recorrido; su tráfico no se atribuye a esta vista previa. La conexión posterior a la API sustituirá la fuente local dentro de esta misma actividad y tendrá validaciones propias.
+El catálogo de diseño no utilizó HTTP, el backend ni MongoDB y no se conectó a Repositories de productos de la app anterior. La restauración de sesión integrada conservó su propio recorrido; su tráfico no se atribuye a esta vista previa. La conexión a la API ya se implementó en esta misma actividad conservando View, ViewModel, dominio, Repository y composición de dependencias. El Repository local de vista previa fue sustituido; este documento y sus capturas conservan el alcance histórico de diseño. El contrato y las nuevas comprobaciones se documentan por separado en [CONEXION-CATALOGO.md](CONEXION-CATALOGO.md).
 
-## Comprobaciones realizadas y aceptación pendiente
+## Comprobaciones históricas de la vista previa
 
 Pasaron TypeScript, lint global sin advertencias, las 146 pruebas existentes, Expo Doctor 21/21 y las exportaciones finales Android (1391 módulos) y web (939 módulos). No se añadieron pruebas nuevas para esta etapa de presentación estática. La exportación no sustituye la aceptación del diseño en un teléfono.
 
@@ -51,4 +51,10 @@ La evidencia está en [verificacion-diseno.json](evidencias/catalogo-productos/v
 
 La QA del catálogo se realizó con la API de 3200 apagada, sin consultas del catálogo. No se ejercitaron escalado de fuente nativo, TalkBack ni movimiento reducido en dispositivo. El uso de una columna con texto ampliado es una política del código, no evidencia de una prueba física.
 
-Falta comprobar y aceptar el diseño en Expo Go. La aceptación visual no acredita consulta a la API, inventario, búsqueda, categorías, detalle, favoritos o bolsa. La actividad sigue «En progreso» y su estado en Trello lo actualiza el usuario. Se conserva un único PR posterior hacia `develop` cuando se complete la actividad y su aceptación, con revisión real de Zenaida, conforme al [plan](PLAN-DE-TRABAJO.md).
+## Aceptación del diseño y siguiente etapa
+
+El usuario confirmó textualmente: «Ya revisé el Catálogo en Expo Go, amigo, y me gustó. Sigamos con la conexión a la API en la misma rama, manteniendo MVVM y Repository. ¿Qué punto puedo marcar en Trello?».
+
+La [aceptación registrada](evidencias/catalogo-productos/expo-go-aceptacion.json) procede únicamente del chat, sin capturas nativas ni observación directa del dispositivo por el agente. Permite marcar «Diseñar pantalla de catálogo». No acredita consulta a la API, inventario, búsqueda, categorías, detalle, favoritos o bolsa, ni una prueba específica de TalkBack, escalado de fuente o movimiento reducido en dispositivo.
+
+La conexión a la API está implementada en `feature/catalogo-productos`, con MVVM y Repository. Sus pruebas técnicas y QA confirmada están separadas de esta evidencia histórica en [CONEXION-CATALOGO.md](CONEXION-CATALOGO.md). La aceptación funcional en Expo Go y revisión por PR siguen pendientes; la confirmación del diseño solo permite marcar ese criterio. La actividad sigue «En progreso» y el usuario actualiza Trello. Se conserva un único PR posterior hacia `develop` al completar la actividad y su aceptación, con revisión real de Zenaida, conforme al [plan](PLAN-DE-TRABAJO.md).

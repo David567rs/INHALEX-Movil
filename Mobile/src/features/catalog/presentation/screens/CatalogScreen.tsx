@@ -1,15 +1,15 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { FlatList, Image, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, FlatList, Image, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { Reveal } from '@/shared/components/Motion';
-import type { ReadCatalogPreview } from '../../domain/useCases/readCatalogPreview';
+import type { ListCatalog } from '../../domain/useCases/listCatalog';
 import { CatalogProductCard } from '../components/CatalogProductCard';
 import { useCatalogViewModel, type CatalogProductViewModel } from '../viewModels/useCatalogViewModel';
 
-export function CatalogScreen({ readPreview }: { readPreview: ReadCatalogPreview }) {
-  const vm = useCatalogViewModel(readPreview);
+export function CatalogScreen({ listCatalog }: { listCatalog: ListCatalog }) {
+  const vm = useCatalogViewModel(listCatalog);
   const { width, fontScale } = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const largeText = fontScale > 1.25;
@@ -26,6 +26,8 @@ export function CatalogScreen({ readPreview }: { readPreview: ReadCatalogPreview
         numColumns={columns}
         initialNumToRender={6}
         showsVerticalScrollIndicator={false}
+        refreshing={vm.refreshing}
+        onRefresh={() => { void vm.refresh(); }}
         style={styles.list}
         contentContainerStyle={styles.content}
         columnWrapperStyle={columns === 2 ? styles.row : undefined}
@@ -53,16 +55,29 @@ export function CatalogScreen({ readPreview }: { readPreview: ReadCatalogPreview
                 <Text accessibilityRole="header" style={styles.title}>Un aroma para ti<Text style={styles.titleDot}>.</Text></Text>
                 <Text style={styles.description}>Pequeñas esencias para acompañar tu día.</Text>
               </View>
-              <View style={styles.preview}>
-                <Ionicons accessible={false} name="eye-outline" size={15} color={colors.primary} />
-                <Text style={styles.previewText}>Vista previa · productos y precios de muestra</Text>
-              </View>
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel="Actualizar catálogo"
+                accessibilityState={{ disabled: vm.status === 'loading' || vm.refreshing, busy: vm.refreshing }}
+                disabled={vm.status === 'loading' || vm.refreshing}
+                onPress={() => { void vm.refresh(); }}
+                style={({ pressed }) => [styles.refreshButton, pressed && styles.pressed]}
+              >
+                {vm.refreshing ? <ActivityIndicator size="small" color={colors.primary} />
+                  : <Ionicons accessible={false} name="refresh-outline" size={16} color={colors.primary} />}
+                <Text style={styles.refreshText}>{vm.refreshing ? 'Actualizando…' : 'Actualizar catálogo'}</Text>
+              </Pressable>
+              {vm.error && vm.products.length > 0 && <View accessibilityLiveRegion="polite" style={styles.notice}>
+                <Text style={styles.noticeText}>{vm.error} Se conserva la última colección cargada.</Text>
+              </View>}
             </Reveal>
             <Reveal delay={60} style={styles.inset}>
               <View style={[styles.collectionRow, largeText && styles.collectionRowStacked]}>
                 <View style={styles.collectionCopy}>
                   <Text accessibilityRole="header" style={styles.collectionTitle}>Nuestra colección</Text>
-                  <Text style={styles.collectionCount}>{vm.total} aromas para descubrir</Text>
+                  <Text style={styles.collectionCount}>{vm.status === 'loading' ? 'Buscando tus próximos aromas…'
+                    : vm.status === 'error' ? 'La colección estará aquí al reconectar'
+                    : `${vm.total} ${vm.total === 1 ? 'producto' : 'productos'} para descubrir`}</Text>
                 </View>
                 <View accessibilityRole="radiogroup" accessibilityLabel="Presentación del catálogo" style={styles.layoutSwitch}>
                   {([
@@ -91,8 +106,35 @@ export function CatalogScreen({ readPreview }: { readPreview: ReadCatalogPreview
             <CatalogProductCard product={item} horizontal={horizontal} />
           </Reveal>
         )}
+        ListEmptyComponent={
+          <View accessibilityLiveRegion="polite" style={styles.emptyState}>
+            {vm.status === 'loading'
+              ? <ActivityIndicator accessibilityLabel="Cargando productos" color={colors.primary} size="large" />
+              : <Ionicons accessible={false} name={vm.status === 'error' ? 'cloud-offline-outline' : 'leaf-outline'} color={colors.primary} size={34} />}
+            <Text accessibilityRole="header" style={styles.stateTitle}>{vm.status === 'loading' ? 'Un momento para descubrir'
+              : vm.status === 'error' ? 'No pudimos cargar la colección' : 'Nuevos aromas están por llegar'}</Text>
+            <Text style={styles.stateCopy}>{vm.status === 'loading' ? 'Estamos preparando el catálogo para ti.'
+              : vm.status === 'error' ? vm.error : 'Por ahora no hay productos disponibles. Puedes volver a consultar en un momento.'}</Text>
+            {vm.status !== 'loading' && <Pressable accessibilityRole="button" onPress={() => { void vm.refresh(); }}
+              style={({ pressed }) => [styles.actionButton, pressed && styles.pressed]}>
+              <Text style={styles.actionText}>{vm.status === 'error' ? 'Reintentar' : 'Volver a consultar'}</Text>
+            </Pressable>}
+          </View>
+        }
         ListFooterComponent={
           <View style={styles.footer}>
+            {vm.products.length > 0 && <>
+              <Text style={styles.loadedCount}>{vm.products.length} de {vm.total} productos</Text>
+              {vm.moreError && <Text accessibilityLiveRegion="polite" style={styles.paginationError}>{vm.moreError}</Text>}
+              {vm.hasMore && <Pressable accessibilityRole="button"
+                accessibilityState={{ disabled: vm.loadingMore || vm.refreshing, busy: vm.loadingMore }}
+                disabled={vm.loadingMore || vm.refreshing}
+                onPress={() => { void vm.loadMore(); }}
+                style={({ pressed }) => [styles.actionButton, styles.moreButton, pressed && styles.pressed]}>
+                {vm.loadingMore && <ActivityIndicator size="small" color={colors.white} />}
+                <Text style={styles.actionText}>{vm.loadingMore ? 'Cargando…' : vm.moreError ? 'Reintentar más productos' : 'Cargar más productos'}</Text>
+              </Pressable>}
+            </>}
             <View accessible={false} importantForAccessibility="no-hide-descendants" style={styles.signature}>
               <View style={styles.signatureLine} />
               <Image source={require('../../../../../assets/inhalex-mark.png')} resizeMode="contain" style={styles.signatureMark} />
@@ -119,8 +161,10 @@ const styles = StyleSheet.create({
   title: { color: colors.text, fontSize: 31, fontWeight: '700', letterSpacing: -1, lineHeight: 38, marginTop: 7 },
   titleDot: { color: colors.primary },
   description: { color: colors.textMuted, fontSize: 13, lineHeight: 21, marginTop: 6 },
-  preview: { alignItems: 'center', alignSelf: 'flex-start', backgroundColor: '#EAF2E4', borderRadius: 11, flexDirection: 'row', gap: 7, marginTop: 17, maxWidth: '100%', paddingHorizontal: 10, paddingVertical: 8 },
-  previewText: { color: '#4E6B50', flexShrink: 1, fontSize: 10, lineHeight: 16 },
+  refreshButton: { alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', gap: 8, marginTop: 10, minHeight: 44, paddingRight: 12 },
+  refreshText: { color: colors.primary, fontSize: 12, fontWeight: '600' },
+  notice: { backgroundColor: '#F8EFE5', borderRadius: 12, padding: 12, marginTop: 8 },
+  noticeText: { color: '#79543B', fontSize: 12, lineHeight: 19 },
   collectionRow: { alignItems: 'center', flexDirection: 'row', gap: 12, justifyContent: 'space-between', marginBottom: 17, marginTop: 28 },
   collectionRowStacked: { alignItems: 'flex-start', flexDirection: 'column' },
   collectionCopy: { flex: 1 },
@@ -133,6 +177,14 @@ const styles = StyleSheet.create({
   row: { alignItems: 'stretch', gap: 12, paddingHorizontal: 22 },
   cardShell: { flex: 1, marginBottom: 14 },
   singleCard: { marginHorizontal: 22 },
+  emptyState: { alignItems: 'center', paddingHorizontal: 30, paddingVertical: 36 },
+  stateTitle: { color: colors.text, fontSize: 19, fontWeight: '700', lineHeight: 26, marginTop: 16, textAlign: 'center' },
+  stateCopy: { color: colors.textMuted, fontSize: 13, lineHeight: 21, marginTop: 9, textAlign: 'center' },
+  actionButton: { alignItems: 'center', backgroundColor: colors.primaryDark, borderRadius: 14, flexDirection: 'row', gap: 9, justifyContent: 'center', marginTop: 20, minHeight: 48, paddingHorizontal: 22, paddingVertical: 12 },
+  actionText: { color: colors.white, fontSize: 13, fontWeight: '700', textAlign: 'center' },
+  moreButton: { marginBottom: 26, marginTop: 12 },
+  loadedCount: { color: colors.textMuted, fontSize: 12, lineHeight: 18, marginBottom: 4, textAlign: 'center' },
+  paginationError: { color: '#8A4E3B', fontSize: 12, lineHeight: 19, marginTop: 8, textAlign: 'center' },
   footer: { alignItems: 'center', paddingHorizontal: 22, paddingTop: 14 },
   signature: { alignItems: 'center', flexDirection: 'row', gap: 14 },
   signatureLine: { backgroundColor: colors.border, height: 1, width: 42 },

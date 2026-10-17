@@ -1,0 +1,118 @@
+{
+  "status": "passed",
+  "startedAt": "2026-10-17T11:41:26.155Z",
+  "completedAt": "2026-10-17T11:41:28.401Z",
+  "origin": "http://127.0.0.1:3212",
+  "fixtureFile": "Temporary file outside the repository",
+  "components": [
+    "ProductsController real TypeScript source",
+    "ProductsService real TypeScript source",
+    "ListProductsQueryDto real TypeScript source",
+    "ValidationPipe whitelist/forbidNonWhitelisted/transform"
+  ],
+  "isolation": {
+    "bindAddress": "127.0.0.1",
+    "mongoConnected": false,
+    "mongooseModelsSimulated": true,
+    "envFilesRead": false,
+    "appModuleLoaded": false,
+    "realAccountsUsed": false,
+    "realCustomerDataUsed": false
+  },
+  "fixtures": {
+    "publicActiveProducts": 23,
+    "hiddenStatusSentinels": 2,
+    "sourceSeeds": 16,
+    "syntheticPublicProducts": 7,
+    "seedValuesModifiedForPromotionAndAvailabilityCases": true
+  },
+  "checks": [
+    {
+      "name": "public page 1 has 20 ordered active items and 23 total",
+      "passed": true
+    },
+    {
+      "name": "page 2 has 3 distinct items, correct metadata and no overlap",
+      "passed": true
+    },
+    {
+      "name": "default pagination is page 1 limit 20",
+      "passed": true
+    },
+    {
+      "name": "invalid pagination rejected with real ValidationPipe 400",
+      "passed": true
+    },
+    {
+      "name": "public status=draft still returns only active records",
+      "passed": true
+    },
+    {
+      "name": "inStock=false filters unavailable records and validates boolean",
+      "passed": true
+    },
+    {
+      "name": "category trim/lowercase and server regex search paths execute",
+      "passed": true
+    },
+    {
+      "name": "unknown query rejected and out-of-range page preserves total",
+      "passed": true
+    },
+    {
+      "name": "available, unavailable, current and expired promo, broken image fixtures",
+      "passed": true
+    },
+    {
+      "name": "synthetic empty uses real service with zero results and totalPages=1",
+      "passed": true
+    },
+    {
+      "name": "injected unavailable and malformed responses are distinguishable",
+      "passed": true
+    },
+    {
+      "name": "loopback CORS allowed, unrelated web origins receive no CORS permission",
+      "passed": true
+    }
+  ],
+  "metrics": {
+    "fixture": "isolated-catalog-model-simulation",
+    "startedAt": "2026-10-17T11:41:26.153Z",
+    "listRequests": 20,
+    "completed": 20,
+    "closedBeforeResponse": 0,
+    "controllerRequests": 18,
+    "modelFindCalls": 11,
+    "modelCountCalls": 11,
+    "authorizationHeadersReceived": 0,
+    "statuses": {
+      "200": 12,
+      "400": 7,
+      "503": 1
+    },
+    "modes": {
+      "success": 17,
+      "empty": 1,
+      "error": 1,
+      "malformed": 1
+    }
+  },
+  "limits": [
+    "Find, sort, skip, limit and count are in-memory model simulations; no real MongoDB behavior or deployed data was verified.",
+    "503 and malformed payloads are synthetic fixture responses that bypass the controller/service.",
+    "This report verifies HTTP/controller/service/DTO behavior, not the mobile UI, Android image rendering or physical storage.",
+    "Category and search queries are contract checks only; those user-facing activities remain outside this catalog stage."
+  ],
+  "controls": {
+    "state": "http://127.0.0.1:3212/__qa/state",
+    "metrics": "http://127.0.0.1:3212/__qa/metrics",
+    "stateModes": [
+      "success",
+      "empty",
+      "error",
+      "malformed"
+    ],
+    "maxDelayMs": 30000
+  }
+}

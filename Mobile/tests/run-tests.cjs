@@ -18,6 +18,9 @@ const result = spawnSync(process.execPath, [
   path.join(__dirname, 'SecureSessionTokenStore.test.cjs'),
   path.join(__dirname, 'RegistrationRepository.test.cjs'),
   path.join(__dirname, 'RegistrationUseCase.test.cjs'),
+  path.join(__dirname, 'CatalogRepository.test.cjs'),
+  path.join(__dirname, 'CatalogUseCase.test.cjs'),
+  path.join(__dirname, 'CatalogController.test.cjs'),
 ], { stdio: 'inherit' });
 
 if (result.error) console.error(result.error.message);

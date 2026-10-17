@@ -1,6 +1,8 @@
+import { Ionicons } from '@expo/vector-icons';
+import { useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { colors } from '@/core/theme/colors';
-import { catalogImages } from '../assets/catalogImages';
+import { getCatalogImage } from '../assets/catalogImages';
 import type { CatalogProductViewModel } from '../viewModels/useCatalogViewModel';
 
 interface CatalogProductCardProps {
@@ -8,28 +10,36 @@ interface CatalogProductCardProps {
   horizontal: boolean;
 }
 
-/** Informative preview: product detail and purchase actions belong to later stages. */
+/** Informative product card; detail and purchase actions have their own activities. */
 export function CatalogProductCard({ product, horizontal }: CatalogProductCardProps) {
+  const [failedImage, setFailedImage] = useState<string | null>(null);
+  const source = product.image !== failedImage ? getCatalogImage(product.image) : null;
   return (
     <View
       accessible
-      accessibilityLabel={`${product.name}. ${product.aromaNote}. Precio de muestra: ${product.priceLabel}.`}
+      accessibilityLabel={`${product.name}. ${product.aromaNote}. ${product.originalPriceLabel ? `Oferta: ${product.priceLabel}. Antes: ${product.originalPriceLabel}.` : `Precio: ${product.priceLabel}.`} ${product.inStock ? 'Disponible' : 'Agotado'}.`}
       style={[styles.card, horizontal && styles.horizontal]}
     >
       <View style={[styles.artwork, horizontal && styles.horizontalArtwork]}>
-        <Image
+        {source ? <Image
           accessible={false}
-          source={catalogImages[product.imageKey]}
+          source={source}
+          onError={() => setFailedImage(product.image)}
           resizeMode="contain"
           style={styles.photo}
-        />
+        /> : <View accessible={false} style={styles.placeholder}>
+          <Ionicons name="leaf-outline" size={30} color={colors.primary} />
+          <Text style={styles.placeholderText}>Imagen no disponible</Text>
+        </View>}
       </View>
       <View style={[styles.copy, horizontal && styles.horizontalCopy]}>
         <Text style={styles.productType}>ESENCIA INHALEX</Text>
-        <Text style={styles.name}>{product.name}</Text>
-        <Text style={styles.note}>{product.aromaNote}</Text>
+        <Text numberOfLines={2} style={styles.name}>{product.name}</Text>
+        <Text numberOfLines={2} style={styles.note}>{product.aromaNote}</Text>
         <View style={styles.priceRow}>
+          {product.originalPriceLabel && <Text style={styles.originalPrice}>{product.originalPriceLabel}</Text>}
           <Text style={styles.price}>{product.priceLabel}</Text>
+          <Text style={[styles.stock, !product.inStock && styles.outOfStock]}>{product.inStock ? 'Disponible' : 'Agotado'}</Text>
         </View>
       </View>
     </View>
@@ -42,6 +52,8 @@ const styles = StyleSheet.create({
   artwork: { alignItems: 'center', backgroundColor: '#F5F5F7', height: 186, justifyContent: 'center', overflow: 'hidden' },
   horizontalArtwork: { alignSelf: 'stretch', height: undefined, minHeight: 154, width: 104 },
   photo: { height: '100%', width: '100%' },
+  placeholder: { alignItems: 'center', gap: 9, justifyContent: 'center', padding: 12 },
+  placeholderText: { color: colors.textMuted, fontSize: 11, textAlign: 'center' },
   copy: { flex: 1, padding: 14, paddingTop: 15 },
   horizontalCopy: { justifyContent: 'center', paddingHorizontal: 17, paddingVertical: 19 },
   productType: { color: colors.primary, fontSize: 8, fontWeight: '700', letterSpacing: 1 },
@@ -49,4 +61,7 @@ const styles = StyleSheet.create({
   note: { color: colors.textMuted, fontSize: 12, lineHeight: 18, marginTop: 3, minHeight: 36 },
   priceRow: { borderTopColor: '#EDF1EA', borderTopWidth: 1, marginTop: 10, paddingTop: 11 },
   price: { color: colors.primaryDark, fontSize: 16, fontWeight: '700', letterSpacing: -0.2, lineHeight: 23 },
+  originalPrice: { color: colors.textMuted, fontSize: 11, lineHeight: 17, textDecorationLine: 'line-through' },
+  stock: { color: colors.primary, fontSize: 10, lineHeight: 16, marginTop: 5 },
+  outOfStock: { color: '#8A4E3B' },
 });
