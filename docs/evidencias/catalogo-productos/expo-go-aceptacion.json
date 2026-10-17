@@ -2,14 +2,15 @@
   "activity": "Catálogo de productos",
   "date": "2026-10-17",
   "branch": "feature/catalogo-productos",
-  "phase": "api-happy-path-accepted-error-retry-pending",
+  "phase": "api-error-retry-accepted-empty-loading-pending",
   "platform": "Expo Go",
   "evidenceType": "human_chat_confirmation",
   "userResponse": "Ya revisé el Catálogo en Expo Go, amigo, y me gustó. Sigamos con la conexión a la API en la misma rama, manteniendo MVVM y Repository. ¿Qué punto puedo marcar en Trello?",
   "acceptedCriteria": [
     "Diseñar pantalla del catálogo",
     "Obtener productos desde la API",
-    "Mostrar nombre, imagen, precio y datos principales"
+    "Mostrar nombre, imagen, precio y datos principales",
+    "Manejar errores de conexión"
   ],
   "designAcceptance": {
     "status": "accepted_by_user",
@@ -23,7 +24,7 @@
     "architecture": "MVVM y Repository",
     "status": "happy_path_accepted_by_user",
     "results": "El usuario confirma productos, fotos, precios y Actualizar catálogo en Expo Go.",
-    "validation": "Prueba física de error y reintento pendiente; carga, vacío y paginación no confirmados por el usuario.",
+    "validation": "Error de conexión, conservación de productos y recuperación al actualizar aceptados por el usuario; carga observada, vacío y paginación pendientes.",
     "acceptedByDesignConfirmation": false,
     "acceptedBySubsequentFunctionalConfirmation": true
   },
@@ -38,12 +39,11 @@
     "attachedScreenshot": "Trello checklist; not a native app screenshot"
   },
   "checklist": {
-    "acceptedCriteria": 3,
+    "acceptedCriteria": 4,
     "totalCriteria": 9,
     "remainingCriteria": [
       "Manejar estado de carga",
       "Mostrar mensaje cuando no existan productos",
-      "Manejar errores de conexión",
       "Verificar navegación al detalle del producto",
       "Probar la funcionalidad",
       "Revisar el código"
@@ -54,19 +54,31 @@
     "status": "awaiting_user_result",
     "backend": "local laptop",
     "steps": [
-      "Detener solo el backend con Ctrl+C, manteniendo Metro y Expo Go abiertos.",
-      "Tocar Actualizar catálogo y comprobar aviso de conexión conservando productos; la espera puede llegar a 15 segundos.",
-      "Ejecutar npm run dev:server desde la raíz del proyecto y esperar a que Nest esté listo.",
-      "Tocar Actualizar catálogo otra vez y comprobar que desaparece el aviso y se recupera la consulta."
+      "Con el backend detenido y Metro abierto, iniciar la API vacía temporal mediante npm run qa:catalog:empty.",
+      "En Expo Go pulsar Actualizar catálogo y observar Actualizando durante la espera controlada de 1500 ms.",
+      "Comprobar cero productos, mensaje de colección vacía y Volver a consultar.",
+      "Detener la API temporal con Ctrl+C, ejecutar npm run dev:server y volver a actualizar para recuperar los productos reales."
     ],
-    "retryButtonScope": "Con productos previos el reintento es Actualizar catálogo. Reintentar aparece en el fallo de carga inicial sin productos."
+    "scope": "Respuesta HTTP vacía simulada; no modifica productos, base de datos, credenciales ni configuración de la app."
+  },
+  "errorRetryConfirmation": {
+    "date": "2026-10-17",
+    "question": "Para marcar «Manejar errores de conexión»: ¿apareció el aviso, se conservaron los productos y volvió a funcionar al reiniciar el backend y pulsar Actualizar catálogo?",
+    "answer": "Sí, funcionaron los tres casos",
+    "connectionNoticeAppeared": true,
+    "loadedProductsPreserved": true,
+    "refreshRecoveredAfterBackendRestart": true,
+    "evidenceType": "human_chat_confirmation",
+    "agentObservedPhysicalDevice": false,
+    "nativeLoadingIndicatorExplicitlyConfirmed": false
   },
   "trello": {
     "taskStatus": "En progreso",
     "criteriaThatMayBeMarked": [
       "Diseñar pantalla del catálogo",
       "Obtener productos desde la API",
-      "Mostrar nombre, imagen, precio y datos principales"
+      "Mostrar nombre, imagen, precio y datos principales",
+      "Manejar errores de conexión"
     ],
     "updatedByAgent": false,
     "updateResponsibility": "user"

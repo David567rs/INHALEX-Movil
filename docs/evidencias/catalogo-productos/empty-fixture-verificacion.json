@@ -1,0 +1,26 @@
+{
+  "activity": "Catálogo de productos",
+  "date": "2026-10-17T12:13:43.419Z",
+  "branch": "feature/catalogo-productos",
+  "status": "passed",
+  "helper": "scripts/qa/catalog-empty.cjs",
+  "endpointUsedForSmoke": "http://127.0.0.1:3214",
+  "checks": {
+    "emptyHttp200": true,
+    "acceptedByRealMobileMapper": true,
+    "artificialDelayMs": 1500,
+    "observedElapsedMs": 1535,
+    "noStore": true,
+    "invalidPage400": true,
+    "otherRoutes503": true,
+    "writeMethod405": true
+  },
+  "scope": {
+    "databaseUsed": false,
+    "envFilesRead": false,
+    "realProductsModified": false,
+    "appCodeChanged": false,
+    "nativeExpoGoAcceptance": "pending-user",
+    "nativeLoadingIndicatorAcceptance": "pending-user"
+  }
+}

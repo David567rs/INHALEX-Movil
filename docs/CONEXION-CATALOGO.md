@@ -1,6 +1,6 @@
 # Conexión del Catálogo a la API
 
-Estado del 17 de octubre de 2026: conexión implementada en `feature/catalogo-productos`, con aceptación humana parcial en Expo Go: 3/9 criterios, diseño, obtención desde la API y nombre/imagen/precio/datos principales. El usuario confirmó también actualización correcta; error/reintento y los demás criterios siguen pendientes. La tarjeta capturada está en «Por hacer» y el usuario puede moverla a «En progreso»; no hay PR ni push de esta etapa. La actividad conservará un único PR completo hacia `develop`.
+Estado del 17 de octubre de 2026: conexión implementada en `feature/catalogo-productos`, con aceptación humana parcial en Expo Go: 4/9 criterios: diseño, obtención desde la API, nombre/imagen/precio/datos principales y errores de conexión. El usuario confirmó también actualización correcta; error/reintento está aceptado y los cinco criterios restantes siguen pendientes. La tarjeta capturada está en «Por hacer» y el usuario puede moverla a «En progreso»; no hay PR ni push de esta etapa. La actividad conservará un único PR completo hacia `develop`.
 
 ## Recorrido y contrato público
 
@@ -46,7 +46,7 @@ La QA web está completada. El fixture 3212 y Metro temporal 8085 quedaron deten
 
 ## Comprobación en Expo Go
 
-El usuario confirmó: «Ya probé el Catálogo en Expo Go, amigo: aparecen los productos, fotos y precios, y funciona Actualizar catálogo. ¿Qué puntos marco en Trello? Sigamos con la prueba de error y reintento.». Es confirmación del chat, sin capturas nativas ni observación directa del agente. Permite marcar los tres primeros criterios de la tarjeta; el checklist completo se conserva en el [plan](PLAN-DE-TRABAJO.md).
+El usuario confirmó: «Ya probé el Catálogo en Expo Go, amigo: aparecen los productos, fotos y precios, y funciona Actualizar catálogo. ¿Qué puntos marco en Trello? Sigamos con la prueba de error y reintento.». Es confirmación del chat, sin capturas nativas ni observación directa del agente. Esa respuesta aceptó los tres primeros criterios; la confirmación posterior de error/reintento eleva el total a 4/9; el checklist completo se conserva en el [plan](PLAN-DE-TRABAJO.md).
 
 Utiliza dos terminales CMD abiertas en `C:\Users\David\Documents\INHALEX-Movil`, con la configuración local existente. Si los servicios ya están activos, conserva sus terminales. En la terminal del backend:
 
@@ -62,15 +62,26 @@ npm run dev:mobile
 
 Abre Catálogo y verifica carga de productos, nombres, fotografías, precios y disponibilidad; alterna cuadrícula/lista y prueba «Cargar más» cuando existan más de 20. Comprueba actualización, un fallo de conexión con aviso/reintento y conservación de datos. La configuración LAN y Expo Go permanece descrita en [Mobile/README.md](../Mobile/README.md).
 
-La aceptación actual es 3/9: diseño, obtención de productos desde la API y nombre/imagen/precio/datos principales. El usuario confirmó también «Actualizar catálogo» en el recorrido correcto. No confirmó carga observada, vacío, error/reintento, paginación ni navegación al detalle. La prueba completa y revisión real de Zenaida permanecen pendientes; detalle depende de `feature/detalle-producto`. No se cierra la actividad ni se abre su PR por esta aceptación parcial.
+La aceptación actual es 4/9: diseño, obtención de productos desde la API, nombre/imagen/precio/datos principales y errores de conexión. El usuario confirmó también «Actualizar catálogo» en el recorrido correcto. El usuario confirmó aviso, conservación de productos y recuperación mediante Actualizar; no confirmó carga observada, vacío, paginación ni navegación al detalle. La prueba completa y revisión real de Zenaida permanecen pendientes; detalle depende de `feature/detalle-producto`. No se cierra la actividad ni se abre su PR por esta aceptación parcial.
 
-## Prueba local de error y reintento pendiente
+## Prueba local de error y reintento aceptada
 
-Este recorrido todavía no tiene resultado del usuario y no marca criterios como completados:
+A la pregunta sobre aviso, conservación de productos y recuperación al reiniciar el backend y pulsar Actualizar, el usuario respondió exactamente «Sí, funcionaron los tres casos». Se acepta «Manejar errores de conexión» a partir del chat; no hubo observación directa del dispositivo por el agente. Estos pasos conservan el recorrido aceptado:
 
 1. Con productos visibles en Expo Go, pulsa `Ctrl+C` únicamente en la terminal del backend. Conserva Metro y Expo Go abiertos.
 2. Pulsa «Actualizar catálogo». Puede mostrar «Actualizando…» hasta el límite de 15 segundos; después debe aparecer el aviso y mantenerse la última colección.
 3. En la terminal del backend ejecuta `npm run dev:server` y espera a que Nest confirme que está listo.
 4. Pulsa de nuevo «Actualizar catálogo»: este es el reintento cuando ya hay productos. Debe recuperar la actualización y quitar el aviso.
 
-El botón «Reintentar» corresponde al error de carga inicial sin productos. En este recorrido con colección conservada se utiliza «Actualizar catálogo». No se da por observado el estado de carga ni por aceptado el manejo de errores hasta recibir la confirmación correspondiente.
+El botón «Reintentar» corresponde al error de carga inicial sin productos. En este recorrido con colección conservada se utiliza «Actualizar catálogo». El manejo de errores está aceptado; la respuesta no acredita haber observado el estado de carga.
+
+## Prueba de carga y catálogo vacío pendiente
+
+El helper `scripts/qa/catalog-empty.cjs`, mediante `npm run qa:catalog:empty`, pasó su [validación HTTP](evidencias/catalogo-productos/empty-fixture-verificacion.json) en loopback 3214 contra `mapCatalogPage` real: vacío 200, demora de 1535 ms para 1500 ms nominales, `no-store`, página inválida 400, otra ruta 503 y POST 405. Se detuvo 3214 y el helper temporal quedó activo en `0.0.0.0:3200`, que estaba libre, para la prueba por LAN; Metro/Expo sigue en 8082. No utiliza MongoDB ni lee `.env`. La prueba nativa «Actualizando…» → vacío sigue pendiente de la respuesta del usuario y no marca criterios adicionales.
+
+1. Deja parado el backend habitual y conserva Expo Go y Metro abiertos.
+2. Desde la raíz `C:\Users\David\Documents\INHALEX-Movil`, ejecuta `npm run qa:catalog:empty`.
+3. En Expo Go pulsa «Actualizar catálogo» y comprueba «Actualizando…», después cero productos, el mensaje vacío y «Volver a consultar».
+4. Detén solo el fixture con `Ctrl+C`, ejecuta `npm run dev:server`, espera a Nest y pulsa «Actualizar catálogo» para recuperar productos reales.
+
+Este recorrido está pendiente: no acredita carga observada ni vacío en el dispositivo hasta recibir la respuesta del usuario. No se modifica la base de datos para simular el caso.
