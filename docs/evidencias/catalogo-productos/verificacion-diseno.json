@@ -1,0 +1,90 @@
+{
+  "activity": "Catálogo de productos",
+  "phase": "design-only",
+  "date": "2026-10-17",
+  "branch": "feature/catalogo-productos",
+  "baseDevelop": "d5171b2510a1ba6a17fa0d95d4e01a61cbbff7fb",
+  "sourceRevision": "526a21e11da1cd1e3f6edea350c7731f90e205bf",
+  "sourceRoot": "Proyecto-INHALEX/Mobile/inhalex-app",
+  "recovery": {
+    "visualReferences": [
+      "src/features/catalog/presentation/screens/CatalogScreen.tsx",
+      "src/features/catalog/presentation/components/ProductCard.tsx",
+      "src/features/catalog/presentation/components/ProductBottleImage.tsx"
+    ],
+    "assets": ["eucalipto.jpeg", "lavanda.jpeg", "menta.jpeg", "manzanilla.jpeg", "canela.jpeg", "rosas.jpeg"],
+    "assetSource": "assets/aromas",
+    "assetDestination": "Mobile/assets/catalog",
+    "trackedSourceFilesUnmodified": true,
+    "copiedAssetHashesMatchSource": true,
+    "originalProjectChanged": false
+  },
+  "architecture": {
+    "flow": "CatalogRoute → injected ReadCatalogPreview → useCatalogViewModel → informative CatalogScreen/cards",
+    "composition": "bootstrap/createCatalogPreview composes the local Repository and domain operation",
+    "domain": "Readonly preview read model and Repository contract, independent of React Native and HTTP",
+    "data": "LocalPreviewCatalogRepository supplies six illustrative items",
+    "viewModel": "Lazy preview read, MXN price formatting and local grid/list state",
+    "apiContractDefined": false,
+    "httpInCatalog": false,
+    "samplePricesAreLive": false
+  },
+  "checks": {
+    "typecheck": "passed",
+    "lint": { "status": "passed", "warnings": 0 },
+    "existingMobileTests": { "passed": 146, "failed": 0 },
+    "newTestsAdded": 0,
+    "testScope": "Existing transport/auth/session regression tests. Static design fixtures are verified through rendering and interaction, not duplicate fixture tests.",
+    "expoDoctor": { "passed": 21, "total": 21 },
+    "androidExport": { "status": "passed", "modules": 1391 },
+    "webExport": { "status": "passed", "modules": 939 },
+    "independentStaticReview": "No material blockers found in design-only scope",
+    "signedAndroidArtifactBuilt": false
+  },
+  "browserQa": {
+    "platform": "Expo web in the Codex in-app browser",
+    "backendLocalPort3200Listening": false,
+    "opensWithoutCatalogApi": true,
+    "viewports": [
+      { "width": 393, "height": 852, "documentScrollWidth": 393 },
+      { "width": 320, "height": 568, "documentScrollWidth": 320 }
+    ],
+    "horizontalOverflow": false,
+    "allSixImagesLoaded": true,
+    "imageDimensions": { "width": 1024, "height": 1536 },
+    "gridToListAndBack": "passed",
+    "narrowGridUsesSingleColumn": true,
+    "scrollToLastProductRosas": "passed",
+    "navigation": ["Catalogo → Cuenta → Inicio", "Inicio → Descubrir aromas → Catalogo"],
+    "fiveTabsPreserved": true,
+    "layoutControlTarget": { "width": 44, "height": 44 },
+    "layoutControlCheckedStateAnnounced": true,
+    "cardsAreInformativeWithoutProductButtons": true,
+    "captures": [
+      "diseno-cuadricula-393-web.jpg",
+      "diseno-lista-393-web.jpg",
+      "diseno-cuadricula-320-web.jpg",
+      "diseno-lista-320-web.jpg",
+      "coleccion-final-web.jpg"
+    ]
+  },
+  "accessibilityLimits": {
+    "largeNativeFontPolicy": "Code switches to one column and disables horizontal cards when fontScale exceeds 1.25",
+    "largeNativeFontsPhysicallyTested": false,
+    "motionPolicy": "Reuses existing Reveal/useReducedMotion",
+    "nativeReducedMotionPhysicallyTested": false,
+    "talkBackPhysicallyTested": false
+  },
+  "outOfScope": [
+    "Catalog API and real inventory",
+    "Loading, remote error and refresh states",
+    "Search, category filtering and sorting",
+    "Product detail, favorites, bag and purchases"
+  ],
+  "expoGoDesignAcceptance": "pending-user",
+  "trelloUpdatedBy": "user",
+  "catalogPullRequest": "not-opened",
+  "dependenciesAdded": false,
+  "backendChanged": false,
+  "authChanged": false
+}

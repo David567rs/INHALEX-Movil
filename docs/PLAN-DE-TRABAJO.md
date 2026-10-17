@@ -187,9 +187,9 @@ El recorrido nativo implementado espera `SecureStore.setItemAsync` antes de publ
 
 Los nueve criterios están satisfechos (9/9). El [PR #4](https://github.com/David567rs/INHALEX-Movil/pull/4), desde `feature/inicio-sesion` hacia `develop`, quedó cerrado y fusionado por David567rs el 16 de octubre de 2026. ZenaidaGR aprobó el HEAD `1b95841b3058c91a90bda4b69ea715e9eef86e1f` y las comprobaciones `Backend verification` y `Mobile verification` concluyeron con `success`. El merge commit es `1031e001b8d79dde662497ceed5f803549e48d20`, con padres `7d308e351999eb9a1dfb8e36a5f331f050f8ce61` y `1b95841b3058c91a90bda4b69ea715e9eef86e1f`. La evidencia está en [integracion-pr4.json](evidencias/inicio-sesion/integracion-pr4.json). La tarjeta de Login puede quedar «Terminado»; el usuario actualiza Trello.
 
-## Persistencia de sesión: PR abierto en revisión
+## Persistencia de sesión integrada
 
-Ambas copias se actualizaron por fast-forward al merge `1031e00`. Zenaida permanece en `develop`, con el stash `81196109270f00fa7edf03a8a8ec6f8bdc963131` conservado y su `.env` presente e ignorado. David trabaja en `feature/persistencia-sesion`, creada desde ese commit en `C:\Users\David\Documents\INHALEX-Movil`. La lectura, restauración y verificación ya están implementadas y las comprobaciones locales finales de esta rama pasaron. El usuario aceptó en Expo Go recuperación al reabrir, estado anónimo después de salir y aviso/reintento tras fallar y restablecerse la API local. El [PR #5](https://github.com/David567rs/INHALEX-Movil/pull/5) está abierto por David567rs hacia `develop`, con revisión solicitada a ZenaidaGR. CI estaba pendiente al abrir el PR. No está fusionado ni aprobado; solo queda pendiente la revisión real. El usuario actualiza Trello.
+Persistencia se desarrolló en `feature/persistencia-sesion` desde el merge `1031e00`. La lectura, restauración y verificación están implementadas y sus comprobaciones locales finales pasaron. El usuario aceptó en Expo Go recuperación al reabrir, estado anónimo después de salir y aviso/reintento tras fallar y restablecerse la API local. El [PR #5](https://github.com/David567rs/INHALEX-Movil/pull/5), de David567rs hacia `develop`, quedó aprobado y fusionado por ZenaidaGR el 17 de octubre de 2026, con Backend CI y Mobile CI correctas. El usuario confirmó la tarjeta «Terminado».
 
 Estado de los nueve criterios de la tarjeta de Persistencia:
 
@@ -201,9 +201,9 @@ Estado de los nueve criterios de la tarjeta de Persistencia:
 - [x] Eliminar al cerrar sesión: el usuario confirmó que salir y reabrir mantiene la aplicación fuera de Cuenta; la coordinación de borrado tiene pruebas automatizadas. No se inspeccionó el almacenamiento directamente.
 - [x] Errores de restauración: token rechazado, red, timeout, servicio y almacenamiento cubiertos por pruebas automatizadas; el usuario confirmó en Expo Go el aviso con la API local inaccesible y la recuperación mediante Reintentar al restablecer el servidor, sin pedir correo ni contraseña.
 - [x] Probar cerrar/abrir: recuperación de la sesión válida y estado anónimo tras cerrar sesión aceptados por el usuario en Expo Go; la interrupción de conexión se verifica en el criterio de errores.
-- [ ] Revisar código: PR #5 abierto y revisión solicitada a ZenaidaGR; aprobación real pendiente. CI estaba pendiente al abrir el PR.
+- [x] Revisar código: ZenaidaGR aprobó el HEAD `f137d4821dd24dd087637df3fe367c80076372e2` del PR #5 y lo fusionó tras pasar ambas CI.
 
-Hay 8/9 criterios aceptados. Solo permanece abierta la revisión real de ZenaidaGR mediante el PR #5, desde `feature/persistencia-sesion` hacia `develop`. Las confirmaciones de reapertura y reintento proceden del usuario, separadas de las pruebas de Node y de la aceptación anterior de Login.
+Los nueve criterios están completos (9/9), incluida la revisión real de ZenaidaGR. Las confirmaciones de reapertura y reintento proceden del usuario, separadas de las pruebas de Node y de la aceptación anterior de Login. El usuario confirmó el cierre de la tarjeta en Trello.
 
 Contratos y recorrido implementados:
 
@@ -220,7 +220,7 @@ Verificación disponible de esta rama:
 - API real aislada y siete fases del coordinador en Node con HTTP real y almacenamiento simulado aprobadas. Son pruebas del contrato y de la coordinación, sin acreditar almacenamiento nativo ni reapertura de Expo Go.
 - QA web mediante componentes reales y API real, con `get/set/clear` simulados en una ruta temporal `src/app/session-qa.tsx`. Las capturas se rotulan como web con almacenamiento simulado; no prueban persistencia del navegador ni Android físico. La ruta se eliminó antes de las exportaciones finales.
 
-La evidencia se documenta en [verificacion.json](evidencias/persistencia-sesion/verificacion.json), [api-verificacion-aislada.json](evidencias/persistencia-sesion/api-verificacion-aislada.json) y [coordinator-real-http.json](evidencias/persistencia-sesion/coordinator-real-http.json). El [PR #5](https://github.com/David567rs/INHALEX-Movil/pull/5), «Implementar Persistencia de sesión con MVVM y Repository», está abierto, sin borrador, por David567rs. El HEAD registrado al abrir es `ecc289d1f0dd6de2423bae5f0ae7aef5095e58a9`; los cambios documentales posteriores pueden actualizarlo. La revisión está solicitada a ZenaidaGR; no hay aprobación ni merge. CI estaba pendiente al abrir el PR. TalkBack y lector de pantalla en Android siguen sin comprobación específica.
+La evidencia se documenta en [verificacion.json](evidencias/persistencia-sesion/verificacion.json), [api-verificacion-aislada.json](evidencias/persistencia-sesion/api-verificacion-aislada.json) y [coordinator-real-http.json](evidencias/persistencia-sesion/coordinator-real-http.json). El [PR #5](https://github.com/David567rs/INHALEX-Movil/pull/5), «Implementar Persistencia de sesión con MVVM y Repository», quedó cerrado y fusionado por ZenaidaGR a las `2026-10-17T11:16:04Z`. Su aprobación corresponde al HEAD final `f137d4821dd24dd087637df3fe367c80076372e2`; `Backend verification` y `Mobile verification` concluyeron con `success`. El merge es `d5171b2510a1ba6a17fa0d95d4e01a61cbbff7fb`, con padres `1031e001b8d79dde662497ceed5f803549e48d20` y `f137d4821dd24dd087637df3fe367c80076372e2`. La [evidencia de integración](evidencias/persistencia-sesion/integracion-pr5.json) conserva estas comprobaciones. TalkBack y lector de pantalla en Android siguen sin comprobación específica.
 
 Aceptación funcional reportada por el usuario en Expo Go, 16 de octubre de 2026:
 
@@ -237,4 +237,16 @@ Recorrido aceptado de reintento, reproducible desde la copia de David:
 2. Entrar en Cuenta e iniciar sesión si hace falta. Forzar el cierre de Expo Go e interrumpir solo la conexión con la API local antes de reabrir, manteniendo Metro accesible y conservando la configuración existente.
 3. Comprobar aviso, opción de Login y reintento; restablecer la conexión y recuperar la sesión sin contraseña.
 
-La [guía móvil](../Mobile/README.md#comprobación-en-expo-go-aceptada) incluye los comandos para ambas terminales y la configuración LAN. Se conserva el entorno existente y las credenciales del servidor. El PR #5 está abierto hacia `develop`; la integración requiere CI aprobado y revisión real de ZenaidaGR. El usuario actualizará la tarjeta.
+La [guía móvil](../Mobile/README.md#comprobación-en-expo-go-aceptada) incluye los comandos para ambas terminales y la configuración LAN. Se conserva el entorno existente y las credenciales del servidor. El PR #5 está integrado y el usuario confirmó su tarjeta «Terminado».
+
+## Catálogo de productos: diseño local en progreso
+
+Ambas copias se actualizaron por fast-forward al merge `d5171b2`, limpias y con sus `.env` conservados. El stash de Zenaida `81196109270f00fa7edf03a8a8ec6f8bdc963131` sigue guardado. Su copia permanece en `develop`; David creó `feature/catalogo-productos` desde ese merge. El diseño local ya está implementado dentro del alcance visual autorizado, sin conectar la API del catálogo.
+
+El [alcance de diseño](DISENO-CATALOGO.md) toma como referencia `CatalogScreen.tsx`, `ProductCard.tsx` y los recursos del proyecto anterior, revisión `526a21e11da1cd1e3f6edea350c7731f90e205bf`. Los seis frascos seleccionados son eucalipto, lavanda, menta, manzanilla, canela y rosas. Sus JPEG originales de 1024×1536 se copiaron sin modificar a `Mobile/assets/catalog/` y cargaron en web. Los datos y precios son ejemplos locales para evaluar el diseño y no acreditan disponibilidad ni precios reales.
+
+La vista previa mantiene MVVM y Repository: un repositorio local suministra los ejemplos; el ViewModel administra estado de presentación y la selección local de cuadrícula o lista; `bootstrap` compone las dependencias. La pantalla no realiza peticiones HTTP. Búsqueda, filtros, categorías, detalle, favoritos y bolsa quedan fuera de este diseño; sus actividades conservan el orden y los responsables del plan.
+
+La validación del diseño pasó TypeScript, lint global sin advertencias, las 146 pruebas existentes, Expo Doctor 21/21 y exportaciones finales Android (1391 módulos) y web (939 módulos). No se añadieron pruebas nuevas para este diseño estático. La QA web a 393×852 y 320×568 comprobó cuadrícula/lista sin desbordamiento horizontal, las seis imágenes, desplazamiento hasta Rosas, Inicio → «Descubrir aromas» → Catálogo y Cuenta → Inicio. Se verificaron áreas de 44×44 del selector radio y su cambio de `aria-checked`. La [evidencia de diseño](evidencias/catalogo-productos/verificacion-diseno.json) y las capturas de esa carpeta corresponden a web.
+
+El código utiliza una columna con `fontScale > 1.25` y conserva la política de movimiento reducido; no se probaron escalado de fuente nativo, TalkBack o movimiento reducido en dispositivo. La QA del catálogo se realizó con la API de 3200 apagada, sin consultas del catálogo. Falta la aceptación del usuario en Expo Go. Catálogo permanece «En progreso» y el usuario actualiza Trello; no hay PR, push de esta etapa ni criterios funcionales aceptados. El único PR de la actividad se preparará cuando se complete su alcance y aceptación.

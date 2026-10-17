@@ -1,5 +1,8 @@
-import { PreparationScreen } from '@/features/shell/presentation/screens/PreparationScreen';
+import { createCatalogPreview } from '@/bootstrap/createCatalogPreview';
+import { CatalogScreen } from '@/features/catalog/presentation/screens/CatalogScreen';
+
+const readPreview = createCatalogPreview();
 
 export default function CatalogRoute() {
-  return <PreparationScreen section="catalogo" />;
+  return <CatalogScreen readPreview={readPreview} />;
 }

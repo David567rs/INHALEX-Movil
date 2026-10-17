@@ -2,7 +2,9 @@
 
 Reinicio de la aplicación móvil de INHALEX con un repositorio independiente, arquitectura MVVM y Repository, y colaboración entre David y Zenaida mediante ramas y pull requests.
 
-El backend, la base móvil, Registro e Inicio de sesión están integrados en `develop` mediante los PR #1 a #4. Esta rama incorpora Persistencia de sesión en `feature/persistencia-sesion`: recuperación al reabrir, cierre y reintento tras un fallo de conexión aceptados por el usuario en Expo Go. El [PR #5](https://github.com/David567rs/INHALEX-Movil/pull/5) apunta a `develop` y tiene solicitada la revisión de Zenaida; la integración requiere CI y su aprobación. Los acuerdos están en [el plan](docs/PLAN-DE-TRABAJO.md), [la arquitectura](docs/ARCHITECTURE.md) y [el versionamiento](docs/VERSIONAMIENTO.md).
+El backend, la base móvil, Registro, Inicio de sesión y Persistencia están integrados en `develop` mediante los PR #1 a #5. Persistencia completó 9/9 criterios: ZenaidaGR aprobó y fusionó el [PR #5](https://github.com/David567rs/INHALEX-Movil/pull/5), con ambas CI correctas, el 17 de octubre de 2026 en `d5171b2`. El usuario confirmó su tarjeta «Terminado». La [evidencia de integración](docs/evidencias/persistencia-sesion/integracion-pr5.json) conserva la revisión, el HEAD y los padres del merge.
+
+La etapa actual de David es el [diseño de Catálogo](docs/DISENO-CATALOGO.md) en `feature/catalogo-productos`: presentación recuperada, imágenes y precios de demostración y Repository local con MVVM e inyección de dependencias. Esta etapa no consulta la API del catálogo. El diseño está pendiente de aceptación en Expo Go; aún no hay PR ni criterios funcionales aceptados de Catálogo. La copia de Zenaida permanece en `develop` en `d5171b2`. Los acuerdos están en [el plan](docs/PLAN-DE-TRABAJO.md), [la arquitectura](docs/ARCHITECTURE.md) y [el versionamiento](docs/VERSIONAMIENTO.md).
 
 ## Carpeta de trabajo
 
@@ -44,7 +46,7 @@ El CI del backend ejecuta esos controles con Node.js 24 y una base simulada en l
 
 ## Base móvil
 
-El proyecto Expo ejecutable está directamente en `Mobile/`. Recupera la identidad visual y la navegación de cinco pestañas; las quince actividades funcionales se incorporarán después, cada una mediante su rama y PR.
+El proyecto Expo ejecutable está directamente en `Mobile/`. Conserva la identidad visual y la navegación de cinco pestañas; las actividades se incorporan por etapas mediante sus ramas y PR.
 
 ```bash
 npm ci --prefix Mobile
