@@ -4,7 +4,7 @@
   "date": "2026-10-17",
   "branch": "feature/catalogo-productos",
   "designAcceptance": "Accepted by user in Expo Go; exact quote in expo-go-aceptacion.json",
-  "nativeApiAcceptance": "User confirmed products/photos/prices/refresh, connection notice, retained products and recovery after backend restart in Expo Go; loading observation, empty catalog and remaining checklist pending.",
+  "nativeApiAcceptance": "User confirmed listing, refresh, connection error/retry, loading indicator and empty state in Expo Go. Empty state used a temporary HTTP fixture without database changes. Remaining checklist pending.",
   "architecture": {
     "flow": "CatalogScreen → useCatalogViewModel/createCatalogController → ListCatalog → CatalogRepository → ApiCatalogRepository → HttpClient",
     "composition": "bootstrap/createCatalogAction",
@@ -122,7 +122,7 @@
     "captureScope": "Capture filenames were reviewed against pixels. Some screenshots lagged one rendered state; incomplete or redundant frames were discarded and retained files are labelled by what they actually show. Final pagination, refresh failure, malformed response and network failure were verified from the rendered DOM, not claimed as captured final states."
   },
   "limits": [
-    "Full API checklist on physical Expo Go pending; listing, refresh and connection error/retry accepted by user chat confirmation",
+    "Full checklist pending; user chat confirms listing, refresh, connection error/retry, loading and empty state in Expo Go",
     "HTTP fixture uses simulated Mongo models and does not prove a real database read",
     "Native pull-to-refresh gesture, TalkBack, enlarged fonts and reduced-motion setting not physically exercised",
     "Search,categories,filters,details,favorites,bag remain separate activities"
@@ -133,9 +133,11 @@
       "Diseñar pantalla del catálogo",
       "Obtener productos desde la API",
       "Mostrar nombre, imagen, precio y datos principales",
-      "Manejar errores de conexión"
+      "Manejar errores de conexión",
+      "Manejar estado de carga",
+      "Mostrar mensaje cuando no existan productos"
     ],
-    "apiCriteria": "4 of 9 criteria accepted by user; native loading, empty, detail navigation, full functionality and PR review pending",
+    "apiCriteria": "6 of 9 criteria accepted by user; detail navigation, full functionality and PR review pending",
     "status": "En progreso",
     "review": "future activity PR"
   },

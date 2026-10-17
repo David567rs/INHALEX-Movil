@@ -2,7 +2,7 @@
   "activity": "Catálogo de productos",
   "date": "2026-10-17",
   "branch": "feature/catalogo-productos",
-  "phase": "api-error-retry-accepted-empty-loading-pending",
+  "phase": "loading-empty-accepted-real-backend-restored",
   "platform": "Expo Go",
   "evidenceType": "human_chat_confirmation",
   "userResponse": "Ya revisé el Catálogo en Expo Go, amigo, y me gustó. Sigamos con la conexión a la API en la misma rama, manteniendo MVVM y Repository. ¿Qué punto puedo marcar en Trello?",
@@ -10,7 +10,9 @@
     "Diseñar pantalla del catálogo",
     "Obtener productos desde la API",
     "Mostrar nombre, imagen, precio y datos principales",
-    "Manejar errores de conexión"
+    "Manejar errores de conexión",
+    "Manejar estado de carga",
+    "Mostrar mensaje cuando no existan productos"
   ],
   "designAcceptance": {
     "status": "accepted_by_user",
@@ -22,9 +24,9 @@
     "authorizedByUser": true,
     "branch": "feature/catalogo-productos",
     "architecture": "MVVM y Repository",
-    "status": "happy_path_accepted_by_user",
+    "status": "six_criteria_accepted_by_user",
     "results": "El usuario confirma productos, fotos, precios y Actualizar catálogo en Expo Go.",
-    "validation": "Error de conexión, conservación de productos y recuperación al actualizar aceptados por el usuario; carga observada, vacío y paginación pendientes.",
+    "validation": "Consulta, actualización, error/reintento, carga y vacío aceptados por el usuario. El vacío se verificó con HTTP temporal simulado de 1500 ms. Paginación nativa y criterios restantes pendientes.",
     "acceptedByDesignConfirmation": false,
     "acceptedBySubsequentFunctionalConfirmation": true
   },
@@ -39,11 +41,9 @@
     "attachedScreenshot": "Trello checklist; not a native app screenshot"
   },
   "checklist": {
-    "acceptedCriteria": 4,
+    "acceptedCriteria": 6,
     "totalCriteria": 9,
     "remainingCriteria": [
-      "Manejar estado de carga",
-      "Mostrar mensaje cuando no existan productos",
       "Verificar navegación al detalle del producto",
       "Probar la funcionalidad",
       "Revisar el código"
@@ -51,15 +51,31 @@
     "detailNavigationDependency": "Pendiente de la actividad feature/detalle-producto, posterior según el plan; no implementada ni aceptada."
   },
   "nextNativeTest": {
-    "status": "awaiting_user_result",
+    "status": "real_backend_restored_awaiting_native_refresh",
     "backend": "local laptop",
     "steps": [
-      "Con el backend detenido y Metro abierto, iniciar la API vacía temporal mediante npm run qa:catalog:empty.",
-      "En Expo Go pulsar Actualizar catálogo y observar Actualizando durante la espera controlada de 1500 ms.",
-      "Comprobar cero productos, mensaje de colección vacía y Volver a consultar.",
-      "Detener la API temporal con Ctrl+C, ejecutar npm run dev:server y volver a actualizar para recuperar los productos reales."
+      "En Expo Go pulsar Volver a consultar o Actualizar catálogo para recuperar los productos del backend real ya restaurado."
     ],
-    "scope": "Respuesta HTTP vacía simulada; no modifica productos, base de datos, credenciales ni configuración de la app."
+    "scope": "La prueba vacía simulada fue aceptada; el backend real responde con 16 productos, ver backend-restaurado.json. El agente no observó el refresco posterior en el teléfono."
+  },
+  "emptyLoadingConfirmation": {
+    "date": "2026-10-17",
+    "userResponse": "Sí, amigo, vi «Actualizando…» y luego «Nuevos aromas están por llegar». Ya marqué esos dos puntos en Trello. Ahora ayúdame a restaurar el backend real.",
+    "loadingIndicatorObserved": true,
+    "emptyStateObserved": true,
+    "emptyDataSource": "Temporal HTTP fixture, 1500 ms, without database changes",
+    "evidenceType": "human_chat_confirmation",
+    "agentObservedPhysicalDevice": false,
+    "trelloTwoCriteriaMarkedByUser": true
+  },
+  "backendRestoration": {
+    "status": "verified",
+    "temporaryFixtureStopped": true,
+    "realBackendStarted": true,
+    "healthHttp200": true,
+    "realRepositoryMappedProducts": 16,
+    "evidence": "backend-restaurado.json",
+    "nativeRefreshAfterRestoration": "pending-user"
   },
   "errorRetryConfirmation": {
     "date": "2026-10-17",
@@ -78,7 +94,9 @@
       "Diseñar pantalla del catálogo",
       "Obtener productos desde la API",
       "Mostrar nombre, imagen, precio y datos principales",
-      "Manejar errores de conexión"
+      "Manejar errores de conexión",
+      "Manejar estado de carga",
+      "Mostrar mensaje cuando no existan productos"
     ],
     "updatedByAgent": false,
     "updateResponsibility": "user"
