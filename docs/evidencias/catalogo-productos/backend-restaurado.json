@@ -1,0 +1,28 @@
+{
+  "activity": "Catálogo de productos",
+  "date": "2026-10-17T12:19:41.624Z",
+  "branch": "feature/catalogo-productos",
+  "status": "real-backend-restored",
+  "temporaryEmptyFixtureStopped": true,
+  "normalConfiguredBackendStarted": true,
+  "origin": "http://127.0.0.1:3200/api",
+  "checks": {
+    "healthHttp200": true,
+    "realMobileRepositoryAndMapperPassed": true,
+    "listedItems": 16,
+    "totalProducts": 16,
+    "page": 1,
+    "limit": 20,
+    "totalPages": 1
+  },
+  "scope": {
+    "requestMethods": [
+      "GET"
+    ],
+    "productsChangedByVerification": false,
+    "envFilesChanged": false,
+    "credentialValuesPrinted": false,
+    "expoMetroPreserved": true,
+    "nativeReloadAfterRestoration": "pending-user"
+  }
+}

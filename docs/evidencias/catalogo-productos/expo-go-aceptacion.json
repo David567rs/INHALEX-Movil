@@ -1,0 +1,131 @@
+{
+  "activity": "Catálogo de productos",
+  "date": "2026-10-17",
+  "branch": "feature/catalogo-productos",
+  "phase": "loading-empty-accepted-real-backend-restored",
+  "platform": "Expo Go",
+  "evidenceType": "human_chat_confirmation",
+  "userResponse": "Ya revisé el Catálogo en Expo Go, amigo, y me gustó. Sigamos con la conexión a la API en la misma rama, manteniendo MVVM y Repository. ¿Qué punto puedo marcar en Trello?",
+  "acceptedCriteria": [
+    "Diseñar pantalla del catálogo",
+    "Obtener productos desde la API",
+    "Mostrar nombre, imagen, precio y datos principales",
+    "Manejar errores de conexión",
+    "Manejar estado de carga",
+    "Mostrar mensaje cuando no existan productos"
+  ],
+  "designAcceptance": {
+    "status": "accepted_by_user",
+    "agentObservedPhysicalDevice": false,
+    "nativeScreenshotsProvided": false,
+    "historicalPreviewEvidence": "verificacion-diseno.json"
+  },
+  "apiConnection": {
+    "authorizedByUser": true,
+    "branch": "feature/catalogo-productos",
+    "architecture": "MVVM y Repository",
+    "status": "six_criteria_accepted_by_user",
+    "results": "El usuario confirma productos, fotos, precios y Actualizar catálogo en Expo Go.",
+    "validation": "Consulta, actualización, error/reintento, carga y vacío aceptados por el usuario. El vacío se verificó con HTTP temporal simulado de 1500 ms. Paginación nativa y criterios restantes pendientes.",
+    "acceptedByDesignConfirmation": false,
+    "acceptedBySubsequentFunctionalConfirmation": true
+  },
+  "functionalConfirmation": {
+    "date": "2026-10-17",
+    "userResponse": "Ya probé el Catálogo en Expo Go, amigo: aparecen los productos, fotos y precios, y funciona Actualizar catálogo. ¿Qué puntos marco en Trello? Sigamos con la prueba de error y reintento.",
+    "productsVisible": true,
+    "photosVisible": true,
+    "pricesVisible": true,
+    "refreshWorks": true,
+    "agentObservedPhysicalDevice": false,
+    "attachedScreenshot": "Trello checklist; not a native app screenshot"
+  },
+  "checklist": {
+    "acceptedCriteria": 6,
+    "totalCriteria": 9,
+    "remainingCriteria": [
+      "Verificar navegación al detalle del producto",
+      "Probar la funcionalidad",
+      "Revisar el código"
+    ],
+    "detailNavigationDependency": "Pendiente de la actividad feature/detalle-producto, posterior según el plan; no implementada ni aceptada."
+  },
+  "nextNativeTest": {
+    "status": "real_backend_restored_awaiting_native_refresh",
+    "backend": "local laptop",
+    "steps": [
+      "En Expo Go pulsar Volver a consultar o Actualizar catálogo para recuperar los productos del backend real ya restaurado."
+    ],
+    "scope": "La prueba vacía simulada fue aceptada; el backend real responde con 16 productos, ver backend-restaurado.json. El agente no observó el refresco posterior en el teléfono."
+  },
+  "emptyLoadingConfirmation": {
+    "date": "2026-10-17",
+    "userResponse": "Sí, amigo, vi «Actualizando…» y luego «Nuevos aromas están por llegar». Ya marqué esos dos puntos en Trello. Ahora ayúdame a restaurar el backend real.",
+    "loadingIndicatorObserved": true,
+    "emptyStateObserved": true,
+    "emptyDataSource": "Temporal HTTP fixture, 1500 ms, without database changes",
+    "evidenceType": "human_chat_confirmation",
+    "agentObservedPhysicalDevice": false,
+    "trelloTwoCriteriaMarkedByUser": true
+  },
+  "backendRestoration": {
+    "status": "verified",
+    "temporaryFixtureStopped": true,
+    "realBackendStarted": true,
+    "healthHttp200": true,
+    "realRepositoryMappedProducts": 16,
+    "evidence": "backend-restaurado.json",
+    "nativeRefreshAfterRestoration": "pending-user"
+  },
+  "errorRetryConfirmation": {
+    "date": "2026-10-17",
+    "question": "Para marcar «Manejar errores de conexión»: ¿apareció el aviso, se conservaron los productos y volvió a funcionar al reiniciar el backend y pulsar Actualizar catálogo?",
+    "answer": "Sí, funcionaron los tres casos",
+    "connectionNoticeAppeared": true,
+    "loadedProductsPreserved": true,
+    "refreshRecoveredAfterBackendRestart": true,
+    "evidenceType": "human_chat_confirmation",
+    "agentObservedPhysicalDevice": false,
+    "nativeLoadingIndicatorExplicitlyConfirmed": false
+  },
+  "trello": {
+    "taskStatus": "En progreso",
+    "criteriaThatMayBeMarked": [
+      "Diseñar pantalla del catálogo",
+      "Obtener productos desde la API",
+      "Mostrar nombre, imagen, precio y datos principales",
+      "Manejar errores de conexión",
+      "Manejar estado de carga",
+      "Mostrar mensaje cuando no existan productos"
+    ],
+    "updatedByAgent": false,
+    "updateResponsibility": "user"
+  },
+  "limitations": [
+    "La evidencia corresponde únicamente a la respuesta textual del usuario en el chat.",
+    "No hay capturas nativas ni observación directa del dispositivo por el agente.",
+    "La confirmación inicial acepta el diseño; la confirmación funcional posterior acepta consulta, presentación y actualización, sin acreditar todos los criterios de Catálogo.",
+    "La evidencia anterior de la vista previa local conserva su alcance y sus precios de demostración.",
+    "No confirma pruebas específicas de TalkBack, escalado de fuente nativo o movimiento reducido en dispositivo."
+  ],
+  "delivery": {
+    "pullRequestOpened": true,
+    "pushPerformedForThisStage": true,
+    "oneActivityPullRequest": true,
+    "pullRequestNumber": 6,
+    "pullRequestUrl": "https://github.com/David567rs/INHALEX-Movil/pull/6",
+    "head": "feature/catalogo-productos",
+    "base": "develop",
+    "reviewRequestedFrom": ["ZenaidaGR"],
+    "humanReview": "pending",
+    "merged": false,
+    "activityFullyCompleted": false,
+    "openingAuthorization": {
+      "userResponse": "Sí, amigo, conservemos el orden. Abre el PR de Catálogo hacia develop para que Zenaida lo revise y deja la navegación al detalle como pendiente en Trello.",
+      "questionAnswer": "Conservar el orden: abrir el PR y dejar ese punto pendiente hasta la actividad de Detalle",
+      "sequence": ["Catálogo", "Categorías", "Detalle"],
+      "detailNavigationCriterion": "pending; not implemented or marked complete",
+      "trelloChangedByAgent": false
+    }
+  }
+}

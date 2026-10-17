@@ -1,0 +1,29 @@
+{
+  "activity": "Catálogo de productos",
+  "date": "2026-10-17",
+  "number": 6,
+  "url": "https://github.com/David567rs/INHALEX-Movil/pull/6",
+  "title": "Implementar Catálogo de productos con MVVM y Repository",
+  "state": "open",
+  "draft": false,
+  "author": "David567rs",
+  "head": "feature/catalogo-productos",
+  "base": "develop",
+  "headCommitAtOpening": "d02847b2218ea4e202f78b637478ea42fe53558b",
+  "requestedReviewers": ["ZenaidaGR"],
+  "reviewStatus": "pending",
+  "remoteCiAtOpening": "pending",
+  "merged": false,
+  "acceptedCriteria": 6,
+  "totalCriteria": 9,
+  "detailNavigation": {
+    "status": "pending",
+    "futureActivity": "feature/detalle-producto",
+    "order": ["Catálogo de productos", "Líneas o categorías", "Detalle de producto"],
+    "deferredWithExplicitUserAuthorization": true,
+    "trelloCheckboxChangedByAgent": false
+  },
+  "openingAuthorization": "Sí, amigo, conservemos el orden. Abre el PR de Catálogo hacia develop para que Zenaida lo revise y deja la navegación al detalle como pendiente en Trello.",
+  "localTechnicalResults": "179 tests, TypeScript, lint, Doctor 21/21 and Android/web exports passed before opening. App source has not changed since those checks.",
+  "scope": "Open for review with explicit pending criteria; does not declare the Trello activity finished or perform a merge."
+}

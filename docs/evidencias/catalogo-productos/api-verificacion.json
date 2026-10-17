@@ -1,0 +1,157 @@
+{
+  "activity": "Catálogo de productos",
+  "phase": "api-connection",
+  "date": "2026-10-17",
+  "branch": "feature/catalogo-productos",
+  "designAcceptance": "Accepted by user in Expo Go; exact quote in expo-go-aceptacion.json",
+  "nativeApiAcceptance": "User confirmed listing, refresh, connection error/retry, loading indicator and empty state in Expo Go. Empty state used a temporary HTTP fixture without database changes. Remaining checklist pending.",
+  "architecture": {
+    "flow": "CatalogScreen → useCatalogViewModel/createCatalogController → ListCatalog → CatalogRepository → ApiCatalogRepository → HttpClient",
+    "composition": "bootstrap/createCatalogAction",
+    "endpoint": "GET /api/products?page=1&limit=20",
+    "publicWithoutCredentials": true,
+    "domainIndependentOfReactAndTransport": true,
+    "exampleRepositoryRemoved": true
+  },
+  "contract": {
+    "pagination": "items,total,page,limit,totalPages; 20 items per page with explicit load more",
+    "money": "API units, not cents; ISO4217 checked; zero base price allowed; only positive, smaller, unexpired promo prices applied",
+    "data": "Copies only public catalog fields; rejects inconsistent pages and duplicate page IDs",
+    "images": "16 exact legacy frontend paths use original bundled artwork; public HTTPS supported, unavailable/broken image uses placeholder",
+    "stock": "inStock false displayed as Agotado"
+  },
+  "checks": {
+    "mobileTests": {
+      "passed": 179,
+      "failed": 0,
+      "newCatalogTests": 33,
+      "repositoryAndUseCase": 25,
+      "controller": 8
+    },
+    "typecheck": "passed",
+    "lint": {
+      "status": "passed",
+      "warnings": 0
+    },
+    "expoDoctor": {
+      "passed": 21,
+      "total": 21
+    },
+    "androidExport": {
+      "status": "passed",
+      "modules": 1406
+    },
+    "webExport": {
+      "status": "passed",
+      "modules": 954
+    },
+    "independentCodeReview": "Two findings corrected before final checks: imports and zero promo price",
+    "signedArtifactBuilt": false
+  },
+  "httpFixture": {
+    "evidence": "api-verificacion-aislada.json",
+    "origin": "http://127.0.0.1:3212",
+    "controllerServiceValidation": "real",
+    "mongoModels": "simulated",
+    "realDatabaseUsed": false,
+    "envFilesRead": false,
+    "fullAppModuleLoaded": false,
+    "realAccountsUsed": false,
+    "activeProducts": 23,
+    "sourceSeedProducts": 16,
+    "syntheticProducts": 7,
+    "stoppedAfterQa": true
+  },
+  "browserQa": {
+    "platform": "Expo web, temporary Metro8085 with isolated API3212",
+    "viewports": [
+      {
+        "width": 393,
+        "height": 852,
+        "scrollWidth": 393
+      },
+      {
+        "width": 320,
+        "height": 568,
+        "scrollWidth": 320
+      }
+    ],
+    "horizontalOverflow": false,
+    "assertionsFromRenderedDom": [
+      "First page lists20of23; next page completes23of23 and removes load-more button",
+      "Grid/list checked controls and both layouts work at393 and320",
+      "All16 original product images loaded; unavailable and broken HTTPS images show placeholder",
+      "In-stock and out-of-stock labels, valid promotion52vsbase60 and expired promotion base60 render",
+      "503 initial failure exposes Reintentar; delayed recovery shows loading then collection",
+      "Pagination failure retains20of23 and exposes retry; recovery loads23of23",
+      "Refresh failure preserves last collection with explicit notice; later empty success replaces it",
+      "Empty success shows0products and Volveraconsultar, never examples",
+      "Malformed response shows safe error and Reintentar",
+      "Stopping fixture and reloading shows network error, with existing navigation intact"
+    ],
+    "captures": [
+      {
+        "file": "api-cuadricula-web.jpg",
+        "shows": "Loaded first page, grid,393px"
+      },
+      {
+        "file": "api-lista-web.jpg",
+        "shows": "Loaded first page, list,393px"
+      },
+      {
+        "file": "api-cuadricula-320-web.jpg",
+        "shows": "Single-column grid with original image loaded,320px"
+      },
+      {
+        "file": "api-error503-web.jpg",
+        "shows": "503 error and Reintentar"
+      },
+      {
+        "file": "api-actualizando-web.jpg",
+        "shows": "Refresh in progress with prior products retained"
+      },
+      {
+        "file": "api-cargando-pagina-web.jpg",
+        "shows": "Next page in progress,20of23"
+      },
+      {
+        "file": "api-vacio-320-web.jpg",
+        "shows": "Empty result and Volveraconsultar,320px"
+      }
+    ],
+    "captureScope": "Capture filenames were reviewed against pixels. Some screenshots lagged one rendered state; incomplete or redundant frames were discarded and retained files are labelled by what they actually show. Final pagination, refresh failure, malformed response and network failure were verified from the rendered DOM, not claimed as captured final states."
+  },
+  "limits": [
+    "Full checklist pending; user chat confirms listing, refresh, connection error/retry, loading and empty state in Expo Go",
+    "HTTP fixture uses simulated Mongo models and does not prove a real database read",
+    "Native pull-to-refresh gesture, TalkBack, enlarged fonts and reduced-motion setting not physically exercised",
+    "Search,categories,filters,details,favorites,bag remain separate activities"
+  ],
+  "trello": {
+    "updatedBy": "user",
+    "acceptedNow": [
+      "Diseñar pantalla del catálogo",
+      "Obtener productos desde la API",
+      "Mostrar nombre, imagen, precio y datos principales",
+      "Manejar errores de conexión",
+      "Manejar estado de carga",
+      "Mostrar mensaje cuando no existan productos"
+    ],
+    "apiCriteria": "6 of 9 criteria accepted by user; detail navigation, full functionality and PR review pending",
+    "status": "En progreso",
+    "review": "PR #6 open toward develop; review requested from ZenaidaGR",
+    "detailNavigation": "Pending until feature/detalle-producto, as explicitly authorized by user",
+    "agentChangedTrello": false
+  },
+  "scope": {
+    "backendChanged": false,
+    "authChanged": false,
+    "dependenciesChanged": false,
+    "envFilesChanged": false,
+    "otherCheckoutChanged": false,
+    "newPrOpened": true,
+    "pullRequestUrl": "https://github.com/David567rs/INHALEX-Movil/pull/6",
+    "pushed": true,
+    "merged": false
+  }
+}

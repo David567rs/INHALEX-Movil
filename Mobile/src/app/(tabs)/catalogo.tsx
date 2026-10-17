@@ -1,5 +1,8 @@
-import { PreparationScreen } from '@/features/shell/presentation/screens/PreparationScreen';
+import { createCatalogAction } from '@/bootstrap/createCatalogAction';
+import { CatalogScreen } from '@/features/catalog/presentation/screens/CatalogScreen';
+
+const listCatalog = createCatalogAction();
 
 export default function CatalogRoute() {
-  return <PreparationScreen section="catalogo" />;
+  return <CatalogScreen listCatalog={listCatalog} />;
 }

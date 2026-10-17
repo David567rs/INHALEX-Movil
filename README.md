@@ -2,7 +2,9 @@
 
 Reinicio de la aplicación móvil de INHALEX con un repositorio independiente, arquitectura MVVM y Repository, y colaboración entre David y Zenaida mediante ramas y pull requests.
 
-El backend, la base móvil, Registro e Inicio de sesión están integrados en `develop` mediante los PR #1 a #4. Esta rama incorpora Persistencia de sesión en `feature/persistencia-sesion`: recuperación al reabrir, cierre y reintento tras un fallo de conexión aceptados por el usuario en Expo Go. El [PR #5](https://github.com/David567rs/INHALEX-Movil/pull/5) apunta a `develop` y tiene solicitada la revisión de Zenaida; la integración requiere CI y su aprobación. Los acuerdos están en [el plan](docs/PLAN-DE-TRABAJO.md), [la arquitectura](docs/ARCHITECTURE.md) y [el versionamiento](docs/VERSIONAMIENTO.md).
+El backend, la base móvil, Registro, Inicio de sesión y Persistencia están integrados en `develop` mediante los PR #1 a #5. Persistencia completó 9/9 criterios: ZenaidaGR aprobó y fusionó el [PR #5](https://github.com/David567rs/INHALEX-Movil/pull/5), con ambas CI correctas, el 17 de octubre de 2026 en `d5171b2`. El usuario confirmó su tarjeta «Terminado». La [evidencia de integración](docs/evidencias/persistencia-sesion/integracion-pr5.json) conserva la revisión, el HEAD y los padres del merge.
+
+El usuario aceptó el [diseño de Catálogo](docs/DISENO-CATALOGO.md) en Expo Go el 17 de octubre de 2026 y autorizó conectar la API en la misma `feature/catalogo-productos`, manteniendo MVVM y Repository. La [aceptación](docs/evidencias/catalogo-productos/expo-go-aceptacion.json) procede del chat y registra 6/9 criterios: diseño, obtención desde la API, nombre/imagen/precio/datos principales, errores de conexión, carga y mensaje vacío; también se confirmó la actualización correcta. La vista previa local conserva su evidencia histórica, con imágenes y precios de demostración. La [conexión a la API](docs/CONEXION-CATALOGO.md) ya está implementada con paginación, actualización y reintento, y tiene comprobaciones técnicas aprobadas. El usuario confirmó error/reintento con «Sí, funcionaron los tres casos». El usuario confirmó «Actualizando…», el mensaje vacío y que marcó esos dos puntos en Trello. Faltan tres criterios: navegación al detalle, prueba completa y revisión por PR. El [PR #6](https://github.com/David567rs/INHALEX-Movil/pull/6) está abierto, sin borrador, por David567rs desde `feature/catalogo-productos` hacia `develop`; la rama está publicada. Se solicitó la revisión de ZenaidaGR y sigue pendiente, sin aprobación ni merge. El estado actualizado de CI se consulta en el PR. El trabajo de Catálogo está en progreso; la tarjeta capturada está en «Por hacer» y el usuario puede moverla a «En progreso». El backend real quedó restaurado: Nest listo en 3200, health 200 y 16 productos verificados mediante GET y el caso de uso/Repository/cliente/mapeador reales ([evidencia](docs/evidencias/catalogo-productos/backend-restaurado.json)). Metro 8082 se conservó. El refresco posterior en Expo Go sigue pendiente de confirmación del usuario. La copia de Zenaida sigue en `develop` en `d5171b2`. Los acuerdos están en [el plan](docs/PLAN-DE-TRABAJO.md), [la arquitectura](docs/ARCHITECTURE.md) y [el versionamiento](docs/VERSIONAMIENTO.md).
 
 ## Carpeta de trabajo
 
@@ -44,7 +46,7 @@ El CI del backend ejecuta esos controles con Node.js 24 y una base simulada en l
 
 ## Base móvil
 
-El proyecto Expo ejecutable está directamente en `Mobile/`. Recupera la identidad visual y la navegación de cinco pestañas; las quince actividades funcionales se incorporarán después, cada una mediante su rama y PR.
+El proyecto Expo ejecutable está directamente en `Mobile/`. Conserva la identidad visual y la navegación de cinco pestañas; las actividades se incorporan por etapas mediante sus ramas y PR.
 
 ```bash
 npm ci --prefix Mobile
