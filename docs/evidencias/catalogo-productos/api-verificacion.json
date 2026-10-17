@@ -139,7 +139,9 @@
     ],
     "apiCriteria": "6 of 9 criteria accepted by user; detail navigation, full functionality and PR review pending",
     "status": "En progreso",
-    "review": "future activity PR"
+    "review": "PR #6 open toward develop; review requested from ZenaidaGR",
+    "detailNavigation": "Pending until feature/detalle-producto, as explicitly authorized by user",
+    "agentChangedTrello": false
   },
   "scope": {
     "backendChanged": false,
@@ -147,7 +149,9 @@
     "dependenciesChanged": false,
     "envFilesChanged": false,
     "otherCheckoutChanged": false,
-    "newPrOpened": false,
-    "pushed": false
+    "newPrOpened": true,
+    "pullRequestUrl": "https://github.com/David567rs/INHALEX-Movil/pull/6",
+    "pushed": true,
+    "merged": false
   }
 }

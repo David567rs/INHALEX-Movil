@@ -109,8 +109,23 @@
     "No confirma pruebas específicas de TalkBack, escalado de fuente nativo o movimiento reducido en dispositivo."
   ],
   "delivery": {
-    "pullRequestOpened": false,
-    "pushPerformedForThisStage": false,
-    "oneFuturePullRequestForCompleteActivity": true
+    "pullRequestOpened": true,
+    "pushPerformedForThisStage": true,
+    "oneActivityPullRequest": true,
+    "pullRequestNumber": 6,
+    "pullRequestUrl": "https://github.com/David567rs/INHALEX-Movil/pull/6",
+    "head": "feature/catalogo-productos",
+    "base": "develop",
+    "reviewRequestedFrom": ["ZenaidaGR"],
+    "humanReview": "pending",
+    "merged": false,
+    "activityFullyCompleted": false,
+    "openingAuthorization": {
+      "userResponse": "Sí, amigo, conservemos el orden. Abre el PR de Catálogo hacia develop para que Zenaida lo revise y deja la navegación al detalle como pendiente en Trello.",
+      "questionAnswer": "Conservar el orden: abrir el PR y dejar ese punto pendiente hasta la actividad de Detalle",
+      "sequence": ["Catálogo", "Categorías", "Detalle"],
+      "detailNavigationCriterion": "pending; not implemented or marked complete",
+      "trelloChangedByAgent": false
+    }
   }
 }
