@@ -1,0 +1,54 @@
+{
+  "activity": "Inicio de sesión",
+  "date": "2026-10-16",
+  "repository": "David567rs/INHALEX-Movil",
+  "pullRequest": {
+    "number": 4,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/4",
+    "head": "feature/inicio-sesion",
+    "base": "develop",
+    "headSha": "1b95841b3058c91a90bda4b69ea715e9eef86e1f",
+    "state": "closed",
+    "merged": true,
+    "mergedBy": "David567rs",
+    "mergeMethod": "merge_commit",
+    "mergeCommitSha": "1031e001b8d79dde662497ceed5f803549e48d20",
+    "mergeCommitParents": [
+      "7d308e351999eb9a1dfb8e36a5f331f050f8ce61",
+      "1b95841b3058c91a90bda4b69ea715e9eef86e1f"
+    ]
+  },
+  "humanReview": {
+    "reviewer": "ZenaidaGR",
+    "state": "APPROVED",
+    "commitSha": "1b95841b3058c91a90bda4b69ea715e9eef86e1f"
+  },
+  "requiredChecks": [
+    {
+      "workflow": "Backend CI",
+      "name": "Backend verification",
+      "conclusion": "success"
+    },
+    {
+      "workflow": "Mobile CI",
+      "name": "Mobile verification",
+      "conclusion": "success"
+    }
+  ],
+  "checklist": {
+    "acceptedCriteria": 9,
+    "totalCriteria": 9,
+    "activityIntegrated": true,
+    "trelloMayBeMarked": "Terminado",
+    "trelloUpdatedByAgent": false
+  },
+  "localCopiesAfterIntegration": {
+    "synchronizedCommitSha": "1031e001b8d79dde662497ceed5f803549e48d20",
+    "updateMethod": "fast_forward",
+    "davidBranch": "feature/persistencia-sesion",
+    "zenaidaBranch": "develop",
+    "zenaidaStashPreserved": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "envFilesPreservedWithoutReadingValues": true
+  },
+  "scope": "Cierre e integración de Login. No acredita lectura o restauración de sesión al arrancar, revocación de JWT ni pruebas específicas de teclado o lector de pantalla en Android."
+}

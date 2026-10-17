@@ -2,13 +2,14 @@ import type { SecureStoreOptions } from 'expo-secure-store';
 import type { SessionTokenStore } from '../../domain/storage/SessionTokenStore';
 
 export type SecureSessionStorage = {
+  getItemAsync(key: string, options?: SecureStoreOptions): Promise<string | null>;
   setItemAsync(key: string, value: string, options?: SecureStoreOptions): Promise<void>;
   deleteItemAsync(key: string, options?: SecureStoreOptions): Promise<void>;
 };
 
 export const SESSION_TOKEN_KEY = 'inhalex.auth.access-token';
 
-/** Writes only the validated access token. This adapter has no session restoration operation. */
+/** Private storage boundary for the access token; it does not interpret or cache credentials. */
 export class SecureSessionTokenStore implements SessionTokenStore {
   private readonly storage: SecureSessionStorage;
   private readonly options: Readonly<SecureStoreOptions>;
@@ -16,6 +17,10 @@ export class SecureSessionTokenStore implements SessionTokenStore {
   constructor(storage: SecureSessionStorage, options: Readonly<SecureStoreOptions>) {
     this.storage = storage;
     this.options = Object.freeze({ ...options });
+  }
+
+  async get(): Promise<string | null> {
+    return await this.storage.getItemAsync(SESSION_TOKEN_KEY, this.options);
   }
 
   async set(token: string): Promise<void> {

@@ -1,7 +1,8 @@
 const assert = require('node:assert/strict');
 const { test } = require('node:test');
 const { LoginError } = require('../src/features/auth/domain/errors/LoginError.ts');
-const { createAuthSession } = require('../src/features/auth/domain/session/createAuthSession.ts');
+const { createAuthSession: createCoordinator } = require('../src/features/auth/domain/session/createAuthSession.ts');
+const { AUTH_INITIAL_STATE } = require('../src/features/auth/domain/session/AuthSession.ts');
 
 const form = () => ({ email: 'ana@example.com', password: 'exact password' });
 const loginResult = (id = 'first') => ({
@@ -20,15 +21,23 @@ const isLoginError = (kind) => (error) => {
   return true;
 };
 
-test('session starts anonymous without reading, restoring or writing any credential', () => {
+// These tests exercise login/logout only; restoration has its own suite.
+const createAuthSession = (login, store) => createCoordinator(login, {
+  get: async () => null,
+  ...store,
+}, async () => loginResult().user);
+
+test('session construction starts in stable checking state without reading or writing any credential', () => {
   let operations = 0;
   const runtime = createAuthSession(async () => { operations++; return loginResult(); }, {
     get: () => { throw new Error('No restoration is allowed'); },
     set: async () => { operations++; },
     clear: async () => { operations++; },
   });
-  assert.equal(runtime.session.getSnapshot(), null);
-  assert.equal(runtime.session.getSnapshot(), null);
+  assert.equal(runtime.session.getSnapshot(), AUTH_INITIAL_STATE);
+  assert.equal(Object.isFrozen(AUTH_INITIAL_STATE), true);
+  assert.equal(runtime.session.getSnapshot().user, null);
+  assert.equal(runtime.session.getSnapshot().user, null);
   assert.equal(runtime.getAccessToken(), undefined);
   assert.equal(operations, 0);
 });
@@ -47,13 +56,15 @@ test('successful login stores only the token and publishes one stable immutable 
   const user = await runtime.session.signIn(form());
   assert.deepEqual(writes, [[result.accessToken]]);
   assert.deepEqual(Object.keys(user).sort(), ['email', 'firstName', 'id', 'lastName', 'phone']);
-  assert.equal(user, runtime.session.getSnapshot());
-  assert.equal(user, runtime.session.getSnapshot());
+  assert.equal(user, runtime.session.getSnapshot().user);
+  assert.equal(user, runtime.session.getSnapshot().user);
+  assert.equal(Object.isFrozen(runtime.session.getSnapshot()), true);
+  assert.equal(runtime.session.getSnapshot().status, 'authenticated');
   assert.notEqual(user, result.user);
   assert.ok(Object.isFrozen(user));
   assert.ok(!JSON.stringify(user).includes('never-public'));
   assert.equal(runtime.getAccessToken(), result.accessToken);
-  assert.equal(changes, 1);
+  assert.equal(changes, 2);
   unsubscribe();
 });
 
@@ -68,12 +79,12 @@ test('pending secure storage never publishes a user or makes the token available
   runtime.session.subscribe(() => { changes++; });
   const pending = runtime.session.signIn(form());
   await writing.promise;
-  assert.equal(runtime.session.getSnapshot(), null);
+  assert.equal(runtime.session.getSnapshot().user, null);
   assert.equal(runtime.getAccessToken(), undefined);
-  assert.equal(changes, 0);
+  assert.equal(changes, 1);
   finish.resolve();
   await pending;
-  assert.equal(changes, 1);
+  assert.equal(changes, 2);
 });
 
 test('the global guard rejects a second login before the first request has completed', async () => {
@@ -115,7 +126,7 @@ test('known action failures are preserved without touching secure storage', asyn
   });
   await assert.rejects(runtime.session.signIn(form()), (error) => error === failure);
   assert.equal(writes, 0);
-  assert.equal(runtime.session.getSnapshot(), null);
+  assert.equal(runtime.session.getSnapshot().user, null);
   assert.equal(runtime.getAccessToken(), undefined);
 });
 
@@ -157,7 +168,7 @@ test('cancellation during HTTP discards a late result even when the action ignor
   response.resolve(loginResult());
   await assert.rejects(pending, isLoginError('cancelled'));
   assert.equal(writes, 0);
-  assert.equal(runtime.session.getSnapshot(), null);
+  assert.equal(runtime.session.getSnapshot().user, null);
   assert.equal(runtime.getAccessToken(), undefined);
 });
 
@@ -191,14 +202,14 @@ test('cancellation during a secure write waits for rollback and keeps the global
   finishWrite.resolve();
   await clearing.promise;
   assert.equal(storedToken, loginResult().accessToken);
-  assert.equal(runtime.session.getSnapshot(), null);
+  assert.equal(runtime.session.getSnapshot().user, null);
   assert.equal(runtime.getAccessToken(), undefined);
   assert.equal(settled, false);
   await assert.rejects(runtime.session.signIn(form()), isLoginError('configuration'));
   finishClear.resolve();
   await rejected;
   assert.equal(storedToken, undefined);
-  assert.equal(changes, 0);
+  assert.equal(changes, 1);
 });
 
 test('an abort after publication does not undo the committed session or clear its token', async () => {
@@ -209,7 +220,7 @@ test('an abort after publication does not undo the committed session or clear it
   });
   const user = await runtime.session.signIn(form(), { signal: controller.signal });
   controller.abort();
-  assert.equal(runtime.session.getSnapshot(), user);
+  assert.equal(runtime.session.getSnapshot().user, user);
   assert.equal(runtime.getAccessToken(), loginResult().accessToken);
   assert.equal(clears, 0);
 });
@@ -229,7 +240,7 @@ test('a failed write attempts cleanup and never publishes either user or private
   });
   assert.equal(clears, 1);
   assert.equal(storedToken, undefined);
-  assert.equal(runtime.session.getSnapshot(), null);
+  assert.equal(runtime.session.getSnapshot().user, null);
   assert.equal(runtime.getAccessToken(), undefined);
 });
 
@@ -241,7 +252,7 @@ test('failure of write cleanup still leaves the running app anonymous', async ()
   });
   await assert.rejects(runtime.session.signIn(form()), isLoginError('storage'));
   assert.equal(clears, 1);
-  assert.equal(runtime.session.getSnapshot(), null);
+  assert.equal(runtime.session.getSnapshot().user, null);
   assert.equal(runtime.getAccessToken(), undefined);
 });
 
@@ -263,7 +274,7 @@ test('failed cancellation cleanup is reported safely instead of claiming a compl
     assert.ok(!error.message.includes('private'));
     return true;
   });
-  assert.equal(runtime.session.getSnapshot(), null);
+  assert.equal(runtime.session.getSnapshot().user, null);
   assert.equal(runtime.getAccessToken(), undefined);
 });
 
@@ -278,9 +289,9 @@ test('logout clears public and private state immediately before the asynchronous
   runtime.session.subscribe(() => { changes++; });
   await runtime.session.signIn(form());
   const pending = runtime.session.signOut();
-  assert.equal(runtime.session.getSnapshot(), null);
+  assert.equal(runtime.session.getSnapshot().user, null);
   assert.equal(runtime.getAccessToken(), undefined);
-  assert.equal(changes, 2);
+  assert.equal(changes, 3);
   await clearing.promise;
   finish.resolve();
   await pending;
@@ -292,7 +303,7 @@ test('logout storage failure keeps the app anonymous and reports incomplete secu
   });
   await runtime.session.signIn(form());
   const pending = runtime.session.signOut();
-  assert.equal(runtime.session.getSnapshot(), null);
+  assert.equal(runtime.session.getSnapshot().user, null);
   assert.equal(runtime.getAccessToken(), undefined);
   await assert.rejects(pending, (error) => {
     isLoginError('storage')(error);
@@ -319,7 +330,7 @@ test('logout cancels a pending HTTP login and cannot be undone by its late resul
   await assert.rejects(pending, isLoginError('cancelled'));
   assert.equal(writes, 0);
   assert.equal(clears, 1);
-  assert.equal(runtime.session.getSnapshot(), null);
+  assert.equal(runtime.session.getSnapshot().user, null);
   assert.equal(runtime.getAccessToken(), undefined);
 });
 
@@ -365,7 +376,7 @@ test('logout, a cancelled write rollback and a new login are serialized without 
   await logoutClearing.promise;
   const second = runtime.session.signIn(form());
   await newRequest.promise;
-  assert.equal(runtime.session.getSnapshot(), null);
+  assert.equal(runtime.session.getSnapshot().user, null);
   assert.equal(runtime.getAccessToken(), undefined);
   assert.equal(events.filter((entry) => entry.startsWith('set:')).length, 1);
   finishLogoutClear.resolve();
@@ -387,7 +398,7 @@ test('a failed storage mutation does not poison the queue or block a later succe
   });
   await assert.rejects(runtime.session.signIn(form()), isLoginError('storage'));
   const user = await runtime.session.signIn(form());
-  assert.equal(user, runtime.session.getSnapshot());
+  assert.equal(user, runtime.session.getSnapshot().user);
   assert.equal(writes, 2);
 });
 
@@ -400,9 +411,9 @@ test('unsubscribed and failing observers cannot corrupt session commits or stop 
   runtime.session.subscribe(() => { throw new Error('Observer failure'); });
   runtime.session.subscribe(() => { changes++; });
   const user = await runtime.session.signIn(form());
-  assert.equal(runtime.session.getSnapshot(), user);
+  assert.equal(runtime.session.getSnapshot().user, user);
   await runtime.session.signOut();
-  assert.equal(runtime.session.getSnapshot(), null);
+  assert.equal(runtime.session.getSnapshot().user, null);
   assert.equal(unsubscribedCalls, 0);
-  assert.equal(changes, 2);
+  assert.equal(changes, 3);
 });

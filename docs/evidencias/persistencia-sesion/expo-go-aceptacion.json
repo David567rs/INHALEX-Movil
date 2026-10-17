@@ -1,0 +1,72 @@
+{
+  "activity": "Persistencia de sesión",
+  "date": "2026-10-16",
+  "branch": "feature/persistencia-sesion",
+  "platform": "Expo Go en Android",
+  "evidenceType": "human_chat_confirmation",
+  "userResponse": "Ya probé en Expo Go, amigo: recupera la sesión al reabrir y, después de cerrar sesión, ya no entra a la cuenta. Sigamos con la prueba del reintento cuando falle la conexión.",
+  "connectionFailureNoticeUserResponse": "si aparecio",
+  "connectionRetryUserResponse": "Sí, amigo, al pulsar Reintentar recuperó mi cuenta sin pedir correo ni contraseña. Ahora abramos el PR para que Zenaida lo revise.",
+  "apiEnvironment": "API local en la laptop, confirmado por el usuario",
+  "acceptedCases": [
+    {
+      "case": "native_reopen_recovers_session",
+      "description": "Al reabrir Expo Go se recupera la sesión y se accede a Cuenta.",
+      "result": "accepted_by_user"
+    },
+    {
+      "case": "logout_reopen_remains_anonymous",
+      "description": "Después de cerrar sesión y reabrir, la aplicación no vuelve a entrar a la cuenta.",
+      "result": "accepted_by_user"
+    },
+    {
+      "case": "local_api_connection_failure_and_retry",
+      "description": "Con la API local inaccesible apareció el aviso; después de restablecer el servidor y pulsar Reintentar, recuperó Cuenta sin pedir correo ni contraseña.",
+      "steps": [
+        "La API local de la laptop dejó de estar accesible para la comprobación de sesión.",
+        "El usuario confirmó que apareció el aviso de recuperación.",
+        "Se restableció el servidor local.",
+        "El usuario pulsó Reintentar y confirmó recuperación sin introducir correo ni contraseña."
+      ],
+      "observationSource": "user_reported_not_agent_observed",
+      "result": "accepted_by_user"
+    }
+  ],
+  "tokenValidationEvidence": {
+    "validNativeRestoration": "accepted_by_user",
+    "implementation": "La restauración verifica el token mediante GET /auth/me antes de publicar el usuario.",
+    "automatedUnauthorizedAndExpiredTokenEvidence": ["api-verificacion-aislada.json", "coordinator-real-http.json"],
+    "expiredTokenOnPhysicalDeviceTested": false
+  },
+  "pendingCases": [],
+  "limitations": [
+    "La aceptación procede de la respuesta textual del usuario en el chat.",
+    "No acredita inspección directa de SecureStore ni del token almacenado.",
+    "La prueba de aviso y reintento fue reportada por el usuario; el agente no observó directamente el dispositivo.",
+    "No confirma prueba de un token caducado en Android físico.",
+    "No hay comprobación específica de TalkBack o lector de pantalla en Android.",
+    "Las capturas web con almacenamiento simulado conservan su alcance separado de esta confirmación humana."
+  ],
+  "checklist": {
+    "acceptedCriteria": 8,
+    "totalCriteria": 9,
+    "remainingCriteria": ["Revisión real de ZenaidaGR mediante PR"],
+    "taskStatus": "En revisión/pruebas",
+    "trelloUpdatedByAgent": false
+  },
+  "pullRequest": {
+    "number": 5,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/5",
+    "title": "Implementar Persistencia de sesión con MVVM y Repository",
+    "author": "David567rs",
+    "head": "feature/persistencia-sesion",
+    "base": "develop",
+    "headCommitAtOpen": "ecc289d1f0dd6de2423bae5f0ae7aef5095e58a9",
+    "status": "open",
+    "draft": false,
+    "reviewRequestedFrom": ["ZenaidaGR"],
+    "humanReview": "pending",
+    "remoteCiAtOpening": "pending",
+    "merged": false
+  }
+}

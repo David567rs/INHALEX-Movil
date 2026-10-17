@@ -25,13 +25,13 @@ test('secure token storage writes only the JWT and deletes the same stable key w
     ['clear', 'inhalex.auth.access-token', options()],
   ]);
   assert.equal(calls[0][3], calls[1][2]);
-  assert.equal(typeof store.get, 'undefined');
 });
 
 test('secure token storage snapshots and freezes caller options before any operation', async () => {
   const supplied = options();
   let received;
   const store = new SecureSessionTokenStore({
+    getItemAsync: async () => null,
     setItemAsync: async (_key, _token, passedOptions) => { received = passedOptions; },
     deleteItemAsync: async () => {},
   }, supplied);
@@ -41,6 +41,37 @@ test('secure token storage snapshots and freezes caller options before any opera
   assert.deepEqual(received, options());
   assert.equal(Object.isFrozen(received), true);
   assert.notEqual(received, supplied);
+});
+
+test('secure token storage reads the same key and frozen options each time without caching', async () => {
+  const calls = [];
+  let stored = token;
+  const store = new SecureSessionTokenStore({
+    getItemAsync: async (...args) => { calls.push(args); return stored; },
+    setItemAsync: async () => {},
+    deleteItemAsync: async () => {},
+  }, options());
+  assert.equal(await store.get(), token);
+  stored = null;
+  assert.equal(await store.get(), null);
+  assert.deepEqual(calls, [
+    ['inhalex.auth.access-token', options()],
+    ['inhalex.auth.access-token', options()],
+  ]);
+  assert.equal(calls[0][1], calls[1][1]);
+  assert.equal(Object.isFrozen(calls[0][1]), true);
+});
+
+test('secure token storage propagates read failure without writing, deleting or retrying', async () => {
+  let attempts = 0;
+  const failure = new Error('Native read unavailable');
+  const store = new SecureSessionTokenStore({
+    getItemAsync: async () => { attempts++; throw failure; },
+    setItemAsync: () => { throw new Error('Must not write'); },
+    deleteItemAsync: () => { throw new Error('Must not delete'); },
+  }, options());
+  await assert.rejects(store.get(), (error) => error === failure);
+  assert.equal(attempts, 1);
 });
 
 test('secure token storage propagates write and deletion failures without reading or retrying', async () => {
@@ -66,9 +97,11 @@ test('web token storage resolves without browser storage access or retaining tok
   Object.defineProperty(globalThis, 'sessionStorage', { configurable: true, get: forbidStorage });
   try {
     const store = createWebSessionTokenStore();
+    assert.equal(await store.get(), null);
     assert.equal(await store.set(token), undefined);
+    assert.equal(await store.get(), null);
     assert.equal(await store.clear(), undefined);
-    assert.deepEqual(Object.keys(store).sort(), ['clear', 'set']);
+    assert.deepEqual(Object.keys(store).sort(), ['clear', 'get', 'set']);
     assert.ok(!JSON.stringify(store).includes(token));
   } finally {
     if (originalLocalStorage) Object.defineProperty(globalThis, 'localStorage', originalLocalStorage);

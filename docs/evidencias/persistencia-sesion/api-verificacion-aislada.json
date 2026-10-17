@@ -1,0 +1,172 @@
+{
+  "fixture": "isolated-persistence",
+  "snapshotAt": "2026-10-16T11:14:43.6085994Z",
+  "smoke": {
+    "status": "passed",
+    "startedAt": "2026-10-16T11:13:25.248Z",
+    "completedAt": "2026-10-16T11:14:23.978Z",
+    "origin": "http://127.0.0.1:3211",
+    "mongoUri": "mongodb://127.0.0.1:27018/inhalex_persistence_isolated",
+    "apiPid": 37036,
+    "envFilesRead": false,
+    "fullAppModuleLoaded": false,
+    "components": [
+      "AuthController",
+      "AuthService",
+      "UsersService",
+      "UserSchema",
+      "JwtService",
+      "AuthSecurityService",
+      "JwtStrategy",
+      "JwtAuthGuard"
+    ],
+    "checks": {
+      "registerStatus": 201,
+      "loginStatus": 201,
+      "syntheticAccountsCreated": 3,
+      "realMongoPersistence": true,
+      "bcryptMatches": true,
+      "validProfileStatus": 200,
+      "profileShape": "flat",
+      "profileUserMatches": true,
+      "profileOmitsCredentials": true,
+      "cacheControl": "private, no-store",
+      "anonymousStatus": 401,
+      "expiredSignedTokenStatus": 401,
+      "invalidTokenStatus": 401,
+      "inactiveUserStatus": 401,
+      "unknownUserStatus": 401,
+      "fixtureUnavailableStatus": 503,
+      "recoveredWithSameTokenStatus": 200
+    },
+    "profileDelayMs": 2000,
+    "profileMode": "real",
+    "metricsUrl": "http://127.0.0.1:3211/__persistence-fixture/metrics",
+    "controlUrl": "http://127.0.0.1:3211/__persistence-fixture/control",
+    "isolation": "Fresh temporary database and synthetic accounts/tokens only. No usual services, AppModule, env file or physical credential storage.",
+    "fixture503IsSyntheticControl": true,
+    "storageCoverage": "API only. Coordinator/store injection and physical SecureStore require separate QA.",
+    "webDurableStorage": false,
+    "physicalSecureStoreTested": false,
+    "privateCredentialsExcludedFromPublicEvidence": true
+  },
+  "metrics": {
+    "fixture": "isolated-persistence",
+    "startedAt": "2026-10-16T11:13:25.248Z",
+    "profileDelayMs": 2000,
+    "totalProfileRequests": 8,
+    "totalLoginRequests": 3,
+    "profileRequests": [
+      {
+        "id": 1,
+        "caseLabel": "smoke-valid",
+        "mode": "real",
+        "startedAt": "2026-10-16T11:14:07.859Z",
+        "status": 200,
+        "elapsedMs": 2019,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 2,
+        "caseLabel": "smoke-anonymous",
+        "mode": "real",
+        "startedAt": "2026-10-16T11:14:09.883Z",
+        "status": 401,
+        "elapsedMs": 2003,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 3,
+        "caseLabel": "smoke-expired",
+        "mode": "real",
+        "startedAt": "2026-10-16T11:14:11.89Z",
+        "status": 401,
+        "elapsedMs": 2006,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 4,
+        "caseLabel": "smoke-invalid",
+        "mode": "real",
+        "startedAt": "2026-10-16T11:14:13.9Z",
+        "status": 401,
+        "elapsedMs": 2003,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 5,
+        "caseLabel": "smoke-inactive",
+        "mode": "real",
+        "startedAt": "2026-10-16T11:14:15.907Z",
+        "status": 401,
+        "elapsedMs": 2014,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 6,
+        "caseLabel": "smoke-unknown-user",
+        "mode": "real",
+        "startedAt": "2026-10-16T11:14:17.924Z",
+        "status": 401,
+        "elapsedMs": 2011,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 7,
+        "caseLabel": "smoke-fixture-unavailable",
+        "mode": "unavailable",
+        "startedAt": "2026-10-16T11:14:19.942Z",
+        "status": 503,
+        "elapsedMs": 2007,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 8,
+        "caseLabel": "smoke-recovered",
+        "mode": "real",
+        "startedAt": "2026-10-16T11:14:21.956Z",
+        "status": 200,
+        "elapsedMs": 2021,
+        "connectionClosedBeforeResponse": false
+      }
+    ],
+    "loginRequests": [
+      {
+        "id": 1,
+        "emailTag": "persistence.smoke@example.test",
+        "startedAt": "2026-10-16T11:14:06.081Z",
+        "status": 201,
+        "elapsedMs": 320,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 2,
+        "emailTag": "persistence.browser.qa@example.test",
+        "startedAt": "2026-10-16T11:14:06.694Z",
+        "status": 201,
+        "elapsedMs": 285,
+        "connectionClosedBeforeResponse": false
+      },
+      {
+        "id": 3,
+        "emailTag": "persistence.inactive@example.test",
+        "startedAt": "2026-10-16T11:14:07.281Z",
+        "status": 201,
+        "elapsedMs": 285,
+        "connectionClosedBeforeResponse": false
+      }
+    ],
+    "controls": [
+      {
+        "at": "2026-10-16T11:14:19.939Z",
+        "profileMode": "unavailable"
+      },
+      {
+        "at": "2026-10-16T11:14:21.953Z",
+        "profileMode": "real"
+      }
+    ]
+  },
+  "corsPreflightStatus": 204,
+  "corsQaOrigin": "http://localhost:8085"
+}

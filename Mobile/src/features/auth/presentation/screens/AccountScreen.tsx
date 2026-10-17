@@ -4,13 +4,21 @@ import { colors } from '@/core/theme/colors';
 import { AppScreen, ModuleCard } from '@/shared/components/AppScreen';
 import { PreparationScreen } from '@/features/shell/presentation/screens/PreparationScreen';
 import type { LoginUser } from '../../domain/models/Login';
-import type { AuthSession } from '../../domain/session/AuthSession';
+import type { AuthSession, AuthSessionState } from '../../domain/session/AuthSession';
 import { useAccountViewModel } from '../viewModels/useAccountViewModel';
+import { SessionStatusScreen } from './SessionStatusScreen';
 
 /** Current-session confirmation; editing the profile is a separate activity. */
-export function AccountScreen({ user, signOut }: { user: LoginUser | null; signOut: AuthSession['signOut'] }) {
+export function AccountScreen({ user, signOut, status, message, restore }: {
+  user: LoginUser | null;
+  signOut: AuthSession['signOut'];
+  status: AuthSessionState['status'];
+  message: string | null;
+  restore: AuthSession['restore'];
+}) {
   const viewModel = useAccountViewModel(signOut);
-  if (!user) return <PreparationScreen section="cuenta" notice={viewModel.message} retry={viewModel.message ? viewModel.logout : undefined} isRetrying={viewModel.isSigningOut} />;
+  if (status === 'checking' || status === 'recovery-error') return <SessionStatusScreen checking={status === 'checking'} message={message} onRetry={restore} onSignOut={viewModel.logout} />;
+  if (!user) return <PreparationScreen section="cuenta" notice={viewModel.message ?? message} retry={viewModel.message ? viewModel.logout : undefined} isRetrying={viewModel.isSigningOut} />;
 
   return (
     <AppScreen title="Cuenta" eyebrow="Un momento para ti">
