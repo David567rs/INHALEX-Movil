@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-17",
+  "pr": 5,
+  "url": "https://github.com/David567rs/INHALEX-Movil/pull/5",
+  "state": "closed",
+  "merged": true,
+  "mergedBy": "ZenaidaGR",
+  "mergedAt": "2026-10-17T11:16:04Z",
+  "mergeCommit": "d5171b2510a1ba6a17fa0d95d4e01a61cbbff7fb",
+  "mergeParents": [
+    "1031e001b8d79dde662497ceed5f803549e48d20",
+    "f137d4821dd24dd087637df3fe367c80076372e2"
+  ],
+  "approvedHead": "f137d4821dd24dd087637df3fe367c80076372e2",
+  "reviewer": "ZenaidaGR",
+  "reviewState": "APPROVED",
+  "reviewUrl": "https://github.com/David567rs/INHALEX-Movil/pull/5#pullrequestreview-5557535161",
+  "criteriaCompleted": 9,
+  "criteriaTotal": 9,
+  "localCopies": [
+    {
+      "Root": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+      "Branch": "develop",
+      "Head": "d5171b2510a1ba6a17fa0d95d4e01a61cbbff7fb",
+      "Clean": true,
+      "EnvPreserved": true,
+      "StashPreserved": true
+    },
+    {
+      "Root": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+      "Branch": "develop",
+      "Head": "d5171b2510a1ba6a17fa0d95d4e01a61cbbff7fb",
+      "Clean": true,
+      "EnvPreserved": true,
+      "StashPreserved": true
+    }
+  ],
+  "requiredChecks": [
+    {
+      "workflow": "Backend CI",
+      "name": "Backend verification",
+      "conclusion": "success"
+    },
+    {
+      "workflow": "Mobile CI",
+      "name": "Mobile verification",
+      "conclusion": "success"
+    }
+  ],
+  "trello": {
+    "status": "Terminado",
+    "confirmedBy": "user",
+    "confirmedDate": "2026-10-17",
+    "updatedByAgent": false
+  },
+  "scope": "PR #5 integrated in develop; this evidence closes Persistencia and does not accept Catalog design or functional criteria."
+}

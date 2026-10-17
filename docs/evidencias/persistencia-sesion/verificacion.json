@@ -3,15 +3,29 @@
   "date": "2026-10-16",
   "branch": "feature/persistencia-sesion",
   "base": "1031e001b8d79dde662497ceed5f803549e48d20",
-  "status": "open-pr-awaiting-human-review",
   "architecture": "MVVM, Repository, domain session coordinator and bootstrap dependency injection",
   "automated": {
-    "mobileTests": { "passed": 146, "failed": 0 },
+    "mobileTests": {
+      "passed": 146,
+      "failed": 0
+    },
     "typecheck": "passed",
-    "lint": { "status": "passed", "warnings": 0 },
-    "expoDoctor": { "passed": 21, "total": 21 },
-    "androidExport": { "status": "passed", "modules": 1378 },
-    "webExport": { "status": "passed", "modules": 926 },
+    "lint": {
+      "status": "passed",
+      "warnings": 0
+    },
+    "expoDoctor": {
+      "passed": 21,
+      "total": 21
+    },
+    "androidExport": {
+      "status": "passed",
+      "modules": 1378
+    },
+    "webExport": {
+      "status": "passed",
+      "modules": 926
+    },
     "coverage": [
       "Same SecureStore key and options on get/set/clear",
       "No HTTP without a stored token; public state contains no credentials",
@@ -47,27 +61,63 @@
   "visualQa": {
     "platform": "web",
     "status": "passed",
-    "viewports": ["393x852", "320x568"],
+    "viewports": [
+      "393x852",
+      "320x568"
+    ],
     "horizontalOverflow": false,
     "controlledPreview": {
       "backend": "real isolated API",
       "storage": "simulated get/set/clear",
       "temporaryRouteRemovedBeforeFinalExports": true,
       "cases": [
-        { "case": "Checking does not display an unverified user", "image": "comprobando-web-simulada.png" },
-        { "case": "Verified saved credential displays Account", "image": "restaurada-web-simulada.png" },
-        { "case": "Empty storage stays anonymous", "image": "sin-token-web-simulada.png" },
-        { "case": "Read failure displays recovery actions", "image": "error-lectura-web-simulada.png" },
-        { "case": "Logout followed by simulated runtime reopen stays anonymous", "image": "cerrar-reabrir-anonima-web-simulada.png" },
-        { "case": "Expired token clears and displays safe notice", "image": "token-caducado-web-simulada.png" },
-        { "case": "Temporary service failure allows retry", "image": "servicio-no-disponible-web-simulada.png" },
-        { "case": "Narrow recovery layout", "image": "servicio-no-disponible-320-web-simulada.png" },
-        { "case": "Retry after API recovery displays Account", "image": "reintento-correcto-web-simulada.png" }
+        {
+          "case": "Checking does not display an unverified user",
+          "image": "comprobando-web-simulada.png"
+        },
+        {
+          "case": "Verified saved credential displays Account",
+          "image": "restaurada-web-simulada.png"
+        },
+        {
+          "case": "Empty storage stays anonymous",
+          "image": "sin-token-web-simulada.png"
+        },
+        {
+          "case": "Read failure displays recovery actions",
+          "image": "error-lectura-web-simulada.png"
+        },
+        {
+          "case": "Logout followed by simulated runtime reopen stays anonymous",
+          "image": "cerrar-reabrir-anonima-web-simulada.png"
+        },
+        {
+          "case": "Expired token clears and displays safe notice",
+          "image": "token-caducado-web-simulada.png"
+        },
+        {
+          "case": "Temporary service failure allows retry",
+          "image": "servicio-no-disponible-web-simulada.png"
+        },
+        {
+          "case": "Narrow recovery layout",
+          "image": "servicio-no-disponible-320-web-simulada.png"
+        },
+        {
+          "case": "Retry after API recovery displays Account",
+          "image": "reintento-correcto-web-simulada.png"
+        }
       ]
     },
     "normalProductRoutes": [
-      { "case": "Real login reaches Account with five tabs", "image": "login-regresion-web.png" },
-      { "case": "New web execution starts Account anonymously, as intended by the nonpersistent web store", "image": "web-inicio-sin-persistencia.png" }
+      {
+        "case": "Real login reaches Account with five tabs",
+        "image": "login-regresion-web.png"
+      },
+      {
+        "case": "New web execution starts Account anonymously, as intended by the nonpersistent web store",
+        "image": "web-inicio-sin-persistencia.png"
+      }
     ],
     "limitations": "Web screenshots and simulated storage do not demonstrate native SecureStore or a physical Android reopen. TalkBack and the native keyboard were not tested."
   },
@@ -89,14 +139,22 @@
   },
   "trello": {
     "updatedBy": "user",
-    "acceptedCriteria": 8,
+    "acceptedCriteria": 9,
     "totalCriteria": 9,
     "accepted": [
-      "Guardar token seguro", "Utilizar Expo SecureStore", "Restaurar al abrir",
-      "Validar token", "Redirigir según estado", "Eliminar al cerrar sesión",
-      "Errores de restauración y reintento", "Probar cerrar/abrir"
+      "Guardar token seguro",
+      "Utilizar Expo SecureStore",
+      "Restaurar al abrir",
+      "Validar token",
+      "Redirigir según estado",
+      "Eliminar al cerrar sesión",
+      "Errores de restauración y reintento",
+      "Probar cerrar/abrir",
+      "Revisión real de ZenaidaGR mediante PR #5"
     ],
-    "remaining": "Real ZenaidaGR review through the activity PR"
+    "remaining": null,
+    "status": "Terminado",
+    "confirmedDoneByUser": true
   },
   "pullRequest": {
     "number": 5,
@@ -106,12 +164,36 @@
     "head": "feature/persistencia-sesion",
     "base": "develop",
     "headCommitAtOpen": "ecc289d1f0dd6de2423bae5f0ae7aef5095e58a9",
-    "status": "open",
+    "status": "closed",
     "draft": false,
-    "reviewRequestedFrom": ["ZenaidaGR"],
-    "humanReview": "pending",
+    "reviewRequestedFrom": [
+      "ZenaidaGR"
+    ],
+    "humanReview": "approved",
     "remoteCiAtOpening": "pending",
-    "merged": false
+    "merged": true,
+    "approvedHead": "f137d4821dd24dd087637df3fe367c80076372e2",
+    "reviewer": "ZenaidaGR",
+    "reviewUrl": "https://github.com/David567rs/INHALEX-Movil/pull/5#pullrequestreview-5557535161",
+    "mergedBy": "ZenaidaGR",
+    "mergedAt": "2026-10-17T11:16:04Z",
+    "mergeCommit": "d5171b2510a1ba6a17fa0d95d4e01a61cbbff7fb",
+    "mergeParents": [
+      "1031e001b8d79dde662497ceed5f803549e48d20",
+      "f137d4821dd24dd087637df3fe367c80076372e2"
+    ],
+    "requiredChecks": [
+      {
+        "workflow": "Backend CI",
+        "name": "Backend verification",
+        "conclusion": "success"
+      },
+      {
+        "workflow": "Mobile CI",
+        "name": "Mobile verification",
+        "conclusion": "success"
+      }
+    ]
   },
   "scope": {
     "backendSourceChanged": false,
@@ -120,5 +202,8 @@
     "userEnvFilesChanged": false,
     "refreshTokenAdded": false,
     "restoration": "Once at application runtime startup; no background AppState or refresh-token feature"
-  }
+  },
+  "status": "integrated",
+  "integrationDate": "2026-10-17",
+  "integrationEvidence": "integracion-pr5.json"
 }
