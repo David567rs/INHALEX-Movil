@@ -1,6 +1,6 @@
 # Conexión de Líneas o categorías
 
-Estado del 18 de octubre de 2026: API implementada en `feature/lineas-categorias`, pendiente de aceptación funcional en Expo Go y revisión. El usuario aceptó el [diseño](DISENO-LINEAS-CATEGORIAS.md) y autorizó continuar en la misma rama con MVVM y Repository. Su [confirmación textual](evidencias/lineas-categorias/expo-go-aceptacion.json) no acepta todavía los ocho criterios funcionales de Trello: siguen 0/8, En progreso. No se creó PR ni se publicó esta actividad.
+Estado del 18 de octubre de 2026: API implementada en `feature/lineas-categorias`, con cinco criterios aceptados por el usuario en Expo Go. Confirmó: «Ya probé en Expo Go, amigo: aparecen las categorías, cambian los productos al elegir otra y funciona «Ver todos». Ya marqué esos puntos en Trello. Sigamos con la prueba de categoría sin productos.». La [evidencia textual](evidencias/lineas-categorias/expo-go-aceptacion.json) separa esta confirmación del [diseño](DISENO-LINEAS-CATEGORIAS.md) y su snapshot inicial 0/8. El estado actual es 5/8, En progreso; el agente no modificó Trello. Quedan categoría sin productos, prueba completa y revisión. No se creó PR ni se publicó esta actividad.
 
 ## Consulta y arquitectura
 
@@ -31,9 +31,9 @@ Catálogo muestra la línea activa, permite «Ver todos», cargar más, actualiz
 
 La [evidencia de conexión](evidencias/lineas-categorias/api-verificacion.json) separa resultados HTTP, observaciones web y límites; no atribuye esos casos a un dispositivo físico.
 
-Los datos y conteos anteriores pertenecen al fixture aislado, no a existencias o categorías comerciales comprobadas en una base real. No hay aceptación nativa de API, filtrado, vacío o paginación. TalkBack, escalado de fuente y movimiento reducido no se han probado físicamente. Las pruebas técnicas y las capturas web no sustituyen la confirmación del usuario en Expo Go.
+Los datos y conteos anteriores pertenecen al fixture aislado, no a existencias o categorías comerciales comprobadas en una base real. Por separado, el usuario confirmó en Expo Go categorías, selección, filtrado y «Ver todos»; no confirmó vacío, paginación nativa, errores o prueba completa. No hay observación del teléfono por el agente ni capturas nativas. TalkBack, escalado de fuente y movimiento reducido no se han probado físicamente.
 
-## Recorrido funcional pendiente en Expo Go
+## Recorrido confirmado en Expo Go
 
 Desde `C:\Users\David\Documents\INHALEX-Movil`, conserva la configuración existente. Si la API local está apagada, abre una terminal con `npm run dev:server`. En otra usa `npm run dev:mobile` si Metro no está activo, o recarga el proyecto existente; no inicies otro sobre 8082. No se necesita iniciar sesión para consultar líneas y productos.
 
@@ -42,18 +42,31 @@ Desde `C:\Users\David\Documents\INHALEX-Movil`, conserva la configuración exist
 3. Pulsa «Ver todos» y comprueba que vuelves al Catálogo completo.
 4. Abre Líneas otra vez, selecciona otra y comprueba selección, regreso y cinco pestañas.
 
-Cuando se pruebe una línea sin productos, verifica su mensaje y la salida del filtro. Los errores y reintentos se comprueban en su recorrido correspondiente. No se atribuyen todavía resultados de estos pasos al usuario.
+El usuario confirmó el recorrido anterior y afirma que marcó sus cinco criterios en Trello. La prueba de vacío que sigue no está aceptada todavía.
 
-## Criterios de Trello pendientes
+## Próxima prueba: categoría sin productos
 
-La captura del usuario contiene exactamente estos ocho criterios; no incluye una casilla de diseño. Permanecen sin marcar hasta su confirmación funcional y la revisión real que corresponda:
+`npm run qa:lines:empty` ya está listo y verificado. Es un helper HTTP temporal en el puerto 3200 para mantener la configuración de Expo Go: devuelve la categoría «Prueba sin productos» vacía y un «Producto de prueba» sintético rotulado en el Catálogo general; otras rutas responden 503. No usa base de datos ni modifica `.env`. El backend real sigue activo y el helper todavía no se inició en 3200.
 
-- [ ] Obtener líneas o categorías desde la API.
-- [ ] Mostrar las categorías disponibles.
-- [ ] Permitir seleccionar una categoría.
-- [ ] Filtrar los productos según la categoría.
+La [verificación del helper](evidencias/lineas-categorias/empty-category-fixture-verificacion.json) pasó diez grupos HTTP mediante `HttpClient`, ambos Repositories y casos de uso móviles reales: categorías 0/1, vacío → todos, página posterior, parámetros inválidos/repetidos, CORS/no-store, 405/503, puerto ocupado sin detener el servidor y CLI inválida. La revisión no encontró fallos materiales. El fixture aislado de 3214 se detuvo; se conservaron el backend 3200 y Metro 8082. Estos resultados HTTP no aceptan todavía el vacío en Expo Go.
+
+1. Pulsar Ctrl+C únicamente en la terminal del backend real, conservando Metro y Expo Go.
+2. Desde la raíz ejecutar `npm run qa:lines:empty`; en Expo Go actualizar Líneas y seleccionar «Prueba sin productos».
+3. Pulsar «Ver productos de esta línea» y comprobar «Esta línea aún no tiene productos»; «Ver todos» debe mostrar «Producto de prueba».
+4. Al terminar, pulsar Ctrl+C en el helper, ejecutar `npm run dev:server` y actualizar para recuperar los datos reales.
+
+La verificación HTTP del helper está aprobada; la aceptación nativa de este recorrido sigue pendiente. Líneas permanece 5/8 y no se marca categoría sin productos antes de la confirmación del usuario.
+
+## Criterios de Trello: 5/8
+
+La captura del usuario contiene exactamente estos ocho criterios; no incluye una casilla de diseño. La confirmación posterior acepta los puntos 1, 2, 3, 4 y 6, que el usuario afirma haber marcado:
+
+- [x] Obtener líneas o categorías desde la API.
+- [x] Mostrar las categorías disponibles.
+- [x] Permitir seleccionar una categoría.
+- [x] Filtrar los productos según la categoría.
 - [ ] Manejar categoría sin productos.
-- [ ] Verificar navegación.
+- [x] Verificar navegación.
 - [ ] Probar la funcionalidad.
 - [ ] Revisar el código.
 

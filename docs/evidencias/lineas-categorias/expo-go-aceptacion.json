@@ -2,7 +2,7 @@
   "activity": "Líneas o categorías",
   "date": "2026-10-18",
   "branch": "feature/lineas-categorias",
-  "phase": "design-accepted-api-functional-acceptance-pending",
+  "phase": "five-functional-criteria-accepted-empty-test-pending",
   "platform": "Expo Go",
   "evidenceType": "human_chat_confirmation",
   "userResponse": "Ya revisé el diseño de Líneas o categorías en Expo Go, amigo, y me gustó. Sigamos con la conexión a la API en la misma rama, manteniendo MVVM y Repository. ¿Qué punto marco en Trello?",
@@ -18,10 +18,11 @@
     "authorizedByUser": true,
     "sameBranch": true,
     "architecture": "MVVM y Repository",
-    "implementationStatus": "implemented-technical-checks-passed-awaiting-user-functional-acceptance",
-    "nativeFunctionalAcceptance": "pending-user"
+    "implementationStatus": "implemented-technical-checks-passed",
+    "nativeFunctionalAcceptance": "five-criteria-accepted-by-user"
   },
-  "checklist": {
+  "checklistAtDesignAcceptance": {
+    "status": "historical-snapshot-before-functional-confirmation",
     "source": "User-provided Trello screenshot after the visual acceptance message",
     "screenshotFollowupText": "mira son esos puntos",
     "acceptedCriteria": 0,
@@ -37,16 +38,63 @@
       "Revisar el código"
     ]
   },
+  "functionalConfirmation": {
+    "date": "2026-10-18",
+    "userResponse": "Ya probé en Expo Go, amigo: aparecen las categorías, cambian los productos al elegir otra y funciona «Ver todos». Ya marqué esos puntos en Trello. Sigamos con la prueba de categoría sin productos.",
+    "evidenceType": "human_chat_confirmation",
+    "categoriesVisible": true,
+    "selectionChangesProducts": true,
+    "viewAllWorks": true,
+    "agentObservedPhysicalDevice": false,
+    "nativeScreenshotsProvided": false
+  },
+  "checklist": {
+    "source": "Subsequent human chat confirmation in Expo Go",
+    "acceptedCriteria": 5,
+    "totalCriteria": 8,
+    "acceptedCriterionNumbers": [1, 2, 3, 4, 6],
+    "acceptedCriteriaNames": [
+      "Obtener líneas o categorías desde la API",
+      "Mostrar las categorías disponibles",
+      "Permitir seleccionar una categoría",
+      "Filtrar los productos según la categoría",
+      "Verificar navegación"
+    ],
+    "remainingCriteria": [
+      "Manejar categoría sin productos",
+      "Probar la funcionalidad",
+      "Revisar el código"
+    ]
+  },
+  "nextNativeTest": {
+    "criterion": "Manejar categoría sin productos",
+    "status": "helper-http-verified-ready-awaiting-user-run-and-native-result",
+    "command": "npm run qa:lines:empty",
+    "scope": "Temporary HTTP on port 3200, Prueba sin productos empty category and Producto de prueba synthetic general-catalog product; no database or env changes.",
+    "helperVerification": {
+      "status": "passed",
+      "httpGroups": 10,
+      "actualMobileComponents": "HttpClient, ApiProductLinesRepository, createListProductLines, ApiCatalogRepository, createListCatalog",
+      "evidence": "empty-category-fixture-verificacion.json",
+      "independentReview": "no material defects",
+      "isolatedPort3214Stopped": true,
+      "realBackend3200Preserved": true,
+      "metro8082Preserved": true
+    },
+    "helperStartedOn3200": false,
+    "nativeResultReceived": false
+  },
   "trello": {
     "taskStatus": "En progreso",
-    "allEightCriteriaUncheckedInProvidedScreenshot": true,
+    "initialScreenshotSnapshot": "checklistAtDesignAcceptance",
+    "fiveCriteriaMarkedByUserAsReportedInChat": true,
     "updatedByAgent": false,
     "updateResponsibility": "user"
   },
   "limitations": [
-    "La confirmación acepta únicamente el diseño visual y autoriza continuar con la API en la misma rama.",
-    "La captura posterior muestra el checklist de Trello, no la aplicación nativa.",
-    "No acredita consulta real, filtrado, vacío, paginación, errores o prueba funcional completa en Expo Go.",
+    "La confirmación inicial acepta el diseño visual; su snapshot 0/8 se conserva separado de la confirmación funcional posterior 5/8.",
+    "La captura inicial muestra el checklist de Trello, no la aplicación nativa; el usuario afirma posteriormente haber marcado cinco criterios.",
+    "La confirmación funcional acepta categorías, selección, filtrado y Ver todos; no acredita categoría vacía, paginación nativa, errores o prueba funcional completa en Expo Go.",
     "No hay capturas nativas ni observación directa del teléfono por el agente.",
     "No acredita TalkBack, escalado de fuente o movimiento reducido en un dispositivo físico.",
     "Las comprobaciones técnicas de la API se registran por separado y no completan por sí solas el checklist humano."

@@ -263,19 +263,19 @@ Se conserva la [aceptación funcional previa](evidencias/catalogo-productos/expo
 
 Ambas copias se actualizaron a `fc13bbf`, conservando sus `.env` y el stash de Zenaida `81196109270f00fa7edf03a8a8ec6f8bdc963131`. Zenaida permanece en `develop`; David creó `feature/lineas-categorias` desde ese merge en `C:\Users\David\Documents\INHALEX-Movil`.
 
-El 18 de octubre de 2026 el usuario aceptó el diseño de Líneas en Expo Go y autorizó conectar la API en esta misma rama con MVVM y Repository. La [aceptación visual](evidencias/lineas-categorias/expo-go-aceptacion.json) procede de su mensaje en el chat; no hay observación directa del teléfono ni capturas nativas. La captura posterior de Trello contiene ocho criterios funcionales, todos sin marcar, y ninguno de diseño: la aceptación visual se registra como comentario, sin sumar una casilla. Estado En progreso, 0/8 criterios funcionales aceptados.
+El 18 de octubre de 2026 el usuario aceptó el diseño de Líneas en Expo Go y autorizó conectar la API en esta misma rama con MVVM y Repository. Después confirmó: «Ya probé en Expo Go, amigo: aparecen las categorías, cambian los productos al elegir otra y funciona «Ver todos». Ya marqué esos puntos en Trello. Sigamos con la prueba de categoría sin productos.». La [aceptación](evidencias/lineas-categorias/expo-go-aceptacion.json) procede del chat; no hay observación directa del teléfono ni capturas nativas. La captura inicial de Trello con ocho criterios sin marcar se conserva como snapshot histórico 0/8; el diseño no tiene casilla. El estado actual es En progreso, 5/8 aceptados, que el usuario afirma haber marcado; el agente no modificó el tablero.
 
 La conexión está implementada en `features/productLines`: entidad `ProductLine { id, name, count }`, contrato Repository asíncrono, caso de uso y mapeador de GET público `/products/categories`, composición diferida y ViewModel con carga, actualización, error/reintento, selección y cancelación. Admite líneas personalizadas válidas y conteo cero. «Ver productos de esta línea» vuelve a Catálogo con el filtro; cambiarlo o quitarlo reinicia la paginación y cancela la consulta anterior. El vacío filtrado tiene mensaje propio. Se eliminó el código de vista previa y se conserva el [diseño histórico](DISENO-LINEAS-CATEGORIAS.md) y [su evidencia](evidencias/lineas-categorias/verificacion-diseno.json). No se modifica Server, autenticación, dependencias o `.env`, ni se implementa Detalle, búsqueda, Favoritos o Bolsa.
 
 Pasaron 206/206 pruebas móviles (27 nuevas), TypeScript, lint global sin advertencias, Doctor 21/21 y exportaciones finales Android (1415 módulos) y web (963 módulos); la revisión independiente no encontró bloqueadores. La API aislada pasó 15 grupos HTTP con Controller, Service y validación DTO reales y modelos Mongo simulados; nueve grupos adicionales usaron Repository y casos de uso móviles reales contra HTTP. No se conectó una base real ni se cargó `.env`; los upserts de categorías por defecto quedan simulados. La [QA web](evidencias/lineas-categorias/api-verificacion.json) confirmó filtro y paginación, vacíos, error/reintento con datos conservados y descarte de respuestas obsoletas al cambiar rápido de línea, sin desbordamiento en 393×852. El [contrato de conexión](CONEXION-LINEAS-CATEGORIAS.md) detalla resultados y recorrido pendiente en Expo Go. TalkBack, escalado de fuente y movimiento reducido no se probaron físicamente.
 
-- [ ] Obtener líneas o categorías desde la API.
-- [ ] Mostrar las categorías disponibles.
-- [ ] Permitir seleccionar una categoría.
-- [ ] Filtrar los productos según la categoría.
+- [x] Obtener líneas o categorías desde la API.
+- [x] Mostrar las categorías disponibles.
+- [x] Permitir seleccionar una categoría.
+- [x] Filtrar los productos según la categoría.
 - [ ] Manejar categoría sin productos.
-- [ ] Verificar navegación.
+- [x] Verificar navegación.
 - [ ] Probar la funcionalidad.
 - [ ] Revisar el código.
 
-La implementación y QA técnica no marcan por sí solas estos criterios como aceptados por el usuario. El siguiente recorrido es Catálogo → Encuentra tu línea → seleccionar → Ver productos de esta línea → Ver todos → otra línea; el resultado funcional en Expo Go sigue pendiente. El agente no modificó Trello ni creó PR o push. Se conserva el orden Catálogo → Categorías → Detalle y Catálogo permanece 7/9.
+Los cinco criterios se apoyan en la confirmación humana, no únicamente en la QA técnica. Siguen pendientes categoría sin productos, prueba funcional completa y revisión. El helper HTTP temporal para la prueba de vacío pasó diez grupos aislados con transporte, Repositories y casos de uso móviles reales; está listo para ejecutar sin cambiar datos ni `.env`. No se inició en 3200: el backend real sigue activo y el resultado nativo continúa pendiente. La guía enlaza el reporte de verificación. No se creó PR o push. Se conserva el orden Catálogo → Categorías → Detalle y Catálogo permanece 7/9.
