@@ -1,6 +1,6 @@
-# Borrador de PR: Implementar Detalle de producto con API y accesos a Favoritos y Bolsa
+# PR #8: Implementar Detalle de producto con API y accesos a Favoritos y Bolsa
 
-Descripción local para `feature/detalle-producto` → `develop`, responsable David567rs. El usuario autorizó abrir el PR y solicitar revisión a ZenaidaGR. La URL, publicación y solicitud real se registrarán al confirmarse.
+Descripción del [PR #8](https://github.com/David567rs/INHALEX-Movil/pull/8), abierto por David567rs desde `feature/detalle-producto` hacia `develop`. La rama está publicada y la revisión está solicitada a ZenaidaGR; no hay aprobación ni merge. El HEAD al abrir fue `6b9658887b5432ff7b9ca36ed43fe0bdfb810b1f`; los checks finales se consultan sobre el HEAD vigente del PR.
 
 ## Actividad y alcance
 
@@ -34,8 +34,8 @@ El usuario aclaró que los criterios 5 y 6 requieren únicamente los accesos de 
 | QA web | Componentes reales con HTTP temporal y datos públicos | Carga, datos adicionales, error/reintento, 404, 393 y 320 px. |
 | Accesos a Favoritos y Bolsa | Iconos y navegación a las pestañas existentes | QA web aprobada en 393 y 320 px; aceptación nativa pendiente. |
 | Expo Go | Confirmaciones del usuario en chat | Datos, cambio de producto, error/recuperación y regreso con/sin filtro aceptados. |
-| CI del nuevo PR | Backend CI y Mobile CI | Pendiente de publicación del PR. |
-| Revisión de ZenaidaGR | Desde su propia cuenta | Pendiente. |
+| CI del PR | Backend CI y Mobile CI | Consultar los checks del HEAD vigente en el PR; CI final todavía sin acreditar. |
+| Revisión de ZenaidaGR | Desde su propia cuenta | Solicitada; aprobación pendiente. |
 
 Los checks técnicos indicados se repitieron después del ajuste de accesos y de retirar la ruta QA. La [verificación de accesos](evidencias/detalle-producto/verificacion-accesos.json) usó un snapshot público inyectado solo para UI y comprobó las pestañas de destino seleccionadas, las cinco pestañas presentes, acciones de al menos 72 px y ausencia de desbordamiento. La ruta temporal se retiró y no quedó en los bundles. Las [evidencias API](evidencias/detalle-producto/verificacion-api.json) separan HTTP real de QA web aislada por CORS. La [aceptación de Expo Go](evidencias/detalle-producto/expo-go-aceptacion.json) procede del usuario; el agente no observó el dispositivo ni acredita TalkBack, fuente ampliada o movimiento reducido físicos.
 

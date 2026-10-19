@@ -1,0 +1,57 @@
+{
+  "clientDate": "2026-10-18",
+  "repository": "David567rs/INHALEX-Movil",
+  "pullRequest": {
+    "number": 8,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/8",
+    "title": "Implementar Detalle de producto con MVVM y Repository",
+    "stateAtOpening": "open",
+    "draft": false,
+    "author": "David567rs",
+    "base": "develop",
+    "head": "feature/detalle-producto",
+    "openedAt": "2026-10-19T05:54:53Z",
+    "openingSourceHead": "6b9658887b5432ff7b9ca36ed43fe0bdfb810b1f",
+    "openingSourceHeadIsHistoricalNotPinnedLatestHead": true
+  },
+  "humanReview": {
+    "requestedReviewersVerifiedViaGitHub": ["ZenaidaGR"],
+    "reviewRequested": true,
+    "approvalReceivedAtRecording": false,
+    "state": "requested-pending",
+    "reviewSubmissionsAtRecording": []
+  },
+  "localVerificationOnPublishedSource": {
+    "mobileTests": "236/236",
+    "typecheck": "passed",
+    "lintWarnings": 0,
+    "expoDoctor": "21/21",
+    "androidExportModules": 1426,
+    "webExportModules": 974,
+    "accessQaEvidence": "verificacion-accesos.json",
+    "temporaryQaRouteRemoved": true
+  },
+  "requiredRemoteChecks": {
+    "names": ["Backend verification", "Mobile verification"],
+    "mustPassOnLatestPrHead": true,
+    "latestStatusSource": "The pull request Checks tab; this opening snapshot does not claim final CI success."
+  },
+  "scope": {
+    "apiAndNavigation": "Product detail with public API, safe loading/error/retry and category-preserving return.",
+    "accessCriteriaClarifiedByUser": "Heart and bag icons open existing Favorite and Bag tabs.",
+    "savesFavoriteOrAddsProduct": false,
+    "nativePreviouslyAcceptedCriteria": [1, 2, 3, 4, 7],
+    "newAccessCriteriaWebVerifiedNativePending": [5, 6],
+    "completeNativeTestAndHumanReview": "pending",
+    "catalogueCriteriaAcceptedInBranch": 9,
+    "catalogueNavigationIntegration": "pending merge of this PR"
+  },
+  "workflow": {
+    "artifactAttachedToChat": true,
+    "autoMergeEnabledByAgent": false,
+    "mergedByAgent": false,
+    "trelloUpdatedByAgent": false,
+    "userReportedPreviousTrelloUpdate": true,
+    "mainModified": false
+  }
+}
