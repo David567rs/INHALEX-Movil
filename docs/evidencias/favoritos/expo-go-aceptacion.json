@@ -2,18 +2,22 @@
   "activity": "Favoritos",
   "branch": "feature/favoritos",
   "date": "2026-10-19",
-  "source": "Mensaje del usuario en el chat",
+  "source": "Mensajes del usuario en el chat para diseño y recorrido nativo; revisión formal de David567rs en GitHub para el criterio 9",
   "design": {
     "accepted": true,
     "quote": "ya revisé el diseño de Favoritos en Expo Go y me gustó. Sigamos con la conexión a la API en la misma rama, manteniendo MVVM y Repository.",
     "agentObservedDevice": false
   },
   "functionalAcceptance": {
-    "acceptedCriteria": 8,
+    "acceptedCriteria": 9,
     "totalCriteria": 9,
-    "status": "Recorrido funcional aceptado por el usuario en Expo Go; revisión real pendiente",
-    "acceptedCriterionIds": [1, 2, 3, 4, 5, 6, 7, 8],
-    "pendingCriterionIds": [9],
+    "status": "9/9 completos: recorrido funcional aceptado por el usuario en Expo Go y revisión formal de David567rs sobre el HEAD final del PR #10",
+    "acceptedCriterionIds": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    "pendingCriterionIds": [],
+    "criterionSources": {
+      "1-8": "Confirmaciones del usuario en Expo Go, conservadas abajo; sin observación directa del dispositivo",
+      "9": "Revisión formal APPROVED de David567rs en el PR #10; no representa una nueva prueba nativa"
+    },
     "confirmations": [
       {
         "date": "2026-10-19",
@@ -43,8 +47,23 @@
         "agentObservedDevice": false
       }
     ],
-    "nextTest": "Revisión real de David567rs sobre el PR de Favoritos de ZenaidaGR hacia develop"
+    "formalCodeReview": {
+      "reviewer": "David567rs",
+      "state": "APPROVED",
+      "submittedAt": "2026-10-19T10:01:37Z",
+      "commitSha": "5d08fe0a392f7919c58ca77cf3b6708f899350d7",
+      "url": "https://github.com/David567rs/INHALEX-Movil/pull/10#pullrequestreview-5569892642",
+      "integrationEvidence": "integracion-pr10.json",
+      "acceptedCriterionIds": [9],
+      "newNativeAcceptance": false
+    },
+    "nextTest": null,
+    "nextStage": "Diseño de Bolsa de compras, pendiente de aceptación en Expo Go"
   },
-  "trello": { "agentReadOrModifiedBoard": false },
-  "limitations": ["Aceptación textual del usuario; sin observación directa del teléfono", "Sin capturas nativas ni prueba física de TalkBack", "Revisión real de David567rs pendiente", "Aislamiento entre dos cuentas cubierto por pruebas automatizadas, sin confirmación física específica", "El fallo de descarga de imagen remota tiene fallback técnico; sin aceptación física específica de ese escenario"]
+  "trello": {
+    "agentReadOrModifiedBoard": false,
+    "userReportedUpdated": true,
+    "source": "El usuario confirmó Trello actualizado tras la integración de Favoritos"
+  },
+  "limitations": ["Aceptación nativa textual del usuario; sin observación directa del teléfono", "Sin capturas nativas ni prueba física de TalkBack", "El criterio 9 procede de revisión formal en GitHub, no de una nueva aceptación nativa", "Aislamiento entre dos cuentas cubierto por pruebas automatizadas, sin confirmación física específica", "El fallo de descarga de imagen remota tiene fallback técnico; sin aceptación física específica de ese escenario"]
 }
