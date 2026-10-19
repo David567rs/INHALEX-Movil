@@ -1,6 +1,6 @@
 # Conexión de Líneas o categorías
 
-Estado del 18 de octubre de 2026: API implementada en `feature/lineas-categorias`, con cinco criterios aceptados por el usuario en Expo Go. Confirmó: «Ya probé en Expo Go, amigo: aparecen las categorías, cambian los productos al elegir otra y funciona «Ver todos». Ya marqué esos puntos en Trello. Sigamos con la prueba de categoría sin productos.». La [evidencia textual](evidencias/lineas-categorias/expo-go-aceptacion.json) separa esta confirmación del [diseño](DISENO-LINEAS-CATEGORIAS.md) y su snapshot inicial 0/8. El estado actual es 5/8, En progreso; el agente no modificó Trello. Quedan categoría sin productos, prueba completa y revisión. No se creó PR ni se publicó esta actividad.
+Estado del 18 de octubre de 2026: API implementada en `feature/lineas-categorias`, con seis criterios aceptados por el usuario en Expo Go, incluido vacío mediante datos sintéticos. La [evidencia textual](evidencias/lineas-categorias/expo-go-aceptacion.json) separa diseño, snapshot inicial 0/8, primera confirmación funcional 5/8 y aceptación posterior de vacío 6/8. La tarjeta sigue En progreso; solo faltan prueba completa y revisión. El usuario había marcado cinco puntos y puede marcar ahora el de vacío; el agente no modificó Trello. No se creó PR ni se publicó esta actividad.
 
 ## Consulta y arquitectura
 
@@ -31,7 +31,7 @@ Catálogo muestra la línea activa, permite «Ver todos», cargar más, actualiz
 
 La [evidencia de conexión](evidencias/lineas-categorias/api-verificacion.json) separa resultados HTTP, observaciones web y límites; no atribuye esos casos a un dispositivo físico.
 
-Los datos y conteos anteriores pertenecen al fixture aislado, no a existencias o categorías comerciales comprobadas en una base real. Por separado, el usuario confirmó en Expo Go categorías, selección, filtrado y «Ver todos»; no confirmó vacío, paginación nativa, errores o prueba completa. No hay observación del teléfono por el agente ni capturas nativas. TalkBack, escalado de fuente y movimiento reducido no se han probado físicamente.
+Los datos y conteos anteriores pertenecen al fixture aislado, no a existencias o categorías comerciales comprobadas en una base real. Por separado, el usuario confirmó en Expo Go categorías, selección, filtrado, «Ver todos» y vacío mediante el helper sintético; no confirmó paginación nativa, errores o prueba completa. No hay observación del teléfono por el agente ni capturas nativas. TalkBack, escalado de fuente y movimiento reducido no se han probado físicamente.
 
 ## Recorrido confirmado en Expo Go
 
@@ -42,30 +42,43 @@ Desde `C:\Users\David\Documents\INHALEX-Movil`, conserva la configuración exist
 3. Pulsa «Ver todos» y comprueba que vuelves al Catálogo completo.
 4. Abre Líneas otra vez, selecciona otra y comprueba selección, regreso y cinco pestañas.
 
-El usuario confirmó el recorrido anterior y afirma que marcó sus cinco criterios en Trello. La prueba de vacío que sigue no está aceptada todavía.
+Ese recorrido sustentó cinco criterios que el usuario afirma haber marcado en Trello. La confirmación posterior de vacío completa el sexto criterio aceptado.
 
-## Próxima prueba: categoría sin productos
+## Categoría sin productos aceptada
 
-`npm run qa:lines:empty` ya está listo y verificado. Es un helper HTTP temporal en el puerto 3200 para mantener la configuración de Expo Go: devuelve la categoría «Prueba sin productos» vacía y un «Producto de prueba» sintético rotulado en el Catálogo general; otras rutas responden 503. No usa base de datos ni modifica `.env`. El backend real sigue activo y el helper todavía no se inició en 3200.
+El usuario probó `npm run qa:lines:empty`, un helper HTTP temporal en 3200 que conserva la configuración de Expo Go. Devuelve la categoría «Prueba sin productos» vacía y un «Producto de prueba» sintético rotulado en el Catálogo general; otras rutas responden 503. No usa base de datos ni modifica `.env`. El recorrido queda conservado como historia:
 
-La [verificación del helper](evidencias/lineas-categorias/empty-category-fixture-verificacion.json) pasó diez grupos HTTP mediante `HttpClient`, ambos Repositories y casos de uso móviles reales: categorías 0/1, vacío → todos, página posterior, parámetros inválidos/repetidos, CORS/no-store, 405/503, puerto ocupado sin detener el servidor y CLI inválida. La revisión no encontró fallos materiales. El fixture aislado de 3214 se detuvo; se conservaron el backend 3200 y Metro 8082. Estos resultados HTTP no aceptan todavía el vacío en Expo Go.
+La [verificación del helper](evidencias/lineas-categorias/empty-category-fixture-verificacion.json) pasó diez grupos HTTP mediante `HttpClient`, ambos Repositories y casos de uso móviles reales: categorías 0/1, vacío → todos, página posterior, parámetros inválidos/repetidos, CORS/no-store, 405/503, puerto ocupado sin detener el servidor y CLI inválida. La revisión no encontró fallos materiales. El fixture aislado de 3214 se detuvo; se conservaron el backend 3200 y Metro 8082. Estos resultados HTTP se distinguen de la aceptación posterior del usuario en Expo Go.
 
 1. Pulsar Ctrl+C únicamente en la terminal del backend real, conservando Metro y Expo Go.
 2. Desde la raíz ejecutar `npm run qa:lines:empty`; en Expo Go actualizar Líneas y seleccionar «Prueba sin productos».
 3. Pulsar «Ver productos de esta línea» y comprobar «Esta línea aún no tiene productos»; «Ver todos» debe mostrar «Producto de prueba».
 4. Al terminar, pulsar Ctrl+C en el helper, ejecutar `npm run dev:server` y actualizar para recuperar los datos reales.
 
-La verificación HTTP del helper está aprobada; la aceptación nativa de este recorrido sigue pendiente. Líneas permanece 5/8 y no se marca categoría sin productos antes de la confirmación del usuario.
+El 18 de octubre de 2026 el usuario confirmó: «Sí, amigo, apareció «Esta línea aún no tiene productos» y «Ver todos» mostró el producto de prueba. Ya restauré el backend real. ¿Qué marco en Trello y qué sigue?».
 
-## Criterios de Trello: 5/8
+Esta respuesta acepta el vacío y la salida al Catálogo general con datos sintéticos; no se presenta como una categoría comercial realmente vacía. La restauración del backend fue reportada por el usuario. Después se comprobó `/api/health` correcto y cinco categorías reales, sin categorías QA; Metro 8082 permaneció activo. No se atribuye al agente observación del teléfono. Líneas queda 6/8; categoría sin productos ya puede marcarse, sin afirmar que el usuario haya realizado todavía ese cambio en Trello.
 
-La captura del usuario contiene exactamente estos ocho criterios; no incluye una casilla de diseño. La confirmación posterior acepta los puntos 1, 2, 3, 4 y 6, que el usuario afirma haber marcado:
+## Próximo recorrido: error y reintento de Líneas
+
+Pendiente de ejecución y confirmación en Expo Go; no hay errores nativos aceptados todavía. Mantén abiertos Expo Go y Metro durante todo el recorrido:
+
+1. Abre «Encuentra tu línea», pulsa «Actualizar líneas» con el backend activo y selecciona una línea real sin abrir sus productos.
+2. Pulsa Ctrl+C únicamente en la terminal del backend. En Líneas pulsa «Actualizar líneas» y espera el aviso.
+3. Comprueba que aparecen «Se conservan las últimas líneas cargadas.» y que permanecen las líneas y la selección.
+4. Ejecuta `npm run dev:server`; cuando esté listo, pulsa «Actualizar líneas» y comprueba que recupera los datos y desaparece el aviso.
+
+Con datos ya cargados el botón del recorrido es «Actualizar líneas»; «Reintentar» corresponde al error inicial sin datos. La prueba completa y la revisión de código continúan pendientes.
+
+## Criterios de Trello: 6/8
+
+La captura del usuario contiene exactamente estos ocho criterios; no incluye una casilla de diseño. Las dos confirmaciones funcionales aceptan los puntos 1 a 6. El usuario había marcado cinco; el criterio de vacío ya puede marcarse:
 
 - [x] Obtener líneas o categorías desde la API.
 - [x] Mostrar las categorías disponibles.
 - [x] Permitir seleccionar una categoría.
 - [x] Filtrar los productos según la categoría.
-- [ ] Manejar categoría sin productos.
+- [x] Manejar categoría sin productos.
 - [x] Verificar navegación.
 - [ ] Probar la funcionalidad.
 - [ ] Revisar el código.

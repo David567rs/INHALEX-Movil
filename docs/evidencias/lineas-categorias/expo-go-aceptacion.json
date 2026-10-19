@@ -2,7 +2,7 @@
   "activity": "Líneas o categorías",
   "date": "2026-10-18",
   "branch": "feature/lineas-categorias",
-  "phase": "five-functional-criteria-accepted-empty-test-pending",
+  "phase": "six-functional-criteria-accepted-final-error-retry-test-pending",
   "platform": "Expo Go",
   "evidenceType": "human_chat_confirmation",
   "userResponse": "Ya revisé el diseño de Líneas o categorías en Expo Go, amigo, y me gustó. Sigamos con la conexión a la API en la misma rama, manteniendo MVVM y Repository. ¿Qué punto marco en Trello?",
@@ -19,7 +19,7 @@
     "sameBranch": true,
     "architecture": "MVVM y Repository",
     "implementationStatus": "implemented-technical-checks-passed",
-    "nativeFunctionalAcceptance": "five-criteria-accepted-by-user"
+    "nativeFunctionalAcceptance": "six-criteria-accepted-by-user"
   },
   "checklistAtDesignAcceptance": {
     "status": "historical-snapshot-before-functional-confirmation",
@@ -50,25 +50,25 @@
   },
   "checklist": {
     "source": "Subsequent human chat confirmation in Expo Go",
-    "acceptedCriteria": 5,
+    "acceptedCriteria": 6,
     "totalCriteria": 8,
-    "acceptedCriterionNumbers": [1, 2, 3, 4, 6],
+    "acceptedCriterionNumbers": [1, 2, 3, 4, 5, 6],
     "acceptedCriteriaNames": [
       "Obtener líneas o categorías desde la API",
       "Mostrar las categorías disponibles",
       "Permitir seleccionar una categoría",
       "Filtrar los productos según la categoría",
+      "Manejar categoría sin productos",
       "Verificar navegación"
     ],
     "remainingCriteria": [
-      "Manejar categoría sin productos",
       "Probar la funcionalidad",
       "Revisar el código"
     ]
   },
-  "nextNativeTest": {
+  "emptyCategoryTest": {
     "criterion": "Manejar categoría sin productos",
-    "status": "helper-http-verified-ready-awaiting-user-run-and-native-result",
+    "status": "accepted-by-user-in-expo-go-with-synthetic-data",
     "command": "npm run qa:lines:empty",
     "scope": "Temporary HTTP on port 3200, Prueba sin productos empty category and Producto de prueba synthetic general-catalog product; no database or env changes.",
     "helperVerification": {
@@ -81,20 +81,38 @@
       "realBackend3200Preserved": true,
       "metro8082Preserved": true
     },
-    "helperStartedOn3200": false,
+    "helperRunReportedByUser": true,
+    "nativeResultReceived": true,
+    "userResponse": "Sí, amigo, apareció «Esta línea aún no tiene productos» y «Ver todos» mostró el producto de prueba. Ya restauré el backend real. ¿Qué marco en Trello y qué sigue?",
+    "emptyMessageAccepted": "Esta línea aún no tiene productos",
+    "viewAllAccepted": "Producto de prueba",
+    "realBackendRestoredReportedByUser": true,
+    "agentHttpVerificationAfterRestoration": {
+      "healthOk": true,
+      "categoriesReceived": 5,
+      "syntheticQaCategoriesPresent": false
+    },
+    "agentObservedPhysicalDevice": false,
+    "nativeScreenshotsProvided": false
+  },
+  "nextNativeTest": {
+    "criterion": "Probar la funcionalidad",
+    "scope": "Final connection failure and retry in Lines, preserving already loaded categories and selection, then recovering after restarting the real backend.",
+    "status": "pending-user-error-and-retry-result",
     "nativeResultReceived": false
   },
   "trello": {
     "taskStatus": "En progreso",
     "initialScreenshotSnapshot": "checklistAtDesignAcceptance",
     "fiveCriteriaMarkedByUserAsReportedInChat": true,
+    "emptyCategoryCriterionReadyToMark": true,
     "updatedByAgent": false,
     "updateResponsibility": "user"
   },
   "limitations": [
-    "La confirmación inicial acepta el diseño visual; su snapshot 0/8 se conserva separado de la confirmación funcional posterior 5/8.",
+    "La confirmación inicial acepta el diseño visual; su snapshot 0/8 se conserva separado de las confirmaciones funcionales posteriores 5/8 y 6/8.",
     "La captura inicial muestra el checklist de Trello, no la aplicación nativa; el usuario afirma posteriormente haber marcado cinco criterios.",
-    "La confirmación funcional acepta categorías, selección, filtrado y Ver todos; no acredita categoría vacía, paginación nativa, errores o prueba funcional completa en Expo Go.",
+    "La confirmación funcional acepta categorías, selección, filtrado, Ver todos y categoría vacía con datos sintéticos; no acredita vacío en una base comercial, paginación nativa, errores o prueba funcional completa en Expo Go.",
     "No hay capturas nativas ni observación directa del teléfono por el agente.",
     "No acredita TalkBack, escalado de fuente o movimiento reducido en un dispositivo físico.",
     "Las comprobaciones técnicas de la API se registran por separado y no completan por sí solas el checklist humano."
