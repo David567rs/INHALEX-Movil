@@ -1,0 +1,35 @@
+{
+  "number": 12,
+  "url": "https://github.com/David567rs/INHALEX-Movil/pull/12",
+  "title": "Implementar Perfil del usuario con MVVM y Repository",
+  "author": "David567rs",
+  "head": "feature/perfil-usuario",
+  "base": "develop",
+  "baseCommit": "559a15464e7cd778b2956b6e217855e5d26a77b0",
+  "implementationCommit": "c90e1a2c45562c1f3f631b1af37dff7eafef8813",
+  "creationHeadCommit": "c90e1a2c45562c1f3f631b1af37dff7eafef8813",
+  "previousActivityClosureCommit": "3f9ef5e",
+  "state": "open",
+  "draft": false,
+  "createdAt": "2026-10-19T11:45:06Z",
+  "requestedReviewers": [
+    "ZenaidaGR"
+  ],
+  "reviewRequestConfirmed": true,
+  "formalApproval": false,
+  "merged": false,
+  "mergeAuthorized": false,
+  "acceptedCriteria": 9,
+  "totalCriteria": 10,
+  "pendingCriterionIds": [
+    10
+  ],
+  "nativeAcceptance": "expo-go-aceptacion.json",
+  "technicalEvidence": "verificacion-api.json",
+  "ci": "Consultar checks del HEAD vigente; no se atribuye éxito por anticipado",
+  "notes": [
+    "La revisión técnica de agentes no sustituye la aprobación real de ZenaidaGR",
+    "Trello no fue leído ni modificado por el agente",
+    "El commit documental que añade este recibo mantiene la implementación; consultar el HEAD remoto vigente"
+  ]
+}

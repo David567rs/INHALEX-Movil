@@ -1,0 +1,164 @@
+{
+  "activity": "Perfil del usuario",
+  "branch": "feature/perfil-usuario",
+  "date": "2026-10-19",
+  "source": "Mensaje directo del usuario en el chat",
+  "design": {
+    "accepted": true,
+    "quote": "Amigo, ya revisé el diseño de Perfil en Expo Go y me gustó. Sigamos con la conexión a la API en la misma rama, manteniendo MVVM y Repository.",
+    "acceptedCriterionIds": [
+      1
+    ],
+    "agentObservedDevice": false,
+    "connectionInSameBranchAuthorized": true
+  },
+  "functionalAcceptance": {
+    "acceptedCriteria": 9,
+    "totalCriteria": 10,
+    "status": "Criterios 1 a 9 aceptados; solo revisión real de ZenaidaGR pendiente",
+    "acceptedCriterionIds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "pendingCriterionIds": [
+      10
+    ],
+    "confirmations": [
+      {
+        "quote": "Amigo, Perfil muestra mis datos, guarda los cambios y los conserva al actualizar. Cuenta también muestra el nombre actualizado. ¿Qué marco en Trello y qué sigue?",
+        "source": "Mensaje directo del usuario en el chat",
+        "acceptedCriterionIds": [
+          2,
+          3,
+          4,
+          6
+        ],
+        "additionalEvidence": "Datos conservados al actualizar y nombre actualizado en Cuenta; evidencia parcial del criterio 9, sin atribuir reapertura o salida/reingreso",
+        "visualSaveNoticeExplicitlyConfirmed": false,
+        "agentObservedDevice": false
+      },
+      {
+        "quote": "Amigo, rechazó el nombre vacío, el de una letra y el teléfono de nueve dígitos. Al corregirlos apareció «Tus datos se guardaron correctamente.». ¿Qué marco en Trello y qué sigue?",
+        "source": "Mensaje directo del usuario en el chat",
+        "acceptedCriterionIds": [
+          5,
+          7
+        ],
+        "additionalEvidence": "Rechazo de nombre obligatorio y longitud mínima, teléfono de nueve dígitos y aviso literal tras corregir/guardar",
+        "visualSaveNoticeExplicitlyConfirmed": true,
+        "agentObservedDevice": false
+      },
+      {
+        "quote": "Amigo, fallaron Guardar y Reintentar sin perder el borrador. Reinicié el backend y Reintentar recuperó el perfil, conservó el borrador y habilitó Guardar. ¿Qué marco en Trello y qué sigue?",
+        "source": "Mensaje directo del usuario en el chat",
+        "acceptedCriterionIds": [
+          8
+        ],
+        "additionalEvidence": "Fallo de guardado y consulta conserva borrador; tras restablecer API, GET recupera perfil confirmado y mantiene borrador con Guardar habilitado. No se atribuye guardado de ese borrador ni reenvío automático de PATCH.",
+        "agentObservedDevice": false
+      },
+      {
+        "quote": "Amigo, los datos se conservaron al reabrir, se ocultaron al cerrar sesión y volvieron al ingresar con la misma cuenta. Abre el PR de Perfil hacia develop para que Zenaida lo revise.",
+        "source": "Mensaje directo del usuario en el chat",
+        "acceptedCriterionIds": [
+          9
+        ],
+        "additionalEvidence": "Reapertura de Expo Go con perfil guardado, ocultación de datos al cerrar sesión y recuperación al ingresar con la misma cuenta",
+        "agentObservedDevice": false,
+        "pullRequestAuthorized": true,
+        "requestedReviewer": "ZenaidaGR",
+        "mergeAuthorized": false
+      }
+    ],
+    "criteria": [
+      {
+        "id": 1,
+        "text": "Crear pantalla de perfil",
+        "accepted": true,
+        "source": "Aceptación del diseño por el usuario"
+      },
+      {
+        "id": 2,
+        "text": "Obtener datos del usuario desde la API",
+        "accepted": true,
+        "source": "Confirmación del usuario de datos reales en Expo Go"
+      },
+      {
+        "id": 3,
+        "text": "Mostrar información personal",
+        "accepted": true,
+        "source": "Confirmación del usuario de datos visibles"
+      },
+      {
+        "id": 4,
+        "text": "Permitir editar datos autorizados",
+        "accepted": true,
+        "source": "Confirmación del usuario de cambios guardados y nombre actualizado"
+      },
+      {
+        "id": 5,
+        "text": "Validar campos modificados",
+        "accepted": true,
+        "source": "Confirmación del usuario de rechazo de nombre vacío, nombre de una letra y teléfono de nueve dígitos"
+      },
+      {
+        "id": 6,
+        "text": "Guardar cambios mediante la API",
+        "accepted": true,
+        "source": "Confirmación del usuario de guardado y conservación al actualizar"
+      },
+      {
+        "id": 7,
+        "text": "Mostrar confirmación de actualización",
+        "accepted": true,
+        "source": "Confirmación del usuario del aviso Tus datos se guardaron correctamente."
+      },
+      {
+        "id": 8,
+        "text": "Manejar errores de conexión",
+        "accepted": true,
+        "source": "Confirmación del usuario del fallo de Guardar y Reintentar, borrador conservado y recuperación tras reiniciar el backend"
+      },
+      {
+        "id": 9,
+        "text": "Probar la funcionalidad",
+        "accepted": true,
+        "source": "Confirmación del usuario del recorrido final de reapertura, salida y reingreso"
+      },
+      {
+        "id": 10,
+        "text": "Revisar el código",
+        "accepted": false
+      }
+    ]
+  },
+  "nextStep": {
+    "status": "pull-request-open-awaiting-real-review",
+    "guide": "../../CONEXION-PERFIL-USUARIO.md",
+    "flow": "PR #12 abierto David567rs -> develop; revisión solicitada a ZenaidaGR; comprobar CI del HEAD vigente y esperar aprobación real, sin merge autorizado",
+    "technicalEvidence": "verificacion-api.json",
+    "technicalVerificationStatus": "Verificación propia en verificacion-api.json completada; funcionalidad nativa aceptada por el usuario; CI remota del PR por consultar",
+    "pullRequest": "https://github.com/David567rs/INHALEX-Movil/pull/12",
+    "reviewer": "ZenaidaGR"
+  },
+  "trello": {
+    "agentReadBoard": false,
+    "agentModifiedBoard": false,
+    "userConfirmedCriteriaMarked": false,
+    "status": "Criterios 1 a 9 aceptados; marcado real del usuario no confirmado; revisión pendiente"
+  },
+  "limitations": [
+    "Aceptación visual textual del usuario, sin observación directa del teléfono por el agente",
+    "Consulta, edición, validación, guardado, aviso visual, error/reintento y recorrido final confirmados textualmente por el usuario",
+    "Las verificaciones del diseño son históricas y no validan la conexión a la API",
+    "Sin nueva prueba física de teclado, TalkBack, texto ampliado o aislamiento entre cuentas",
+    "Revisión real de ZenaidaGR pendiente; publicación y apertura del PR autorizadas, sin autorización de merge"
+  ]
+}
