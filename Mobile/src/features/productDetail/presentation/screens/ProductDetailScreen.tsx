@@ -4,6 +4,7 @@ import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, Text, View
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { FavoriteProductButton } from '@/features/favorites/presentation/components/FavoriteProductButton';
+import { AddToCartButton } from '@/features/cart/presentation/components/AddToCartButton';
 import { Reveal } from '@/shared/components/Motion';
 import type { GetProductDetail } from '../../domain/useCases/getProductDetail';
 import { ProductDetailImage } from '../components/ProductDetailImage';
@@ -107,6 +108,7 @@ export function ProductDetailScreen({ productId, getProduct }: { productId: stri
             </Pressable>
 
             <FavoriteProductButton product={product} />
+            <AddToCartButton product={product} />
 
             <View style={[styles.actions, stackActions && styles.stackedActions]}>
               <Pressable accessibilityRole="button" accessibilityLabel="Ir a Favoritos"

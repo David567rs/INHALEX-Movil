@@ -1,0 +1,41 @@
+{
+  "activity": "Bolsa de compras",
+  "observedAt": "2026-10-19T10:51:32.291834+00:00",
+  "pullRequest": {
+    "number": 11,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/11",
+    "title": "Implementar Bolsa de compras con MVVM y Repository",
+    "author": "ZenaidaGR",
+    "headBranch": "feature/bolsa-compras",
+    "baseBranch": "develop",
+    "state": "open",
+    "requestedReviewers": [
+      "David567rs"
+    ],
+    "implementationCommit": "28292f3da721ac8a157844b0917320cb5dc2e9d7",
+    "priorIntegrationReceiptCommit": "9b5c87f4c835a4bbe188f7fe75c31a2204295ca8",
+    "approval": "pending",
+    "merged": false,
+    "checks": "Consultar CI sobre el HEAD vigente del PR; este registro no declara un resultado final de CI"
+  },
+  "acceptance": {
+    "criteriaAccepted": 9,
+    "criteriaTotal": 10,
+    "pending": [
+      {
+        "id": 10,
+        "text": "Revisar el código",
+        "reviewer": "David567rs"
+      }
+    ],
+    "source": "expo-go-aceptacion.json; confirmaciones textuales del usuario, sin observación directa del dispositivo"
+  },
+  "technicalEvidence": "verificacion-api.json",
+  "trello": {
+    "agentReadBoard": false,
+    "agentModifiedBoard": false,
+    "userConfirmedCriteriaMarked": false,
+    "status": "En progreso hasta revisión/integración"
+  },
+  "authorization": "Usuario autorizó publicar la rama y abrir el PR hacia develop para David567rs. Sin autorización de merge en esta solicitud."
+}

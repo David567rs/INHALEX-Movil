@@ -1,5 +1,5 @@
-import { PreparationScreen } from '@/features/shell/presentation/screens/PreparationScreen';
+import { CartScreen } from '@/features/cart/presentation/screens/CartScreen';
 
 export default function CartRoute() {
-  return <PreparationScreen section="bolsa" />;
+  return <CartScreen />;
 }

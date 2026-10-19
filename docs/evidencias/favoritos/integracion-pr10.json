@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "activity": "Favoritos",
+  "clientDate": "2026-10-19",
+  "verifiedAtUtc": "2026-10-19T10:06:42.6972024Z",
+  "evidenceSource": "GitHub REST GET responses; read-only verification",
+  "repository": "David567rs/INHALEX-Movil",
+  "pullRequest": {
+    "number": 10,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/10",
+    "title": "Implementar Favoritos con MVVM y Repository",
+    "state": "closed",
+    "merged": true,
+    "author": "ZenaidaGR",
+    "headRef": "feature/favoritos",
+    "headSha": "5d08fe0a392f7919c58ca77cf3b6708f899350d7",
+    "baseRef": "develop",
+    "mergedAt": "2026-10-19T10:01:46Z",
+    "mergedBy": "David567rs"
+  },
+  "approval": {
+    "id": 5569892642,
+    "author": "David567rs",
+    "state": "APPROVED",
+    "commitSha": "5d08fe0a392f7919c58ca77cf3b6708f899350d7",
+    "submittedAt": "2026-10-19T10:01:37Z",
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/10#pullrequestreview-5569892642"
+  },
+  "mergeCommit": {
+    "sha": "a943e7d164bce14689eb8373cf689bfb8ff1329b",
+    "parents": [
+      "852614afd801cfa67a5025ac6128e1803e69f32f",
+      "5d08fe0a392f7919c58ca77cf3b6708f899350d7"
+    ],
+    "url": "https://github.com/David567rs/INHALEX-Movil/commit/a943e7d164bce14689eb8373cf689bfb8ff1329b",
+    "committedAt": "2026-10-19T10:01:46Z",
+    "verification": "Verified independently through GitHub REST git/commits parent chain and develop ref."
+  },
+  "developRef": {
+    "ref": "refs/heads/develop",
+    "sha": "a943e7d164bce14689eb8373cf689bfb8ff1329b"
+  },
+  "preMergeCI": {
+    "headSha": "5d08fe0a392f7919c58ca77cf3b6708f899350d7",
+    "allRequiredSuccessfulBeforeMerge": true,
+    "workflowRuns": [
+      {
+        "id": 39233961403,
+        "name": "Backend CI",
+        "event": "pull_request",
+        "headSha": "5d08fe0a392f7919c58ca77cf3b6708f899350d7",
+        "status": "completed",
+        "conclusion": "success",
+        "createdAt": "2026-10-19T09:57:50Z",
+        "updatedAt": "2026-10-19T09:58:23Z",
+        "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39233961403",
+        "attempt": 1
+      },
+      {
+        "id": 39233961395,
+        "name": "Mobile CI",
+        "event": "pull_request",
+        "headSha": "5d08fe0a392f7919c58ca77cf3b6708f899350d7",
+        "status": "completed",
+        "conclusion": "success",
+        "createdAt": "2026-10-19T09:57:50Z",
+        "updatedAt": "2026-10-19T09:58:44Z",
+        "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39233961395",
+        "attempt": 1
+      }
+    ],
+    "checkRuns": [
+      {
+        "id": 117998412519,
+        "name": "Mobile verification",
+        "headSha": "5d08fe0a392f7919c58ca77cf3b6708f899350d7",
+        "status": "completed",
+        "conclusion": "success",
+        "completedAt": "2026-10-19T09:58:44Z",
+        "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39233961395/job/117998412519"
+      },
+      {
+        "id": 117998412297,
+        "name": "Backend verification",
+        "headSha": "5d08fe0a392f7919c58ca77cf3b6708f899350d7",
+        "status": "completed",
+        "conclusion": "success",
+        "completedAt": "2026-10-19T09:58:23Z",
+        "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39233961403/job/117998412297"
+      }
+    ]
+  },
+  "assertions": {
+    "closedAndMerged": true,
+    "approvalOnFinalHead": true,
+    "mergeHasTwoExpectedParents": true,
+    "developPointsToMerge": true,
+    "requiredWorkflowsAndJobsSucceededBeforeMerge": true
+  },
+  "scope": {
+    "repositoryFilesModified": false,
+    "gitFetchSwitchPullPerformed": false,
+    "commitsOrPushesPerformed": false,
+    "newBranchesCreated": false,
+    "servicesOrConfigurationChanged": false,
+    "localCloneSynchronization": "Not independently asserted here; performed and verified separately by the parent agent.",
+    "trelloState": "Not read or modified by this verification."
+  },
+  "sources": [
+    "https://api.github.com/repos/David567rs/INHALEX-Movil/pulls/10",
+    "https://api.github.com/repos/David567rs/INHALEX-Movil/pulls/10/reviews?per_page=100",
+    "https://api.github.com/repos/David567rs/INHALEX-Movil/git/commits/a943e7d164bce14689eb8373cf689bfb8ff1329b",
+    "https://api.github.com/repos/David567rs/INHALEX-Movil/git/ref/heads/develop",
+    "https://api.github.com/repos/David567rs/INHALEX-Movil/actions/runs?head_sha=5d08fe0a392f7919c58ca77cf3b6708f899350d7&event=pull_request&per_page=100",
+    "https://api.github.com/repos/David567rs/INHALEX-Movil/commits/5d08fe0a392f7919c58ca77cf3b6708f899350d7/check-runs?per_page=100"
+  ]
+}
