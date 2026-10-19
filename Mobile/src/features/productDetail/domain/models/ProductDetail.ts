@@ -1,5 +1,4 @@
-/** Public snapshot selected from the catalog; independent of transport and UI. */
-export type ProductDetailPreview = Readonly<{
+export type ProductDetail = Readonly<{
   id: string;
   name: string;
   description: string;
@@ -9,4 +8,8 @@ export type ProductDetailPreview = Readonly<{
   image: string | null;
   inStock: boolean;
   originalPrice: number | null;
+  longDescription: string | null;
+  benefits: readonly string[];
+  presentation: string | null;
+  origin: string | null;
 }>;

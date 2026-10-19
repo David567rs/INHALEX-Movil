@@ -83,4 +83,4 @@ Los ocho criterios de la captura están satisfechos mediante aceptación humana 
 - [x] Probar la funcionalidad.
 - [x] Revisar el código.
 
-El usuario confirmó Trello actualizado/cerrado, sin cambios del agente en el tablero. El desarrollo continúa con [solo diseño de Detalle](DISENO-DETALLE-PRODUCTO.md), 0/9 y aceptación pendiente. Se conserva Catálogo → Categorías → Detalle; Catálogo sigue 7/9, con navegación al detalle y prueba completa pendientes. La vista previa de Detalle no los completa.
+El usuario confirmó Trello actualizado/cerrado, sin cambios del agente en el tablero. El desarrollo continúa con Detalle; su estado vigente y aceptación están en [la conexión de Detalle](CONEXION-DETALLE-PRODUCTO.md). Se conserva Catálogo → Categorías → Detalle; Catálogo sigue 7/9, con navegación al detalle y prueba completa pendientes. La vista previa de Detalle no los completa.

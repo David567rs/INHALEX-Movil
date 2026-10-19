@@ -1,0 +1,127 @@
+{
+  "activity": "Detalle de producto",
+  "clientDate": "2026-10-18",
+  "branch": "feature/detalle-producto",
+  "baseCommit": "b0b9856f7470d8f9b76a8de2d462b29ac3f2d4eb",
+  "stage": "api-implementation-technically-verified",
+  "status": "technical-checks-passed-native-api-acceptance-pending",
+  "architecture": {
+    "flow": "ProductDetailScreen -> useProductDetailViewModel/controller -> GetProductDetail -> ProductDetailRepository -> ApiProductDetailRepository -> HttpClient",
+    "composition": "createProductDetailAction",
+    "publicEndpoint": "GET /api/products/:idOrSlug",
+    "additionalFields": ["longDescription", "benefits", "presentation", "origin"],
+    "publicWhitelistOnly": true,
+    "routeIdentityValidatedBeforeHttp": true,
+    "responseIdentityMatchesRequestedProduct": true,
+    "favoritesAndBag": "Disabled, labelled Próximamente"
+  },
+  "checks": {
+    "typecheck": "passed",
+    "lint": { "status": "passed", "scope": "global", "warnings": 0 },
+    "mobileTests": {
+      "passed": 236,
+      "failed": 0,
+      "newTestsAdded": 30,
+      "newDomainAndDataTests": 22,
+      "newControllerTests": 8
+    },
+    "expoDoctor": { "passed": 21, "total": 21 },
+    "androidExport": { "passed": true, "modules": 1426, "exitCode": 0 },
+    "webExport": { "passed": true, "modules": 974, "exitCode": 0 },
+    "independentReadOnlyReview": "no-material-blockers"
+  },
+  "realHttpReadOnly": {
+    "evidence": "api-http-real.json",
+    "backendPort": 3200,
+    "passed": true,
+    "actualMobileComponents": "HttpClient, ApiProductDetailRepository and GetProductDetail",
+    "products": ["Toronjil", "Mirra y Azafran"],
+    "idAndSlugVerified": true,
+    "unknownProduct404": true,
+    "invalidRouteWithoutHttp": true,
+    "privateFieldsExcluded": true,
+    "noBearerOrCookies": true,
+    "getRequestsOnly": true
+  },
+  "browserQa": {
+    "status": "passed-against-temporary-public-http-fixture",
+    "platform": "web",
+    "viewports": [
+      { "width": 393, "height": 852 },
+      { "width": 320, "height": 568 }
+    ],
+    "horizontalOverflowPixels": 0,
+    "fixture": {
+      "temporaryRoute": "detalle-api-qa.tsx",
+      "httpPort": 3216,
+      "actualComposition": "createProductDetailAction",
+      "publicProductSnapshots": 16,
+      "corsAllowedFor": "http://localhost:8082",
+      "productionBackendCorsChanged": false
+    },
+    "observed": {
+      "loadingState": true,
+      "selectedProductDisplayed": true,
+      "additionalAvailableInformationDisplayed": true,
+      "favoritesAndBagDisabledUpcoming": true,
+      "refresh503RetainedProduct": true,
+      "manualRetryRecoveredAfter503": true,
+      "initial503AndRetry": true,
+      "notFound404ClearedPreviousProduct": true,
+      "noCrossProductData": true
+    },
+    "screenshots": [
+      "api-producto-web.png",
+      "api-informacion-web.png",
+      "api-compacto-web.png",
+      "api-error-conserva-web.png",
+      "api-error-inicial-web.png",
+      "api-cargando-web.png",
+      "api-actualizando-web.png",
+      "api-no-disponible-web.png"
+    ],
+    "directBrowserAgainstRealBackendTested": false,
+    "realBackendCorsLimitation": "Original API 3200 did not allow the web 8082 origin; configuration was preserved."
+  },
+  "cleanupAndEnvironment": {
+    "temporaryRouteRemovedBeforeFinalChecks": true,
+    "temporaryControlFilesOutsideRepositoryRemoved": true,
+    "temporaryHttp3216Stopped": true,
+    "qaReferencesAbsentFromSourceAndFinalBundles": true,
+    "backend3200PreservedActive": true,
+    "metro8082PreservedActive": true,
+    "backendSettingsAndAuthenticationUnchanged": true,
+    "serverEnvUnchangedInBothCopies": true,
+    "zenaidaCloneClean": true,
+    "zenaidaBranch": "develop",
+    "zenaidaHead": "b0b9856f7470d8f9b76a8de2d462b29ac3f2d4eb"
+  },
+  "acceptance": {
+    "evidence": "expo-go-aceptacion.json",
+    "acceptedCriteria": 1,
+    "totalCriteria": 9,
+    "onlyAcceptedCriterion": "Crear pantalla de detalle",
+    "nativeApiAcceptance": "pending-user",
+    "agentObservedPhysicalDevice": false,
+    "nativeScreenshotsProvided": false,
+    "trelloUpdatedByAgent": false,
+    "catalogueAcceptedCriteria": 7,
+    "catalogueTotalCriteria": 9
+  },
+  "limitations": [
+    "La lectura HTTP real y la QA web con servidor temporal son evidencias distintas.",
+    "La QA web no acredita navegador contra el backend real ni prueba nativa de la API.",
+    "Los snapshots públicos del fixture no demuestran datos actualizados en producción.",
+    "Los checks técnicos no aceptan por sí solos más criterios de Trello.",
+    "Favoritos y Bolsa siguen Próximamente; no se aceptó su funcionalidad.",
+    "No se acreditan TalkBack, escalado de fuente o movimiento reducido físicos.",
+    "Catálogo conserva navegación al detalle y prueba completa pendientes: 7/9."
+  ],
+  "delivery": {
+    "pullRequestOpened": false,
+    "pushPerformedForThisStage": false,
+    "remoteCiClaimed": false,
+    "humanReview": "pending",
+    "activityFullyCompleted": false
+  }
+}

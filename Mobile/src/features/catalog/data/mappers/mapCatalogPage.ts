@@ -57,7 +57,7 @@ function promotionIsCurrent(value: unknown, now: number): boolean {
   return Number.isFinite(end) && end > now;
 }
 
-function mapProduct(value: unknown, now: number): CatalogProduct {
+export function mapCatalogProduct(value: unknown, now = Date.now()): CatalogProduct {
   if (!isRecord(value) || !isNonemptyString(value._id) || !isNonemptyString(value.name)
     || !isNonemptyString(value.description) || !isPrice(value.price)
     || typeof value.currency !== 'string' || !/^[A-Z]{3}$/.test(value.currency) || !isISO4217(value.currency)
@@ -93,7 +93,7 @@ export function mapCatalogPage(payload: unknown, expected: CatalogListInput, now
 
   if (expected.category !== undefined && payload.items.some((product) =>
     !isRecord(product) || product.category !== expected.category)) throw invalidResponse();
-  const items = payload.items.map((product) => mapProduct(product, now));
+  const items = payload.items.map((product) => mapCatalogProduct(product, now));
   if (new Set(items.map((product) => product.id)).size !== items.length) throw invalidResponse();
   return { items, total, page: expected.page, limit: expected.limit, totalPages };
 }

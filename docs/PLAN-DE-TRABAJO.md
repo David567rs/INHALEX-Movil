@@ -276,15 +276,17 @@ La [evidencia de integración](evidencias/lineas-categorias/integracion-pr7.json
 
 El [contrato y QA de Líneas](CONEXION-LINEAS-CATEGORIAS.md) conserva los límites: vacío con datos sintéticos, modelos Mongo simulados en la API aislada, confirmaciones de Expo Go mediante chat y capturas web. Las 206 pruebas y las exportaciones anteriores pertenecen a Líneas, sin revalidar por sí solas Detalle.
 
-## Detalle de producto: diseño implementado, 0/9
+## Detalle de producto: API verificada técnicamente, 1/9
 
-Ambas copias se actualizaron al merge `b0b9856`. Zenaida permanece en `develop`; David creó `feature/detalle-producto` desde ese merge. Se conservaron `Server/.env` en ambas y el stash de Zenaida `81196109270f00fa7edf03a8a8ec6f8bdc963131`. No existe `Mobile/.env` en ninguna copia y no es necesario crearlo.
+David continúa en `feature/detalle-producto`, creada desde `b0b9856`. Zenaida permanece en `develop`; se conservaron `Server/.env` y su stash `81196109270f00fa7edf03a8a8ec6f8bdc963131`.
 
-El usuario autorizó SOLO diseño. El [diseño implementado](DISENO-DETALLE-PRODUCTO.md) reutiliza el producto ya cargado por Catálogo: snapshot acotado a 12 IDs en memoria → Repository de vista previa de lectura → caso de uso → `useProductDetailViewModel` → pantalla Stack `/producto/[id]`. La composición usa `createProductDetailPreviewAction` y `rememberProductDetailPreview`. Presenta datos existentes y «Vista previa», conserva retorno/filtro y ofrece volver al Catálogo si el ID no está en memoria. No añade HTTP desde Detalle, productos ficticios ni funcionalidades de Favoritos/Bolsa; sus acciones quedan deshabilitadas, «Próximamente», por depender de las actividades posteriores de Zenaida.
+El 18 de octubre de 2026 el usuario confirmó: «Ya revisé el diseño de Detalle de producto en Expo Go, amigo, y me gustó.». La [aceptación textual](evidencias/detalle-producto/expo-go-aceptacion.json) completa únicamente «Crear pantalla de detalle»: 1/9. No hay observación directa del dispositivo ni capturas nativas y el agente no marcó Trello.
 
-La captura de Trello del usuario contiene exactamente estos nueve criterios, todos pendientes. «Crear pantalla de detalle» sí existe y solo podrá marcarse después de la aceptación del diseño en Expo Go:
+La [conexión a la API](CONEXION-DETALLE-PRODUCTO.md) está implementada y verificada técnicamente en la misma rama con MVVM y Repository: GET público `/products/:idOrSlug`, datos base y `longDescription`, `benefits`, `presentation` y `origin` disponibles. Pasaron 236/236 pruebas (30 nuevas: 22 de dominio/datos y 8 del controlador), TypeScript, lint sin advertencias, Doctor 21/21 y exportaciones Android 1426/web 974. La [evidencia](evidencias/detalle-producto/verificacion-api.json) distingue HTTP real de lectura en 3200 y QA web mediante HTTP temporal 3216 con snapshots públicos por CORS original, sin modificarlo. Los temporales se retiraron y el backend, configuración, autenticación y `.env` se conservaron. La aceptación funcional de API en Expo Go sigue pendiente; no se suman criterios solo por el código. Favoritos y Bolsa siguen deshabilitados, «Próximamente»; sus capacidades dependen de actividades posteriores de Zenaida.
 
-- [ ] Crear pantalla de detalle.
+La captura de Trello contiene exactamente estos nueve criterios:
+
+- [x] Crear pantalla de detalle.
 - [ ] Obtener información del producto seleccionado.
 - [ ] Mostrar nombre, descripción, precio e imagen.
 - [ ] Mostrar información adicional disponible.
@@ -294,4 +296,4 @@ La captura de Trello del usuario contiene exactamente estos nueve criterios, tod
 - [ ] Probar la funcionalidad.
 - [ ] Revisar el código.
 
-La [verificación del diseño](evidencias/detalle-producto/verificacion-diseno.json) registra 206/206 pruebas existentes, TypeScript, lint global sin advertencias, Doctor 21/21, exportaciones Android 1422/web 970 con salida 0 y revisión independiente sin bloqueadores. Un smoke de lectura comprobó el cache de 12 IDs, clonación/congelación y `null` ante ID desconocido. La QA web de 393×852 y 320×568 pasó con snapshots inyectados temporalmente; CORS bloqueó el catálogo real, por lo que no acredita navegador contra API en vivo ni prueba nativa. Ambos temporales se retiraron antes de exportar, preservando backend 3200 y Metro 8082. La aceptación en Expo Go sigue pendiente; después de la revisión visual solo podrá marcarse «Crear pantalla de detalle» (1/9), sin aceptar los otros criterios. No se declara nuevo PR, push o criterio aceptado. El diseño no cierra los dos pendientes de Catálogo: conserva 7/9 y el orden Catálogo → Categorías → Detalle.
+El [diseño inicial](DISENO-DETALLE-PRODUCTO.md) y [su verificación](evidencias/detalle-producto/verificacion-diseno.json) se conservan como snapshot histórico: datos del Catálogo en memoria, QA web por inyección de snapshots debido a CORS y checks de la etapa visual. No se trasladan esos resultados a la API verificada técnicamente, todavía sin aceptación funcional nativa ni se atribuye aceptación nativa adicional. No se declara PR o push nuevo. Catálogo mantiene 7/9, con navegación al detalle y prueba completa pendientes, y el orden Catálogo → Categorías → Detalle.

@@ -1,0 +1,66 @@
+{
+  "activity": "Detalle de producto",
+  "date": "2026-10-18",
+  "branch": "feature/detalle-producto",
+  "phase": "design-accepted-api-technically-verified-awaiting-user",
+  "platform": "Expo Go",
+  "evidenceType": "human_chat_confirmation",
+  "userResponse": "Ya revisé el diseño de Detalle de producto en Expo Go, amigo, y me gustó.",
+  "designAcceptance": {
+    "status": "accepted_by_user",
+    "acceptedCriterion": "Crear pantalla de detalle",
+    "agentObservedPhysicalDevice": false,
+    "nativeScreenshotsProvided": false,
+    "historicalPreviewEvidence": "verificacion-diseno.json",
+    "historicalChecklistBeforeAcceptance": "0/9"
+  },
+  "apiConnection": {
+    "authorizedByUser": true,
+    "sameBranch": true,
+    "architecture": "MVVM y Repository",
+    "publicEndpoint": "GET /api/products/:idOrSlug",
+    "status": "implemented-and-technically-verified",
+    "technicalEvidence": "verificacion-api.json",
+    "realHttpEvidence": "api-http-real.json",
+    "nativeFunctionalAcceptance": "pending-user",
+    "acceptedByDesignConfirmation": false
+  },
+  "checklist": {
+    "source": "User-provided nine-item Trello screenshot and subsequent design acceptance in chat",
+    "acceptedCriteria": 1,
+    "totalCriteria": 9,
+    "acceptedCriterionNumbers": [1],
+    "acceptedCriteriaNames": ["Crear pantalla de detalle"],
+    "remainingCriteria": [
+      "Obtener información del producto seleccionado",
+      "Mostrar nombre, descripción, precio e imagen",
+      "Mostrar información adicional disponible",
+      "Agregar acceso a favoritos",
+      "Agregar acceso a bolsa de compras",
+      "Manejar errores al cargar el producto",
+      "Probar la funcionalidad",
+      "Revisar el código"
+    ]
+  },
+  "trello": {
+    "criterionReadyToMark": "Crear pantalla de detalle",
+    "criterionMarkedByUserConfirmed": false,
+    "updatedByAgent": false,
+    "updateResponsibility": "user"
+  },
+  "limitations": [
+    "La confirmación acepta únicamente el diseño visual en Expo Go.",
+    "No hay observación directa del teléfono ni capturas nativas del agente.",
+    "No acepta todavía la consulta nueva de Detalle, sus datos adicionales, errores o prueba funcional completa.",
+    "Los checks y la QA de snapshots del diseño anterior se conservan como historia, separados de los resultados técnicos de la conexión y de la aceptación funcional que continúa pendiente.",
+    "Favoritos y Bolsa continúan Próximamente, sin funcionalidad aceptada.",
+    "No acredita pruebas físicas de TalkBack, escalado de fuente o movimiento reducido.",
+    "Catálogo permanece 7/9; no se cierran sus pendientes mediante esta aceptación visual."
+  ],
+  "delivery": {
+    "pullRequestOpened": false,
+    "pushPerformedForThisStage": false,
+    "humanReview": "pending",
+    "activityFullyCompleted": false
+  }
+}

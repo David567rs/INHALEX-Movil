@@ -1,11 +1,11 @@
 import { useLocalSearchParams } from 'expo-router';
-import { createProductDetailPreviewAction } from '@/bootstrap/createProductDetailPreviewAction';
+import { createProductDetailAction } from '@/bootstrap/createProductDetailAction';
 import { ProductDetailScreen } from '@/features/productDetail/presentation/screens/ProductDetailScreen';
 
-const readProduct = createProductDetailPreviewAction();
+const getProduct = createProductDetailAction();
 
 export default function ProductDetailRoute() {
   const { id } = useLocalSearchParams<{ id?: string | string[] }>();
   return <ProductDetailScreen key={typeof id === 'string' ? id : 'invalid'}
-    productId={typeof id === 'string' ? id : ''} readProduct={readProduct} />;
+    productId={typeof id === 'string' ? id : ''} getProduct={getProduct} />;
 }

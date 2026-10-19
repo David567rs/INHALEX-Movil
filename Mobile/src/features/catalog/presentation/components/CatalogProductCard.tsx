@@ -17,7 +17,7 @@ export function CatalogProductCard({ product, horizontal, onPress }: CatalogProd
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityHint="Abre la vista previa del producto"
+      accessibilityHint="Abre la información del producto"
       accessibilityLabel={`${product.name}. ${product.aromaNote}. ${product.originalPriceLabel ? `Oferta: ${product.priceLabel}. Antes: ${product.originalPriceLabel}.` : `Precio: ${product.priceLabel}.`} ${product.inStock ? 'Disponible' : 'Agotado'}.`}
       onPress={onPress}
       style={({ pressed }) => [styles.card, horizontal && styles.horizontal, pressed && styles.pressed]}

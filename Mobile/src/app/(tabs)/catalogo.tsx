@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { router, useLocalSearchParams } from 'expo-router';
 import { createCatalogAction } from '@/bootstrap/createCatalogAction';
-import { rememberProductDetailPreview } from '@/bootstrap/createProductDetailPreviewAction';
 import type { CatalogProduct } from '@/features/catalog/domain/models/Catalog';
 import type { ListCatalog } from '@/features/catalog/domain/useCases/listCatalog';
 import { CatalogScreen } from '@/features/catalog/presentation/screens/CatalogScreen';
@@ -15,7 +14,6 @@ export default function CatalogRoute() {
   const scopedList = useMemo<ListCatalog>(() => category === undefined ? listCatalog
     : (input, options) => listCatalog({ ...input, category }, options), [category]);
   function openProduct(product: CatalogProduct) {
-    rememberProductDetailPreview(product);
     router.push({ pathname: '/producto/[id]', params: { id: product.id } });
   }
   return <CatalogScreen key={category === undefined ? 'all' : `line:${category}`} listCatalog={scopedList}

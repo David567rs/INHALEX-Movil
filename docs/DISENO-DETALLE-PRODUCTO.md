@@ -1,10 +1,10 @@
 # Diseño de Detalle de producto
 
-Estado del 18 de octubre de 2026: diseño implementado, QA web y checks finales aprobados en `feature/detalle-producto`, creada desde `develop` en `b0b9856f7470d8f9b76a8de2d462b29ac3f2d4eb` después de integrar Líneas mediante el [PR #7](https://github.com/David567rs/INHALEX-Movil/pull/7). El usuario autorizó SOLO diseño. La aceptación en Expo Go sigue pendiente; no se declara PR o push de esta actividad.
+Estado del 18 de octubre de 2026: diseño aceptado por el usuario en Expo Go, con «Crear pantalla de detalle» completado (1/9). David continúa en `feature/detalle-producto`, creada desde `develop` en `b0b9856f7470d8f9b76a8de2d462b29ac3f2d4eb`. La [conexión a la API](CONEXION-DETALLE-PRODUCTO.md) está implementada y verificada técnicamente en la misma rama, pendiente de aceptación funcional en Expo Go; [su evidencia](evidencias/detalle-producto/verificacion-api.json) se registra por separado. Este documento conserva la implementación y QA históricas del diseño inicial, sin PR o push nuevo.
 
-Detalle permanece **0/9** hasta la revisión del usuario en Expo Go. Su checklist sí incluye «Crear pantalla de detalle», que podrá marcarse después de esa aceptación. La tarjeta y sus criterios los administra el usuario; el agente no modificó Trello.
+El usuario confirmó: «Ya revisé el diseño de Detalle de producto en Expo Go, amigo, y me gustó.». La [aceptación textual](evidencias/detalle-producto/expo-go-aceptacion.json) completa solo «Crear pantalla de detalle»: **1/9**, sin observación directa del teléfono ni capturas nativas. El snapshot anterior de [verificación visual](evidencias/detalle-producto/verificacion-diseno.json) conserva su estado previo 0/9. El agente no marcó Trello.
 
-## Datos existentes y límites
+## Datos y límites del diseño inicial
 
 El diseño parte del producto público que Catálogo ya cargó. Al abrirlo se recuerda un snapshot de memoria acotado a 12 IDs y se lee desde el Repository de vista previa. No añade GET de detalle ni HTTP desde su pantalla, no consulta MongoDB y no fabrica productos, descripciones, precios o fotografías.
 
@@ -12,7 +12,7 @@ La ruta Stack `/producto/[id]` muestra el rótulo «Vista previa»: sus datos pr
 
 La imagen amplia, el nombre, precio, disponibilidad, descripción y aromas se muestran con los datos disponibles. El regreso conserva el Catálogo y su filtro. Las cinco pestañas existentes se mantienen al volver.
 
-## MVVM y Repository
+## MVVM y Repository del diseño inicial
 
 Flujo implementado: producto de Catálogo → snapshot acotado en memoria por ID → `ProductDetailPreviewRepository` de lectura → caso de uso de lectura → `useProductDetailViewModel` → `ProductDetailScreen`. `ProductDetailImage` administra la imagen y su fallback visual.
 
@@ -24,7 +24,7 @@ La referencia visual es `ProductDetails.tsx` de la móvil original, revisión `5
 
 Favoritos y Bolsa se presentan como acciones deshabilitadas con «Próximamente». Sus capacidades corresponden a actividades posteriores de Zenaida; no se implementan ni se marcan aceptadas en esta etapa. No cambia Server, autenticación, cuentas, dependencias o `.env`.
 
-## QA web y límites
+## QA web histórica del diseño y límites
 
 La [evidencia](evidencias/detalle-producto/verificacion-diseno.json) registra QA en 393×852 y 320×568 con desbordamiento horizontal cero: imágenes de Toronjil y Mirra, apertura correcta de dos IDs, regreso conservando la línea de un listado de prueba, y fallback ante ID sin snapshot con retorno a `/catalogo`. Los dos accesos «Próximamente» están deshabilitados; regreso midió 44×44 px y las acciones 72 px de altura, apiladas en 320 px. Se simularon precio cero, agotado, ausencia de aromas, nombre largo e imagen ausente, con el rótulo «Datos de muestra».
 
@@ -36,7 +36,7 @@ Capturas web: [principal](evidencias/detalle-producto/diseno-principal-web.png),
 
 Los checks finales de esta etapa pasaron después de retirar ambos temporales QA: TypeScript; lint global con cero advertencias; 206/206 pruebas existentes, sin pruebas nuevas decorativas; Expo Doctor 21/21; exportaciones Android 1422 módulos y web 970 módulos, ambas con salida 0. Los resultados se ejecutaron sobre esta implementación, sin trasladar las exportaciones anteriores de Líneas. Backend 3200 y Metro 8082 conservaron sus procesos; el proxy 3215 quedó cerrado y el segundo servidor 8085 no se inició.
 
-El recorrido previsto para la revisión humana es abrir un producto ya cargado, comprobar su presentación, volver conservando el filtro y revisar el retorno seguro ante un ID sin snapshot. La aceptación en Expo Go sigue pendiente; no hay observación directa del dispositivo ni capturas nativas del agente. Tampoco se declaran pruebas físicas de TalkBack, escalado de fuente o movimiento reducido.
+El recorrido visual consistía en abrir un producto ya cargado, comprobar su presentación, volver conservando el filtro y revisar el retorno seguro ante un ID sin snapshot. El usuario aceptó el diseño después de esta QA; no se atribuyen al agente observación directa del dispositivo ni capturas nativas. Tampoco se declaran pruebas físicas de TalkBack, escalado de fuente o movimiento reducido. La aceptación del diseño no confirma la nueva API.
 
 ## Documentación consultada antes de implementar
 
@@ -45,11 +45,11 @@ El recorrido previsto para la revisión humana es abrir un producto ya cargado, 
 - [Safe Area Context para SDK 57](https://docs.expo.dev/versions/v57.0.0/sdk/safe-area-context/).
 - React Native 0.86: [Pressable](https://reactnative.dev/docs/0.86/pressable), [Image](https://reactnative.dev/docs/0.86/image), [accesibilidad](https://reactnative.dev/docs/0.86/accessibility), [ScrollView](https://reactnative.dev/docs/0.86/scrollview), [Text](https://reactnative.dev/docs/0.86/text) y [useWindowDimensions](https://reactnative.dev/docs/0.86/usewindowdimensions).
 
-## Checklist exacto de Trello: 0/9
+## Checklist exacto de Trello: 1/9
 
-Fuente: captura enviada por el usuario al iniciar Detalle. Todos los criterios siguen pendientes; después de la aceptación visual en Expo Go solo podrá marcarse «Crear pantalla de detalle» (1/9):
+Fuente: captura enviada por el usuario al iniciar Detalle y confirmación posterior del diseño. Solo se acepta la primera casilla; no se atribuyen resultados de la API en desarrollo a las restantes:
 
-- [ ] Crear pantalla de detalle.
+- [x] Crear pantalla de detalle.
 - [ ] Obtener información del producto seleccionado.
 - [ ] Mostrar nombre, descripción, precio e imagen.
 - [ ] Mostrar información adicional disponible.
