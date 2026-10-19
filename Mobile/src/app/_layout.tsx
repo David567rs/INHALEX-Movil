@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { createApplicationRuntime } from '@/bootstrap/createApplicationServices';
 import { AuthSessionProvider } from '@/features/auth/presentation/context/AuthSessionProvider';
 import { FavoritesProvider } from '@/features/favorites/presentation/context/FavoritesProvider';
+import { CartProvider } from '@/features/cart/presentation/context/CartProvider';
 import { colors } from '@/core/theme/colors';
 import { useReducedMotion } from '@/shared/hooks/useReducedMotion';
 
@@ -16,6 +17,7 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <AuthSessionProvider session={runtime.session}>
         <FavoritesProvider controller={runtime.favorites}>
+        <CartProvider controller={runtime.cart}>
         <StatusBar style="dark" />
         <Stack
           initialRouteName="(tabs)"
@@ -33,6 +35,7 @@ export default function RootLayout() {
           <Stack.Screen name="busqueda-productos" />
           <Stack.Screen name="producto/[id]" />
         </Stack>
+        </CartProvider>
         </FavoritesProvider>
       </AuthSessionProvider>
     </SafeAreaProvider>

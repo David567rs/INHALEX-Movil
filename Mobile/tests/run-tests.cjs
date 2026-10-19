@@ -33,6 +33,10 @@ const result = spawnSync(process.execPath, [
   path.join(__dirname, 'FavoritesRepository.test.cjs'),
   path.join(__dirname, 'FavoritesController.test.cjs'),
   path.join(__dirname, 'FavoritesHttpIntegration.test.cjs'),
+  path.join(__dirname, 'CartActions.test.cjs'),
+  path.join(__dirname, 'CartRepository.test.cjs'),
+  path.join(__dirname, 'CartController.test.cjs'),
+  path.join(__dirname, 'CartHttpIntegration.test.cjs'),
 ], { stdio: 'inherit' });
 
 if (result.error) console.error(result.error.message);

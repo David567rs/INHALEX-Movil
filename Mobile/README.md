@@ -1,12 +1,32 @@
 # INHALEX: base móvil
 
-Proyecto Expo SDK 57 con React Native, TypeScript y Expo Router, identidad INHALEX y cinco pestañas. Registro, Login, Persistencia, Catálogo, Líneas, Detalle y Búsqueda están integrados. El [PR #9](https://github.com/David567rs/INHALEX-Movil/pull/9) de ZenaidaGR quedó aprobado por David567rs sobre `22042d7`, con Backend CI y Mobile CI correctos, y fusionado por él a `develop` en `852614a` el 19 de octubre de 2026: Búsqueda **8/8** y Trello actualizado según confirmó el usuario. La [evidencia de integración](../docs/evidencias/busqueda-productos/integracion-pr9.json) conserva los identificadores completos. La actividad actual es la [conexión de Favoritos](../docs/CONEXION-FAVORITOS.md), en la copia de Zenaida y rama `feature/favoritos`, con MVVM y Repository autenticado. El usuario aceptó el recorrido completo de Favoritos en Expo Go, incluidos reapertura, cierre de sesión y reingreso: **8/9**. El [PR #10](https://github.com/David567rs/INHALEX-Movil/pull/10) está abierto por ZenaidaGR hacia develop con revisión solicitada a David567rs. Las actividades siguen el [plan](../docs/PLAN-DE-TRABAJO.md).
+Proyecto Expo SDK 57 con React Native, TypeScript y Expo Router, identidad INHALEX y cinco pestañas. Registro, Login, Persistencia, Catálogo, Líneas, Detalle, Búsqueda y Favoritos están integrados. El [PR #10](https://github.com/David567rs/INHALEX-Movil/pull/10) de ZenaidaGR fue aprobado por David567rs sobre `5d08fe0`, con Backend CI y Mobile CI correctos, y fusionado por él a `develop` en `a943e7d` el 19 de octubre de 2026. La revisión real completa **Favoritos 9/9** y el usuario confirmó Trello actualizado; la [evidencia de integración](../docs/evidencias/favoritos/integracion-pr10.json) conserva los datos completos. La actividad actual es la [conexión de Bolsa de compras](../docs/CONEXION-BOLSA-COMPRAS.md), en la copia de Zenaida, rama `feature/bolsa-compras`, con MVVM y Repository autenticado. El diseño y el recorrido positivo están aceptados en Expo Go: Bolsa avanza a **9/10**, con el recorrido completo aceptado por el usuario en Expo Go. Solo queda la revisión real de David567rs en el PR hacia develop. Este estado prevalece sobre las etapas históricas del README. Las actividades siguen el [plan](../docs/PLAN-DE-TRABAJO.md).
+
+## Probar Bolsa conectada a la API
+
+El usuario aceptó el diseño y autorizó conectar la API en la misma rama. Su [confirmación posterior](../docs/evidencias/bolsa-compras/expo-go-aceptacion.json) acepta el recorrido de agregar, mostrar, cambiar cantidades, actualizar, quitar y totales correctos, y después los límites 1/25: **7/10**. El agente no observó el teléfono ni modificó Trello. El vacío, su actualización y **Explorar catálogo** también quedaron aceptados como evidencia parcial de la prueba completa. Error/reintento y el recorrido final de reapertura/salida/reingreso también quedaron aceptados: **9/10**. El usuario autorizó abrir el PR de ZenaidaGR hacia develop para David567rs; la [guía](../docs/CONEXION-BOLSA-COMPRAS.md) describe el recorrido. Se retiraron las muestras y el selector de vista previa; se conservan las cinco pestañas, la sesión y Favoritos integrado.
+
+Reutiliza el QR de Metro de Zenaida (`8083`) y el backend en `3200`:
+
+1. Inicia sesión en **Cuenta** y abre **Catálogo → un producto disponible → Agregar a mi bolsa**. Espera la confirmación.
+2. Entra en **Bolsa** y comprueba foto, nombre, precio, cantidad y subtotal del producto.
+3. Usa **+** y **−**, esperando cada confirmación, y comprueba que cambian cantidad e importes. Disminuir queda bloqueado en 1; aumentar queda bloqueado en 25.
+4. Pulsa **Actualizar bolsa** y comprueba que conserva los datos confirmados sin error.
+5. Pulsa **Quitar** y verifica que la fila desaparece tras la respuesta. Si era la última, aparece **Tu bolsa aún está vacía**.
+
+El resumen presenta **Total de productos** según la API y **Envío: Por definir**, sin incluir envío. **Continuar con mi pedido** permanece deshabilitado. Tras una escritura fallida se conservan los datos previos y se exige **Reintentar** una lectura antes de otra mutación; no hay reenvío automático. El [contrato y guía](../docs/CONEXION-BOLSA-COMPRAS.md) detallan sesión, límites y la diferencia existente entre promociones de Bolsa y Catálogo. Pasaron 369 pruebas, TypeScript, lint, Doctor 21/21, exportaciones Android/web y QA web simulada. La evidencia técnica está en [verificacion-api.json](../docs/evidencias/bolsa-compras/verificacion-api.json). La aceptación vigente es 9/10; los resultados técnicos no sustituyen las pruebas nativas pendientes ni la revisión del compañero.
+
+Si Metro de Zenaida no estuviera activo, desde `C:\Users\David\Documents\INHALEX-Movil-Zenaida`:
+
+```sh
+npm --prefix Mobile run start -- --port 8083
+```
 
 ## Probar Favoritos conectado a la API
 
-El diseño de Favoritos ya fue aceptado por el usuario en Expo Go. La [conexión a la API](../docs/CONEXION-FAVORITOS.md) se implementa en la misma rama `feature/favoritos`, con Repository autenticado y estado compartido entre la lista y el corazón del Detalle. Esta actualización prevalece sobre los estados históricos de diseño que contiene este README. El usuario confirmó guardar, actualizar, quitar, vacío, error/reintento, reapertura, limpieza al salir y recuperación al reingresar: **8/9** aceptados. El [PR #10](https://github.com/David567rs/INHALEX-Movil/pull/10) está abierto hacia develop con revisión solicitada a David567rs; esa revisión es el único criterio pendiente. Consultar CI sobre el HEAD vigente y conservar Trello en progreso.
+La [conexión de Favoritos](../docs/CONEXION-FAVORITOS.md) está integrada en `develop`, con Repository autenticado y estado compartido entre la lista y el corazón del Detalle. El usuario confirmó guardar, actualizar, quitar, vacío, error/reintento, reapertura, limpieza al salir y recuperación al reingresar. La revisión formal de David567rs y el merge del [PR #10](https://github.com/David567rs/INHALEX-Movil/pull/10) completaron **9/9**; la [aceptación](../docs/evidencias/favoritos/expo-go-aceptacion.json) distingue el recorrido nativo reportado por el usuario de la revisión de código.
 
-Reutiliza el QR de Metro de Zenaida (`8083`) y el backend en `3200`. Inicia sesión, abre un producto del Catálogo y pulsa **Guardar en favoritos**. Comprueba que aparece en **Favoritos**, actualiza la lista y entra en su Detalle; el corazón debe seguir marcado. Vuelve a la lista y prueba **Quitar**. Las muestras anteriores ya no aparecen en la aplicación normal. Mantén pendientes en Trello los criterios funcionales hasta confirmar sus pruebas. Se conservan las cinco pestañas.
+Reutiliza el QR de Metro de Zenaida (`8083`) y el backend en `3200`. Inicia sesión, abre un producto del Catálogo y pulsa **Guardar en favoritos**. Comprueba que aparece en **Favoritos**, actualiza la lista y entra en su Detalle; el corazón debe seguir marcado. Vuelve a la lista y prueba **Quitar**. Las muestras anteriores de Favoritos ya no aparecen en la aplicación normal. Se conservan las cinco pestañas.
 
 Si Metro de Zenaida no estuviera activo, desde `C:\Users\David\Documents\INHALEX-Movil-Zenaida`:
 

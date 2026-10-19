@@ -1,0 +1,130 @@
+{
+  "activity": "Bolsa de compras: conexión a la API",
+  "date": "2026-10-19",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+  "branch": "feature/bolsa-compras",
+  "baseCommit": "a943e7d164bce14689eb8373cf689bfb8ff1329b",
+  "status": "Implementación y verificación técnica completadas; aceptación funcional en Expo Go pendiente",
+  "automated": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "tests": {
+      "passed": 369,
+      "failed": 0,
+      "newCartTests": 47,
+      "existingTests": 322
+    },
+    "doctor": {
+      "passed": 21,
+      "total": 21
+    },
+    "androidExport": {
+      "status": "passed",
+      "modules": 1455,
+      "bundle": "entry-d75f863a8ab4f254a807a7bcb8de0791.hbc"
+    },
+    "webExport": {
+      "status": "passed",
+      "modules": 1003,
+      "bundle": "entry-28a57682c0aad0bf3287fb0f9e15704e.js"
+    }
+  },
+  "http": {
+    "isolated": {
+      "status": "passed",
+      "scope": "Transporte HTTP real de loopback con API y almacenamiento simulados, cuentas ficticias; no MongoDB real",
+      "cases": [
+        "GET/POST/PATCH/DELETE autenticados",
+        "cantidades 1 y 25, agregación y límite",
+        "aislamiento entre cuentas ficticias",
+        "errores,401 y no repetición automática"
+      ]
+    },
+    "runningBackendReadOnly": {
+      "baseUrl": "http://localhost:3200/api",
+      "health": "ok",
+      "database": "connected",
+      "unauthenticatedCartStatus": 401,
+      "authenticatedCartWritesPerformed": false
+    }
+  },
+  "webQA": {
+    "status": "passed",
+    "temporaryRoute": "/cart-qa (eliminada antes de exportar)",
+    "scope": "Pantalla, ViewModel, controlador, casos de uso, Repository, mapper y HttpClient reales con sesión y transporte simulados en memoria",
+    "widths": [
+      397,
+      320
+    ],
+    "cases": [
+      "Agregar actualiza colección confirmada",
+      "Incrementar/decrementar y totales 2→3→4→3 por149MXN",
+      "Conexión interrumpida al quitar conserva producto y cantidades, bloquea mutaciones",
+      "GET fallido conserva datos y GET exitoso recupera",
+      "Cantidad25 bloquea aumentar y agregar",
+      "Cantidad1 bloquea disminuir",
+      "Quitar último producto muestra vacío",
+      "401 limpia datos y solicita reingreso",
+      "Cerrar sesión oculta datos personales",
+      "Acceso abre formulario de inicio de sesión",
+      "Imagen cargada, sin desbordamiento horizontal y controles44px",
+      "Ruta normal /bolsa con cinco pestañas y acceso anónimo"
+    ],
+    "screenshots": [
+      "api-coleccion-web-simulada.png",
+      "api-error-web-simulada.png",
+      "api-limite-compacto-web-simulada.png",
+      "api-vacio-compacto-web-simulada.png",
+      "api-sesion-caducada-web-simulada.png",
+      "api-acceso-web.png"
+    ]
+  },
+  "architecture": {
+    "pattern": "MVVM + Repository + bootstrap injection",
+    "privateCredential": true,
+    "authoritativeFullCartResponses": true,
+    "allOperationsSerialized": true,
+    "ambiguousMutationRetry": "GET before allowing a new write; never replay POST automatically",
+    "sessionIsolation": "Snapshot identity, generation, cancellation and401blocking"
+  },
+  "review": {
+    "technical": "Independent agent: no actionable findings",
+    "peerReview": "Pending David567rs in a future PR"
+  },
+  "preservation": {
+    "serverEnvSha256": "D9B2404F2A8BA429C2A8A3A454CFB72326A42AB013F462E01E5CEFDD59E233BB",
+    "stash": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "services": [
+      {
+        "port": 3200,
+        "pid": 30280
+      },
+      {
+        "port": 8082,
+        "pid": 28288
+      },
+      {
+        "port": 8083,
+        "pid": 13476
+      }
+    ],
+    "servicesRestartedByAgent": false,
+    "backendChanges": false,
+    "corsChanges": false,
+    "dependencyChanges": false,
+    "committedOrPushed": false
+  },
+  "functionalAcceptance": {
+    "acceptedCriteria": 0,
+    "totalCriteria": 10,
+    "source": "User accepted design only; native functional tests pending",
+    "agentReadOrModifiedTrello": false
+  },
+  "limitations": [
+    "No physical-device observation or native captures by agent",
+    "Native TalkBack and enlarged text not physically tested",
+    "Authenticated functional flows against real backend/MongoDB await user in Expo Go",
+    "CartService applies active lower promotion without checking promoEndsAt; API confirmed price can differ from Catalogue",
+    "Total is products subtotal, excludes shipping; checkout/order creation remain for later activity"
+  ]
+}

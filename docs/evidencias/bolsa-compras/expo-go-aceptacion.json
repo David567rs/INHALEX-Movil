@@ -1,0 +1,171 @@
+{
+  "activity": "Bolsa de compras",
+  "branch": "feature/bolsa-compras",
+  "date": "2026-10-19",
+  "source": "Confirmaciones textuales del usuario en el chat: diseño, recorrido positivo, límites1/25, vacío y error/reintento de Bolsa en Expo Go",
+  "design": {
+    "accepted": true,
+    "quote": "Amigo, ya revisé el diseño de Bolsa en Expo Go y me gustó. Sigamos con la conexión a la API en la misma rama, manteniendo MVVM y Repository.",
+    "agentObservedDevice": false
+  },
+  "functionalAcceptance": {
+    "acceptedCriteria": 9,
+    "totalCriteria": 10,
+    "status": "9/10: recorrido completo aceptado por el usuario en Expo Go; pendiente revisión real de David567rs",
+    "acceptedCriterionIds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "pendingCriterionIds": [
+      10
+    ],
+    "confirmations": [
+      {
+        "date": "2026-10-19",
+        "quote": "Amigo, ya pude agregar, cambiar cantidades, actualizar y quitar productos en Expo Go. Los totales cambian correctamente. ¿Qué marco en Trello y qué sigue?",
+        "acceptedCriterionIds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7
+        ],
+        "source": "Mensaje del usuario en respuesta al recorrido guiado de agregar, mostrar, +/−, actualizar, quitar y comprobar importes",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-19",
+        "quote": "Amigo, no permite bajar de 1 ni superar 25, y al bajar a 24 actualiza el total. Sigamos con la prueba de bolsa vacía.",
+        "acceptedCriterionIds": [
+          6
+        ],
+        "source": "Confirmación textual del usuario de límites 1/25 y actualización al bajar a 24 en Expo Go",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-19",
+        "quote": "Amigo, apareció «Tu bolsa aún está vacía», se mantuvo al actualizar y «Explorar catálogo» abrió Catálogo. Sigamos con la prueba de error y reintento.",
+        "acceptedCriterionIds": [],
+        "partialCriterionIds": [
+          9
+        ],
+        "checks": [
+          "Tu bolsa aún está vacía al quitar el último producto",
+          "Actualizar conserva vacío sin error",
+          "Explorar catálogo abre Catálogo"
+        ],
+        "source": "Confirmación textual del usuario en Expo Go; evidencia parcial de Probar la funcionalidad, sin criterio adicional de vacío",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-19",
+        "quote": "Amigo, fallaron Quitar y Reintentar sin perder el producto ni los importes. Reinicié el backend y Reintentar recuperó la lista sin errores. ¿Qué marco en Trello y qué sigue?",
+        "acceptedCriterionIds": [
+          8
+        ],
+        "checks": [
+          "Quitar falla conservando producto e importes",
+          "Reintentar falla conservando la bolsa",
+          "Reiniciar backend y Reintentar recupera la lista sin errores"
+        ],
+        "source": "Confirmación textual del usuario en Expo Go del fallo de escritura/lectura y recuperación tras reiniciar el backend local",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-19",
+        "quote": "Amigo, la bolsa se conservó al reabrir, se ocultó al cerrar sesión y volvió al ingresar con la misma cuenta. Cantidades y totales correctos. Abre el PR hacia develop para que David567rs lo revise.",
+        "acceptedCriterionIds": [
+          9
+        ],
+        "checks": [
+          "Bolsa conservada al reabrir Expo Go",
+          "Bolsa personal oculta al cerrar sesión",
+          "Recuperación con la misma cuenta",
+          "Cantidades y totales correctos"
+        ],
+        "source": "Confirmación textual del usuario en Expo Go y autorización de PR hacia develop para David567rs",
+        "agentObservedDevice": false
+      }
+    ],
+    "criteria": [
+      {
+        "id": 1,
+        "text": "Agregar productos a la bolsa",
+        "accepted": true
+      },
+      {
+        "id": 2,
+        "text": "Mostrar los productos agregados",
+        "accepted": true
+      },
+      {
+        "id": 3,
+        "text": "Modificar la cantidad de productos",
+        "accepted": true
+      },
+      {
+        "id": 4,
+        "text": "Eliminar productos de la bolsa",
+        "accepted": true
+      },
+      {
+        "id": 5,
+        "text": "Calcular el total de la compra",
+        "accepted": true
+      },
+      {
+        "id": 6,
+        "text": "Evitar cantidades inválidas",
+        "accepted": true
+      },
+      {
+        "id": 7,
+        "text": "Mantener actualizada la información de la bolsa",
+        "accepted": true
+      },
+      {
+        "id": 8,
+        "text": "Manejar errores de conexión",
+        "accepted": true
+      },
+      {
+        "id": 9,
+        "text": "Probar la funcionalidad",
+        "accepted": true
+      },
+      {
+        "id": 10,
+        "text": "Revisar el código",
+        "accepted": false
+      }
+    ]
+  },
+  "nextStep": {
+    "status": "prepare-pull-request",
+    "guide": "../../CONEXION-BOLSA-COMPRAS.md",
+    "flow": "Publicar feature/bolsa-compras como ZenaidaGR, abrir PR hacia develop y solicitar revisión real a David567rs; esperar aprobación y CI antes de integrar",
+    "technicalEvidence": "verificacion-api.json",
+    "technicalVerificationStatus": "Aprobada: 369 pruebas, TypeScript, lint, Doctor21/21, Android/web y QA web simulada; consultar verificacion-api.json",
+    "purpose": "Revisión real del criterio10; no fusionar por la autorización de apertura"
+  },
+  "trello": {
+    "agentReadBoard": false,
+    "agentModifiedBoard": false,
+    "userConfirmedCriteriaMarked": false,
+    "status": "En progreso: se pueden marcar criterios 1 a 9; Revisar el código pendiente; marcado del usuario aún no confirmado"
+  },
+  "limitations": [
+    "No hay observación directa del teléfono ni capturas nativas por el agente",
+    "Las pruebas técnicas y el diseño no sustituyen la aceptación funcional ni la revisión real de David567rs",
+    "Las pruebas HTTP aisladas usan API y almacenamiento simulados, sin escrituras en MongoDB real ni prueba de SecureStore nativo",
+    "Recorrido nativo aceptado por reporte del usuario; no acredita observación directa del dispositivo, TalkBack, texto ampliado ni prueba física entre dos cuentas distintas"
+  ]
+}

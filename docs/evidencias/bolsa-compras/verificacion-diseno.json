@@ -1,0 +1,66 @@
+{
+  "activity": "Bolsa de compras - diseño",
+  "date": "2026-10-19",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+  "branch": "feature/bolsa-compras",
+  "base": "a943e7d164bce14689eb8373cf689bfb8ff1329b",
+  "scope": {
+    "stage": "Vista previa visual con datos sintéticos de solo lectura",
+    "architecture": "View → useCartPreviewViewModel → ReadCartPreview → CartPreviewRepository → LocalCartPreviewRepository, composición en bootstrap",
+    "samples": [
+      { "id": "preview-bag-lavanda", "quantity": 2, "unitPrice": 149, "lineTotal": 298 },
+      { "id": "preview-bag-eucalipto", "quantity": 1, "unitPrice": 129, "lineTotal": 129 }
+    ],
+    "illustrativeSummary": { "currency": "MXN", "subtotal": 427, "total": 427, "unitCount": 3, "shipping": "Por definir; no incluido" },
+    "bagApiRequests": false,
+    "quantityOrRemovalHandlers": false,
+    "persistentBag": false,
+    "realPurchaseCalculation": false,
+    "orderCreation": false,
+    "newAuthenticationRequirements": false,
+    "dependencyChanges": false,
+    "syntheticIdsUsedInDetailNavigation": false
+  },
+  "checks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "existingMobileTests": { "passed": 322, "failed": 0, "newTests": 0, "note": "Pruebas de infraestructura y actividades integradas; no prueban una Bolsa real. No se añadieron pruebas que reproduzcan fixtures estáticos." },
+    "doctor": { "passed": 21, "total": 21 },
+    "androidExport": { "status": "passed", "modules": 1450, "bundle": "entry-e8d71a44b068f6f2e067938e99c290e7.hbc" },
+    "webExport": { "status": "passed", "modules": 998, "bundle": "entry-6551b3fe8b1be1056089c3adb351ab0b.js" },
+    "technicalReview": "Revisión independiente de separación de capas, controles inactivos, IDs sintéticos y accesibilidad sin hallazgos pendientes"
+  },
+  "webQa": {
+    "url": "http://localhost:8083/bolsa",
+    "source": "Pantalla real con Repository local de muestras; no API de Bolsa",
+    "widthsCss": [397, 320],
+    "collectionAndEmpty": "passed",
+    "allSampleImagesLoaded": true,
+    "quantityRemoveContinueButtonsDisabled": 7,
+    "quantityAndRemoveButtonMinimumHeightCss": 44,
+    "continueButtonMinimumHeightCss": 52,
+    "modeRadioMinimumHeightCss": 46,
+    "fiveTabsPreserved": true,
+    "horizontalOverflow": false,
+    "catalogNavigationAndReturn": "passed: abre /catalogo y permite volver a Bolsa",
+    "catalogWebDataLimit": "La ruta de Catálogo conserva su error de conexión web previo; no se atribuye a esta QA carga real de productos ni se cambió CORS/configuración",
+    "decorativeGroups": "Se ocultan a accesibilidad los grupos decorativos, incluidos el icono de vista previa y el aviso de etapa; controles tienen nombre y estado disabled",
+    "viewportRestored": true,
+    "captures": ["diseno-coleccion-web.png", "diseno-resumen-web.png", "diseno-vacio-web.png", "diseno-compacto-web.png", "diseno-resumen-compacto-web.png", "diseno-vacio-compacto-web.png"]
+  },
+  "preservation": {
+    "davidClone": "develop en a943e7d, limpio",
+    "zenaidaEnvironmentSha256": "D9B2404F2A8BA429C2A8A3A454CFB72326A42AB013F462E01E5CEFDD59E233BB",
+    "stash": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "existingServices": [3200, 8082, 8083],
+    "backendSessionAndFavoritesCodeChanged": false
+  },
+  "acceptance": {
+    "nativeDesign": "Pendiente del usuario en Expo Go",
+    "functionalCriteriaAccepted": 0,
+    "totalCriteria": 10,
+    "trelloReadOrModifiedByAgent": false,
+    "limitations": ["Las capturas son web", "Los datos y el vacío son sintéticos", "No se probó una Bolsa real ni su API", "Sin comprobación física de TalkBack o texto ampliado"]
+  },
+  "delivery": { "commit": null, "pullRequest": null, "state": "Cambios locales, pendientes de aceptación visual antes de conectar la API" }
+}

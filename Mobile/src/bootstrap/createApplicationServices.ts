@@ -18,6 +18,10 @@ import { FavoritesError } from '../features/favorites/domain/errors/FavoritesErr
 import { createFavoritesActions } from '../features/favorites/domain/useCases/createFavoritesActions';
 import type { FavoritesActions } from '../features/favorites/domain/repositories/FavoritesRepository';
 import { createFavoritesController } from '../features/favorites/presentation/state/createFavoritesController';
+import { ApiCartRepository } from '../features/cart/data/repositories/ApiCartRepository';
+import { CartError } from '../features/cart/domain/errors/CartError';
+import { createCartActions, type CartActions } from '../features/cart/domain/useCases/cartActions';
+import { createCartController } from '../features/cart/presentation/state/createCartController';
 
 export interface ApplicationServicesOptions {
   environment?: Environment;
@@ -75,7 +79,7 @@ export function createApplicationAuthSession(options: Omit<ApplicationServicesOp
   return createApplicationAuthRuntime(options).session;
 }
 
-/** One private credential source, one public session and one personal collection per app. */
+/** The public session and personal collections share one private credential source. */
 export function createApplicationRuntime(options: Omit<ApplicationServicesOptions, 'getAccessToken'> = {}) {
   const auth = createApplicationAuthRuntime(options);
   let actions: FavoritesActions | undefined;
@@ -102,8 +106,30 @@ export function createApplicationRuntime(options: Omit<ApplicationServicesOption
     add: async (id, requestOptions) => favoritesActions().add(id, requestOptions),
     remove: async (id, requestOptions) => favoritesActions().remove(id, requestOptions),
   });
+  let cartActions: CartActions | undefined;
+  function getCartActions(): CartActions {
+    if (!cartActions) {
+      try {
+        const environment = options.environment ?? readEnvironment();
+        cartActions = createCartActions(new ApiCartRepository(new HttpClient({
+          baseUrl: environment.apiUrl, isDevelopment: environment.isDevelopment,
+          requestTimeoutMs: environment.requestTimeoutMs, fetch: options.fetch,
+          getAccessToken: auth.getAccessToken,
+        })));
+      } catch {
+        throw new CartError('La bolsa no está disponible en este momento. Inténtalo más tarde.', 'configuration');
+      }
+    }
+    return cartActions;
+  }
+  const cart = createCartController(auth.session, {
+    list: async (requestOptions) => getCartActions().list(requestOptions),
+    add: async (id, quantity, requestOptions) => getCartActions().add(id, quantity, requestOptions),
+    updateQuantity: async (id, quantity, requestOptions) => getCartActions().updateQuantity(id, quantity, requestOptions),
+    remove: async (id, requestOptions) => getCartActions().remove(id, requestOptions),
+  });
   // No transport or credential is exposed to the React tree.
-  return Object.freeze({ session: auth.session, favorites });
+  return Object.freeze({ session: auth.session, favorites, cart });
 }
 
 /** Defer configuration until submission so navigation never depends on the API. */
