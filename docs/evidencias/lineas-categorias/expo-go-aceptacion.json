@@ -1,0 +1,185 @@
+{
+  "activity": "Líneas o categorías",
+  "date": "2026-10-18",
+  "branch": "feature/lineas-categorias",
+  "phase": "seven-functional-criteria-accepted-pr-open-review-requested",
+  "platform": "Expo Go",
+  "evidenceType": "human_chat_confirmation",
+  "userResponse": "Ya revisé el diseño de Líneas o categorías en Expo Go, amigo, y me gustó. Sigamos con la conexión a la API en la misma rama, manteniendo MVVM y Repository. ¿Qué punto marco en Trello?",
+  "designAcceptance": {
+    "status": "accepted_by_user",
+    "agentObservedPhysicalDevice": false,
+    "nativeScreenshotsProvided": false,
+    "historicalPreviewEvidence": "verificacion-diseno.json",
+    "trelloDesignCriterionExists": false,
+    "recordAs": "Visual acceptance comment; no functional checklist item checked."
+  },
+  "apiConnection": {
+    "authorizedByUser": true,
+    "sameBranch": true,
+    "architecture": "MVVM y Repository",
+    "implementationStatus": "implemented-technical-checks-passed",
+    "nativeFunctionalAcceptance": "seven-criteria-accepted-by-user"
+  },
+  "checklistAtDesignAcceptance": {
+    "status": "historical-snapshot-before-functional-confirmation",
+    "source": "User-provided Trello screenshot after the visual acceptance message",
+    "screenshotFollowupText": "mira son esos puntos",
+    "acceptedCriteria": 0,
+    "totalCriteria": 8,
+    "remainingCriteria": [
+      "Obtener líneas o categorías desde la API",
+      "Mostrar las categorías disponibles",
+      "Permitir seleccionar una categoría",
+      "Filtrar los productos según la categoría",
+      "Manejar categoría sin productos",
+      "Verificar navegación",
+      "Probar la funcionalidad",
+      "Revisar el código"
+    ]
+  },
+  "functionalConfirmation": {
+    "date": "2026-10-18",
+    "userResponse": "Ya probé en Expo Go, amigo: aparecen las categorías, cambian los productos al elegir otra y funciona «Ver todos». Ya marqué esos puntos en Trello. Sigamos con la prueba de categoría sin productos.",
+    "evidenceType": "human_chat_confirmation",
+    "acceptedCriteriaAfterConfirmation": 5,
+    "categoriesVisible": true,
+    "selectionChangesProducts": true,
+    "viewAllWorks": true,
+    "agentObservedPhysicalDevice": false,
+    "nativeScreenshotsProvided": false
+  },
+  "checklist": {
+    "source": "Subsequent human chat confirmation in Expo Go",
+    "acceptedCriteria": 7,
+    "totalCriteria": 8,
+    "acceptedCriterionNumbers": [1, 2, 3, 4, 5, 6, 7],
+    "acceptedCriteriaNames": [
+      "Obtener líneas o categorías desde la API",
+      "Mostrar las categorías disponibles",
+      "Permitir seleccionar una categoría",
+      "Filtrar los productos según la categoría",
+      "Manejar categoría sin productos",
+      "Verificar navegación",
+      "Probar la funcionalidad"
+    ],
+    "remainingCriteria": [
+      "Revisar el código"
+    ]
+  },
+  "emptyCategoryTest": {
+    "criterion": "Manejar categoría sin productos",
+    "status": "accepted-by-user-in-expo-go-with-synthetic-data",
+    "command": "npm run qa:lines:empty",
+    "scope": "Temporary HTTP on port 3200, Prueba sin productos empty category and Producto de prueba synthetic general-catalog product; no database or env changes.",
+    "helperVerification": {
+      "status": "passed",
+      "httpGroups": 10,
+      "actualMobileComponents": "HttpClient, ApiProductLinesRepository, createListProductLines, ApiCatalogRepository, createListCatalog",
+      "evidence": "empty-category-fixture-verificacion.json",
+      "independentReview": "no material defects",
+      "isolatedPort3214Stopped": true,
+      "realBackend3200Preserved": true,
+      "metro8082Preserved": true
+    },
+    "helperRunReportedByUser": true,
+    "nativeResultReceived": true,
+    "acceptedCriteriaAfterConfirmation": 6,
+    "userResponse": "Sí, amigo, apareció «Esta línea aún no tiene productos» y «Ver todos» mostró el producto de prueba. Ya restauré el backend real. ¿Qué marco en Trello y qué sigue?",
+    "emptyMessageAccepted": "Esta línea aún no tiene productos",
+    "viewAllAccepted": "Producto de prueba",
+    "realBackendRestoredReportedByUser": true,
+    "agentHttpVerificationAfterRestoration": {
+      "healthOk": true,
+      "categoriesReceived": 5,
+      "syntheticQaCategoriesPresent": false
+    },
+    "agentObservedPhysicalDevice": false,
+    "nativeScreenshotsProvided": false
+  },
+  "finalErrorRetryTest": {
+    "date": "2026-10-18",
+    "criterion": "Probar la funcionalidad",
+    "scope": "Final connection failure and retry in Lines, preserving already loaded categories and selection, then recovering after restarting the real backend.",
+    "status": "accepted-by-user-in-expo-go",
+    "userResponse": "Sí, amigo, apareció el aviso y se conservaron las categorías y mi selección. Al reiniciar el backend y actualizar, desapareció el aviso. Ahora abramos el PR hacia develop para que Zenaida lo revise.",
+    "evidenceType": "human_chat_confirmation",
+    "connectionNoticeAppeared": true,
+    "loadedCategoriesPreserved": true,
+    "selectionPreserved": true,
+    "noticeClearedAfterBackendRestartAndRefresh": true,
+    "acceptedCriteriaAfterConfirmation": 7,
+    "nativeResultReceived": true,
+    "agentObservedPhysicalDevice": false,
+    "nativeScreenshotsProvided": false,
+    "humanCodeReviewCompleted": false
+  },
+  "trello": {
+    "taskStatus": "En progreso",
+    "initialScreenshotSnapshot": "checklistAtDesignAcceptance",
+    "fiveCriteriaMarkedByUserAsReportedInChat": true,
+    "emptyCategoryCriterionReadyToMark": true,
+    "functionalityCriterionReadyToMark": true,
+    "functionalityCriterionMarkedByUserConfirmed": false,
+    "updatedByAgent": false,
+    "updateResponsibility": "user"
+  },
+  "limitations": [
+    "La confirmación inicial acepta el diseño visual; su snapshot 0/8 se conserva separado de las confirmaciones funcionales posteriores 5/8, 6/8 y 7/8.",
+    "La captura inicial muestra el checklist de Trello, no la aplicación nativa; el usuario afirma posteriormente haber marcado cinco criterios.",
+    "Las confirmaciones funcionales aceptan categorías, selección, filtrado, Ver todos, categoría vacía sintética y prueba final de error/recuperación. No acreditan vacío en una base comercial ni una prueba específica de paginación nativa.",
+    "No hay capturas nativas ni observación directa del teléfono por el agente.",
+    "No acredita TalkBack, escalado de fuente o movimiento reducido en un dispositivo físico.",
+    "Las comprobaciones técnicas de la API se registran por separado y no completan por sí solas el checklist humano."
+  ],
+  "prePrVerification": {
+    "mobileTests": { "passed": 206, "failed": 0 },
+    "typecheck": "passed",
+    "lint": "passed-without-warnings",
+    "independentReadOnlyReview": "no-material-blockers",
+    "mobileSourceUnchangedSince": "0927bf4",
+    "realHumanReview": "pending-ZenaidaGR"
+  },
+  "delivery": {
+    "stage": "pr-open-review-requested",
+    "pullRequestAuthorizedByUser": true,
+    "authorizationDate": "2026-10-18",
+    "authorizationEvidence": "finalErrorRetryTest.userResponse",
+    "pullRequestNumber": 7,
+    "pullRequestUrl": "https://github.com/David567rs/INHALEX-Movil/pull/7",
+    "title": "Implementar Líneas o categorías con MVVM y Repository",
+    "author": "David567rs",
+    "head": "feature/lineas-categorias",
+    "base": "develop",
+    "baseAtCreation": "fc13bbf7afcd0ee81e9f0f7dadce8931852d9b78",
+    "headAtCreation": "e61fc7bb09b5581127543b8c99fbe92356cc2ceb",
+    "createdAt": "2026-10-19T04:30:39Z",
+    "createdLocalDate": "2026-10-18",
+    "state": "open",
+    "draft": false,
+    "merged": false,
+    "mergeableAtCreationObservation": true,
+    "pullRequestOpened": true,
+    "pushPerformedForThisStage": true,
+    "reviewRequested": true,
+    "reviewRequestedFrom": ["ZenaidaGR"],
+    "reviewRequestedAt": "2026-10-19T04:31:14Z",
+    "creationHeadChecks": {
+      "scope": "First execution on headAtCreation; not evidence for a later documentation commit.",
+      "head": "e61fc7bb09b5581127543b8c99fbe92356cc2ceb",
+      "backend": {
+        "status": "success",
+        "runId": "39199835238",
+        "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39199835238"
+      },
+      "mobile": {
+        "status": "success",
+        "runId": "39199835223",
+        "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39199835223"
+      }
+    },
+    "latestHeadChecksSource": "https://github.com/David567rs/INHALEX-Movil/pull/7/checks",
+    "humanReview": "pending",
+    "activityFullyCompleted": false
+  }
+}

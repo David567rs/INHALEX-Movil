@@ -31,17 +31,30 @@ test('catalog use case follows DTO limits: positive safe pages without a 100-pag
   }
 });
 
-test('catalog use case only forwards page/limit and the same cancellation options without mutating its input', async () => {
+test('catalog use case forwards a normalized category and pagination without leaking unrelated search fields', async () => {
   let sentInput;
   let sentOptions;
   const list = createListCatalog({ list: async (input, options) => { sentInput = input; sentOptions = options; return emptyPage; } });
-  const input = Object.freeze({ page: 1, limit: 20, search: 'not-part-of-this-activity', category: 'not-part-of-this-activity' });
+  const input = Object.freeze({ page: 1, limit: 20, search: 'not-part-of-this-activity', category: ' LINEA-VERDE ' });
   const before = { ...input };
   const options = { signal: new AbortController().signal };
   assert.equal(await list(input, options), emptyPage);
-  assert.deepEqual(sentInput, { page: 1, limit: 20 });
+  assert.deepEqual(sentInput, { page: 1, limit: 20, category: 'linea-verde' });
   assert.equal(sentOptions, options);
   assert.deepEqual(input, before);
+});
+
+test('invalid category inputs are rejected before transport, while dynamic backend slugs remain supported', async () => {
+  const calls = [];
+  const list = createListCatalog({ list: async (input) => { calls.push(input); return emptyPage; } });
+  for (const category of ['', ' ', null, 7, [], ['linea-verde'], 'linea/x', 'linea?x', 'línea', 'linea_verde']) {
+    await assert.rejects(list({ page: 1, limit: 20, category }), (error) => error.kind === 'configuration');
+  }
+  assert.equal(calls.length, 0);
+  for (const category of ['linea-personalizada-2', '-linea-', '-']) {
+    await list({ page: 1, limit: 20, category });
+    assert.equal(calls.at(-1).category, category);
+  }
 });
 
 test('catalog use case does not call its repository when already cancelled', async () => {

@@ -28,6 +28,35 @@ const isCatalogError = (kind) => (error) => {
   return true;
 };
 
+test('filtered catalog uses the exact dynamic category on every requested page and validates membership', async () => {
+  const urls = [];
+  const repo = repository(async (url) => {
+    urls.push(url);
+    const query = new URL(url).searchParams;
+    return jsonResponse(payload([product({ category: '-linea-nueva-' })], {
+      page: Number(query.get('page')), limit: 1, total: 2, totalPages: 2,
+    }));
+  });
+  for (const page of [1, 2]) {
+    await repo.list({ page, limit: 1, category: '-linea-nueva-' });
+    assert.equal(urls.at(-1), `https://api.example/api/products?page=${page}&limit=1&category=-linea-nueva-`);
+  }
+});
+
+test('filtered catalog rejects a product from another line instead of mixing categories', async () => {
+  for (const category of ['linea-resfriado', undefined]) {
+    const repo = repository(async () => jsonResponse(payload([product({ category })])));
+    await assert.rejects(repo.list({ page: 1, limit: 20, category: 'linea-verde' }), isCatalogError('invalid-response'));
+  }
+});
+
+test('a category without products is a successful empty page, not an error or fallback to all products', async () => {
+  const result = await repository(async () => jsonResponse(payload([]))).list({ page: 1, limit: 20, category: 'sin-productos' });
+  assert.deepEqual(result.items, []);
+  assert.equal(result.total, 0);
+  assert.equal(result.totalPages, 1);
+});
+
 test('catalog uses the paginated public GET without bearer, cookies or body and only returns public product fields', async () => {
   let call;
   const repo = repository(async (url, options) => {

@@ -1,0 +1,89 @@
+{
+  "status": "passed",
+  "startedAt": "2026-10-19T04:18:18.551Z",
+  "completedAt": "2026-10-19T04:18:20.757Z",
+  "origin": "http://127.0.0.1:3214",
+  "helperPath": "C:\\Users\\David\\Documents\\INHALEX-Movil\\scripts\\qa\\lines-empty.cjs",
+  "verifierPath": "C:\\Users\\David\\AppData\\Local\\Temp\\inhalex-lineas-empty-helper-smoke.cjs",
+  "groupsPassed": 10,
+  "checks": [
+    {
+      "name": "identity and public no-store CORS headers",
+      "passed": true
+    },
+    {
+      "name": "real mobile lines Repository and use case accept both dynamic slugs and counts",
+      "passed": true
+    },
+    {
+      "name": "real mobile catalog Repository and use case map zero-price synthetic product without bearer",
+      "passed": true
+    },
+    {
+      "name": "real mobile filtered empty, populated and normalized dynamic slugs",
+      "passed": true
+    },
+    {
+      "name": "returning to all omits category and restores the product; unknown and all literal are empty",
+      "passed": true
+    },
+    {
+      "name": "page greater than one preserves total and totalPages with no items",
+      "passed": true
+    },
+    {
+      "name": "HTTP rejects invalid integers, repeated parameters and unknown query keys",
+      "passed": true
+    },
+    {
+      "name": "non-GET returns 405 and unrelated API endpoints remain unavailable",
+      "passed": true
+    },
+    {
+      "name": "occupied port reports a clear error and leaves the running fixture intact",
+      "passed": true
+    },
+    {
+      "name": "invalid CLI port fails before starting a listener",
+      "passed": true
+    }
+  ],
+  "components": [
+    "Node HTTP synthetic helper",
+    "HttpClient real source",
+    "ApiCatalogRepository real source",
+    "createListCatalog real source",
+    "ApiProductLinesRepository real source",
+    "createListProductLines real source"
+  ],
+  "isolation": {
+    "syntheticDataOnly": true,
+    "databaseUsed": false,
+    "envFilesRead": false,
+    "backendImported": false,
+    "bearerUsed": false,
+    "originalPort3200Touched": false,
+    "metro8082Touched": false
+  },
+  "publicRequests": [
+    "/api/products/categories",
+    "/api/products?page=1&limit=20",
+    "/api/products?page=1&limit=20&category=qa-sin-productos",
+    "/api/products?page=1&limit=20&category=qa-con-productos",
+    "/api/products?page=1&limit=20&category=qa-con-productos",
+    "/api/products?page=1&limit=20",
+    "/api/products?page=1&limit=20&category=qa-desconocida",
+    "/api/products?page=2&limit=1",
+    "/api/products?page=99&limit=20&category=qa-con-productos"
+  ],
+  "fixtureStoppedAfterChecks": true,
+  "limits": [
+    "No real backend, database, inventory or Expo Go device was tested.",
+    "The helper is intentionally synthetic and supports only the two public read endpoints."
+  ],
+  "shutdown": {
+    "method": "Ctrl+C on exec session 26495",
+    "port3214Closed": true,
+    "checkedAt": "2026-10-19T04:18:41.2234409Z"
+  }
+}

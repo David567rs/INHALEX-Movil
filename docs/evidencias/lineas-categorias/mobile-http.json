@@ -1,0 +1,25 @@
+{
+  "recordedDate": "2026-10-18",
+  "passed": true,
+  "groups": [
+    "7 dynamic categories including zero",
+    "unfiltered public catalog total 31",
+    "all seven category totals match actual filtered API",
+    "green pagination page 2 has 3 of 23",
+    "unknown category returns valid empty page",
+    "category 503 safe domain error and explicit recovery",
+    "invalid category DTO rejected",
+    "synthetic empty category list stays empty",
+    "filtered products 503 and recovery keep category contract"
+  ],
+  "actualMobileRepositoriesAndUseCases": true,
+  "origin": "http://127.0.0.1:3212/api",
+  "realNestControllerServiceDto": true,
+  "mongoModelsSimulated": true,
+  "realDatabase": false,
+  "syntheticModes": [
+    "503",
+    "malformed",
+    "empty-category-list"
+  ]
+}

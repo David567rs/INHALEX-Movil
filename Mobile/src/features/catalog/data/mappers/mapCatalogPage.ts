@@ -91,6 +91,8 @@ export function mapCatalogPage(payload: unknown, expected: CatalogListInput, now
   const expectedCount = expected.page > totalPages ? 0 : Math.min(expected.limit, total - (expected.page - 1) * expected.limit);
   if (payload.totalPages !== totalPages || payload.items.length !== expectedCount) throw invalidResponse();
 
+  if (expected.category !== undefined && payload.items.some((product) =>
+    !isRecord(product) || product.category !== expected.category)) throw invalidResponse();
   const items = payload.items.map((product) => mapProduct(product, now));
   if (new Set(items.map((product) => product.id)).size !== items.length) throw invalidResponse();
   return { items, total, page: expected.page, limit: expected.limit, totalPages };

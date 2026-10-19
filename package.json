@@ -15,6 +15,7 @@
     "test:mobile": "npm --prefix Mobile test",
     "doctor:mobile": "npm --prefix Mobile run doctor",
     "export:mobile": "npm --prefix Mobile run export:android",
-    "qa:catalog:empty": "node scripts/qa/catalog-empty.cjs"
+    "qa:catalog:empty": "node scripts/qa/catalog-empty.cjs",
+    "qa:lines:empty": "node scripts/qa/lines-empty.cjs"
   }
 }

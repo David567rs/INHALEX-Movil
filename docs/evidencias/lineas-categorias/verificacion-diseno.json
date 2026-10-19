@@ -1,0 +1,103 @@
+{
+  "activity": "Líneas o categorías",
+  "date": "2026-10-18",
+  "branch": "feature/lineas-categorias",
+  "baseCommit": "fc13bbf7afcd0ee81e9f0f7dadce8931852d9b78",
+  "stage": "local-design",
+  "nativeAcceptance": "pending-user",
+  "recoveredReference": {
+    "revision": "526a21e11da1cd1e3f6edea350c7731f90e205bf",
+    "path": "Mobile/inhalex-app/src/features/catalog/presentation/components/CategoryChips.tsx",
+    "scope": "IDs, names and rounded green selection. Independent screen is new; no category photo or description copied."
+  },
+  "implementation": {
+    "architecture": "View -> ViewModel -> domain use case -> Repository contract -> local preview Repository; bootstrap injection",
+    "entry": "Catálogo -> Encuentra tu línea",
+    "route": "/lineas-categorias",
+    "lineCount": 5,
+    "selection": "Local single selection only; no product filtering"
+  },
+  "checks": {
+    "typecheck": "passed",
+    "lint": "passed without warnings",
+    "existingMobileTests": {
+      "passed": 179,
+      "failed": 0,
+      "newTestsAdded": 0
+    },
+    "expoDoctor": {
+      "passed": 21,
+      "total": 21
+    },
+    "androidExport": {
+      "passed": true,
+      "modules": 1412
+    },
+    "webExport": {
+      "passed": true,
+      "modules": 960
+    },
+    "independentReadOnlyReview": "no material blockers"
+  },
+  "browserQa": {
+    "platform": "web",
+    "compactViewport": {
+      "width": 320,
+      "height": 568
+    },
+    "largerViewport": {
+      "observedLogicalWidths": [
+        392,
+        394
+      ],
+      "height": 852,
+      "exact393Claimed": false
+    },
+    "horizontalContentBeyondOnePixel": false,
+    "fiveLinesDisplayed": true,
+    "allFiveSelectionsExercised": true,
+    "uniqueSelectionWithinLineGroup": true,
+    "selectedNameUpdated": true,
+    "entryFromCatalog": true,
+    "returnToCatalog": true,
+    "tabCountAfterReturn": 5,
+    "controlMinHeightPixels": 44,
+    "categoryCardsMinHeightPixels": 93.99,
+    "catalogDuringNavigation": "Connection error state; entry and return remain functional. Existing real products/API behavior is not re-accepted by this QA.",
+    "backendHealthHttpStatus": 200
+  },
+  "screenshots": [
+    {
+      "file": "diseno-principal-web.png",
+      "scope": "Main design near 393 px; web"
+    },
+    {
+      "file": "diseno-compacto-web.png",
+      "scope": "Main design at 320 px; web"
+    },
+    {
+      "file": "diseno-seleccion-web.png",
+      "scope": "Fifth line selected near 393 px, note and return button; web"
+    },
+    {
+      "file": "diseno-seleccion-compacto-web.png",
+      "scope": "Fifth line selected at 320 px with note and return button; web"
+    }
+  ],
+  "limitations": {
+    "nativeExpoGoObservedByAgent": false,
+    "userDesignAccepted": false,
+    "talkBackTested": false,
+    "fontScalingTested": false,
+    "reducedMotionPhysicallyTested": false,
+    "categoriesApiConnected": false,
+    "productsFiltered": false,
+    "detailImplemented": false,
+    "newDependencies": false,
+    "backendCodeChanged": false,
+    "envChanged": false,
+    "trelloChangedByAgent": false,
+    "prCreated": false,
+    "pushed": false
+  }
+}

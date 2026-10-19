@@ -27,6 +27,7 @@ export default function RootLayout() {
           <Stack.Screen name="experiencia" />
           <Stack.Screen name="register" />
           <Stack.Screen name="sign-in" />
+          <Stack.Screen name="lineas-categorias" />
         </Stack>
       </AuthSessionProvider>
     </SafeAreaProvider>
