@@ -1,0 +1,52 @@
+{
+  "number": 12,
+  "url": "https://github.com/David567rs/INHALEX-Movil/pull/12",
+  "title": "Implementar Perfil del usuario con MVVM y Repository",
+  "author": "David567rs",
+  "state": "closed",
+  "head": "feature/perfil-usuario",
+  "headSha": "ef60a37207c26dab1ee00c7869fb8e0f397d590c",
+  "base": "develop",
+  "merged": true,
+  "mergedAt": "2026-10-19T11:49:37Z",
+  "mergedBy": "ZenaidaGR",
+  "mergeCommit": "27d2495301bd52aa32749220c77f9dca24d0dde5",
+  "reviews": [
+    {
+      "reviewer": "ZenaidaGR",
+      "state": "APPROVED",
+      "commit": "ef60a37207c26dab1ee00c7869fb8e0f397d590c",
+      "submittedAt": "2026-10-19T11:49:28Z",
+      "url": "https://github.com/David567rs/INHALEX-Movil/pull/12#pullrequestreview-5571081141",
+      "id": 5571081141
+    }
+  ],
+  "checks": [
+    {
+      "name": "Mobile verification",
+      "status": "completed",
+      "conclusion": "success",
+      "sha": "ef60a37207c26dab1ee00c7869fb8e0f397d590c",
+      "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39247014913/job/118041411183",
+      "id": 118041411183
+    },
+    {
+      "name": "Backend verification",
+      "status": "completed",
+      "conclusion": "success",
+      "sha": "ef60a37207c26dab1ee00c7869fb8e0f397d590c",
+      "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39247014918/job/118041275701",
+      "id": 118041275701
+    }
+  ],
+  "acceptedCriteria": 10,
+  "totalCriteria": 10,
+  "completedBy": "La revisión formal de ZenaidaGR completa Revisar el código (10); no añade una nueva prueba nativa",
+  "trelloReadByAgent": false,
+  "trelloModifiedByAgent": false,
+  "trelloUpdateConfirmedByUser": false,
+  "mergeParents": [
+    "559a15464e7cd778b2956b6e217855e5d26a77b0",
+    "ef60a37207c26dab1ee00c7869fb8e0f397d590c"
+  ]
+}
