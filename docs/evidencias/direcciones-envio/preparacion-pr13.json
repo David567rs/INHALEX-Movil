@@ -1,0 +1,93 @@
+{
+  "activity": "Direcciones de envío",
+  "date": "2026-10-19",
+  "repository": "David567rs/INHALEX-Movil",
+  "workspace": "C:/Users/David/Documents/INHALEX-Movil",
+  "branch": "feature/direcciones-envio",
+  "base": "develop",
+  "pullRequest": {
+    "number": 13,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/13",
+    "title": "Implementar Direcciones de envío con MVVM y Repository",
+    "author": "David567rs",
+    "state": "open",
+    "draft": false,
+    "merged": false,
+    "createdAt": "2026-10-19T12:46:08Z",
+    "implementationCommitSha": "eeca4d86474e002f3a454dfd8de8b756bae1f70f",
+    "headAtCreation": "eeca4d86474e002f3a454dfd8de8b756bae1f70f",
+    "baseSha": "27d2495301bd52aa32749220c77f9dca24d0dde5",
+    "requestedReviewers": [
+      "ZenaidaGR"
+    ],
+    "reviewRequestConfirmedByGitHub": true
+  },
+  "codeTrees": {
+    "source": "353f03acbcd1202842c3310ed72d2bb4b3f0f82b",
+    "tests": "98123f7f1c71fd03a9c2cb8a19a4111450c956d1"
+  },
+  "localVerification": {
+    "typecheck": {
+      "exitCode": 0,
+      "rerunBeforePublication": true
+    },
+    "lint": {
+      "exitCode": 0,
+      "rerunBeforePublication": true
+    },
+    "tests": {
+      "passed": 485,
+      "failed": 0,
+      "rerunBeforePublication": true
+    },
+    "diffCheck": {
+      "exitCode": 0
+    },
+    "independentBoundedReview": "No additional actionable findings; technical review does not replace ZenaidaGR approval",
+    "doctorAndExports": "Approved in verificacion-api.json for the same implementation before native acceptance; not rerun for documentation-only updates"
+  },
+  "nativeAcceptance": {
+    "evidence": "expo-go-aceptacion.json",
+    "acceptedCriteria": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "totalCriteria": 10,
+    "source": "User text in the chat; no direct device observation by the agent",
+    "pendingCriterion": 10
+  },
+  "ci": {
+    "statusAtReceipt": "Pending verification on the latest PR HEAD after publication-link documentation commit; do not infer success from historical local checks",
+    "query": "GitHub Actions for current pull request HEAD"
+  },
+  "preserved": {
+    "zenaidaCloneCleanDevelop": "27d2495301bd52aa32749220c77f9dca24d0dde5",
+    "zenaidaStash": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "serverEnvSha256BothClones": "D9B2404F2A8BA429C2A8A3A454CFB72326A42AB013F462E01E5CEFDD59E233BB",
+    "ports": [
+      3200,
+      8082,
+      8083
+    ],
+    "identitiesAndConfiguration": true
+  },
+  "trello": {
+    "agentReadBoard": false,
+    "agentModifiedBoard": false,
+    "userConfirmedMarked": false,
+    "status": "9/10 accepted; Revisar el código and integration pending"
+  },
+  "limitations": [
+    "No approval or merge performed",
+    "Native acceptance comes from the user, not browser screenshots",
+    "Web QA and socket integration tests use synthetic session/API/storage",
+    "No physical test between two distinct accounts, TalkBack or text scaling"
+  ]
+}

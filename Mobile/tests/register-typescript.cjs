@@ -29,6 +29,9 @@ const sourceRoots = [
   '../src/features/profile/domain',
   '../src/features/profile/data',
   '../src/features/profile/presentation/state',
+  '../src/features/shippingAddresses/domain',
+  '../src/features/shippingAddresses/data',
+  '../src/features/shippingAddresses/presentation/state',
 ].map((directory) => fs.realpathSync(path.resolve(__dirname, directory)) + path.sep);
 require.extensions['.ts'] = (module, filename) => {
   const sourceFile = fs.realpathSync(filename);

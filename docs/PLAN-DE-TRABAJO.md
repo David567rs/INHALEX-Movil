@@ -458,3 +458,92 @@ La [conexión de Perfil](CONEXION-PERFIL-USUARIO.md) continúa solo en la copia 
 - [ ] Revisar el código
 
 La verificación técnica registrada en verificacion-api.json pasó TypeScript, lint, 424/424 pruebas, Doctor 21/21 y exportaciones Android 1467/web 1015, con QA web sintética y HTTP real contra una API simulada. Es un registro anterior a esta aceptación nativa; no se repitieron comprobaciones por una actualización documental. Mantener cinco pestañas, rama, servicios, configuración, identidades y stash. Publicación y PR autorizados; la revisión real corresponde a ZenaidaGR y no se sustituye por la revisión técnica de agentes.
+
+## Estado vigente: Direcciones de envío, diseño pendiente de aceptación (0/10)
+
+Este apartado prevalece sobre los estados históricos anteriores. El [PR #12](https://github.com/David567rs/INHALEX-Movil/pull/12), creado por David567rs, fue aprobado por ZenaidaGR sobre `ef60a37207c26dab1ee00c7869fb8e0f397d590c` a las `2026-10-19T11:49:28Z` y fusionado por ella a `develop` a las `11:49:37Z`, en `27d2495301bd52aa32749220c77f9dca24d0dde5`, con Backend CI y Mobile CI correctos sobre ese HEAD. La [evidencia de integración](evidencias/perfil-usuario/integracion-pr12.json) registra la revisión formal que completa **Perfil 10/10**, sin añadir aceptación nativa. El usuario confirmó después Trello actualizado; su estado vigente se registra en `evidencias/perfil-usuario/expo-go-aceptacion.json`. El agente no leyó ni modificó el tablero.
+
+La tarea actual corresponde a David y se realiza solo en `C:\Users\David\Documents\INHALEX-Movil`, rama `feature/direcciones-envio`, creada desde `27d2495`. ZenaidaGR revisará el futuro PR a `develop`. Se conservan `.env`, servicios, identidades y el stash de Zenaida.
+
+El [diseño de Direcciones](DISENO-DIRECCIONES-ENVIO.md) mantiene MVVM, Repository local de solo lectura y bootstrap. Cuenta → **Direcciones de envío** (etiqueta accesible **Ver diseño de direcciones**) abre `/direcciones-envio`, con **Vista previa**, **Direcciones de ejemplo para revisar el diseño**, composiciones **Con direcciones / Sin direcciones** y muestras Casa/Trabajo. **Nueva dirección** y **Editar** abren un borrador en memoria; **Cancelar** lo descarta y vuelve. **Guardar dirección**, eliminar, seleccionar y **Dirección principal** están deshabilitados. Número interior y Referencias son opcionales; Estado/Municipio o alcaldía se presentan sin asumir una ubicación real. No hay validación funcional, conexión a la API o persistencia. Se conservan cinco pestañas y sesión.
+
+La captura contiene exactamente estos diez criterios, todos pendientes:
+
+- [ ] Agregar formulario para registrar dirección
+- [ ] Crear pantalla de direcciones
+- [ ] Validar campos obligatorios
+- [ ] Guardar dirección mediante la API
+- [ ] Mostrar direcciones registradas
+- [ ] Permitir seleccionar una dirección
+- [ ] Permitir editar o eliminar una dirección
+- [ ] Manejar errores de conexión
+- [ ] Probar la funcionalidad
+- [ ] Revisar el código
+
+Direcciones permanece **0/10**, con diseño pendiente de aceptación en Expo Go. Solo tras aprobarlo podrán aceptarse 1 y 2; muestras y borrador no completan los criterios 5, 6 o 7 ni otros funcionales. Las comprobaciones propias se registrarán con resultados reales en `evidencias/direcciones-envio/verificacion-diseno.json`; no se reutilizan conteos de Perfil. Esta etapa permanece local, sin commit, publicación ni PR. Tras aceptar el diseño se continuará con conexión, aceptación funcional y revisión real del compañero.
+
+Verificación propia de Direcciones completada: TypeScript, lint, 424/424 pruebas existentes, Doctor 21/21, exportaciones Android/web y QA web a 320/397 px aprobados, según docs/evidencias/direcciones-envio/verificacion-diseno.json. Lista, formulario, borrador, Cancelar y regreso a Cuenta con cinco tabs verificados. La revisión técnica no sustituye la aceptación en Expo Go ni acredita funcionalidades reales; Direcciones sigue 0/10. Zenaida limpia en develop, .env, identidades, stash y servicios conservados.
+
+## Estado vigente: Direcciones conectadas, aceptación funcional pendiente (2/10)
+
+El usuario confirmó exactamente: «Amigo, ya revisé el diseño de Direcciones en Expo Go y me gustó. Sigamos con la conexión a la API en la misma rama feature/direcciones-envio, manteniendo MVVM y Repository.». La [aceptación textual](evidencias/direcciones-envio/expo-go-aceptacion.json) completa únicamente los criterios 1 y 2: **2/10**. Este apartado prevalece sobre el estado visual anterior. El agente no observó el teléfono ni leyó o modificó Trello; el marcado del usuario no está confirmado.
+
+La [conexión de Direcciones](CONEXION-DIRECCIONES-ENVIO.md) está implementada solo en la copia de David, rama `feature/direcciones-envio`, con MVVM, Repository y bootstrap. GET/POST `/addresses` y PATCH/DELETE `/addresses/:addressId` requieren Bearer y devuelven la colección completa, máximo cinco. Seleccionar establece una dirección principal mediante `{isDefault:true}`, sin crear pedido o checkout. Incluye alta, edición, actualización, principal y eliminación con confirmación en pantalla, sin muestras en el recorrido normal. Una operación bloquea las demás; error conserva datos/borrador. Mutación incierta o GET recuperable fallido exige GET exitoso antes de otra escritura, sin reenvío automático. La reconciliación conserva los textos del borrador y marca `isDefault:true` si la dirección editada se confirmó principal. Salir/cambiar sesión limpia datos y descarta respuestas tardías; 401 limpia y bloquea hasta recuperar autenticación.
+
+- [x] Agregar formulario para registrar dirección
+- [x] Crear pantalla de direcciones
+- [ ] Validar campos obligatorios
+- [ ] Guardar dirección mediante la API
+- [ ] Mostrar direcciones registradas
+- [ ] Permitir seleccionar una dirección
+- [ ] Permitir editar o eliminar una dirección
+- [ ] Manejar errores de conexión
+- [ ] Probar la funcionalidad
+- [ ] Revisar el código
+
+La primera prueba real será Cuenta con sesión de prueba → Direcciones → crear ficticia y verla → editar/actualizar → segunda dirección y cambio de principal → eliminar con confirmación y comprobar lista. Validación, vacío, error/reintento y reapertura/sesiones siguen después. La guía no acepta criterios sin confirmación posterior. La [verificación propia de conexión](evidencias/direcciones-envio/verificacion-api.json) pasó TypeScript/lint, 485/485 pruebas (61 nuevas), Doctor 21/21 y exportaciones Android/web. La QA web usó componentes/Repository/HttpClient reales con transporte y sesión simulados; a 320 px no hubo contenido exterior y se revisó la lista a 397 px. La ruta temporal `qa-direcciones` se retiró antes de los checks finales; la ruta real sin sesión está protegida y sin fixtures. Son resultados técnicos, sin aceptación nativa funcional adicional: se mantiene 2/10. Se conservan cinco pestañas, configuración, servicios, identidades, stash y la otra copia. Sin commit, publicación ni PR; la revisión real futura corresponde a ZenaidaGR.
+
+
+## Estado vigente: Direcciones, flujo positivo aceptado en Expo Go (6/10)
+
+Este último apartado prevalece sobre los estados anteriores. El usuario confirmó exactamente: «Amigo, ya pude guardar, editar, seleccionar como principal, actualizar y eliminar direcciones en Expo Go. ¿Qué marco en Trello y qué sigue?». La aceptación textual en docs/evidencias/direcciones-envio/expo-go-aceptacion.json completa los criterios 4, 5, 6 y 7, además del diseño 1 y 2: 6/10. No se observó directamente el teléfono ni se leyó o modificó Trello; el usuario todavía no confirmó el marcado del tablero.
+
+Continúa solo en David, feature/direcciones-envio, con MVVM y Repository. El siguiente paso es probar validaciones en Expo Go: Guardar formulario vacío; luego datos de prueba con etiqueta A, teléfono de nueve dígitos y código postal de cuatro; corregir y guardar una sola vez. Interior y Referencias pueden quedar vacíos. No aceptar Validar campos obligatorios (3) antes de la confirmación. Después siguen vacío, error/reintento (8), recorrido de reapertura/salida/reingreso (9) y revisión real de ZenaidaGR (10). Mantener la tarjeta En progreso. Sin commit, publicación ni PR.
+
+Esta actualización solo registra aceptación y guía; no modifica código ni repite pruebas. La evidencia técnica de conexión permanece como snapshot previo: 485/485 pruebas, TypeScript/lint, Doctor 21/21 y exportaciones aprobadas. Se conservan rama, cinco pestañas, servicios, configuración, identidades, stash y la otra copia.
+
+
+## Estado vigente: Direcciones, validaciones aceptadas en Expo Go (7/10)
+
+Este apartado prevalece sobre los estados anteriores. El usuario confirmó: «Amigo, rechazó los campos vacíos, la etiqueta de una letra, el teléfono de nueve dígitos y el código postal de cuatro. Al corregirlos guardó la dirección. ¿Qué marco en Trello y qué sigue?». Esto completa Validar campos obligatorios (3), además de 1, 2 y 4–7 ya aceptados: 7/10. La evidencia textual está en docs/evidencias/direcciones-envio/expo-go-aceptacion.json; no se observó el teléfono ni se aceptan límites superiores o formatos no reportados. Trello no fue leído ni modificado por el agente y su marcado sigue sin confirmar.
+
+Siguiente prueba: vacío, en una cuenta de prueba, eliminando solo las direcciones ficticias hasta dejar cero. Comprobar Aún no tienes direcciones; Actualizar direcciones conserva el vacío sin error; Nueva dirección abre el formulario vacío y Cancelar vuelve al estado vacío. Este paso solo aporta evidencia parcial a Probar la funcionalidad (9). Después se guían errores/reintento (8), reapertura/salida/reingreso (9) y revisión real de ZenaidaGR (10). Mantener la tarjeta En progreso.
+
+Solo se actualiza documentación y aceptación; no hay cambios de código ni nuevas ejecuciones de tests. Continúa en INHALEX-Movil, feature/direcciones-envio, con MVVM y Repository. Se conservan servicios, configuración, identidades, stash, cinco pestañas y la otra copia. Sin commit, publicación ni PR.
+
+
+## Estado vigente: Direcciones, vacío aceptado y prueba de error/reintento pendiente (7/10)
+
+El usuario confirmó: «Amigo, apareció «Aún no tienes direcciones», se mantuvo al actualizar y Nueva dirección abrió el formulario vacío. Cancelar regresó al vacío. Sigamos con la prueba de error y reintento.». Se registra como evidencia parcial de Probar la funcionalidad (9), sin completar un criterio adicional. Continúan aceptados 1–7 y pendientes 8, 9 y 10. El agente no observó el teléfono ni leyó o modificó Trello.
+
+Próximo paso manual en Expo Go: con la API local encendida, crear una dirección ficticia, abrir Editar y cambiar un dato sin guardar. Mantener Expo Go y Metro abiertos; detener solo el backend local 3200 desde su terminal. Guardar y Reintentar deben fallar conservando el borrador y la colección confirmada, sin aviso de éxito. Reiniciar backend y pulsar Reintentar: GET debe conservar el borrador y habilitar Guardar, sin reenviar el cambio automáticamente; guardar una vez y actualizar después. Esta guía no acepta errores/reintento por anticipado. El criterio 8 espera confirmación y el 9 también requiere el recorrido final de reapertura/salida/reingreso. La revisión real futura corresponde a ZenaidaGR (10).
+
+Inspección de solo lectura confirmó API 3200 PID30280 y Metro 8082 PID28288 / 8083 PID13476, sin detenerlos; Mobile solo tiene .env.example y su configuración de desarrollo apunta por defecto a API local 3200. No se cambió configuración ni código, ni se ejecutaron pruebas nuevas. Esta actualización documental mantiene rama feature/direcciones-envio en INHALEX-Movil, MVVM y Repository, estado 7/10, servicios, identidades, stash y la otra copia. Sin commit, publicación ni PR.
+
+
+## Estado vigente: Direcciones, preparación de PR autorizada (9/10)
+
+Este apartado prevalece sobre los estados anteriores. El usuario confirmó exactamente: «Amigo, las direcciones y la principal se conservaron al reabrir, se ocultaron al cerrar sesión y volvieron al ingresar con la misma cuenta. Abre el PR de Direcciones hacia develop para que Zenaida lo revise.». La evidencia textual en `evidencias/direcciones-envio/expo-go-aceptacion.json` completa **Probar la funcionalidad** (9). Están aceptados los criterios 1–9: **9/10**; solo **Revisar el código** (10) espera la revisión real de ZenaidaGR. El agente no observó el teléfono ni leyó o modificó Trello; no se acredita una prueba física entre dos cuentas distintas ni se confirma el marcado del tablero. Mantener la tarjeta **En progreso** hasta revisión e integración.
+
+Ya están aceptados diseño, alta/lista, edición/eliminación, principal, validación de los casos reportados, vacío, error/reintento y reapertura/salida/reingreso con la misma cuenta. La [guía de conexión](CONEXION-DIRECCIONES-ENVIO.md) conserva el contrato y los límites de cada evidencia. La revisión técnica de agentes no sustituye el criterio 10.
+
+El usuario autoriza commit y publicación de `feature/direcciones-envio` desde la copia de David, PR de David567rs hacia `develop` y solicitud de revisión a ZenaidaGR. El estado es preparación autorizada; todavía no se declara PR abierto ni número o URL. No fusionar por esta solicitud. La verificación previa registra 485 pruebas, TypeScript/lint, Doctor 21/21 y exportaciones; sus snapshots se conservan. Las comprobaciones finales de preparación se registrarán por separado con resultados reales y la CI se consultará sobre el HEAD publicado.
+
+Mantener MVVM y Repository, configuración, servicios, identidades, stash, cinco pestañas y la otra copia. El cierre documental anterior de Perfil/PR #12 permanece como está. Esta actualización no ejecuta pruebas ni modifica código.
+
+
+## Estado vigente: PR #13 de Direcciones abierto (9/10)
+
+El [PR #13](https://github.com/David567rs/INHALEX-Movil/pull/13), Implementar Direcciones de envío con MVVM y Repository, está abierto por David567rs desde feature/direcciones-envio hacia develop. GitHub confirmó a ZenaidaGR como revisora solicitada. La implementación publicada es eeca4d86474e002f3a454dfd8de8b756bae1f70f; el recibo está en docs/evidencias/direcciones-envio/preparacion-pr13.json. Consultar la CI del HEAD vigente después del enlace documental: no se declara aprobada por los resultados locales.
+
+Direcciones permanece 9/10: el usuario aceptó el recorrido en Expo Go, incluida reapertura y salida/reingreso con la misma cuenta. Solo Revisar el código (10) espera revisión real de ZenaidaGR. El agente no observó el teléfono ni leyó o modificó Trello; mantener la tarjeta En progreso hasta revisión e integración. No hay aprobación ni merge. Esta actualización enlaza el PR sin cambiar código funcional y conserva configuración, servicios, identidades, stash y la otra copia.

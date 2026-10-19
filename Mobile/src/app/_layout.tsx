@@ -7,6 +7,7 @@ import { AuthSessionProvider } from '@/features/auth/presentation/context/AuthSe
 import { FavoritesProvider } from '@/features/favorites/presentation/context/FavoritesProvider';
 import { CartProvider } from '@/features/cart/presentation/context/CartProvider';
 import { ProfileProvider } from '@/features/profile/presentation/context/ProfileProvider';
+import { ShippingAddressesProvider } from '@/features/shippingAddresses/presentation/context/ShippingAddressesProvider';
 import { colors } from '@/core/theme/colors';
 import { useReducedMotion } from '@/shared/hooks/useReducedMotion';
 
@@ -20,6 +21,7 @@ export default function RootLayout() {
         <FavoritesProvider controller={runtime.favorites}>
         <CartProvider controller={runtime.cart}>
         <ProfileProvider controller={runtime.profile}>
+        <ShippingAddressesProvider controller={runtime.shippingAddresses}>
         <StatusBar style="dark" />
         <Stack
           initialRouteName="(tabs)"
@@ -37,7 +39,9 @@ export default function RootLayout() {
           <Stack.Screen name="busqueda-productos" />
           <Stack.Screen name="producto/[id]" />
           <Stack.Screen name="perfil-usuario" />
+          <Stack.Screen name="direcciones-envio" />
         </Stack>
+        </ShippingAddressesProvider>
         </ProfileProvider>
         </CartProvider>
         </FavoritesProvider>

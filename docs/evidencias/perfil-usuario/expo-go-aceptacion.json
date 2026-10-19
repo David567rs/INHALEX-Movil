@@ -2,7 +2,7 @@
   "activity": "Perfil del usuario",
   "branch": "feature/perfil-usuario",
   "date": "2026-10-19",
-  "source": "Mensaje directo del usuario en el chat",
+  "source": "Mensajes directos del usuario para diseño y recorrido nativo; revisión formal de ZenaidaGR para el criterio 10",
   "design": {
     "accepted": true,
     "quote": "Amigo, ya revisé el diseño de Perfil en Expo Go y me gustó. Sigamos con la conexión a la API en la misma rama, manteniendo MVVM y Repository.",
@@ -13,9 +13,9 @@
     "connectionInSameBranchAuthorized": true
   },
   "functionalAcceptance": {
-    "acceptedCriteria": 9,
+    "acceptedCriteria": 10,
     "totalCriteria": 10,
-    "status": "Criterios 1 a 9 aceptados; solo revisión real de ZenaidaGR pendiente",
+    "status": "10/10: criterios 1 a 9 aceptados por el usuario y criterio 10 completado por revisión formal de ZenaidaGR en el PR #12",
     "acceptedCriterionIds": [
       1,
       2,
@@ -25,11 +25,20 @@
       6,
       7,
       8,
-      9
-    ],
-    "pendingCriterionIds": [
+      9,
       10
     ],
+    "pendingCriterionIds": [],
+    "formalCodeReview": {
+      "reviewer": "ZenaidaGR",
+      "state": "APPROVED",
+      "submittedAt": "2026-10-19T11:49:28Z",
+      "commitSha": "ef60a37207c26dab1ee00c7869fb8e0f397d590c",
+      "url": "https://github.com/David567rs/INHALEX-Movil/pull/12#pullrequestreview-5571081141",
+      "acceptedCriterionIds": [10],
+      "integrationEvidence": "integracion-pr12.json",
+      "newNativeAcceptance": false
+    },
     "confirmations": [
       {
         "quote": "Amigo, Perfil muestra mis datos, guarda los cambios y los conserva al actualizar. Cuenta también muestra el nombre actualizado. ¿Qué marco en Trello y qué sigue?",
@@ -135,30 +144,34 @@
       {
         "id": 10,
         "text": "Revisar el código",
-        "accepted": false
+        "accepted": true,
+        "source": "Revisión formal APPROVED de ZenaidaGR sobre el HEAD final del PR #12; no nueva prueba nativa"
       }
     ]
   },
   "nextStep": {
-    "status": "pull-request-open-awaiting-real-review",
+    "status": "complete",
     "guide": "../../CONEXION-PERFIL-USUARIO.md",
-    "flow": "PR #12 abierto David567rs -> develop; revisión solicitada a ZenaidaGR; comprobar CI del HEAD vigente y esperar aprobación real, sin merge autorizado",
+    "flow": "PR #12 aprobado y fusionado por ZenaidaGR a develop con ambas CI correctas; siguiente actividad: diseño de Direcciones de envío",
     "technicalEvidence": "verificacion-api.json",
-    "technicalVerificationStatus": "Verificación propia en verificacion-api.json completada; funcionalidad nativa aceptada por el usuario; CI remota del PR por consultar",
+    "technicalVerificationStatus": "Verificación propia en verificacion-api.json y aceptación nativa previas conservadas; revisión y CI remota del HEAD final verificadas en integracion-pr12.json",
     "pullRequest": "https://github.com/David567rs/INHALEX-Movil/pull/12",
-    "reviewer": "ZenaidaGR"
+    "reviewer": "ZenaidaGR",
+    "integrationEvidence": "integracion-pr12.json",
+    "mergeCommitSha": "27d2495301bd52aa32749220c77f9dca24d0dde5",
+    "mergedAt": "2026-10-19T11:49:37Z"
   },
   "trello": {
     "agentReadBoard": false,
     "agentModifiedBoard": false,
-    "userConfirmedCriteriaMarked": false,
-    "status": "Criterios 1 a 9 aceptados; marcado real del usuario no confirmado; revisión pendiente"
+    "userConfirmedCriteriaMarked": true,
+    "status": "El usuario confirmó Trello actualizado tras la integración de Perfil; el agente no leyó ni modificó el tablero"
   },
   "limitations": [
     "Aceptación visual textual del usuario, sin observación directa del teléfono por el agente",
     "Consulta, edición, validación, guardado, aviso visual, error/reintento y recorrido final confirmados textualmente por el usuario",
     "Las verificaciones del diseño son históricas y no validan la conexión a la API",
     "Sin nueva prueba física de teclado, TalkBack, texto ampliado o aislamiento entre cuentas",
-    "Revisión real de ZenaidaGR pendiente; publicación y apertura del PR autorizadas, sin autorización de merge"
+    "El criterio 10 procede de revisión formal de ZenaidaGR en GitHub y no añade una nueva prueba nativa"
   ]
 }

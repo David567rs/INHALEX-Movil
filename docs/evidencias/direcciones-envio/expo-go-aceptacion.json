@@ -1,0 +1,177 @@
+{
+  "activity": "Direcciones de envío",
+  "branch": "feature/direcciones-envio",
+  "date": "2026-10-19",
+  "source": "Mensaje directo del usuario en el chat y criterios de su captura",
+  "design": {
+    "accepted": true,
+    "quote": "Amigo, ya revisé el diseño de Direcciones en Expo Go y me gustó. Sigamos con la conexión a la API en la misma rama feature/direcciones-envio, manteniendo MVVM y Repository.",
+    "acceptedCriterionIds": [
+      1,
+      2
+    ],
+    "agentObservedDevice": false,
+    "apiConnected": false,
+    "scope": "Aceptación de la etapa visual histórica, sin API",
+    "technicalEvidence": "verificacion-diseno.json",
+    "connectionInSameBranchAuthorized": true
+  },
+  "functionalAcceptance": {
+    "acceptedCriteria": 9,
+    "totalCriteria": 10,
+    "status": "Criterios 1 a 9 aceptados en Expo Go, incluida reapertura y salida/reingreso con la misma cuenta; revisión real de ZenaidaGR pendiente",
+    "acceptedCriterionIds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "pendingCriterionIds": [
+      10
+    ],
+    "confirmations": [
+      {
+        "date": "2026-10-19",
+        "quote": "Amigo, ya pude guardar, editar, seleccionar como principal, actualizar y eliminar direcciones en Expo Go. ¿Qué marco en Trello y qué sigue?",
+        "acceptedCriterionIds": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "source": "Confirmación textual del usuario del flujo positivo con la API en Expo Go; sin observación directa del teléfono por el agente"
+      },
+      {
+        "date": "2026-10-19",
+        "quote": "Amigo, rechazó los campos vacíos, la etiqueta de una letra, el teléfono de nueve dígitos y el código postal de cuatro. Al corregirlos guardó la dirección. ¿Qué marco en Trello y qué sigue?",
+        "acceptedCriterionIds": [
+          3
+        ],
+        "source": "Validaciones y guardado corregido confirmados textualmente por el usuario en Expo Go; sin observación directa del dispositivo"
+      },
+      {
+        "date": "2026-10-19",
+        "quote": "Amigo, apareció «Aún no tienes direcciones», se mantuvo al actualizar y Nueva dirección abrió el formulario vacío. Cancelar regresó al vacío. Sigamos con la prueba de error y reintento.",
+        "acceptedCriterionIds": [],
+        "partialCriterionIds": [
+          9
+        ],
+        "source": "Vacío, actualización del vacío, formulario vacío y Cancelar confirmados textualmente por el usuario en Expo Go; no completa Probar la funcionalidad por sí solo"
+      },
+      {
+        "date": "2026-10-19",
+        "quote": "Amigo, fallaron Guardar y Reintentar sin perder el borrador. Reinicié el backend y Reintentar habilitó Guardar. Los cambios se guardaron y se conservaron al actualizar. ¿Qué marco en Trello y qué sigue?",
+        "acceptedCriterionIds": [
+          8
+        ],
+        "partialCriterionIds": [
+          9
+        ],
+        "source": "Error de Guardar y Reintentar conservando el borrador, recuperación tras reiniciar la API y guardado/actualización posteriores confirmados textualmente por el usuario en Expo Go; sin observación directa del dispositivo"
+      },
+      {
+        "date": "2026-10-19",
+        "quote": "Amigo, las direcciones y la principal se conservaron al reabrir, se ocultaron al cerrar sesión y volvieron al ingresar con la misma cuenta. Abre el PR de Direcciones hacia develop para que Zenaida lo revise.",
+        "acceptedCriterionIds": [
+          9
+        ],
+        "source": "Confirmación textual del usuario de reapertura y salida/reingreso con la misma cuenta, que completa el recorrido funcional previo; sin observación directa del dispositivo"
+      }
+    ],
+    "criteria": [
+      {
+        "id": 1,
+        "text": "Agregar formulario para registrar dirección",
+        "accepted": true,
+        "source": "Aceptación del diseño por el usuario"
+      },
+      {
+        "id": 2,
+        "text": "Crear pantalla de direcciones",
+        "accepted": true,
+        "source": "Aceptación del diseño por el usuario"
+      },
+      {
+        "id": 3,
+        "text": "Validar campos obligatorios",
+        "accepted": true,
+        "source": "Rechazo de vacíos, etiqueta de una letra, teléfono de nueve dígitos y CP de cuatro; guardado corregido confirmado por el usuario"
+      },
+      {
+        "id": 4,
+        "text": "Guardar dirección mediante la API",
+        "accepted": true,
+        "source": "Flujo positivo confirmado por el usuario en Expo Go"
+      },
+      {
+        "id": 5,
+        "text": "Mostrar direcciones registradas",
+        "accepted": true,
+        "source": "Flujo positivo confirmado por el usuario en Expo Go"
+      },
+      {
+        "id": 6,
+        "text": "Permitir seleccionar una dirección",
+        "accepted": true,
+        "source": "Selección como principal confirmada por el usuario en Expo Go"
+      },
+      {
+        "id": 7,
+        "text": "Permitir editar o eliminar una dirección",
+        "accepted": true,
+        "source": "Edición y eliminación confirmadas por el usuario en Expo Go"
+      },
+      {
+        "id": 8,
+        "text": "Manejar errores de conexión",
+        "accepted": true,
+        "source": "Guardar y Reintentar fallidos conservan borrador; reintento tras reiniciar API habilita Guardar y los cambios se conservan al actualizar, según el usuario"
+      },
+      {
+        "id": 9,
+        "text": "Probar la funcionalidad",
+        "accepted": true,
+        "source": "Recorrido positivo, validaciones, vacío y error/reintento previos, junto con reapertura y salida/reingreso confirmados por el usuario"
+      },
+      {
+        "id": 10,
+        "text": "Revisar el código",
+        "accepted": false
+      }
+    ]
+  },
+  "nextStep": {
+    "status": "pull-request-open-awaiting-peer-review",
+    "guide": "../../CONEXION-DIRECCIONES-ENVIO.md",
+    "flow": "PR #13 de David567rs abierto desde feature/direcciones-envio hacia develop; ZenaidaGR solicitada como revisora. Consultar CI del HEAD vigente; aprobación y merge pendientes.",
+    "publicationAuthorizedByUser": true,
+    "reviewer": "ZenaidaGR",
+    "technicalEvidence": "verificacion-api.json",
+    "technicalVerificationStatus": "Aprobada en verificacion-api.json: TypeScript/lint, 485/485 pruebas (61 nuevas), Doctor 21/21, exportaciones Android/web y QA web con componentes/Repository/HttpClient reales, transporte y sesión simulados; ruta temporal retirada. No añade aceptación funcional nativa.",
+    "pullRequest": "https://github.com/David567rs/INHALEX-Movil/pull/13",
+    "reviewRequested": true,
+    "implementationCommitSha": "eeca4d86474e002f3a454dfd8de8b756bae1f70f",
+    "publicationEvidence": "preparacion-pr13.json"
+  },
+  "trello": {
+    "agentReadBoard": false,
+    "agentModifiedBoard": false,
+    "userConfirmedCriteriaMarked": false,
+    "status": "Criterios 1 a 9 aceptados, 9/10; solo Revisar el código pendiente. Marcado real del usuario no confirmado"
+  },
+  "limitations": [
+    "Aceptación visual textual del usuario; sin observación directa del dispositivo por el agente",
+    "Formulario, pantalla, flujo positivo, validaciones, vacío, error/reintento y reapertura/salida/reingreso confirmados textualmente; solo revisión real pendiente",
+    "La aceptación de error/reintento corresponde al caso reportado de Guardar y Reintentar; no se atribuyen nuevas pruebas físicas de timeout u otras mutaciones",
+    "La aceptación de validación cubre solo los casos reportados; no se atribuyen pruebas físicas de límites superiores u otros formatos",
+    "Las muestras Casa/Trabajo y el borrador pertenecen al diseño histórico y no completan los criterios 5, 6 o 7",
+    "Seleccionar corresponde a establecer dirección principal de la cuenta, sin checkout ni creación de pedido",
+    "Sin nueva aceptación de pruebas físicas de teclado, TalkBack, texto ampliado o aislamiento entre dos cuentas distintas",
+    "Commit, publicación y apertura de PR autorizados por el usuario; no hay autorización de merge ni revisión formal aceptada por anticipado"
+  ]
+}
