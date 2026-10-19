@@ -1,8 +1,8 @@
 # Diseño de Detalle de producto
 
-Estado del 18 de octubre de 2026: diseño aceptado por el usuario en Expo Go, con «Crear pantalla de detalle» completado (hito histórico 1/9); la confirmación posterior de datos completos y cambio de producto deja el estado actual en 4/9. David continúa en `feature/detalle-producto`, creada desde `develop` en `b0b9856f7470d8f9b76a8de2d462b29ac3f2d4eb`. La [conexión a la API](CONEXION-DETALLE-PRODUCTO.md) está implementada y verificada técnicamente en la misma rama, con datos y cambio de producto aceptados en Expo Go, pero error/reintento y prueba completa aún pendientes; [su evidencia](evidencias/detalle-producto/verificacion-api.json) se registra por separado. Este documento conserva la implementación y QA históricas del diseño inicial, sin PR o push nuevo.
+Estado del 18 de octubre de 2026: diseño aceptado por el usuario en Expo Go, con «Crear pantalla de detalle» completado (hito histórico 1/9); las confirmaciones posteriores de datos, cambio de producto y error/recuperación dejan el estado actual en 5/9. David continúa en `feature/detalle-producto`, creada desde `develop` en `b0b9856f7470d8f9b76a8de2d462b29ac3f2d4eb`. La [conexión a la API](CONEXION-DETALLE-PRODUCTO.md) está implementada y verificada técnicamente en la misma rama, con datos y cambio de producto aceptados en Expo Go, error/reintento aceptado y prueba completa aún pendiente; [su evidencia](evidencias/detalle-producto/verificacion-api.json) se registra por separado. Este documento conserva la implementación y QA históricas del diseño inicial, sin PR o push nuevo.
 
-El usuario confirmó: «Ya revisé el diseño de Detalle de producto en Expo Go, amigo, y me gustó.». Ese mensaje aceptó el diseño (1/9). La [confirmación textual posterior](evidencias/detalle-producto/expo-go-aceptacion.json) de datos completos y cambio al abrir otro producto completa los criterios 1 a 4: **4/9**, sin observación directa del teléfono ni capturas nativas. El snapshot anterior de [verificación visual](evidencias/detalle-producto/verificacion-diseno.json) conserva su estado previo 0/9. El agente no marcó Trello.
+El usuario confirmó: «Ya revisé el diseño de Detalle de producto en Expo Go, amigo, y me gustó.». Ese mensaje aceptó el diseño (1/9). La [confirmación textual posterior](evidencias/detalle-producto/expo-go-aceptacion.json) de datos completos y cambio al abrir otro producto completó los criterios 1 a 4 (hito 4/9); la aceptación posterior de error/reintento añade el 7: **5/9**, sin observación directa del teléfono ni capturas nativas. El snapshot anterior de [verificación visual](evidencias/detalle-producto/verificacion-diseno.json) conserva su estado previo 0/9. El agente no marcó Trello.
 
 ## Datos y límites del diseño inicial
 
@@ -45,9 +45,9 @@ El recorrido visual consistía en abrir un producto ya cargado, comprobar su pre
 - [Safe Area Context para SDK 57](https://docs.expo.dev/versions/v57.0.0/sdk/safe-area-context/).
 - React Native 0.86: [Pressable](https://reactnative.dev/docs/0.86/pressable), [Image](https://reactnative.dev/docs/0.86/image), [accesibilidad](https://reactnative.dev/docs/0.86/accessibility), [ScrollView](https://reactnative.dev/docs/0.86/scrollview), [Text](https://reactnative.dev/docs/0.86/text) y [useWindowDimensions](https://reactnative.dev/docs/0.86/usewindowdimensions).
 
-## Checklist exacto de Trello: 4/9
+## Checklist exacto de Trello: 5/9
 
-Fuente: captura enviada por el usuario al iniciar Detalle y confirmaciones posteriores del diseño y de los datos de API. Se aceptan los criterios 1 a 4; los otros cinco siguen pendientes:
+Fuente: captura enviada por el usuario al iniciar Detalle y confirmaciones posteriores del diseño y de los datos de API. Se aceptan los criterios 1, 2, 3, 4 y 7; los otros cuatro siguen pendientes:
 
 - [x] Crear pantalla de detalle.
 - [x] Obtener información del producto seleccionado.
@@ -55,7 +55,7 @@ Fuente: captura enviada por el usuario al iniciar Detalle y confirmaciones poste
 - [x] Mostrar información adicional disponible.
 - [ ] Agregar acceso a favoritos.
 - [ ] Agregar acceso a bolsa de compras.
-- [ ] Manejar errores al cargar el producto.
+- [x] Manejar errores al cargar el producto.
 - [ ] Probar la funcionalidad.
 - [ ] Revisar el código.
 

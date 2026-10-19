@@ -1,6 +1,6 @@
 # Conexión de Detalle de producto
 
-Estado del 18 de octubre de 2026: conexión implementada y verificada técnicamente en `feature/detalle-producto`, con datos completos y cambio entre productos confirmados por el usuario en Expo Go. La [aceptación textual](evidencias/detalle-producto/expo-go-aceptacion.json) completa los criterios 1 a 4: **4/9**. Favoritos, Bolsa, errores, prueba completa y revisión siguen pendientes. No hay observación directa del teléfono, nuevas capturas nativas ni cambios del agente en Trello. No se declara PR, push o CI remota de esta actividad.
+Estado del 18 de octubre de 2026: datos completos, cambio de producto y error/recuperación confirmados por el usuario en Expo Go. La [aceptación textual](evidencias/detalle-producto/expo-go-aceptacion.json) completa los criterios 1, 2, 3, 4 y 7: **5/9**. Favoritos, Bolsa, prueba completa y revisión siguen pendientes. No hay observación directa del teléfono, nuevas capturas nativas ni cambios del agente en Trello. No se declara PR, push o CI remota de esta actividad.
 
 ## Contrato y arquitectura
 
@@ -37,19 +37,23 @@ La ruta y los archivos temporales de control se retiraron y el servidor 3216 se 
 
 El [registro del diseño inicial](evidencias/detalle-producto/verificacion-diseno.json) conserva la vista previa de snapshots en memoria, 206 pruebas y exportaciones Android 1422/web 970. Su QA web por inyección de snapshots pertenece a esa etapa, separada de esta consulta GET.
 
-El usuario confirmó: «Ya probé el Detalle en Expo Go, amigo: aparecen los datos completos y cambian al abrir otro producto.». Esto acepta consulta y presentación de datos base y adicionales, junto con el diseño ya aceptado: 4/9. Los registros técnicos conservan la aceptación de su momento; el estado humano vigente está en expo-go-aceptacion.json. No hay observación directa del teléfono ni nuevas capturas nativas; TalkBack, escalado de fuente y movimiento reducido físicos tampoco se acreditan. Catálogo mantiene 7/9: la navegación y conservación del filtro en su recorrido completo todavía esperan aceptación explícita, al igual que su prueba completa.
+El usuario confirmó: «Ya probé el Detalle en Expo Go, amigo: aparecen los datos completos y cambian al abrir otro producto.». Esto acepta consulta y presentación de datos base y adicionales, junto con el diseño ya aceptado: hito previo 4/9. Los registros técnicos conservan la aceptación de su momento; el estado humano vigente está en expo-go-aceptacion.json. No hay observación directa del teléfono ni nuevas capturas nativas; TalkBack, escalado de fuente y movimiento reducido físicos tampoco se acreditan. Catálogo mantiene 7/9: la navegación y conservación del filtro en su recorrido completo todavía esperan aceptación explícita, al igual que su prueba completa.
 
-## Prueba de error y reintento pendiente
+## Error y reintento aceptados
 
-Recorrido manual preparado/en progreso, sin resultado del usuario recibido todavía. La API local usa 3200 y el timeout configurado es 15 segundos; conserva Expo Go y Metro 8082 abiertos:
+El 18 de octubre de 2026 el usuario confirmó: «Sí, amigo, apareció el aviso, se conservaron los datos y al reiniciar el backend y pulsar Reintentar se recuperó el producto.». El recorrido aceptado utilizó la API local 3200, conservando Expo Go y Metro 8082, con timeout de 15 segundos. Se conserva como referencia:
 
 1. Con el backend activo, abre un producto y pulsa «Actualizar producto» para partir del mismo detalle con datos cargados.
 2. Pulsa Ctrl+C únicamente en la terminal del backend local; conserva Expo Go y Metro.
-3. En ese detalle pulsa «Actualizar producto» y espera hasta unos 15 segundos: se espera un aviso conservando los datos, todavía sin dar este resultado por observado.
+3. En ese detalle pulsa «Actualizar producto» y espera el aviso conservando los datos.
 4. Desde `C:\Users\David\Documents\INHALEX-Movil` ejecuta `npm run dev:server` y espera a que Nest esté listo.
-5. Pulsa «Reintentar» y comprueba recuperación y desaparición del aviso. El criterio de errores seguirá pendiente hasta confirmar el resultado.
+5. Pulsa «Reintentar» para recuperar el producto. El criterio de errores queda aceptado por la confirmación textual, sin observación física del agente.
 
-## Checklist: 4/9
+## Próxima prueba de navegación
+
+Propuesta pendiente de resultado: Catálogo → «Encuentra tu línea» → seleccionar línea → «Ver productos de esta línea» → «Ver detalle» → flecha para volver conservando el filtro. Después «Ver todos los productos» → otro producto → flecha para volver a «Nuestra colección». Todavía no se acepta este recorrido ni se marca prueba funcional completa. Catálogo conserva 7/9.
+
+## Checklist: 5/9
 
 - [x] Crear pantalla de detalle.
 - [x] Obtener información del producto seleccionado.
@@ -57,7 +61,7 @@ Recorrido manual preparado/en progreso, sin resultado del usuario recibido todav
 - [x] Mostrar información adicional disponible.
 - [ ] Agregar acceso a favoritos.
 - [ ] Agregar acceso a bolsa de compras.
-- [ ] Manejar errores al cargar el producto.
+- [x] Manejar errores al cargar el producto.
 - [ ] Probar la funcionalidad.
 - [ ] Revisar el código.
 
