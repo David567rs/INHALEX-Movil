@@ -2,7 +2,7 @@
 
 ## Etapa actual
 
-La conexión se incorpora en `C:\Users\David\Documents\INHALEX-Movil-Zenaida`, en la misma rama `feature/busqueda-productos`, creada desde `develop` en `50d2152`. La responsable sigue siendo ZenaidaGR y David567rs revisará el futuro PR hacia `develop`. No se ha abierto PR ni creado un commit de esta actividad.
+La conexión se incorpora en `C:\Users\David\Documents\INHALEX-Movil-Zenaida`, en la misma rama `feature/busqueda-productos`, creada desde `develop` en `50d2152`. El [PR #9](https://github.com/David567rs/INHALEX-Movil/pull/9), «Implementar Búsqueda de productos con MVVM y Repository», está abierto hacia `develop`, creado desde la cuenta autenticada ZenaidaGR y con revisión solicitada a David567rs. El commit funcional es `80dd7ec67808c2baa0fbb94514cf232ad6751a4e`. La aprobación y el merge siguen pendientes; consultar CI sobre el HEAD vigente.
 
 El usuario aceptó el diseño, escritura y borrado en Expo Go y autorizó continuar con la API:
 
@@ -78,7 +78,7 @@ Con la API activa, enviar cada búsqueda con **Buscar**:
 
 Al cambiar de término deben retirarse los resultados anteriores y, después de pulsar Buscar, aparecer los del término enviado. El usuario respondió «dale ya quedó, y cada que acabes sugiereme el siguiente texto porque ya no aparece»: se registra aceptación contextual de estos tres casos y del criterio 7 (7/8). La revisión del código se completará con la revisión real de David567rs sobre el futuro PR de Zenaida hacia `develop`.
 
-La siguiente etapa es preparar el PR de `feature/busqueda-productos` hacia `develop`, con responsabilidad de ZenaidaGR y revisión de David567rs. Todavía no hay PR abierto ni revisión completada. No se atribuyen al usuario pruebas nativas de paginación ni cancelación. Esta guía no ejecutó arranques ni paradas de servicios.
+La siguiente etapa es la revisión real de David567rs sobre el [PR #9](https://github.com/David567rs/INHALEX-Movil/pull/9), de `feature/busqueda-productos` hacia `develop`, creado por ZenaidaGR. El PR está abierto y la revisión solicitada; no hay aprobación ni merge. No se atribuyen al usuario pruebas nativas de paginación ni cancelación. Esta guía no ejecutó arranques ni paradas de servicios.
 
 ## Verificación técnica
 
@@ -88,8 +88,12 @@ La siguiente etapa es preparar el PR de `feature/busqueda-productos` hacia `deve
 - QA web con componentes y Repository reales, HTTP temporal en 3218, snapshots públicos y 25 productos sintéticos para paginación. Las capturas se rotulan «QA web · HTTP con datos de prueba»; no representan navegador contra MongoDB real ni dispositivo físico. Se verificaron carga, resultados/foto/precio, ausencia de coincidencias, 503 seguro inicial y de actualización, conservación de datos y recuperación mediante Reintentar, envío Enter, limpieza y sugerencias sin consulta, carga 20→25 y fin de paginación. [Solicitudes del fixture](evidencias/busqueda-productos/qa-http-requests.json).
 - Se comprobó navegación al ID de Menta y regreso a Búsqueda conservando sus dos resultados. La carga de Detalle en web sigue limitada por CORS del backend para el origen 8083; no se modificó esa configuración. La comprobación HTTP real y la futura prueba Expo Go se registran por separado.
 - QA visual sin desbordamiento horizontal a 321 px CSS y vista habitual alrededor de 392 px CSS (zoom del navegador 110 %). En web se evita que un desplazamiento automático cierre el foco del campo; Android conserva el cierre del teclado al arrastrar. El foco al primer toque después de desplazarse y el envío Enter se verificaron en navegador, sin atribuir prueba física de teclado o TalkBack.
-- Ruta QA, servidor 3218 y helpers temporales retirados antes de los checks finales. API 3200, Metro de David 8082, Metro de Zenaida 8083, `.env`, identidades y stash conservados. Cambios locales sin commit, publicación ni PR.
+- Ruta QA, servidor 3218 y helpers temporales retirados antes de los checks finales. La preparación del PR conservó API 3200, Metro de David 8082, Metro de Zenaida 8083, `.env`, identidades y stash. Se publicó el commit funcional `80dd7ec` con la identidad local de ZenaidaGR y se abrió el PR #9 desde esa cuenta, sin aprobación ni merge.
 - [Verificación final de conexión](evidencias/busqueda-productos/verificacion-api.json).
 - Expo Go: diseño, escritura, borrado y resultados de `Lavanda` con foto y precio aceptados explícitamente; vacío, error/reintento y distintos términos aceptados mediante respuestas contextuales a sus guías (7/8). Solo queda pendiente la revisión real del código. Los snapshots técnicos conservan el estado humano que existía al generarlos; la aceptación textual contiene el estado actual.
 
 Las capturas y `verificacion-diseno.json` conservan el código y los resultados de la etapa visual histórica; no validan esta conexión por sí solos.
+
+## Preparación del PR #9
+
+Antes de publicar se repitieron 280/280 pruebas móviles, TypeScript y lint, todos aprobados. Una revisión técnica independiente no encontró problemas accionables; no sustituye la revisión humana. Doctor 21/21 y las exportaciones Android/web corresponden a la verificación de conexión anterior y no se repitieron porque el código no cambió. La [evidencia de preparación](evidencias/busqueda-productos/preparacion-pr.json) distingue esas comprobaciones del CI remoto, pendiente al capturar la publicación. Las comprobaciones vigentes se consultan en el PR sobre su HEAD actual. Trello está 7/8 según el usuario, con «Revisar el código» pendiente y la tarjeta abierta hasta la integración.

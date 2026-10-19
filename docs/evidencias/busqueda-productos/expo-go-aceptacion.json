@@ -92,7 +92,10 @@
     "additionalCriteriaMarkedByAgent": false
   },
   "delivery": {
-    "pullRequest": null,
+    "pullRequest": "https://github.com/David567rs/INHALEX-Movil/pull/9",
+    "pullRequestNumber": 9,
+    "author": "ZenaidaGR",
+    "requestedReviewers": ["David567rs"],
     "futureReviewer": "David567rs",
     "approval": "pending",
     "merged": false

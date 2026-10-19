@@ -31,6 +31,15 @@
     "updatedByAgent": false,
     "reviewCriterionComplete": false
   },
-  "remoteCi": "pending_publication",
+  "publication": {
+    "pullRequestNumber": 9,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/9",
+    "author": "ZenaidaGR",
+    "sourceCommit": "80dd7ec67808c2baa0fbb94514cf232ad6751a4e",
+    "state": "open",
+    "requestedReviewers": ["David567rs"],
+    "reviewApproved": false
+  },
+  "remoteCi": "pending_at_publication_snapshot_check_current_pr_head",
   "merged": false
 }
