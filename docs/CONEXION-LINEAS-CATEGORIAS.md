@@ -1,6 +1,6 @@
 # Conexión de Líneas o categorías
 
-Estado del 18 de octubre de 2026: API implementada en `feature/lineas-categorias`, con siete criterios aceptados por el usuario en Expo Go. La [evidencia textual](evidencias/lineas-categorias/expo-go-aceptacion.json) separa diseño, snapshot inicial 0/8, primeras confirmaciones 5/8 y 6/8 y recorrido final de error/reintento aceptado 7/8. La tarjeta sigue En progreso; solo falta revisión de código. El usuario puede marcar «Probar la funcionalidad», sin afirmar que ya lo hizo; el agente no modificó Trello. Autorizó abrir el PR hacia `develop` para que Zenaida lo revise. El [PR #7](https://github.com/David567rs/INHALEX-Movil/pull/7), «Implementar Líneas o categorías con MVVM y Repository», está abierto por David567rs desde `feature/lineas-categorias` hacia `develop`, con la rama publicada y revisión solicitada a ZenaidaGR. Consulta [los checks del HEAD vigente](https://github.com/David567rs/INHALEX-Movil/pull/7/checks); no hay aprobación ni merge.
+Estado del 18 de octubre de 2026: Líneas o categorías integrada y completada 8/8. ZenaidaGR aprobó el HEAD final `6e787da42ba9273032a21374b92f0f56b9bc1437` y fusionó el [PR #7](https://github.com/David567rs/INHALEX-Movil/pull/7) hacia `develop` en `b0b9856f7470d8f9b76a8de2d462b29ac3f2d4eb`, con Backend CI y Mobile CI correctos sobre ese HEAD. La [evidencia de integración](evidencias/lineas-categorias/integracion-pr7.json) conserva revisión, checks y padres del merge. El usuario confirmó Trello actualizado/cerrado; el agente no leyó ni modificó el tablero. Las [confirmaciones de Expo Go](evidencias/lineas-categorias/expo-go-aceptacion.json) conservan el recorrido y sus límites.
 
 ## Consulta y arquitectura
 
@@ -68,11 +68,11 @@ El 18 de octubre de 2026 el usuario confirmó: «Sí, amigo, apareció el aviso 
 3. Comprueba que aparecen «Se conservan las últimas líneas cargadas.» y que permanecen las líneas y la selección.
 4. Ejecuta `npm run dev:server`; cuando esté listo, pulsa «Actualizar líneas» y comprueba que recupera los datos y desaparece el aviso.
 
-Con datos ya cargados el botón del recorrido es «Actualizar líneas»; «Reintentar» corresponde al error inicial sin datos. La confirmación acepta aviso, conservación de categorías y selección, y recuperación al reiniciar el backend y actualizar. Completa «Probar la funcionalidad»; solo queda revisión de código. La evidencia es textual, sin observación directa del teléfono ni capturas nativas. El [PR #7](https://github.com/David567rs/INHALEX-Movil/pull/7) ya está abierto hacia `develop` y la revisión fue solicitada a ZenaidaGR. La apertura no completa el criterio «Revisar el código»; sigue 7/8. Consulta [los checks del HEAD vigente](https://github.com/David567rs/INHALEX-Movil/pull/7/checks); sin aprobación ni merge.
+Con datos ya cargados el botón del recorrido es «Actualizar líneas»; «Reintentar» corresponde al error inicial sin datos. La confirmación aceptó aviso, conservación de categorías y selección y recuperación al reiniciar el backend y actualizar: completó «Probar la funcionalidad», hito 7/8. La aprobación posterior de ZenaidaGR sobre el HEAD final completó el octavo criterio y el PR quedó fusionado. La evidencia nativa sigue siendo textual, sin observación directa del teléfono ni capturas nativas.
 
-## Criterios de Trello: 7/8
+## Criterios de Trello: 8/8
 
-La captura del usuario contiene exactamente estos ocho criterios; no incluye una casilla de diseño. Las confirmaciones funcionales aceptan los puntos 1 a 7. El usuario puede marcar «Probar la funcionalidad»; no se da por realizado ese cambio en el tablero:
+Los ocho criterios de la captura están satisfechos mediante aceptación humana y revisión real:
 
 - [x] Obtener líneas o categorías desde la API.
 - [x] Mostrar las categorías disponibles.
@@ -81,6 +81,6 @@ La captura del usuario contiene exactamente estos ocho criterios; no incluye una
 - [x] Manejar categoría sin productos.
 - [x] Verificar navegación.
 - [x] Probar la funcionalidad.
-- [ ] Revisar el código.
+- [x] Revisar el código.
 
-El usuario administra el tablero. El agente no lo modificó. Se conserva el orden Catálogo → Categorías → Detalle; Catálogo sigue 7/9, con navegación al detalle y prueba completa pendientes.
+El usuario confirmó Trello actualizado/cerrado, sin cambios del agente en el tablero. El desarrollo continúa con [solo diseño de Detalle](DISENO-DETALLE-PRODUCTO.md), 0/9 y aceptación pendiente. Se conserva Catálogo → Categorías → Detalle; Catálogo sigue 7/9, con navegación al detalle y prueba completa pendientes. La vista previa de Detalle no los completa.

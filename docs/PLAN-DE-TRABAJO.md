@@ -259,15 +259,11 @@ Catálogo queda 7/9. Detalle depende de `feature/detalle-producto`, posterior en
 
 Se conserva la [aceptación funcional previa](evidencias/catalogo-productos/expo-go-aceptacion.json), reportada por el usuario desde Expo Go, y la [QA web](evidencias/catalogo-productos/api-verificacion.json). El [contrato de conexión](CONEXION-CATALOGO.md) describe paginación pública, estados, mapeo y recursos recuperados; el [diseño](DISENO-CATALOGO.md) conserva la vista previa histórica. Las 179 pruebas y exportaciones aprobadas pertenecen a Catálogo. El fixture de API utilizó Controller/Service/ValidationPipe reales y modelos Mongo simulados; no se presenta como una prueba de MongoDB real.
 
-## Líneas o categorías: diseño aceptado y API implementada
+## Líneas o categorías integradas: 8/8
 
-Ambas copias se actualizaron a `fc13bbf`, conservando sus `.env` y el stash de Zenaida `81196109270f00fa7edf03a8a8ec6f8bdc963131`. Zenaida permanece en `develop`; David creó `feature/lineas-categorias` desde ese merge en `C:\Users\David\Documents\INHALEX-Movil`.
+El [PR #7](https://github.com/David567rs/INHALEX-Movil/pull/7) quedó cerrado y fusionado por ZenaidaGR en `develop` a las `2026-10-19T04:37:00Z` (18 de octubre en Ciudad de México). Su aprobación a las `04:36:54Z` corresponde al HEAD final `6e787da42ba9273032a21374b92f0f56b9bc1437`. Backend CI `39200089592` y Mobile CI `39200089607` terminaron con `success` sobre ese mismo HEAD. El merge `b0b9856f7470d8f9b76a8de2d462b29ac3f2d4eb` tiene padres `fc13bbf7afcd0ee81e9f0f7dadce8931852d9b78` y `6e787da42ba9273032a21374b92f0f56b9bc1437`.
 
-El 18 de octubre de 2026 el usuario aceptó el diseño de Líneas en Expo Go y autorizó conectar la API en esta misma rama con MVVM y Repository. Después confirmó: «Ya probé en Expo Go, amigo: aparecen las categorías, cambian los productos al elegir otra y funciona «Ver todos». Ya marqué esos puntos en Trello. Sigamos con la prueba de categoría sin productos.». La [aceptación](evidencias/lineas-categorias/expo-go-aceptacion.json) procede del chat; no hay observación directa del teléfono ni capturas nativas. La captura inicial de Trello con ocho criterios sin marcar se conserva como snapshot histórico 0/8; el diseño no tiene casilla. El estado actual es En progreso, 7/8 aceptados: después confirmó vacío con datos sintéticos y el recorrido final de error/reintento conservando categorías y selección. Puede marcar «Probar la funcionalidad», sin afirmar que ya lo hizo; el agente no modificó Trello.
-
-La conexión está implementada en `features/productLines`: entidad `ProductLine { id, name, count }`, contrato Repository asíncrono, caso de uso y mapeador de GET público `/products/categories`, composición diferida y ViewModel con carga, actualización, error/reintento, selección y cancelación. Admite líneas personalizadas válidas y conteo cero. «Ver productos de esta línea» vuelve a Catálogo con el filtro; cambiarlo o quitarlo reinicia la paginación y cancela la consulta anterior. El vacío filtrado tiene mensaje propio. Se eliminó el código de vista previa y se conserva el [diseño histórico](DISENO-LINEAS-CATEGORIAS.md) y [su evidencia](evidencias/lineas-categorias/verificacion-diseno.json). No se modifica Server, autenticación, dependencias o `.env`, ni se implementa Detalle, búsqueda, Favoritos o Bolsa.
-
-Pasaron 206/206 pruebas móviles (27 nuevas), TypeScript, lint global sin advertencias, Doctor 21/21 y exportaciones finales Android (1415 módulos) y web (963 módulos); la revisión independiente no encontró bloqueadores. La API aislada pasó 15 grupos HTTP con Controller, Service y validación DTO reales y modelos Mongo simulados; nueve grupos adicionales usaron Repository y casos de uso móviles reales contra HTTP. No se conectó una base real ni se cargó `.env`; los upserts de categorías por defecto quedan simulados. La [QA web](evidencias/lineas-categorias/api-verificacion.json) confirmó filtro y paginación, vacíos, error/reintento con datos conservados y descarte de respuestas obsoletas al cambiar rápido de línea, sin desbordamiento en 393×852. El [contrato de conexión](CONEXION-LINEAS-CATEGORIAS.md) detalla resultados y los recorridos aceptados en Expo Go. TalkBack, escalado de fuente y movimiento reducido no se probaron físicamente.
+La [evidencia de integración](evidencias/lineas-categorias/integracion-pr7.json) registra revisión, CI y merge. La [aceptación humana](evidencias/lineas-categorias/expo-go-aceptacion.json) conserva los hitos 0/8, 5/8, 6/8 y 7/8 anteriores; la revisión real completa ahora 8/8. El usuario confirmó Trello actualizado/cerrado. El agente no leyó ni modificó el tablero en vivo.
 
 - [x] Obtener líneas o categorías desde la API.
 - [x] Mostrar las categorías disponibles.
@@ -276,6 +272,26 @@ Pasaron 206/206 pruebas móviles (27 nuevas), TypeScript, lint global sin advert
 - [x] Manejar categoría sin productos.
 - [x] Verificar navegación.
 - [x] Probar la funcionalidad.
+- [x] Revisar el código.
+
+El [contrato y QA de Líneas](CONEXION-LINEAS-CATEGORIAS.md) conserva los límites: vacío con datos sintéticos, modelos Mongo simulados en la API aislada, confirmaciones de Expo Go mediante chat y capturas web. Las 206 pruebas y las exportaciones anteriores pertenecen a Líneas, sin revalidar por sí solas Detalle.
+
+## Detalle de producto: diseño implementado, 0/9
+
+Ambas copias se actualizaron al merge `b0b9856`. Zenaida permanece en `develop`; David creó `feature/detalle-producto` desde ese merge. Se conservaron `Server/.env` en ambas y el stash de Zenaida `81196109270f00fa7edf03a8a8ec6f8bdc963131`. No existe `Mobile/.env` en ninguna copia y no es necesario crearlo.
+
+El usuario autorizó SOLO diseño. El [diseño implementado](DISENO-DETALLE-PRODUCTO.md) reutiliza el producto ya cargado por Catálogo: snapshot acotado a 12 IDs en memoria → Repository de vista previa de lectura → caso de uso → `useProductDetailViewModel` → pantalla Stack `/producto/[id]`. La composición usa `createProductDetailPreviewAction` y `rememberProductDetailPreview`. Presenta datos existentes y «Vista previa», conserva retorno/filtro y ofrece volver al Catálogo si el ID no está en memoria. No añade HTTP desde Detalle, productos ficticios ni funcionalidades de Favoritos/Bolsa; sus acciones quedan deshabilitadas, «Próximamente», por depender de las actividades posteriores de Zenaida.
+
+La captura de Trello del usuario contiene exactamente estos nueve criterios, todos pendientes. «Crear pantalla de detalle» sí existe y solo podrá marcarse después de la aceptación del diseño en Expo Go:
+
+- [ ] Crear pantalla de detalle.
+- [ ] Obtener información del producto seleccionado.
+- [ ] Mostrar nombre, descripción, precio e imagen.
+- [ ] Mostrar información adicional disponible.
+- [ ] Agregar acceso a favoritos.
+- [ ] Agregar acceso a bolsa de compras.
+- [ ] Manejar errores al cargar el producto.
+- [ ] Probar la funcionalidad.
 - [ ] Revisar el código.
 
-Los siete criterios se apoyan en la confirmación humana, no únicamente en la QA técnica. Solo sigue pendiente revisión de código. El recorrido vacío de Expo Go se aceptó con datos sintéticos; la guía conserva como historia los diez grupos HTTP del helper, sin cambios de datos ni `.env`. El usuario informó que restauró el backend real; después se verificaron health correcto y cinco categorías reales sin categorías QA, con Metro 8082 activo. El 18 de octubre de 2026 el usuario confirmó el recorrido final de error/reintento y autorizó abrir el PR hacia `develop` para que Zenaida lo revise. El [PR #7](https://github.com/David567rs/INHALEX-Movil/pull/7), «Implementar Líneas o categorías con MVVM y Repository», está abierto por David567rs desde `feature/lineas-categorias` hacia `develop`; la rama está publicada y la revisión se solicitó a ZenaidaGR. Consulta [los checks del HEAD vigente](https://github.com/David567rs/INHALEX-Movil/pull/7/checks); no hay aprobación ni merge. Se conserva el orden Catálogo → Categorías → Detalle y Catálogo permanece 7/9.
+La [verificación del diseño](evidencias/detalle-producto/verificacion-diseno.json) registra 206/206 pruebas existentes, TypeScript, lint global sin advertencias, Doctor 21/21, exportaciones Android 1422/web 970 con salida 0 y revisión independiente sin bloqueadores. Un smoke de lectura comprobó el cache de 12 IDs, clonación/congelación y `null` ante ID desconocido. La QA web de 393×852 y 320×568 pasó con snapshots inyectados temporalmente; CORS bloqueó el catálogo real, por lo que no acredita navegador contra API en vivo ni prueba nativa. Ambos temporales se retiraron antes de exportar, preservando backend 3200 y Metro 8082. La aceptación en Expo Go sigue pendiente; después de la revisión visual solo podrá marcarse «Crear pantalla de detalle» (1/9), sin aceptar los otros criterios. No se declara nuevo PR, push o criterio aceptado. El diseño no cierra los dos pendientes de Catálogo: conserva 7/9 y el orden Catálogo → Categorías → Detalle.

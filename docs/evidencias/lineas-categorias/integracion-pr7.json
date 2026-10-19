@@ -1,0 +1,88 @@
+{
+  "activity": "Líneas o categorías",
+  "recordedDate": "2026-10-18",
+  "repository": "David567rs/INHALEX-Movil",
+  "pullRequest": {
+    "number": 7,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/7",
+    "author": "David567rs",
+    "head": "feature/lineas-categorias",
+    "base": "develop",
+    "finalHeadSha": "6e787da42ba9273032a21374b92f0f56b9bc1437",
+    "state": "closed",
+    "merged": true,
+    "mergedBy": "ZenaidaGR",
+    "mergedAt": "2026-10-19T04:37:00Z",
+    "mergedLocalDate": "2026-10-18",
+    "mergeMethod": "merge_commit",
+    "mergeCommitSha": "b0b9856f7470d8f9b76a8de2d462b29ac3f2d4eb",
+    "mergeCommitParents": [
+      "fc13bbf7afcd0ee81e9f0f7dadce8931852d9b78",
+      "6e787da42ba9273032a21374b92f0f56b9bc1437"
+    ],
+    "mergeCommitVerification": "Verified through GitHub REST git/commits and parent chain."
+  },
+  "humanReview": {
+    "reviewer": "ZenaidaGR",
+    "state": "APPROVED",
+    "submittedAt": "2026-10-19T04:36:54Z",
+    "commitSha": "6e787da42ba9273032a21374b92f0f56b9bc1437"
+  },
+  "requiredChecks": [
+    {
+      "workflow": "Backend CI",
+      "runId": 39200089592,
+      "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39200089592",
+      "headSha": "6e787da42ba9273032a21374b92f0f56b9bc1437",
+      "conclusion": "success"
+    },
+    {
+      "workflow": "Mobile CI",
+      "runId": 39200089607,
+      "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39200089607",
+      "headSha": "6e787da42ba9273032a21374b92f0f56b9bc1437",
+      "conclusion": "success"
+    }
+  ],
+  "checklist": {
+    "acceptedCriteria": 8,
+    "totalCriteria": 8,
+    "reviewCodeCompleted": true,
+    "remainingCriteria": [],
+    "humanFunctionalAcceptanceEvidence": "expo-go-aceptacion.json"
+  },
+  "trello": {
+    "source": "El usuario confirmó haber actualizado/cerrado la tarjeta.",
+    "taskStatus": "Terminado",
+    "userReportedCardClosed": true,
+    "liveBoardReadByAgent": false,
+    "boardUpdatedByAgent": false
+  },
+  "localCopies": {
+    "synchronizedCommitSha": "b0b9856f7470d8f9b76a8de2d462b29ac3f2d4eb",
+    "davidCurrentBranch": "feature/detalle-producto",
+    "zenaidaCurrentBranch": "develop",
+    "envFilesPreserved": true,
+    "serverEnvFilesPresent": true,
+    "mobileEnvFilesPresent": false,
+    "zenaidaStashPreserved": "81196109270f00fa7edf03a8a8ec6f8bdc963131"
+  },
+  "nextStage": {
+    "activity": "Detalle de producto",
+    "scope": "Solo diseño con snapshot acotado de datos ya cargados por Catálogo, MVVM y Repository de lectura; sin HTTP nuevo desde Detalle.",
+    "designAccepted": false,
+    "apiConnected": false,
+    "newValidationResultsClaimed": false,
+    "checklistAccepted": 0,
+    "checklistTotal": 9
+  },
+  "catalogueDependency": {
+    "acceptedCriteria": 7,
+    "totalCriteria": 9,
+    "remainingCriteria": [
+      "Verificar navegación al detalle del producto",
+      "Probar la funcionalidad"
+    ],
+    "detailPreviewDoesNotCompleteTheseCriteria": true
+  }
+}

@@ -2,7 +2,7 @@
   "activity": "Líneas o categorías",
   "date": "2026-10-18",
   "branch": "feature/lineas-categorias",
-  "phase": "seven-functional-criteria-accepted-pr-open-review-requested",
+  "phase": "integrated-eight-of-eight-criteria-complete",
   "platform": "Expo Go",
   "evidenceType": "human_chat_confirmation",
   "userResponse": "Ya revisé el diseño de Líneas o categorías en Expo Go, amigo, y me gustó. Sigamos con la conexión a la API en la misma rama, manteniendo MVVM y Repository. ¿Qué punto marco en Trello?",
@@ -19,7 +19,7 @@
     "sameBranch": true,
     "architecture": "MVVM y Repository",
     "implementationStatus": "implemented-technical-checks-passed",
-    "nativeFunctionalAcceptance": "seven-criteria-accepted-by-user"
+    "nativeFunctionalAcceptance": "seven-functional-criteria-accepted-by-user-plus-real-code-review"
   },
   "checklistAtDesignAcceptance": {
     "status": "historical-snapshot-before-functional-confirmation",
@@ -50,10 +50,10 @@
     "nativeScreenshotsProvided": false
   },
   "checklist": {
-    "source": "Subsequent human chat confirmation in Expo Go",
-    "acceptedCriteria": 7,
+    "source": "Human chat confirmations in Expo Go plus ZenaidaGR approval on the final PR head",
+    "acceptedCriteria": 8,
     "totalCriteria": 8,
-    "acceptedCriterionNumbers": [1, 2, 3, 4, 5, 6, 7],
+    "acceptedCriterionNumbers": [1, 2, 3, 4, 5, 6, 7, 8],
     "acceptedCriteriaNames": [
       "Obtener líneas o categorías desde la API",
       "Mostrar las categorías disponibles",
@@ -61,11 +61,11 @@
       "Filtrar los productos según la categoría",
       "Manejar categoría sin productos",
       "Verificar navegación",
-      "Probar la funcionalidad"
-    ],
-    "remainingCriteria": [
+      "Probar la funcionalidad",
       "Revisar el código"
-    ]
+    ],
+    "reviewCodeCompleted": true,
+    "remainingCriteria": []
   },
   "emptyCategoryTest": {
     "criterion": "Manejar categoría sin productos",
@@ -112,20 +112,23 @@
     "nativeResultReceived": true,
     "agentObservedPhysicalDevice": false,
     "nativeScreenshotsProvided": false,
-    "humanCodeReviewCompleted": false
+    "humanCodeReviewCompletedAtFunctionalConfirmation": false
   },
   "trello": {
-    "taskStatus": "En progreso",
+    "taskStatus": "Terminado",
     "initialScreenshotSnapshot": "checklistAtDesignAcceptance",
     "fiveCriteriaMarkedByUserAsReportedInChat": true,
-    "emptyCategoryCriterionReadyToMark": true,
-    "functionalityCriterionReadyToMark": true,
-    "functionalityCriterionMarkedByUserConfirmed": false,
+    "emptyCategoryCriterionAccepted": true,
+    "functionalityCriterionAccepted": true,
+    "functionalityCriterionMarkedByUserConfirmed": true,
+    "userReportedCardClosed": true,
+    "closureSource": "El usuario confirmó Trello actualizado/cerrado.",
+    "liveBoardReadByAgent": false,
     "updatedByAgent": false,
     "updateResponsibility": "user"
   },
   "limitations": [
-    "La confirmación inicial acepta el diseño visual; su snapshot 0/8 se conserva separado de las confirmaciones funcionales posteriores 5/8, 6/8 y 7/8.",
+    "La confirmación inicial acepta el diseño visual; su snapshot 0/8 se conserva separado de las confirmaciones funcionales posteriores 5/8, 6/8 y 7/8. La aprobación real del HEAD final completa ahora 8/8.",
     "La captura inicial muestra el checklist de Trello, no la aplicación nativa; el usuario afirma posteriormente haber marcado cinco criterios.",
     "Las confirmaciones funcionales aceptan categorías, selección, filtrado, Ver todos, categoría vacía sintética y prueba final de error/recuperación. No acreditan vacío en una base comercial ni una prueba específica de paginación nativa.",
     "No hay capturas nativas ni observación directa del teléfono por el agente.",
@@ -133,6 +136,7 @@
     "Las comprobaciones técnicas de la API se registran por separado y no completan por sí solas el checklist humano."
   ],
   "prePrVerification": {
+    "scope": "Historical pre-PR snapshot; the current approval is recorded in delivery and integracion-pr7.json.",
     "mobileTests": { "passed": 206, "failed": 0 },
     "typecheck": "passed",
     "lint": "passed-without-warnings",
@@ -141,7 +145,7 @@
     "realHumanReview": "pending-ZenaidaGR"
   },
   "delivery": {
-    "stage": "pr-open-review-requested",
+    "stage": "closed-merged-integrated",
     "pullRequestAuthorizedByUser": true,
     "authorizationDate": "2026-10-18",
     "authorizationEvidence": "finalErrorRetryTest.userResponse",
@@ -155,9 +159,19 @@
     "headAtCreation": "e61fc7bb09b5581127543b8c99fbe92356cc2ceb",
     "createdAt": "2026-10-19T04:30:39Z",
     "createdLocalDate": "2026-10-18",
-    "state": "open",
+    "state": "closed",
     "draft": false,
-    "merged": false,
+    "merged": true,
+    "finalHeadSha": "6e787da42ba9273032a21374b92f0f56b9bc1437",
+    "mergedBy": "ZenaidaGR",
+    "mergedAt": "2026-10-19T04:37:00Z",
+    "mergedLocalDate": "2026-10-18",
+    "mergeMethod": "merge_commit",
+    "mergeCommitSha": "b0b9856f7470d8f9b76a8de2d462b29ac3f2d4eb",
+    "mergeCommitParents": [
+      "fc13bbf7afcd0ee81e9f0f7dadce8931852d9b78",
+      "6e787da42ba9273032a21374b92f0f56b9bc1437"
+    ],
     "mergeableAtCreationObservation": true,
     "pullRequestOpened": true,
     "pushPerformedForThisStage": true,
@@ -179,7 +193,17 @@
       }
     },
     "latestHeadChecksSource": "https://github.com/David567rs/INHALEX-Movil/pull/7/checks",
-    "humanReview": "pending",
-    "activityFullyCompleted": false
+    "finalHeadChecks": {
+      "headSha": "6e787da42ba9273032a21374b92f0f56b9bc1437",
+      "backendRunId": 39200089592,
+      "mobileRunId": 39200089607,
+      "conclusion": "success"
+    },
+    "humanReview": "APPROVED",
+    "reviewer": "ZenaidaGR",
+    "reviewSubmittedAt": "2026-10-19T04:36:54Z",
+    "reviewedHeadSha": "6e787da42ba9273032a21374b92f0f56b9bc1437",
+    "integrationEvidence": "integracion-pr7.json",
+    "activityFullyCompleted": true
   }
 }

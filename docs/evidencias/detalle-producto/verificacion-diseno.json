@@ -1,0 +1,142 @@
+{
+  "activity": "Detalle de producto",
+  "date": "2026-10-18",
+  "branch": "feature/detalle-producto",
+  "baseCommit": "b0b9856f7470d8f9b76a8de2d462b29ac3f2d4eb",
+  "stage": "detail-preview-design",
+  "status": "design-implemented-web-qa-and-automated-checks-passed-awaiting-user",
+  "nativeAcceptance": "pending-user",
+  "scope": "Only detail design from data already loaded by Catalog; no new HTTP from Detail and no fabricated products.",
+  "architecture": {
+    "dataSource": "In-memory cache bounded to 12 snapshots keyed by product ID from Catalog domain products",
+    "repository": "Read-only ProductDetailPreviewRepository",
+    "useCase": "Read product preview by ID",
+    "viewModel": "useProductDetailViewModel",
+    "view": "ProductDetailScreen",
+    "imageComponent": "ProductDetailImage",
+    "composition": "createProductDetailPreviewAction and rememberProductDetailPreview",
+    "route": "/producto/[id]",
+    "previewLabel": "Vista previa",
+    "missingSnapshot": "Return to Catalog; no fabricated product or claim of connected detail API",
+    "backNavigation": "Preserve Catalog and its category filter",
+    "favoritesAndBag": "Disabled, labelled Próximamente; later activities owned by Zenaida"
+  },
+  "recoveredReference": {
+    "revision": "526a21e11da1cd1e3f6edea350c7731f90e205bf",
+    "file": "ProductDetails.tsx",
+    "scope": "Visual presentation only; no original functional controls or complete detail API imported"
+  },
+  "checks": {
+    "typecheck": "passed",
+    "lint": { "status": "passed", "scope": "global", "warnings": 0 },
+    "mobileTests": { "passed": 206, "failed": 0, "newTrackedTestsAdded": 0 },
+    "expoDoctor": { "passed": 21, "total": 21 },
+    "androidExport": { "passed": true, "modules": 1422, "exitCode": 0 },
+    "webExport": { "passed": true, "modules": 970, "exitCode": 0 },
+    "independentReadOnlyReview": "no-material-blockers",
+    "readOnlyCacheAndCompositionSmoke": {
+      "status": "passed",
+      "capacity": 12,
+      "snapshotCloningAndFreezing": true,
+      "unknownIdReturnsNull": true
+    }
+  },
+  "browserQa": {
+    "status": "passed-with-injected-snapshots",
+    "platform": "web",
+    "serverPort": 8082,
+    "viewports": [
+      { "width": 393, "height": 852 },
+      { "width": 320, "height": 568 }
+    ],
+    "horizontalOverflowPixels": 0,
+    "imagesObserved": ["Toronjil", "Mirra"],
+    "twoProductIdsOpenedCorrectData": true,
+    "backPreservedNamedLineInTestListing": true,
+    "missingSnapshotFallbackReturnedToCatalog": true,
+    "favoritesAndBagDisabledUpcoming": true,
+    "backControlPixels": { "width": 44, "height": 44 },
+    "actionControlHeightPixels": 72,
+    "actionsStackedAt320": true,
+    "simulatedVisualCases": [
+      "zero price",
+      "out of stock",
+      "no aromas",
+      "long name",
+      "missing image"
+    ],
+    "syntheticDataLabel": "Datos de muestra",
+    "dataInjection": {
+      "temporaryRoute": "detalle-diseno-qa.tsx",
+      "publicSnapshotsReadViaCli": 6,
+      "labelledSyntheticSnapshots": 1,
+      "actualComponentsExercised": "CatalogScreen/ViewModel, bootstrap, /producto/[id] route and ProductDetailScreen",
+      "browserLiveApiTested": false,
+      "corsLimitation": "API 3200 did not include Access-Control-Allow-Origin for web origin 8082."
+    },
+    "screenshots": [
+      "diseno-principal-web.png",
+      "diseno-informacion-web.png",
+      "diseno-compacto-web.png",
+      "diseno-sin-seleccion-web.png",
+      "diseno-fallback-web.png"
+    ]
+  },
+  "qaCleanup": {
+    "temporaryFilesRemoved": 2,
+    "temporaryFilesAbsentBeforeFinalExports": true,
+    "proxy3215Stopped": true,
+    "additionalServer8085Started": false,
+    "backend3200Preserved": true,
+    "metro8082Preserved": true,
+    "qaBrowserTabClosed": true,
+    "viewportReset": true
+  },
+  "documentationConsultedBeforeCode": [
+    "https://docs.expo.dev/versions/v57.0.0/",
+    "https://docs.expo.dev/versions/v57.0.0/sdk/router/",
+    "https://docs.expo.dev/router/basics/navigation/",
+    "https://docs.expo.dev/versions/v57.0.0/sdk/safe-area-context/",
+    "https://docs.expo.dev/llms.txt",
+    "https://reactnative.dev/docs/0.86/pressable",
+    "https://reactnative.dev/docs/0.86/image",
+    "https://reactnative.dev/docs/0.86/accessibility",
+    "https://reactnative.dev/docs/0.86/scrollview",
+    "https://reactnative.dev/docs/0.86/text",
+    "https://reactnative.dev/docs/0.86/usewindowdimensions"
+  ],
+  "checklist": {
+    "source": "User-provided Trello screenshot for Detail",
+    "acceptedCriteria": 0,
+    "totalCriteria": 9,
+    "remainingCriteria": [
+      "Crear pantalla de detalle",
+      "Obtener información del producto seleccionado",
+      "Mostrar nombre, descripción, precio e imagen",
+      "Mostrar información adicional disponible",
+      "Agregar acceso a favoritos",
+      "Agregar acceso a bolsa de compras",
+      "Manejar errores al cargar el producto",
+      "Probar la funcionalidad",
+      "Revisar el código"
+    ]
+  },
+  "limitations": {
+    "browserQaResultsRecorded": true,
+    "automatedChecksRecorded": true,
+    "browserLiveApiTested": false,
+    "detailApiLoadingErrorsTested": false,
+    "detailApiConnected": false,
+    "nativeDesignAccepted": false,
+    "firstCriterionOnlyAfterVisualAcceptance": "Crear pantalla de detalle",
+    "agentObservedPhysicalDevice": false,
+    "nativeScreenshotsProvided": false,
+    "talkBackTested": false,
+    "fontScalingPhysicallyTested": false,
+    "reducedMotionPhysicallyTested": false,
+    "trelloChangedByAgent": false,
+    "prCreatedForDetail": false,
+    "pushedForDetail": false,
+    "catalogueCriteriaCompletedByPreview": false
+  }
+}

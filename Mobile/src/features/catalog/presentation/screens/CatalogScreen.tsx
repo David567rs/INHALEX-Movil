@@ -5,11 +5,14 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { colors } from '@/core/theme/colors';
 import { Reveal } from '@/shared/components/Motion';
 import type { ListCatalog } from '../../domain/useCases/listCatalog';
+import type { CatalogProduct } from '../../domain/models/Catalog';
 import { CatalogProductCard } from '../components/CatalogProductCard';
 import { useCatalogViewModel, type CatalogProductViewModel } from '../viewModels/useCatalogViewModel';
 
-export function CatalogScreen({ listCatalog, categoryName }: { listCatalog: ListCatalog; categoryName?: string }) {
-  const vm = useCatalogViewModel(listCatalog);
+export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
+  listCatalog: ListCatalog; categoryName?: string; onSelectProduct: (product: CatalogProduct) => void;
+}) {
+  const vm = useCatalogViewModel(listCatalog, onSelectProduct);
   const { width, fontScale } = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const largeText = fontScale > 1.25;
@@ -122,7 +125,7 @@ export function CatalogScreen({ listCatalog, categoryName }: { listCatalog: List
         }
         renderItem={({ item, index }) => (
           <Reveal delay={Math.min(index, 5) * 35} style={[styles.cardShell, columns === 1 && styles.singleCard]}>
-            <CatalogProductCard product={item} horizontal={horizontal} />
+            <CatalogProductCard product={item} horizontal={horizontal} onPress={() => vm.openProduct(item.id)} />
           </Reveal>
         )}
         ListEmptyComponent={
