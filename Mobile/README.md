@@ -16,7 +16,7 @@ Si Metro de David no estuviera activo, desde `C:\Users\David\Documents\INHALEX-M
 npm --prefix Mobile run start -- --port 8082
 ```
 
-El [diseño y su verificación](../docs/DISENO-PERFIL-USUARIO.md) se conservan como historia. La [verificación de conexión](../docs/evidencias/perfil-usuario/verificacion-api.json) pasó TypeScript, lint, 424 pruebas, Doctor 21/21 y exportaciones Android/web. La QA web de componentes reales usa datos sintéticos y el test HTTP usa una API simulada sobre sockets reales; ambos distinguen sus límites de la aceptación nativa pendiente. Se mantienen las cinco pestañas, configuración y servicios. La publicación y apertura del PR están autorizadas; queda pendiente la revisión real de ZenaidaGR, sin merge autorizado.
+El [diseño y su verificación](../docs/DISENO-PERFIL-USUARIO.md) se conservan como historia. La [verificación de conexión](../docs/evidencias/perfil-usuario/verificacion-api.json) pasó TypeScript, lint, 424 pruebas, Doctor 21/21 y exportaciones Android/web. La QA web de componentes reales usa datos sintéticos y el test HTTP usa una API simulada sobre sockets reales; ambos distinguen sus límites de la aceptación nativa pendiente. Se mantienen las cinco pestañas, configuración y servicios. El [PR #12](https://github.com/David567rs/INHALEX-Movil/pull/12), abierto por David567rs desde feature/perfil-usuario hacia develop, tiene revisión solicitada y confirmada a ZenaidaGR. Perfil permanece 9/10; consultar CI del HEAD vigente. La aprobación real y la integración siguen pendientes.
 
 ## Probar Bolsa conectada a la API
 

@@ -71,4 +71,4 @@ La [verificación de conexión](evidencias/perfil-usuario/verificacion-api.json)
 
 Estos resultados corresponden a la conexión, no al diseño histórico. No se modificaron perfiles reales en la base activa ni se probó el servidor Nest/MongoDB mediante una cuenta real. La prueba HTTP usa una API simulada y la prueba web una composición de datos sintéticos, ambas identificadas en la evidencia. Teclado nativo, TalkBack, texto ampliado, el aislamiento físico entre dos cuentas distintas siguen sin prueba específica. El usuario sí confirmó los datos guardados al reabrir y al reingresar con la misma cuenta.
 
-Se conservan `.env`, servicios, identidades y el stash de Zenaida. La publicación y apertura de PR están autorizadas; la revisión real de ZenaidaGR sigue pendiente y esta solicitud no autoriza merge.
+Se conservan `.env`, servicios, identidades y el stash de Zenaida. El [PR #12](https://github.com/David567rs/INHALEX-Movil/pull/12), abierto por David567rs desde feature/perfil-usuario hacia develop, tiene revisión solicitada y confirmada a ZenaidaGR. Perfil permanece 9/10; consultar CI del HEAD vigente. La aprobación real y la integración siguen pendientes.
