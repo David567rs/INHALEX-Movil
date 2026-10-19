@@ -2,7 +2,7 @@
   "activity": "Líneas o categorías",
   "date": "2026-10-18",
   "branch": "feature/lineas-categorias",
-  "phase": "six-functional-criteria-accepted-final-error-retry-test-pending",
+  "phase": "seven-functional-criteria-accepted-pr-preparation",
   "platform": "Expo Go",
   "evidenceType": "human_chat_confirmation",
   "userResponse": "Ya revisé el diseño de Líneas o categorías en Expo Go, amigo, y me gustó. Sigamos con la conexión a la API en la misma rama, manteniendo MVVM y Repository. ¿Qué punto marco en Trello?",
@@ -19,7 +19,7 @@
     "sameBranch": true,
     "architecture": "MVVM y Repository",
     "implementationStatus": "implemented-technical-checks-passed",
-    "nativeFunctionalAcceptance": "six-criteria-accepted-by-user"
+    "nativeFunctionalAcceptance": "seven-criteria-accepted-by-user"
   },
   "checklistAtDesignAcceptance": {
     "status": "historical-snapshot-before-functional-confirmation",
@@ -42,6 +42,7 @@
     "date": "2026-10-18",
     "userResponse": "Ya probé en Expo Go, amigo: aparecen las categorías, cambian los productos al elegir otra y funciona «Ver todos». Ya marqué esos puntos en Trello. Sigamos con la prueba de categoría sin productos.",
     "evidenceType": "human_chat_confirmation",
+    "acceptedCriteriaAfterConfirmation": 5,
     "categoriesVisible": true,
     "selectionChangesProducts": true,
     "viewAllWorks": true,
@@ -50,19 +51,19 @@
   },
   "checklist": {
     "source": "Subsequent human chat confirmation in Expo Go",
-    "acceptedCriteria": 6,
+    "acceptedCriteria": 7,
     "totalCriteria": 8,
-    "acceptedCriterionNumbers": [1, 2, 3, 4, 5, 6],
+    "acceptedCriterionNumbers": [1, 2, 3, 4, 5, 6, 7],
     "acceptedCriteriaNames": [
       "Obtener líneas o categorías desde la API",
       "Mostrar las categorías disponibles",
       "Permitir seleccionar una categoría",
       "Filtrar los productos según la categoría",
       "Manejar categoría sin productos",
-      "Verificar navegación"
+      "Verificar navegación",
+      "Probar la funcionalidad"
     ],
     "remainingCriteria": [
-      "Probar la funcionalidad",
       "Revisar el código"
     ]
   },
@@ -83,6 +84,7 @@
     },
     "helperRunReportedByUser": true,
     "nativeResultReceived": true,
+    "acceptedCriteriaAfterConfirmation": 6,
     "userResponse": "Sí, amigo, apareció «Esta línea aún no tiene productos» y «Ver todos» mostró el producto de prueba. Ya restauré el backend real. ¿Qué marco en Trello y qué sigue?",
     "emptyMessageAccepted": "Esta línea aún no tiene productos",
     "viewAllAccepted": "Producto de prueba",
@@ -95,31 +97,59 @@
     "agentObservedPhysicalDevice": false,
     "nativeScreenshotsProvided": false
   },
-  "nextNativeTest": {
+  "finalErrorRetryTest": {
+    "date": "2026-10-18",
     "criterion": "Probar la funcionalidad",
     "scope": "Final connection failure and retry in Lines, preserving already loaded categories and selection, then recovering after restarting the real backend.",
-    "status": "pending-user-error-and-retry-result",
-    "nativeResultReceived": false
+    "status": "accepted-by-user-in-expo-go",
+    "userResponse": "Sí, amigo, apareció el aviso y se conservaron las categorías y mi selección. Al reiniciar el backend y actualizar, desapareció el aviso. Ahora abramos el PR hacia develop para que Zenaida lo revise.",
+    "evidenceType": "human_chat_confirmation",
+    "connectionNoticeAppeared": true,
+    "loadedCategoriesPreserved": true,
+    "selectionPreserved": true,
+    "noticeClearedAfterBackendRestartAndRefresh": true,
+    "acceptedCriteriaAfterConfirmation": 7,
+    "nativeResultReceived": true,
+    "agentObservedPhysicalDevice": false,
+    "nativeScreenshotsProvided": false,
+    "humanCodeReviewCompleted": false
   },
   "trello": {
     "taskStatus": "En progreso",
     "initialScreenshotSnapshot": "checklistAtDesignAcceptance",
     "fiveCriteriaMarkedByUserAsReportedInChat": true,
     "emptyCategoryCriterionReadyToMark": true,
+    "functionalityCriterionReadyToMark": true,
+    "functionalityCriterionMarkedByUserConfirmed": false,
     "updatedByAgent": false,
     "updateResponsibility": "user"
   },
   "limitations": [
-    "La confirmación inicial acepta el diseño visual; su snapshot 0/8 se conserva separado de las confirmaciones funcionales posteriores 5/8 y 6/8.",
+    "La confirmación inicial acepta el diseño visual; su snapshot 0/8 se conserva separado de las confirmaciones funcionales posteriores 5/8, 6/8 y 7/8.",
     "La captura inicial muestra el checklist de Trello, no la aplicación nativa; el usuario afirma posteriormente haber marcado cinco criterios.",
-    "La confirmación funcional acepta categorías, selección, filtrado, Ver todos y categoría vacía con datos sintéticos; no acredita vacío en una base comercial, paginación nativa, errores o prueba funcional completa en Expo Go.",
+    "Las confirmaciones funcionales aceptan categorías, selección, filtrado, Ver todos, categoría vacía sintética y prueba final de error/recuperación. No acreditan vacío en una base comercial ni una prueba específica de paginación nativa.",
     "No hay capturas nativas ni observación directa del teléfono por el agente.",
     "No acredita TalkBack, escalado de fuente o movimiento reducido en un dispositivo físico.",
     "Las comprobaciones técnicas de la API se registran por separado y no completan por sí solas el checklist humano."
   ],
+  "prePrVerification": {
+    "mobileTests": { "passed": 206, "failed": 0 },
+    "typecheck": "passed",
+    "lint": "passed-without-warnings",
+    "independentReadOnlyReview": "no-material-blockers",
+    "mobileSourceUnchangedSince": "0927bf4",
+    "realHumanReview": "pending-ZenaidaGR"
+  },
   "delivery": {
+    "stage": "authorized-pr-preparation",
+    "pullRequestAuthorizedByUser": true,
+    "authorizationDate": "2026-10-18",
+    "authorizationEvidence": "finalErrorRetryTest.userResponse",
+    "plannedBase": "develop",
+    "plannedReviewer": "ZenaidaGR",
     "pullRequestOpened": false,
     "pushPerformedForThisStage": false,
+    "reviewRequested": false,
     "humanReview": "pending",
     "activityFullyCompleted": false
   }

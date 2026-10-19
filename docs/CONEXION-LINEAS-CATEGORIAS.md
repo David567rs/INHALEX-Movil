@@ -1,6 +1,6 @@
 # Conexión de Líneas o categorías
 
-Estado del 18 de octubre de 2026: API implementada en `feature/lineas-categorias`, con seis criterios aceptados por el usuario en Expo Go, incluido vacío mediante datos sintéticos. La [evidencia textual](evidencias/lineas-categorias/expo-go-aceptacion.json) separa diseño, snapshot inicial 0/8, primera confirmación funcional 5/8 y aceptación posterior de vacío 6/8. La tarjeta sigue En progreso; solo faltan prueba completa y revisión. El usuario había marcado cinco puntos y puede marcar ahora el de vacío; el agente no modificó Trello. No se creó PR ni se publicó esta actividad.
+Estado del 18 de octubre de 2026: API implementada en `feature/lineas-categorias`, con siete criterios aceptados por el usuario en Expo Go. La [evidencia textual](evidencias/lineas-categorias/expo-go-aceptacion.json) separa diseño, snapshot inicial 0/8, primeras confirmaciones 5/8 y 6/8 y recorrido final de error/reintento aceptado 7/8. La tarjeta sigue En progreso; solo falta revisión de código. El usuario puede marcar «Probar la funcionalidad», sin afirmar que ya lo hizo; el agente no modificó Trello. Autorizó abrir el PR hacia `develop` para que Zenaida lo revise. El PR está en preparación, todavía sin apertura ni push.
 
 ## Consulta y arquitectura
 
@@ -31,7 +31,7 @@ Catálogo muestra la línea activa, permite «Ver todos», cargar más, actualiz
 
 La [evidencia de conexión](evidencias/lineas-categorias/api-verificacion.json) separa resultados HTTP, observaciones web y límites; no atribuye esos casos a un dispositivo físico.
 
-Los datos y conteos anteriores pertenecen al fixture aislado, no a existencias o categorías comerciales comprobadas en una base real. Por separado, el usuario confirmó en Expo Go categorías, selección, filtrado, «Ver todos» y vacío mediante el helper sintético; no confirmó paginación nativa, errores o prueba completa. No hay observación del teléfono por el agente ni capturas nativas. TalkBack, escalado de fuente y movimiento reducido no se han probado físicamente.
+Los datos y conteos anteriores pertenecen al fixture aislado, no a existencias o categorías comerciales comprobadas en una base real. Por separado, el usuario confirmó en Expo Go categorías, selección, filtrado, «Ver todos», vacío mediante el helper sintético y error/recuperación conservando categorías y selección. Con este recorrido final se acepta «Probar la funcionalidad»; la paginación nativa no tiene confirmación específica. No hay observación del teléfono por el agente ni capturas nativas. TalkBack, escalado de fuente y movimiento reducido no se han probado físicamente.
 
 ## Recorrido confirmado en Expo Go
 
@@ -57,22 +57,22 @@ La [verificación del helper](evidencias/lineas-categorias/empty-category-fixtur
 
 El 18 de octubre de 2026 el usuario confirmó: «Sí, amigo, apareció «Esta línea aún no tiene productos» y «Ver todos» mostró el producto de prueba. Ya restauré el backend real. ¿Qué marco en Trello y qué sigue?».
 
-Esta respuesta acepta el vacío y la salida al Catálogo general con datos sintéticos; no se presenta como una categoría comercial realmente vacía. La restauración del backend fue reportada por el usuario. Después se comprobó `/api/health` correcto y cinco categorías reales, sin categorías QA; Metro 8082 permaneció activo. No se atribuye al agente observación del teléfono. Líneas queda 6/8; categoría sin productos ya puede marcarse, sin afirmar que el usuario haya realizado todavía ese cambio en Trello.
+Esta respuesta acepta el vacío y la salida al Catálogo general con datos sintéticos; no se presenta como una categoría comercial realmente vacía. La restauración del backend fue reportada por el usuario. Después se comprobó `/api/health` correcto y cinco categorías reales, sin categorías QA; Metro 8082 permaneció activo. No se atribuye al agente observación del teléfono. Esta etapa dejó Líneas en 6/8; el recorrido final siguiente la llevó a 7/8, sin afirmar cambios posteriores en Trello.
 
-## Próximo recorrido: error y reintento de Líneas
+## Error y reintento de Líneas aceptados
 
-Pendiente de ejecución y confirmación en Expo Go; no hay errores nativos aceptados todavía. Mantén abiertos Expo Go y Metro durante todo el recorrido:
+El 18 de octubre de 2026 el usuario confirmó: «Sí, amigo, apareció el aviso y se conservaron las categorías y mi selección. Al reiniciar el backend y actualizar, desapareció el aviso. Ahora abramos el PR hacia develop para que Zenaida lo revise.». El recorrido aceptado queda como referencia, manteniendo Expo Go y Metro abiertos:
 
 1. Abre «Encuentra tu línea», pulsa «Actualizar líneas» con el backend activo y selecciona una línea real sin abrir sus productos.
 2. Pulsa Ctrl+C únicamente en la terminal del backend. En Líneas pulsa «Actualizar líneas» y espera el aviso.
 3. Comprueba que aparecen «Se conservan las últimas líneas cargadas.» y que permanecen las líneas y la selección.
 4. Ejecuta `npm run dev:server`; cuando esté listo, pulsa «Actualizar líneas» y comprueba que recupera los datos y desaparece el aviso.
 
-Con datos ya cargados el botón del recorrido es «Actualizar líneas»; «Reintentar» corresponde al error inicial sin datos. La prueba completa y la revisión de código continúan pendientes.
+Con datos ya cargados el botón del recorrido es «Actualizar líneas»; «Reintentar» corresponde al error inicial sin datos. La confirmación acepta aviso, conservación de categorías y selección, y recuperación al reiniciar el backend y actualizar. Completa «Probar la funcionalidad»; solo queda revisión de código. La evidencia es textual, sin observación directa del teléfono ni capturas nativas. El PR autorizado hacia `develop` para Zenaida está en preparación, todavía sin apertura, push o revisión solicitada.
 
-## Criterios de Trello: 6/8
+## Criterios de Trello: 7/8
 
-La captura del usuario contiene exactamente estos ocho criterios; no incluye una casilla de diseño. Las dos confirmaciones funcionales aceptan los puntos 1 a 6. El usuario había marcado cinco; el criterio de vacío ya puede marcarse:
+La captura del usuario contiene exactamente estos ocho criterios; no incluye una casilla de diseño. Las confirmaciones funcionales aceptan los puntos 1 a 7. El usuario puede marcar «Probar la funcionalidad»; no se da por realizado ese cambio en el tablero:
 
 - [x] Obtener líneas o categorías desde la API.
 - [x] Mostrar las categorías disponibles.
@@ -80,7 +80,7 @@ La captura del usuario contiene exactamente estos ocho criterios; no incluye una
 - [x] Filtrar los productos según la categoría.
 - [x] Manejar categoría sin productos.
 - [x] Verificar navegación.
-- [ ] Probar la funcionalidad.
+- [x] Probar la funcionalidad.
 - [ ] Revisar el código.
 
 El usuario administra el tablero. El agente no lo modificó. Se conserva el orden Catálogo → Categorías → Detalle; Catálogo sigue 7/9, con navegación al detalle y prueba completa pendientes.
