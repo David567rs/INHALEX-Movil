@@ -1,0 +1,104 @@
+{
+  "activity": "Direcciones de envío",
+  "stage": "api-connection-awaiting-native-acceptance",
+  "date": "2026-10-19",
+  "workspace": "C:/Users/David/Documents/INHALEX-Movil",
+  "branch": "feature/direcciones-envio",
+  "baseCommit": "27d2495301bd52aa32749220c77f9dca24d0dde5",
+  "changesCommitted": false,
+  "published": false,
+  "pullRequest": null,
+  "contract": {
+    "source": "Existing Server addresses.controller.ts, addresses.service.ts and create/update shipping address DTOs; no backend changes",
+    "list": "GET /addresses",
+    "create": "POST /addresses with allowlisted address draft",
+    "update": "PATCH /addresses/:addressId with allowlisted address draft",
+    "selectPrincipal": "PATCH /addresses/:addressId with only isDefault:true",
+    "remove": "DELETE /addresses/:addressId after inline UI confirmation",
+    "authentication": "Private Bearer from existing auth runtime; no user ID or credential exposed to the React tree",
+    "response": "Flat complete array of public addresses, including empty array",
+    "maximumAddresses": 5,
+    "defaultRules": "First address becomes principal; selecting another clears the former principal; deleting principal can promote a remaining address. Backend ignores isDefault:false when updating.",
+    "selectionScope": "Principal address in the account; checkout and order selection remain separate activities"
+  },
+  "architecture": {
+    "flow": "ShippingAddressesScreen -> useShippingAddressesViewModel -> shared controller -> shippingAddressActions -> ShippingAddressRepository -> ApiShippingAddressRepository -> HttpClient",
+    "bootstrap": "Lazy authenticated composition in createApplicationRuntime; existing authorizationSession isolates account changes from public profile metadata updates",
+    "confirmedWritesOnly": true,
+    "previewRemovedFromNormalSource": true,
+    "draftPersistence": "Memory only, cleared on Cancel or session boundary",
+    "recovery": "Failed reads and uncertain mutations retain confirmed rows and draft, block writes and require an explicit successful GET; no automatic write retry",
+    "defaultReconciliation": "GET may force draft.isDefault to true for an address already confirmed principal while preserving all eleven text fields",
+    "session": "Logout, changed account and new login to the same account clear private rows/draft and invalidate late responses; 401 clears data and blocks retries until new authentication"
+  },
+  "automatedChecks": {
+    "typecheck": { "command": "npm run typecheck", "exitCode": 0 },
+    "lint": { "command": "npm run lint", "exitCode": 0 },
+    "tests": { "command": "npm test", "exitCode": 0, "passed": 485, "failed": 0, "previousRegressionTests": 424, "newTests": 61,
+      "newFiles": { "ShippingAddressDomain.test.cjs": 14, "ShippingAddressRepository.test.cjs": 16, "ShippingAddressesController.test.cjs": 29, "ShippingAddressesHttpIntegration.test.cjs": 2 } },
+    "doctor": { "command": "npm run doctor", "exitCode": 0, "passed": 21, "total": 21 },
+    "androidExport": { "command": "npm run export:android", "exitCode": 0, "bundle": "entry-aea1d3f08629852c0d5ee741d2f18534.hbc" },
+    "webExport": { "command": "npm run export:web", "exitCode": 0, "bundle": "entry-b41e984c2760690891bee55bdf2a2ebd.js" },
+    "diffCheck": { "command": "git diff --check", "exitCode": 0 },
+    "independentBoundedReview": "Reviewed API mapping, auth/session boundaries, controller and UI. Corrected principal reconciliation after GET, blocked writes after failed GET and disabled create save when a refresh reaches five addresses. No unresolved actionable findings from that bounded review."
+  },
+  "httpIntegration": {
+    "realSockets": true,
+    "apiAndTokenStore": "Simulated in isolated ephemeral loopback server and memory; no real account or backend mutations",
+    "coverage": [
+      "Authenticated GET, POST, PATCH, principal selection and DELETE through real HttpClient/Repository/actions/controller/AuthSession",
+      "Full authoritative collections, optional-field omission and clearing, normalized allowlisted payloads",
+      "Bearer authentication with no cookies or user identifier in request bodies",
+      "PATCH committed before response loss: no optimistic publish, previous rows and draft retained, explicit GET reconciles without repeating PATCH",
+      "Synchronous logout cleanup, account isolation and 401 block until new login",
+      "In-flight transport cancellation for all five actions with no duplicate request"
+    ]
+  },
+  "webQA": {
+    "components": "Actual connected screen, form, Provider, controller, actions, Repository and HttpClient",
+    "sessionAndTransport": "Synthetic in-memory session and injected simulated fetch; not the real backend",
+    "temporaryRoute": "/qa-direcciones",
+    "temporaryRouteRemovedBeforeExports": true,
+    "viewports": [{ "width": 397, "height": 900 }, { "width": 320, "height": 850 }],
+    "observed": [
+      "Loaded Casa QA and Trabajo QA with live action controls and no preview selector",
+      "Selected Trabajo QA as principal and observed one principal marker with confirmation",
+      "Submitted empty new form and saw required-field, phone and postal-code messages",
+      "Created Visitas QA from fictitious inputs and observed confirmed collection count of three",
+      "Opened Visitas QA edit, changed exterior number to 16, simulated disconnected transport and saw the exact draft retained with Save disabled",
+      "Connected and retried GET; retained number 16, cleared error and re-enabled Save; then PATCH confirmed the changed row",
+      "Delete presented inline confirmation; Conservar retained the row",
+      "Confirmed deletions of the three synthetic rows, including principal promotion, ending with Aún no tienes direcciones",
+      "Synthetic logout showed the sign-in gate",
+      "At 320 px document width matched viewport and inspected visible inputs/textareas/buttons had no right overflow",
+      "Actual /direcciones-envio route returned to its normal anonymous gate after removing the temporary QA route"
+    ],
+    "screenshots": ["api-lista-web-397.png", "api-error-borrador-web-320.png", "api-confirmar-eliminacion-web-320.png", "api-vacia-web-320.png", "api-acceso-real-web-320.png"],
+    "realPersonalDataUsed": false
+  },
+  "preserved": {
+    "zenaidaClone": "Clean develop at 27d2495301bd52aa32749220c77f9dca24d0dde5",
+    "zenaidaStash": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "serverEnvSha256BothClones": "D9B2404F2A8BA429C2A8A3A454CFB72326A42AB013F462E01E5CEFDD59E233BB",
+    "services": [{ "port": 3200, "pid": 30280 }, { "port": 8082, "pid": 28288 }, { "port": 8083, "pid": 13476 }],
+    "health": "API ok; MongoDB connected",
+    "identitiesAndCredentialsUnchanged": true,
+    "fiveTabsUnchanged": true,
+    "serverDependenciesAndEnvironmentUnchanged": true
+  },
+  "acceptance": {
+    "nativeDesignAcceptedByUser": true,
+    "acceptedCriteria": [1, 2],
+    "totalCriteria": 10,
+    "nativeFunctionalAcceptance": false,
+    "agentObservedDevice": false,
+    "agentReadOrModifiedTrello": false,
+    "nextStep": "User runs the positive CRUD/principal flow in Expo Go with a real test account and fictitious addresses before further Trello criteria are accepted"
+  },
+  "limitations": [
+    "Automated tests and synthetic web QA do not prove successful writes to the running real backend or acceptance in Expo Go",
+    "No direct physical-device keyboard, TalkBack, text scaling, reopen or two-account test was performed by the agent",
+    "Validation, empty state, error/retry, reopening and real session isolation remain awaiting their user acceptance steps",
+    "No checkout, shipping rate, order selection, commit, push, pull request or teammate approval was performed"
+  ]
+}

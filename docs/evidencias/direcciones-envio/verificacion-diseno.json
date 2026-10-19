@@ -1,0 +1,80 @@
+{
+  "activity": "Direcciones de envío",
+  "stage": "design-only",
+  "date": "2026-10-19",
+  "workspace": "C:/Users/David/Documents/INHALEX-Movil",
+  "branch": "feature/direcciones-envio",
+  "baseCommit": "27d2495301bd52aa32749220c77f9dca24d0dde5",
+  "changesCommitted": false,
+  "published": false,
+  "pullRequest": null,
+  "architecture": {
+    "flow": "View -> useAddressesPreviewViewModel -> ReadAddressesPreview -> AddressPreviewRepository -> LocalAddressPreviewRepository",
+    "composition": "createAddressesPreviewAction in bootstrap",
+    "data": "Two frozen synthetic address examples, unrelated to any account",
+    "draft": "In-memory text only; Cancel discards it and preserves the chosen composition",
+    "apiConnected": false,
+    "validationImplemented": false,
+    "persistenceImplemented": false,
+    "realSelectionOrMutationImplemented": false
+  },
+  "automatedChecks": {
+    "typecheck": { "command": "npm run typecheck", "exitCode": 0 },
+    "lint": { "command": "npm run lint", "exitCode": 0 },
+    "existingRegressionSuite": { "command": "npm test", "exitCode": 0, "passed": 424, "failed": 0, "newDesignTestsAdded": false },
+    "doctor": { "command": "npm run doctor", "exitCode": 0, "passed": 21, "total": 21 },
+    "androidExport": { "command": "npm run export:android", "exitCode": 0, "output": "Mobile/dist/android", "bundle": "entry-2c00121016131e0cd792947b11c4bee6.hbc" },
+    "webExport": { "command": "npm run export:web", "exitCode": 0, "output": "Mobile/dist/web", "bundle": "entry-56411e6665659ba07a606b759db5959a.js" },
+    "diffCheck": { "command": "git diff --check", "exitCode": 0 },
+    "review": "Independent read-only review of the new presentation and preview layers; decorative card icon hidden from accessibility after one finding. No remaining actionable findings in the bounded review."
+  },
+  "webVisualQA": {
+    "origin": "http://localhost:8082",
+    "route": "/direcciones-envio",
+    "viewports": [{ "width": 397, "height": 900 }, { "width": 320, "height": 850 }],
+    "observed": [
+      "Con direcciones shows Casa and Trabajo with explicit preview and synthetic-data notices",
+      "Sin direcciones shows its empty composition and opens a new form",
+      "A new form starts empty; typed sample label and recipient are reflected in the inputs",
+      "Cancel returns to the same empty composition, and reopening a new form clears the previous draft",
+      "Editing Casa loads its synthetic fields and a checked, disabled principal illustration",
+      "Cancel after changing the Casa label preserves the original two read-only examples",
+      "Guardar, Eliminar, Seleccionar and principal controls remain disabled without mutation handlers",
+      "All eleven text fields and final form actions are reachable by scrolling at 320 px",
+      "Document width equals viewport width at 320 and 397 px; inspected inputs and buttons do not extend beyond the viewport",
+      "Volver a Cuenta restores Cuenta, with Profile, the new Addresses access and the existing five tabs",
+      "The Cuenta Addresses access opens the preview route without changing authentication"
+    ],
+    "screenshots": [
+      "lista-web-397.png", "vacia-web-397.png", "formulario-web-397.png",
+      "lista-web-320.png", "vacia-web-320.png", "formulario-web-320.png",
+      "formulario-acciones-web-320.png", "acceso-cuenta-web-320.png"
+    ],
+    "sensitiveDataUsed": false,
+    "deviceAcceptance": false
+  },
+  "preserved": {
+    "zenaidaClone": "Clean develop at the same base commit; no edits in that clone",
+    "zenaidaStash": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "serverEnvSha256BothClones": "D9B2404F2A8BA429C2A8A3A454CFB72326A42AB013F462E01E5CEFDD59E233BB",
+    "services": [{ "port": 3200, "pid": 30280 }, { "port": 8082, "pid": 28288 }, { "port": 8083, "pid": 13476 }],
+    "health": "API ok; MongoDB connected",
+    "gitIdentityDavid": "David Resendez / resendez515@gmail.com / David567rs",
+    "gitIdentityZenaida": "ZenaidaGR / 171315816+ZenaidaGR@users.noreply.github.com / ZenaidaGR",
+    "fiveTabs": true,
+    "serverDependenciesAuthAndSessionUnchanged": true
+  },
+  "trello": {
+    "acceptedCriteria": 0,
+    "totalCriteria": 10,
+    "eligibleAfterUserDesignAcceptance": [1, 2],
+    "agentModifiedBoard": false
+  },
+  "limitations": [
+    "Web QA does not replace the user's visual acceptance in Expo Go",
+    "Native keyboard, physical text scaling and TalkBack have not been tested on a device",
+    "The existing regression suite does not prove real address registration, validation, selection, editing or deletion",
+    "Synthetic examples do not satisfy registered-address or mutation criteria",
+    "No connection to the addresses API, real address writes, commit, push or PR in this stage"
+  ]
+}

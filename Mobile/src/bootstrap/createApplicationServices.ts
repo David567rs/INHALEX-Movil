@@ -26,6 +26,10 @@ import { ApiProfileRepository } from '../features/profile/data/repositories/ApiP
 import { ProfileError } from '../features/profile/domain/errors/ProfileError';
 import { createProfileActions, type ProfileActions } from '../features/profile/domain/useCases/profileActions';
 import { createProfileController } from '../features/profile/presentation/state/createProfileController';
+import { ApiShippingAddressRepository } from '../features/shippingAddresses/data/repositories/ApiShippingAddressRepository';
+import { ShippingAddressError } from '../features/shippingAddresses/domain/errors/ShippingAddressError';
+import { createShippingAddressActions, type ShippingAddressActions } from '../features/shippingAddresses/domain/useCases/shippingAddressActions';
+import { createShippingAddressesController } from '../features/shippingAddresses/presentation/state/createShippingAddressesController';
 
 export interface ApplicationServicesOptions {
   environment?: Environment;
@@ -152,8 +156,31 @@ export function createApplicationRuntime(options: Omit<ApplicationServicesOption
     get: async (requestOptions) => getProfileActions().get(requestOptions),
     update: async (draft, requestOptions) => getProfileActions().update(draft, requestOptions),
   }, auth.updatePublicUser);
+  let addressActions: ShippingAddressActions | undefined;
+  function getAddressActions(): ShippingAddressActions {
+    if (!addressActions) {
+      try {
+        const environment = options.environment ?? readEnvironment();
+        addressActions = createShippingAddressActions(new ApiShippingAddressRepository(new HttpClient({
+          baseUrl: environment.apiUrl, isDevelopment: environment.isDevelopment,
+          requestTimeoutMs: environment.requestTimeoutMs, fetch: options.fetch,
+          getAccessToken: auth.getAccessToken,
+        })));
+      } catch {
+        throw new ShippingAddressError('Las direcciones no están disponibles en este momento. Inténtalo más tarde.', 'configuration');
+      }
+    }
+    return addressActions;
+  }
+  const shippingAddresses = createShippingAddressesController(auth.authorizationSession, {
+    list: async (requestOptions) => getAddressActions().list(requestOptions),
+    create: async (draft, requestOptions) => getAddressActions().create(draft, requestOptions),
+    update: async (id, draft, requestOptions) => getAddressActions().update(id, draft, requestOptions),
+    select: async (id, requestOptions) => getAddressActions().select(id, requestOptions),
+    remove: async (id, requestOptions) => getAddressActions().remove(id, requestOptions),
+  });
   // No transport or credential is exposed to the React tree.
-  return Object.freeze({ session: auth.session, favorites, cart, profile });
+  return Object.freeze({ session: auth.session, favorites, cart, profile, shippingAddresses });
 }
 
 /** Defer configuration until submission so navigation never depends on the API. */
