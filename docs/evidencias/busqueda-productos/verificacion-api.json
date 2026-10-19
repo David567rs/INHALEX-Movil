@@ -1,0 +1,74 @@
+{
+  "clientDate": "2026-10-19",
+  "timezone": "America/Mexico_City",
+  "workspace": "C:/Users/David/Documents/INHALEX-Movil-Zenaida",
+  "branch": "feature/busqueda-productos",
+  "baseCommit": "50d2152f1d23d46f413f2cbc8d81e32914e19143",
+  "stage": "api-connected-local-uncommitted",
+  "architecture": {
+    "layers": "Screen -> ViewModel/controller -> SearchProducts -> ProductSearchRepository -> ApiProductSearchRepository -> HttpClient",
+    "composition": "bootstrap/createProductSearchAction.ts",
+    "sharedPublicContract": "CatalogPage + strict catalog mapper",
+    "searchTerm": "outer trim only, maximum100 UTF16 code units; regex literal escape then URI encoding in data adapter",
+    "queryOnTyping": false,
+    "explicitButtonOrKeyboardSubmit": true,
+    "cancelAndIgnoreStaleRequests": true,
+    "duplicateSubmissionBlocked": true,
+    "retainSameTermResultsOnRefreshFailure": true,
+    "editingClearsStaleResults": true,
+    "pagination": "20 per page, deduplicate ids, restart first page if collection shrank",
+    "httpInViewOrDomain": false,
+    "authenticated": false,
+    "obsoletePreviewWiringRemoved": true
+  },
+  "automated": {
+    "typecheck": "passed-global",
+    "lint": "passed-no-warnings",
+    "tests": { "passed": 280, "failed": 0, "new": 44, "repository": 12, "useCase": 10, "controller": 22 },
+    "expoDoctor": { "passed": 21, "total": 21 },
+    "androidExport": { "status": "passed", "modules": 1434, "bundle": "entry-15678101659c765507bc2f67f63ace98.hbc" },
+    "webExport": { "status": "passed", "modules": 982, "bundle": "entry-e38f7b818ceafd8322e0407c1fa36062.js" },
+    "independentReview": "no actionable issues"
+  },
+  "realHttp": {
+    "evidence": "api-http-real.json",
+    "target": "running Nest/MongoDB public API3200",
+    "cases": ["Lavanda", "LAVANDA", "menta", "café", "cafe", "no-match", "[ literal", ".* literal"],
+    "credentials": "omit, no Authorization",
+    "publicFieldsOnly": true,
+    "databaseWrites": false
+  },
+  "webQA": {
+    "temporaryRoute": "busqueda-http-qa",
+    "fixture": "loopback3218; public snapshots + synthetic25-item pagination; no database writes",
+    "label": "QA web · HTTP con datos de prueba",
+    "requestLog": "qa-http-requests.json",
+    "verified": ["idle", "loading and duplicate-submit disabled", "results with photo/price", "no matches", "safe503 without raw diagnostics", "same-term results retained on503", "retry recovered", "Enter submits", "clear and suggestions do not request", "pagination20 to25", "no more button after last page", "detail id navigation", "back retains search results"],
+    "responsiveCssWidths": [321, 392],
+    "browserZoom": "110%",
+    "horizontalOverflowObserved": false,
+    "focusFix": "web uses keyboardDismissMode none, native keeps on-drag; first focus after scroll verified",
+    "detailLoadLimitation": "detail route opened correct id but live web HTTP is blocked by unchanged CORS for8083; no live detail data claimed",
+    "screenshots": ["api-cargando-web.png", "api-resultados-web.png", "api-sin-resultados-web.png", "api-error-inicial-web.png", "api-error-conserva-web.png", "api-paginacion-web.png", "api-compacto-web.png"]
+  },
+  "cleanup": {
+    "qaRouteRemoved": true,
+    "qaTypesRemoved": true,
+    "fixtureStopped": true,
+    "temporaryHelpersRemoved": true,
+    "finalChecksAfterCleanup": true
+  },
+  "preservation": {
+    "backendChanged": false,
+    "corsChanged": false,
+    "dependenciesChanged": false,
+    "serverEnvSha256": "D9B2404F2A8BA429C2A8A3A454CFB72326A42AB013F462E01E5CEFDD59E233BB",
+    "stashCommit": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "gitAndCredentialUser": "ZenaidaGR",
+    "davidWorkingTreeUnchanged": true,
+    "preservedServices": [3200, 8082, 8083]
+  },
+  "nativeAcceptance": { "acceptedCriteria": [1, 2], "total": 8, "apiAcceptance": "pending-user-expo-go-test", "agentObservedDevice": false },
+  "trello": { "firstTwoMarkedByUser": true, "updatedByAgent": false, "additionalCriteriaAccepted": false },
+  "delivery": { "commitCreated": false, "pushed": false, "pullRequestCreated": false, "futureReviewer": "David567rs", "merged": false }
+}

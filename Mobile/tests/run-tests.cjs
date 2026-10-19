@@ -26,6 +26,9 @@ const result = spawnSync(process.execPath, [
   path.join(__dirname, 'ProductDetailRepository.test.cjs'),
   path.join(__dirname, 'ProductDetailUseCase.test.cjs'),
   path.join(__dirname, 'ProductDetailController.test.cjs'),
+  path.join(__dirname, 'ProductSearchRepository.test.cjs'),
+  path.join(__dirname, 'ProductSearchUseCase.test.cjs'),
+  path.join(__dirname, 'ProductSearchController.test.cjs'),
 ], { stdio: 'inherit' });
 
 if (result.error) console.error(result.error.message);

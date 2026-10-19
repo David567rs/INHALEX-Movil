@@ -1,6 +1,16 @@
 # INHALEX: base móvil
 
-Proyecto Expo SDK 57 con React Native, TypeScript y Expo Router, identidad INHALEX y cinco pestañas. Registro, Login, Persistencia, Catálogo y Líneas están integrados. Líneas completó 8/8 mediante el [PR #7](https://github.com/David567rs/INHALEX-Movil/pull/7); Catálogo tiene 9/9 aceptados en rama, con integración de navegación pendiente y tarjeta abierta hasta el merge. David continúa en `feature/detalle-producto`: diseño, datos completos y cambio de producto aceptados en Expo Go, junto con error y recuperación (5/9). La navegación de Catálogo fue aceptada, sin cambiar el conteo 5/9 de Detalle; el [PR #8](https://github.com/David567rs/INHALEX-Movil/pull/8) está abierto hacia `develop` e incluye los accesos de navegación a Favoritos y Bolsa. La revisión está solicitada a ZenaidaGR, sin aprobación ni merge; consulta los checks del HEAD vigente en el PR, sin declarar CI final aprobada. Las actividades siguen el [plan](../docs/PLAN-DE-TRABAJO.md).
+Proyecto Expo SDK 57 con React Native, TypeScript y Expo Router, identidad INHALEX y cinco pestañas. Registro, Login, Persistencia, Catálogo, Líneas y Detalle están integrados. El [PR #8](https://github.com/David567rs/INHALEX-Movil/pull/8) quedó aprobado y fusionado por ZenaidaGR en `develop` (`50d2152`); Detalle y Catálogo completaron sus criterios. La actividad actual es la [conexión de Búsqueda de productos](../docs/CONEXION-BUSQUEDA-PRODUCTOS.md), en `INHALEX-Movil-Zenaida`, rama `feature/busqueda-productos`, con MVVM y Repository. El usuario aceptó diseño, escritura/borrado y resultados reales de `Lavanda` con foto y precio en Expo Go, y confirmó contextualmente las guías sin coincidencias, error/reintento y distintos términos (`LAVANDA`, `Menta` y `Lavanda` con espacios exteriores): 7/8 criterios. La última aceptación procede de su respuesta en el chat «dale ya quedó, y cada que acabes sugiereme el siguiente texto porque ya no aparece», sin observación directa del dispositivo ni cambios en Trello por el agente. El [PR #9](https://github.com/David567rs/INHALEX-Movil/pull/9) de ZenaidaGR está abierto hacia `develop`, con revisión solicitada a David567rs; solo queda pendiente esa revisión real, sin aprobación ni merge. La CI del HEAD vigente está pendiente de verificación; no se declara aprobada. Las actividades siguen el [plan](../docs/PLAN-DE-TRABAJO.md).
+
+## Probar la conexión de Búsqueda en la copia de Zenaida
+
+Metro de esta copia utiliza `8083`; la copia de David conserva `8082` y la API compartida `3200`. Si ya está encendido, reutiliza su QR o abre `exp://192.168.1.77:8083` en Expo Go dentro de la misma red. La dirección LAN puede cambiar al cambiar de red. Entra en **Catálogo → Buscar productos**, escribe `Lavanda` y pulsa **Buscar**. Escribir, borrar y tocar sugerencias solo modifica el borrador; la consulta requiere envío explícito. Las tarjetas muestran los datos públicos reales de Catálogo y abren Detalle. La búsqueda distingue acentos: `café` y `cafe` pueden dar resultados diferentes. La [guía de conexión](../docs/CONEXION-BUSQUEDA-PRODUCTOS.md) separa la prueba de resultados de las comprobaciones posteriores de vacío y error/reintento.
+
+Si Metro de Zenaida no estuviera activo, desde `C:\Users\David\Documents\INHALEX-Movil-Zenaida`, en Git Bash o CMD:
+
+```sh
+npm --prefix Mobile run start -- --port 8083
+```
 
 ## Abrir el proyecto
 
