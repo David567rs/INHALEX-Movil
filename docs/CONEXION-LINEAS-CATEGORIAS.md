@@ -1,6 +1,6 @@
 # Conexión de Líneas o categorías
 
-Estado del 18 de octubre de 2026: API implementada en `feature/lineas-categorias`, con siete criterios aceptados por el usuario en Expo Go. La [evidencia textual](evidencias/lineas-categorias/expo-go-aceptacion.json) separa diseño, snapshot inicial 0/8, primeras confirmaciones 5/8 y 6/8 y recorrido final de error/reintento aceptado 7/8. La tarjeta sigue En progreso; solo falta revisión de código. El usuario puede marcar «Probar la funcionalidad», sin afirmar que ya lo hizo; el agente no modificó Trello. Autorizó abrir el PR hacia `develop` para que Zenaida lo revise. El PR está en preparación, todavía sin apertura ni push.
+Estado del 18 de octubre de 2026: API implementada en `feature/lineas-categorias`, con siete criterios aceptados por el usuario en Expo Go. La [evidencia textual](evidencias/lineas-categorias/expo-go-aceptacion.json) separa diseño, snapshot inicial 0/8, primeras confirmaciones 5/8 y 6/8 y recorrido final de error/reintento aceptado 7/8. La tarjeta sigue En progreso; solo falta revisión de código. El usuario puede marcar «Probar la funcionalidad», sin afirmar que ya lo hizo; el agente no modificó Trello. Autorizó abrir el PR hacia `develop` para que Zenaida lo revise. El [PR #7](https://github.com/David567rs/INHALEX-Movil/pull/7), «Implementar Líneas o categorías con MVVM y Repository», está abierto por David567rs desde `feature/lineas-categorias` hacia `develop`, con la rama publicada y revisión solicitada a ZenaidaGR. Consulta [los checks del HEAD vigente](https://github.com/David567rs/INHALEX-Movil/pull/7/checks); no hay aprobación ni merge.
 
 ## Consulta y arquitectura
 
@@ -68,7 +68,7 @@ El 18 de octubre de 2026 el usuario confirmó: «Sí, amigo, apareció el aviso 
 3. Comprueba que aparecen «Se conservan las últimas líneas cargadas.» y que permanecen las líneas y la selección.
 4. Ejecuta `npm run dev:server`; cuando esté listo, pulsa «Actualizar líneas» y comprueba que recupera los datos y desaparece el aviso.
 
-Con datos ya cargados el botón del recorrido es «Actualizar líneas»; «Reintentar» corresponde al error inicial sin datos. La confirmación acepta aviso, conservación de categorías y selección, y recuperación al reiniciar el backend y actualizar. Completa «Probar la funcionalidad»; solo queda revisión de código. La evidencia es textual, sin observación directa del teléfono ni capturas nativas. El PR autorizado hacia `develop` para Zenaida está en preparación, todavía sin apertura, push o revisión solicitada.
+Con datos ya cargados el botón del recorrido es «Actualizar líneas»; «Reintentar» corresponde al error inicial sin datos. La confirmación acepta aviso, conservación de categorías y selección, y recuperación al reiniciar el backend y actualizar. Completa «Probar la funcionalidad»; solo queda revisión de código. La evidencia es textual, sin observación directa del teléfono ni capturas nativas. El [PR #7](https://github.com/David567rs/INHALEX-Movil/pull/7) ya está abierto hacia `develop` y la revisión fue solicitada a ZenaidaGR. La apertura no completa el criterio «Revisar el código»; sigue 7/8. Consulta [los checks del HEAD vigente](https://github.com/David567rs/INHALEX-Movil/pull/7/checks); sin aprobación ni merge.
 
 ## Criterios de Trello: 7/8
 
