@@ -1,0 +1,176 @@
+{
+  "activity": "Perfil del usuario",
+  "stage": "API connection",
+  "verifiedAt": "2026-10-19T11:30:08Z",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+  "branch": "feature/perfil-usuario",
+  "baseCommit": "559a15464e7cd778b2956b6e217855e5d26a77b0",
+  "architecture": "ProfileScreen -> useProfileViewModel/createProfileController -> ProfileActions -> ProfileRepository -> ApiProfileRepository -> HttpClient, private bootstrap composition",
+  "contract": {
+    "read": "GET /api/auth/me",
+    "update": "PATCH /api/auth/me",
+    "authorization": "Existing private Bearer",
+    "editableFields": [
+      "firstName",
+      "lastName",
+      "phone"
+    ],
+    "readonlyFields": [
+      "email"
+    ],
+    "publicModelFields": [
+      "id",
+      "firstName",
+      "lastName",
+      "email",
+      "phone"
+    ],
+    "validation": "Normalized names 2-50 each, full name <=100 and DTO characters; phone 10-15 digits",
+    "backendModified": false
+  },
+  "automatedChecks": {
+    "typecheck": {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    "lint": {
+      "command": "npm run lint",
+      "exitCode": 0
+    },
+    "tests": {
+      "command": "npm test",
+      "passed": 424,
+      "failed": 0,
+      "existingBaseline": 369,
+      "added": 55,
+      "addedCoverage": {
+        "domainAndRepository": 26,
+        "controller": 22,
+        "privatePublicUserUpdate": 2,
+        "realHttpSimulatedApiAndStore": 1,
+        "pendingCartFavoritesAndAuthContinuity": 4
+      }
+    },
+    "doctor": {
+      "command": "npm run doctor",
+      "passed": 21,
+      "total": 21,
+      "exitCode": 0
+    },
+    "androidExport": {
+      "command": "npm run export:android",
+      "exitCode": 0,
+      "modules": 1467,
+      "bundle": "Mobile/dist/android/_expo/static/js/android/entry-9318a89acc3b727a1b8190e205b8e0f3.hbc",
+      "sha256": "88F97E11C5C08F52E1A1A0B46673102CD8A7C422827798A609796CAC27909CA1"
+    },
+    "webExport": {
+      "command": "npm run export:web",
+      "exitCode": 0,
+      "modules": 1015,
+      "bundle": "Mobile/dist/web/_expo/static/js/web/entry-191516519981ab7dfed7786dae60867e.js",
+      "sha256": "C6914DF55F552DC8F4CCB3762FE33FB870DA13D263BEBCDA0EF90DC086D4F212"
+    },
+    "gitDiffCheck": "passed",
+    "temporaryQaRemovedBeforeFinalChecks": true
+  },
+  "behaviorVerified": [
+    "GET/PATCH use the private Bearer, allowlisted fields and safe errors; validation matches backend; legacy reads remain possible",
+    "Malformed responses and mismatched account IDs cannot replace the confirmed profile",
+    "Duplicate submissions, concurrent operations and late responses after cancellation/logout/new login/stop are guarded",
+    "Recoverable reads retain confirmed data; uncertain writes retain the draft and require GET before another PATCH",
+    "An HTTP write applied before its response fails is reconciled by GET, without automatic PATCH retry",
+    "401 clears profile/draft and requests authentication without silently deleting stored credentials",
+    "Confirmed PATCH updates Cuenta public user via expected-session callback without replacing JWT or rewriting SecureStore",
+    "Private authorizationSession preserves pending Cart/Favorites writes on metadata updates; real auth transitions still invalidate them"
+  ],
+  "browserReview": {
+    "type": "Real React UI and profile controller with labelled synthetic in-memory actions/auth/store; no live profile API or database write",
+    "origin": "http://localhost:8082",
+    "viewports": [
+      {
+        "width": 397,
+        "height": 900
+      },
+      {
+        "width": 320,
+        "height": 850
+      }
+    ],
+    "passed": [
+      "Anonymous gate and authenticated synthetic summary; read-only email",
+      "Required name validation, correction and confirmed Save",
+      "Cancel restores confirmed data",
+      "Failed Save preserves draft and disables further writes; warning persists on draft edits",
+      "Explicit refresh after connection recovery unlocks Save and retains draft",
+      "Successful recovered Save displays the new name",
+      "Failed refresh retains profile, retry clears warning",
+      "Logout removes personal content",
+      "Compact summary/form readable without visible horizontal clipping",
+      "Final production route opens from Cuenta and navigates to login without synthetic fixtures",
+      "Cuenta retains five tabs"
+    ],
+    "screenshots": [
+      "api-qa-anonimo-web.png",
+      "api-qa-resumen-web.png",
+      "api-qa-validacion-web.png",
+      "api-qa-guardado-web.png",
+      "api-qa-error-borrador-web.png",
+      "api-qa-recuperado-compacto-web.png",
+      "api-qa-edicion-compacta-web.png",
+      "api-qa-error-lectura-compacto-web.png",
+      "api-qa-sesion-cerrada-compacto-web.png",
+      "api-final-acceso-cuenta-compacto-web.png",
+      "api-final-perfil-sin-sesion-web.png"
+    ],
+    "temporaryRoute": "profile-qa.tsx removed; no helper or synthetic credentials in final source or web bundle",
+    "viewportRestored": true
+  },
+  "preservation": {
+    "zenaidaBranch": "develop",
+    "zenaidaHead": "559a15464e7cd778b2956b6e217855e5d26a77b0",
+    "zenaidaClean": true,
+    "zenaidaStash": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "bothServerEnvSha256": "D9B2404F2A8BA429C2A8A3A454CFB72326A42AB013F462E01E5CEFDD59E233BB",
+    "dependenciesChanged": false,
+    "gitIdentitiesPreserved": true,
+    "services": [
+      {
+        "port": 3200,
+        "pid": 30280
+      },
+      {
+        "port": 8082,
+        "pid": 28288
+      },
+      {
+        "port": 8083,
+        "pid": 13476
+      }
+    ],
+    "apiHealth": "ok",
+    "database": "connected"
+  },
+  "limits": [
+    "No real user profile was changed by the agent in the live database",
+    "Real socket HTTP integration uses a simulated API/store, not the live Nest/MongoDB backend or native SecureStore",
+    "Web UI evidence is synthetic and is not an Expo Go recording",
+    "Native keyboard, TalkBack, large text, real server persistence and physical account isolation await user confirmation"
+  ],
+  "humanAcceptance": {
+    "designAccepted": true,
+    "acceptedCriteria": [
+      1
+    ],
+    "acceptedCount": 1,
+    "totalCriteria": 10,
+    "source": "expo-go-aceptacion.json",
+    "agentReadOrModifiedTrello": false,
+    "newNativeFunctionalAcceptance": false
+  },
+  "publication": {
+    "committed": false,
+    "pushed": false,
+    "pullRequest": null
+  }
+}

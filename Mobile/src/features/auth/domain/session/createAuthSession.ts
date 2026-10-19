@@ -30,8 +30,11 @@ function publicUser(user: LoginUser): LoginUser {
 export function createAuthSession(login: LoginUserAction, store: SessionTokenStore, verifySession: VerifySessionAction): {
   session: AuthSession;
   getAccessToken: () => string | undefined;
+  updatePublicUser: (user: LoginUser, expected: AuthSessionState) => boolean;
+  authorizationSession: AuthSession;
 } {
   let snapshot: AuthSessionState = AUTH_INITIAL_STATE;
+  let authorizationSnapshot: AuthSessionState = AUTH_INITIAL_STATE;
   let accessToken: string | undefined;
   let generation = 0;
   let pendingLogin = false;
@@ -40,13 +43,19 @@ export function createAuthSession(login: LoginUserAction, store: SessionTokenSto
   let pendingRestoration: Promise<void> | null = null;
   let storageTail: Promise<void> = Promise.resolve();
   const listeners = new Set<() => void>();
+  const authorizationListeners = new Set<() => void>();
 
-  function publish(next: AuthSessionState) {
+  function publish(next: AuthSessionState, metadataOnly = false) {
     if (snapshot.status === next.status && snapshot.user === next.user && snapshot.message === next.message) return;
     snapshot = Object.freeze(next);
+    if (!metadataOnly) authorizationSnapshot = snapshot;
     for (const listener of [...listeners]) {
       try { listener(); }
       catch { /* Observers cannot turn a committed authentication operation into a failure. */ }
+    }
+    if (!metadataOnly) for (const listener of [...authorizationListeners]) {
+      try { listener(); }
+      catch { /* Personal collections observe authorization changes independently of profile text. */ }
     }
   }
 
@@ -227,5 +236,23 @@ export function createAuthSession(login: LoginUserAction, store: SessionTokenSto
     },
   });
 
-  return { session, getAccessToken: () => accessToken };
+  function updatePublicUser(user: LoginUser, expected: AuthSessionState): boolean {
+    // A confirmed profile write cannot revive a signed-out session or replace a newer login.
+    if (snapshot !== expected || snapshot.status !== 'authenticated' || !snapshot.user
+      || snapshot.user.id !== user.id || !accessToken) return false;
+    const next = publicUser(user);
+    if (Object.keys(next).every((key) => next[key as keyof LoginUser] === snapshot.user?.[key as keyof LoginUser])) return true;
+    publish({ ...snapshot, user: next }, true);
+    return snapshot.status === 'authenticated' && snapshot.user === next;
+  }
+
+  // Private composition port: metadata edits must not cancel unrelated in-flight collection writes.
+  const authorizationSession: AuthSession = Object.freeze({ ...session,
+    getSnapshot: () => authorizationSnapshot,
+    subscribe: (listener: () => void) => {
+      authorizationListeners.add(listener);
+      return () => { authorizationListeners.delete(listener); };
+    },
+  });
+  return { session, getAccessToken: () => accessToken, updatePublicUser, authorizationSession };
 }

@@ -1,0 +1,96 @@
+{
+  "activity": "Perfil del usuario",
+  "stage": "design-only",
+  "verifiedAt": "2026-10-19T11:14:55Z",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+  "branch": "feature/perfil-usuario",
+  "baseCommit": "559a15464e7cd778b2956b6e217855e5d26a77b0",
+  "publication": { "committed": false, "pushed": false, "pullRequest": null },
+  "architecture": "View -> ViewModel -> ReadProfilePreview -> ProfilePreviewRepository -> LocalProfilePreviewRepository; bootstrap composes the dependency",
+  "scope": {
+    "syntheticProfile": true,
+    "draftInMemoryOnly": true,
+    "profileApiConnected": false,
+    "validationImplemented": false,
+    "saveImplemented": false,
+    "emailEditable": false,
+    "newDependencies": false,
+    "serverChanges": false,
+    "authImplementationChanged": false
+  },
+  "automatedChecks": {
+    "typecheck": { "command": "npm run typecheck", "exitCode": 0 },
+    "lint": { "command": "npm run lint", "exitCode": 0 },
+    "existingTests": { "command": "npm test", "passed": 369, "failed": 0, "newTests": 0 },
+    "doctor": { "command": "npm run doctor", "passed": 21, "total": 21, "exitCode": 0 },
+    "androidExport": {
+      "command": "npm run export:android",
+      "exitCode": 0,
+      "modules": 1463,
+      "bundle": "Mobile/dist/android/_expo/static/js/android/entry-65d45f23f9429c87b60cab01cfa6b4ec.hbc",
+      "sha256": "7A0522D7DF197C1942392108D340EB436EDCFDD950670F01DC2508C9CCFC6480"
+    },
+    "webExport": {
+      "command": "npm run export:web",
+      "exitCode": 0,
+      "modules": 1011,
+      "bundle": "Mobile/dist/web/_expo/static/js/web/entry-3b6ed804b9ba5297acfb2f9ded5d735e.js",
+      "sha256": "12481DAF102383A3289BBE214873BDBC3567314DCD1FC7D4E2E01202A9F36C69"
+    }
+  },
+  "browserReview": {
+    "origin": "http://localhost:8082",
+    "viewports": [ { "width": 397, "height": 900 }, { "width": 320, "height": 850 } ],
+    "passed": [
+      "Cuenta exposes the labelled profile preview, including without a session",
+      "Summary shows the explicitly synthetic profile and contact sections",
+      "No horizontal overflow in summary or edit mode at either tested width",
+      "All three sample text fields accept local draft input",
+      "Email is read-only and Save is disabled without a handler",
+      "Cancel returns to the original summary; reopening restores all sample fields",
+      "Compact identity remains visible after its flex layout correction",
+      "Back returns to Cuenta with the existing five tabs",
+      "Back, Save and Cancel meet the measured 44px minimum height"
+    ],
+    "screenshots": [
+      "acceso-cuenta-web.png",
+      "resumen-web.png",
+      "edicion-borrador-web.png",
+      "edicion-restaurada-web.png",
+      "resumen-compacto-web.png",
+      "contacto-compacto-web.png",
+      "edicion-compacta-web.png",
+      "edicion-controles-compactos-web.png",
+      "regreso-cuenta-compacto-web.png"
+    ],
+    "viewportRestored": true,
+    "limitations": [
+      "Web QA does not establish native keyboard, large text or TalkBack behavior",
+      "No real profile retrieval, authorization, field validation, update or persistence was tested",
+      "Existing shared FormField icon semantics were not changed in this visual activity"
+    ]
+  },
+  "preservation": {
+    "zenaidaBranch": "develop",
+    "zenaidaHead": "559a15464e7cd778b2956b6e217855e5d26a77b0",
+    "zenaidaWorkingTreeClean": true,
+    "zenaidaStashPreserved": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "bothServerEnvSha256": "D9B2404F2A8BA429C2A8A3A454CFB72326A42AB013F462E01E5CEFDD59E233BB",
+    "gitIdentitiesPreserved": true,
+    "listeningServices": [
+      { "port": 3200, "pid": 30280 },
+      { "port": 8082, "pid": 28288 },
+      { "port": 8083, "pid": 13476 }
+    ],
+    "apiHealth": "ok",
+    "database": "connected"
+  },
+  "acceptance": {
+    "expoGoDesignAccepted": false,
+    "nativeDeviceObservedByAgent": false,
+    "trelloReadOrModifiedByAgent": false,
+    "acceptedCriteria": 0,
+    "totalCriteria": 10,
+    "nextStep": "User reviews the preview in Expo Go before connecting the real API in this same branch"
+  }
+}

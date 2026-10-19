@@ -416,3 +416,45 @@ Se autoriza commit/publicación de `feature/bolsa-compras` desde ZenaidaGR y PR 
 El [PR#11](https://github.com/David567rs/INHALEX-Movil/pull/11), **Implementar Bolsa de compras con MVVM y Repository**, quedó abierto por ZenaidaGR desde `feature/bolsa-compras` hacia `develop`, con revisión solicitada y confirmada a David567rs. Al abrirlo estaba publicado el commit de implementación `28292f3da721ac8a157844b0917320cb5dc2e9d7`, precedido por el cierre documental de Favoritos. La evidencia de apertura está en `docs/evidencias/bolsa-compras/preparacion-pr11.json` (desde docs: `evidencias/bolsa-compras/preparacion-pr11.json`).
 
 Bolsa continúa 9/10, con **Revisar el código** pendiente; no hay aprobación ni merge. Consultar CI del HEAD vigente. La aceptación nativa procede del usuario y se distingue de la QA web simulada y las 369 pruebas técnicas ya registradas. El agente no leyó ni modificó Trello. Mantener la tarjeta en progreso hasta revisión/integración. Esta actualización enlaza el PR sin cambiar código funcional.
+
+## Estado vigente: Perfil del usuario, diseño pendiente de aceptación (0/10)
+
+Este apartado prevalece sobre los estados históricos anteriores. El [PR #11](https://github.com/David567rs/INHALEX-Movil/pull/11), creado por ZenaidaGR, fue aprobado por David567rs sobre `d68a9698ff5142875d6a36878173d3d88cfc8c20` a las `2026-10-19T10:55:10Z` y fusionado por él a `develop` a las `10:55:19Z`, en `559a15464e7cd778b2956b6e217855e5d26a77b0`. Backend CI y Mobile CI terminaron correctamente sobre ese HEAD antes del merge. La [evidencia de integración](evidencias/bolsa-compras/integracion-pr11.json) registra la revisión formal que completa **Bolsa 10/10**, sin añadir aceptación nativa. El usuario confirmó Trello actualizado; el agente no leyó ni modificó el tablero.
+
+Ambas copias se sincronizaron con `develop` en `559a154`, limpias antes de iniciar Perfil, con recibo de sincronización separado. Zenaida permanece en `develop`; la actividad actual se realiza solo en `C:\Users\David\Documents\INHALEX-Movil`, rama `feature/perfil-usuario`, creada desde ese commit. David567rs conserva la responsabilidad y ZenaidaGR revisará el futuro PR a `develop`.
+
+El [diseño de Perfil](DISENO-PERFIL-USUARIO.md) utiliza MVVM, un Repository local de solo lectura y bootstrap. Cuenta → **Perfil del usuario**, con etiqueta accesible **Ver diseño de perfil**, abre `/perfil-usuario`, incluso sin sesión durante esta etapa. `ProfilePreviewScreen` muestra **Vista previa**, **Datos de ejemplo para revisar el diseño.**, secciones **Información personal** y **Datos de contacto**, avatar VF y Valeria Flores, `valeria@example.test`, teléfono `5512345678`. **Editar datos de ejemplo**, con etiqueta accesible **Revisar diseño de edición de perfil**, abre **Editar tus datos** con un borrador de Nombres, Apellidos y Teléfono en memoria; correo de solo lectura, **Cancelar** restaura y **Guardar cambios** está deshabilitado sin acción. Se conservan cinco pestañas y sesión. No hay consulta o escritura real de perfil, validación funcional, persistencia ni cambios de autenticación, backend o dependencias.
+
+La captura del usuario contiene exactamente estos diez criterios, todos pendientes:
+
+- [ ] Crear pantalla de perfil
+- [ ] Obtener datos del usuario desde la API
+- [ ] Mostrar información personal
+- [ ] Permitir editar datos autorizados
+- [ ] Validar campos modificados
+- [ ] Guardar cambios mediante la API
+- [ ] Mostrar confirmación de actualización
+- [ ] Manejar errores de conexión
+- [ ] Probar la funcionalidad
+- [ ] Revisar el código
+
+Perfil permanece **0/10**, con aceptación visual en Expo Go pendiente. Solo la aprobación posterior del diseño permitirá aceptar el criterio 1; los datos de ejemplo y el borrador no completan los demás criterios. La [verificación propia de Perfil](evidencias/perfil-usuario/verificacion-diseno.json) registra TypeScript, lint, 369/369 pruebas existentes, Doctor 21/21, exportaciones Android 1463/web 1011 y QA web a 320/397 px aprobados. Se comprobaron resumen, borrador descartable, correo de solo lectura, guardado deshabilitado y regreso a Cuenta con cinco pestañas. Teclado nativo, TalkBack y texto ampliado no se probaron físicamente. Esta etapa permanece local, sin commit, publicación ni PR. Tras aceptar el diseño se continuará con conexión y aceptación funcional, y después con la revisión real de ZenaidaGR.
+
+## Estado vigente: Perfil aceptado funcionalmente, preparación de PR (9/10)
+
+Actualización vigente: el usuario confirmó exactamente: «Amigo, los datos se conservaron al reabrir, se ocultaron al cerrar sesión y volvieron al ingresar con la misma cuenta. Abre el PR de Perfil hacia develop para que Zenaida lo revise.». Se acepta Probar la funcionalidad (9): Perfil 9/10, únicamente Revisar el código (10) pendiente. La aceptación textual incluye reapertura con datos guardados, ocultación al cerrar sesión y recuperación al ingresar con la misma cuenta; no es una observación directa del dispositivo por el agente ni una prueba física entre dos cuentas distintas. El usuario autoriza commit/publicación de feature/perfil-usuario como David567rs, PR hacia develop y solicitud de revisión a ZenaidaGR. No fusionar por esta solicitud. Mantener tarjeta en progreso hasta revisión/integración; el marcado de Trello no está confirmado y el agente no leyó ni modificó el tablero. La aceptación vigente está en expo-go-aceptacion.json.
+
+La [conexión de Perfil](CONEXION-PERFIL-USUARIO.md) continúa solo en la copia de David, rama `feature/perfil-usuario`, con MVVM, Repository y bootstrap. GET/PATCH `/auth/me` requieren Bearer; PATCH envía únicamente nombres, apellidos y teléfono conforme al DTO existente. El correo es de solo lectura. La implementación incluye consulta, **Editar datos**, validación, guardado confirmado, carga, errores/reintento y protección al cambiar/cerrar sesión. Tras PATCH actualiza los datos públicos de Cuenta mediante un callback privado ligado a la sesión esperada, sin sustituir el token ni escribir SecureStore. Los cambios de metadatos conservan las operaciones pendientes de Bolsa/Favoritos; login nuevo y logout siguen invalidándolas. Un fallo de transporte al guardar exige GET exitoso antes de otro PATCH, conserva el aviso al editar/Cancelar y permite revisar el borrador abierto después de reconciliar el perfil confirmado; no reenvía la escritura. El diseño y sus verificaciones permanecen como historia.
+
+- [x] Crear pantalla de perfil
+- [x] Obtener datos del usuario desde la API
+- [x] Mostrar información personal
+- [x] Permitir editar datos autorizados
+- [x] Validar campos modificados
+- [x] Guardar cambios mediante la API
+- [x] Mostrar confirmación de actualización
+- [x] Manejar errores de conexión
+- [x] Probar la funcionalidad
+- [ ] Revisar el código
+
+La verificación técnica registrada en verificacion-api.json pasó TypeScript, lint, 424/424 pruebas, Doctor 21/21 y exportaciones Android 1467/web 1015, con QA web sintética y HTTP real contra una API simulada. Es un registro anterior a esta aceptación nativa; no se repitieron comprobaciones por una actualización documental. Mantener cinco pestañas, rama, servicios, configuración, identidades y stash. Publicación y PR autorizados; la revisión real corresponde a ZenaidaGR y no se sustituye por la revisión técnica de agentes.

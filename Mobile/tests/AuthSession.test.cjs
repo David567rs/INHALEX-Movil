@@ -27,6 +27,41 @@ const createAuthSession = (login, store) => createCoordinator(login, {
   ...store,
 }, async () => loginResult().user);
 
+test('confirmed public profile updates preserve credentials, project fields and reject obsolete sessions', async () => {
+  const writes = [];
+  const runtime = createAuthSession(async () => loginResult(), {
+    set: async (token) => writes.push(token), clear: async () => {},
+  });
+  await runtime.session.signIn(form());
+  const expected = runtime.session.getSnapshot();
+  const token = runtime.getAccessToken();
+  const updated = { ...expected.user, firstName: 'Elena', passwordHash: 'never-public', accessToken: 'never-public' };
+  assert.equal(runtime.updatePublicUser(updated, expected), true);
+  assert.equal(runtime.session.getSnapshot().user.firstName, 'Elena');
+  assert.deepEqual(Object.keys(runtime.session.getSnapshot().user).sort(), ['email', 'firstName', 'id', 'lastName', 'phone']);
+  assert.equal(runtime.getAccessToken(), token);
+  assert.deepEqual(writes, [token]);
+  assert.equal(runtime.updatePublicUser(updated, expected), false);
+  const current = runtime.session.getSnapshot();
+  assert.equal(runtime.updatePublicUser({ ...updated, id: 'another-account' }, current), false);
+  assert.equal(runtime.updatePublicUser(updated, current), true);
+  assert.equal(runtime.session.getSnapshot(), current, 'identical data does not notify personal collections');
+  await runtime.session.signOut();
+  assert.equal(runtime.updatePublicUser(updated, current), false);
+  assert.equal(runtime.session.getSnapshot().user, null);
+});
+
+test('profile publication cannot override a logout performed by a session observer', async () => {
+  const runtime = createAuthSession(async () => loginResult(), { set: async () => {}, clear: async () => {} });
+  await runtime.session.signIn(form());
+  const expected = runtime.session.getSnapshot();
+  const unsubscribe = runtime.session.subscribe(() => { if (runtime.session.getSnapshot().user?.firstName === 'Elena') void runtime.session.signOut(); });
+  assert.equal(runtime.updatePublicUser({ ...expected.user, firstName: 'Elena' }, expected), false);
+  assert.equal(runtime.session.getSnapshot().status, 'anonymous');
+  assert.equal(runtime.getAccessToken(), undefined);
+  unsubscribe();
+});
+
 test('session construction starts in stable checking state without reading or writing any credential', () => {
   let operations = 0;
   const runtime = createAuthSession(async () => { operations++; return loginResult(); }, {

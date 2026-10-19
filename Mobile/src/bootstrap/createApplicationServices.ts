@@ -22,6 +22,10 @@ import { ApiCartRepository } from '../features/cart/data/repositories/ApiCartRep
 import { CartError } from '../features/cart/domain/errors/CartError';
 import { createCartActions, type CartActions } from '../features/cart/domain/useCases/cartActions';
 import { createCartController } from '../features/cart/presentation/state/createCartController';
+import { ApiProfileRepository } from '../features/profile/data/repositories/ApiProfileRepository';
+import { ProfileError } from '../features/profile/domain/errors/ProfileError';
+import { createProfileActions, type ProfileActions } from '../features/profile/domain/useCases/profileActions';
+import { createProfileController } from '../features/profile/presentation/state/createProfileController';
 
 export interface ApplicationServicesOptions {
   environment?: Environment;
@@ -101,7 +105,7 @@ export function createApplicationRuntime(options: Omit<ApplicationServicesOption
     }
     return actions;
   }
-  const favorites = createFavoritesController(auth.session, {
+  const favorites = createFavoritesController(auth.authorizationSession, {
     list: async (requestOptions) => favoritesActions().list(requestOptions),
     add: async (id, requestOptions) => favoritesActions().add(id, requestOptions),
     remove: async (id, requestOptions) => favoritesActions().remove(id, requestOptions),
@@ -122,14 +126,34 @@ export function createApplicationRuntime(options: Omit<ApplicationServicesOption
     }
     return cartActions;
   }
-  const cart = createCartController(auth.session, {
+  const cart = createCartController(auth.authorizationSession, {
     list: async (requestOptions) => getCartActions().list(requestOptions),
     add: async (id, quantity, requestOptions) => getCartActions().add(id, quantity, requestOptions),
     updateQuantity: async (id, quantity, requestOptions) => getCartActions().updateQuantity(id, quantity, requestOptions),
     remove: async (id, requestOptions) => getCartActions().remove(id, requestOptions),
   });
+  let profileActions: ProfileActions | undefined;
+  function getProfileActions(): ProfileActions {
+    if (!profileActions) {
+      try {
+        const environment = options.environment ?? readEnvironment();
+        profileActions = createProfileActions(new ApiProfileRepository(new HttpClient({
+          baseUrl: environment.apiUrl, isDevelopment: environment.isDevelopment,
+          requestTimeoutMs: environment.requestTimeoutMs, fetch: options.fetch,
+          getAccessToken: auth.getAccessToken,
+        })));
+      } catch {
+        throw new ProfileError('El perfil no está disponible en este momento. Inténtalo más tarde.', 'configuration');
+      }
+    }
+    return profileActions;
+  }
+  const profile = createProfileController(auth.session, {
+    get: async (requestOptions) => getProfileActions().get(requestOptions),
+    update: async (draft, requestOptions) => getProfileActions().update(draft, requestOptions),
+  }, auth.updatePublicUser);
   // No transport or credential is exposed to the React tree.
-  return Object.freeze({ session: auth.session, favorites, cart });
+  return Object.freeze({ session: auth.session, favorites, cart, profile });
 }
 
 /** Defer configuration until submission so navigation never depends on the API. */
