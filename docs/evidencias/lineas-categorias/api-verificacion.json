@@ -1,0 +1,146 @@
+{
+  "activity": "Líneas o categorías",
+  "recordedDate": "2026-10-18",
+  "branch": "feature/lineas-categorias",
+  "status": "api-implemented-awaiting-user-functional-acceptance",
+  "publicContracts": {
+    "categories": "GET /api/products/categories -> {id,name,count}[]",
+    "products": "GET /api/products?page=1&limit=20&category=<slug>",
+    "allProducts": "omit category query entirely",
+    "counts": "Active products including unavailable stock; category list can contain zero-count and custom categories",
+    "categoryFilter": "Exact normalized slug; product mapper verifies every returned item belongs to requested category"
+  },
+  "architecture": {
+    "categories": "ProductLinesScreen -> ViewModel/controller -> ListProductLines -> ProductLinesRepository -> ApiProductLinesRepository -> HttpClient",
+    "filterNavigation": "Selected slug and display name -> Expo Router dismissTo Catalog -> scoped ListCatalog; key per filter remounts controller at page 1 and aborts old requests",
+    "composition": "bootstrap/createProductLinesAction.ts, lazy public HttpClient",
+    "previewDataRemoved": true
+  },
+  "technicalChecks": {
+    "typecheck": "passed",
+    "lint": "passed without warnings",
+    "mobileTests": {
+      "passed": 206,
+      "failed": 0,
+      "newForThisActivity": 27
+    },
+    "doctor": {
+      "passed": 21,
+      "total": 21
+    },
+    "androidExport": {
+      "passed": true,
+      "modules": 1415
+    },
+    "webExport": {
+      "passed": true,
+      "modules": 963
+    },
+    "independentReadOnlyReview": "No material blockers"
+  },
+  "httpIntegration": {
+    "nestControllerServiceDto": true,
+    "mongooseModelsSimulated": true,
+    "realMongoConnected": false,
+    "appModuleLoaded": false,
+    "envRead": false,
+    "realCustomerData": false,
+    "backendHttpGroupsPassed": 15,
+    "actualMobileRepositoryUseCaseGroupsPassed": 9,
+    "fixtureCategoryCount": 7,
+    "fixturePublicProductCount": 31,
+    "fixtureGreenProductCount": 23,
+    "categoriesEndpointUpserts": "Default-category upserts are simulated in memory in the fixture; no real database touched",
+    "syntheticResponseModes": [
+      "503",
+      "malformed payload",
+      "empty category list"
+    ],
+    "evidence": [
+      "api-aislada.json",
+      "mobile-http.json"
+    ]
+  },
+  "webQa": {
+    "viewports": [
+      {
+        "width": 393,
+        "height": 852
+      },
+      {
+        "width": 320,
+        "height": 568
+      }
+    ],
+    "horizontalOverflowBeyondOnePixel": false,
+    "observations": [
+      "Dynamic seven-category list and API counts, including a custom category and a zero-count category",
+      "CTA disabled until one category is selected",
+      "Selected category navigates to products with a visible line label",
+      "Filtered green collection 20 -> 23, same category preserved on page 2",
+      "Clear filter restores all 31 products and removes filtered heading",
+      "Custom category shows exactly 2 products",
+      "Zero-count category shows its own empty-state message without falling back to all products",
+      "Category refresh 503 preserves seven loaded categories and selected custom category",
+      "Forced empty category list clears selection and disables CTA",
+      "Initial category error presents Reintentar; delayed retry shows loading then recovers seven categories",
+      "Filtered product refresh 503 preserves two products and filter; refresh recovers",
+      "Rapid switch from delayed green request to resfriado resolves only the new line, 1 product; previous response discarded",
+      "Five tabs preserved after returning to filtered Catalog"
+    ],
+    "screenshots": [
+      {
+        "file": "api-error-lineas-web.png",
+        "scope": "Synthetic initial category 503 and retry; web QA fixture"
+      },
+      {
+        "file": "api-filtro-personalizado-web.png",
+        "scope": "Custom category with two synthetic products at 393px; web QA fixture"
+      },
+      {
+        "file": "api-linea-vacia-web.png",
+        "scope": "Real service result for zero-count fixture category; web, simulated Mongo models"
+      },
+      {
+        "file": "api-lineas-320-web.png",
+        "scope": "Selected category and API counts at 320px; web QA fixture"
+      }
+    ]
+  },
+  "humanAcceptance": {
+    "visualDesign": "Accepted by user in Expo Go; exact text in expo-go-aceptacion.json",
+    "functionalApi": "pending-user",
+    "trelloCriteriaAccepted": 0,
+    "trelloCriteriaTotal": 8,
+    "trelloStateFromScreenshot": "En progreso; all eight unchecked",
+    "designCheckboxExists": false,
+    "boardReadLiveByAgent": false,
+    "boardEditedByAgent": false
+  },
+  "scope": {
+    "nativeDeviceObservedByAgent": false,
+    "talkBackTested": false,
+    "fontScalingPhysicallyTested": false,
+    "backendSourceModified": false,
+    "authModified": false,
+    "dependenciesModified": false,
+    "envModified": false,
+    "detailImplemented": false,
+    "searchFavoritesCartAdded": false,
+    "pushPerformed": false,
+    "prCreated": false
+  },
+  "cleanup": {
+    "qaMetro8085": "stopped after verification of PID and command line",
+    "normalMetro8082": {
+      "preserved": true,
+      "pid": 28288
+    },
+    "normalBackend3200": {
+      "preserved": true,
+      "pid": 25204,
+      "healthStatus": 200
+    },
+    "qaFixture3212": "stopped after verification of PID and command line"
+  }
+}

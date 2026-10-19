@@ -15,9 +15,14 @@ export function createListCatalog(repository: CatalogRepository): ListCatalog {
       || !Number.isSafeInteger(input?.limit) || input.limit < 1 || input.limit > 100) {
       throw new CatalogError('No pudimos cargar esta página del catálogo. Inténtalo de nuevo.', 'configuration');
     }
+    const category = typeof input.category === 'string' ? input.category.trim().toLowerCase() : input.category;
+    if (category !== undefined && (typeof category !== 'string' || !/^[a-z0-9-]+$/.test(category))) {
+      throw new CatalogError('No pudimos identificar esta línea. Vuelve al catálogo y selecciona otra.', 'configuration');
+    }
 
     try {
-      const result = await repository.list({ page: input.page, limit: input.limit }, options);
+      const result = await repository.list({ page: input.page, limit: input.limit,
+        ...(category === undefined ? {} : { category }) }, options);
       if (options?.signal?.aborted) throw cancelled();
       return result;
     } catch (error) {

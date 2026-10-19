@@ -1,6 +1,6 @@
 # INHALEX: base móvil
 
-Proyecto Expo SDK 57 con React Native, TypeScript y Expo Router, identidad INHALEX y cinco pestañas. Registro, Login, Persistencia y Catálogo están integrados. El PR #6 de Catálogo fue aprobado y fusionado por ZenaidaGR con ambas CI correctas en `fc13bbf`; queda 7/9, con detalle y prueba completa pendientes. David prepara ahora solo el diseño local de Líneas o categorías en `feature/lineas-categorias`, sin API ni aceptación del diseño todavía. Las actividades siguen el [plan](../docs/PLAN-DE-TRABAJO.md).
+Proyecto Expo SDK 57 con React Native, TypeScript y Expo Router, identidad INHALEX y cinco pestañas. Registro, Login, Persistencia y Catálogo están integrados. El PR #6 de Catálogo fue aprobado y fusionado por ZenaidaGR con ambas CI correctas en `fc13bbf`; queda 7/9, con detalle y prueba completa pendientes. David continúa Líneas o categorías en `feature/lineas-categorias`: diseño aceptado por el usuario y API implementada, pendiente de aceptación funcional en Expo Go. Las actividades siguen el [plan](../docs/PLAN-DE-TRABAJO.md).
 
 ## Abrir el proyecto
 
@@ -82,20 +82,24 @@ La revisión de código está completada. Solo quedan navegación al detalle, de
 
 El [contrato y comprobaciones de Catálogo](../docs/CONEXION-CATALOGO.md), el [diseño histórico](../docs/DISENO-CATALOGO.md) y las evidencias conservan sus límites: las pruebas aisladas utilizaron modelos Mongo simulados, las capturas son web y la aceptación nativa fue reportada por el usuario. Las 179 pruebas y exportaciones son resultados históricos de esa actividad.
 
-## Líneas o categorías: diseño local implementado
+## Líneas o categorías: diseño aceptado y API implementada
 
-Ambas copias se actualizaron a `fc13bbf`, conservando `.env` y el stash de Zenaida; su copia permanece en `develop`. David creó `feature/lineas-categorias` desde ese estado. La presentación local ya está implementada en `features/productLines`: entidad `ProductLine { id, name }`, contrato Repository y caso de uso, PreviewRepository con cinco IDs/nombres de la fuente, ViewModel de selección local y dependencias compuestas en `bootstrap`. La pantalla Stack `/lineas-categorias` se abre desde «Encuentra tu línea» en Catálogo y conserva las cinco pestañas.
+David continúa en `feature/lineas-categorias` desde `fc13bbf`; la copia de Zenaida permanece en `develop`, con `.env` y stash conservados. El usuario aceptó el diseño en Expo Go el 18 de octubre de 2026 y autorizó continuar con MVVM y Repository en la misma rama. La [aceptación](../docs/evidencias/lineas-categorias/expo-go-aceptacion.json) procede del chat, sin observación directa del dispositivo ni capturas nativas. No hay criterio de diseño en el checklist de la tarjeta: quedan 0/8 criterios funcionales aceptados, En progreso.
 
-Pasaron las 179 pruebas existentes, TypeScript, lint global sin advertencias, Doctor 21/21 y exportaciones Android (1412 módulos) y web (960 módulos). La QA web comprobó entrada desde Catálogo, retorno con las cinco pestañas intactas, cinco líneas y selección visual única. Se observaron 320×568 y anchos de 392–394×852 sin desbordamiento mayor a 1 px. No se ejercitaron físicamente TalkBack, fuente ampliada o movimiento reducido.
+`features/productLines` usa `ProductLine { id, name, count }`, caso de uso asíncrono y `ApiProductLinesRepository` para GET público `/products/categories`. El mapeador valida IDs únicos, slugs, nombres y conteos enteros seguros, incluido cero, y admite líneas personalizadas válidas. El ViewModel presenta carga, actualización y error/reintento, conserva la selección si falla la consulta y la elimina si desaparece de una respuesta válida. La composición se realiza bajo demanda; las vistas no llaman HTTP.
 
-La aceptación del diseño en Expo Go sigue pendiente; no se conecta la API de Líneas ni se filtran productos, implementa Detalle o cambia autenticación, dependencias o `.env`. La [guía de diseño](../docs/DISENO-LINEAS-CATEGORIAS.md) y [su evidencia web](../docs/evidencias/lineas-categorias/verificacion-diseno.json) conservan el alcance. No se declara funcionalidad completa ni actualización de Trello, PR o push. Se conserva el orden Catálogo → Categorías → Detalle; Favoritos y Bolsa mantienen sus actividades propias.
+«Ver productos de esta línea» vuelve a Catálogo con `category` y `lineName`. El listado público añade la categoría a su consulta paginada; cambiar o quitar el filtro reinicia página y cancela la petición anterior. «Ver todos» omite `category`. Una línea vacía tiene mensaje propio. Se conservaron cinco pestañas y los recursos visuales; se eliminó el Repository de vista previa, conservando [su evidencia histórica](../docs/evidencias/lineas-categorias/verificacion-diseno.json). No cambia Server, autenticación, dependencias o `.env`, ni incorpora Detalle, búsqueda, Favoritos o Bolsa.
 
-### Recorrido pendiente de aceptación en Expo Go
+Pasaron 206/206 pruebas móviles (27 nuevas), TypeScript, lint global sin advertencias, Doctor 21/21 y exportaciones finales Android (1415 módulos) y web (963 módulos). La revisión independiente no encontró bloqueadores. Las comprobaciones aisladas reúnen componentes Nest y transporte HTTP reales con modelos Mongo simulados; no prueban una base de datos real. La QA web comprobó selección, filtro y paginación, vacíos, reintento y conservación de datos ante error, y cambios rápidos de filtro sin resultados obsoletos; en 393×852 no hubo desbordamiento. Consulta el [contrato y límites](../docs/CONEXION-LINEAS-CATEGORIAS.md) y [los resultados](../docs/evidencias/lineas-categorias/api-verificacion.json). La API en Expo Go sigue pendiente de confirmación del usuario; TalkBack, fuente ampliada y movimiento reducido no tienen pruebas físicas específicas.
+
+### Recorrido funcional pendiente en Expo Go
 
 1. Abre Catálogo y pulsa «Encuentra tu línea».
-2. Comprueba las cinco líneas y selecciona una: solo debe quedar una selección visual.
-3. Selecciona otra y comprueba que el cambio sea local, sin filtrar el catálogo.
-4. Vuelve a Catálogo y verifica que las cinco pestañas se conservan.
+2. Revisa las líneas recibidas, selecciona una y pulsa «Ver productos de esta línea».
+3. Comprueba el nombre del filtro y los productos; pulsa «Ver todos» para recuperar el Catálogo sin filtro.
+4. Abre Líneas de nuevo y prueba otra selección. Verifica el regreso y las cinco pestañas.
+
+Los criterios se marcan tras la confirmación del usuario del recorrido correspondiente, incluyendo vacío y errores cuando se prueben. No se declara funcionalidad completa ni actualización de Trello, revisión por el compañero, PR o push. Se conserva el orden Catálogo → Categorías → Detalle.
 
 ## Versión
 

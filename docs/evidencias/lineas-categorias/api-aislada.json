@@ -1,0 +1,188 @@
+{
+  "status": "passed",
+  "startedAt": "2026-10-19T03:31:17.595Z",
+  "completedAt": "2026-10-19T03:31:18.046Z",
+  "origin": "http://127.0.0.1:3212",
+  "fixturePath": "C:\\Users\\David\\AppData\\Local\\Temp\\inhalex-lineas-api-fixture.cjs",
+  "smokePath": "C:\\Users\\David\\AppData\\Local\\Temp\\inhalex-lineas-api-smoke.cjs",
+  "process": {
+    "pid": 4740,
+    "stop": "Ctrl+C in the fixture exec session, or send SIGINT to that exact fixture PID."
+  },
+  "components": [
+    "ProductsController real TypeScript source",
+    "ProductsService real TypeScript source",
+    "ListProductsQueryDto real source",
+    "ValidationPipe whitelist/forbidNonWhitelisted/transform"
+  ],
+  "isolation": {
+    "bindAddress": "127.0.0.1",
+    "mongoConnected": false,
+    "mongooseModelsSimulated": true,
+    "envFilesRead": false,
+    "appModuleLoaded": false,
+    "realAccountsUsed": false,
+    "realCustomerDataUsed": false,
+    "originalPort3200Touched": false,
+    "metro8082Touched": false
+  },
+  "fixtures": {
+    "visibleCategories": 7,
+    "defaultCategories": 5,
+    "customActiveCategories": 2,
+    "zeroCategories": 1,
+    "inactiveCategories": 1,
+    "publicProducts": 31,
+    "hiddenStatusSentinels": 2,
+    "greenLineProducts": 23,
+    "imageAndCopySource": "Public default seeds reused in test-only synthetic products; categories reassigned only in memory."
+  },
+  "checks": [
+    {
+      "name": "public categories are a flat whitelist array, slugs, active custom and zero, sorted deterministically",
+      "pathType": "real-service",
+      "passed": true
+    },
+    {
+      "name": "category counts include active out-of-stock, exclude draft and archived, retain zero",
+      "pathType": "real-service",
+      "passed": true
+    },
+    {
+      "name": "green line pages 20 + 3, exact category subset and no repeated IDs",
+      "pathType": "real-service",
+      "passed": true
+    },
+    {
+      "name": "product order sortOrder ascending then createdAt descending",
+      "pathType": "real-service",
+      "passed": true
+    },
+    {
+      "name": "omitted category lists all active products, totals cannot be derived by summing visible categories",
+      "pathType": "real-service",
+      "passed": true
+    },
+    {
+      "name": "category lowercases and trims, matches exact slug only",
+      "pathType": "real-service",
+      "passed": true
+    },
+    {
+      "name": "custom slug accepted, zero and unknown return valid empty metadata, inactive category not enforced by list",
+      "pathType": "real-service",
+      "passed": true
+    },
+    {
+      "name": "all sentinel is not a backend category; empty omitted category uses all",
+      "pathType": "real-service",
+      "passed": true
+    },
+    {
+      "name": "out-of-range page preserves total and defaults remain page1 limit20",
+      "pathType": "real-service",
+      "passed": true
+    },
+    {
+      "name": "real ValidationPipe rejects invalid page, limit, status, repeated category and unknown query",
+      "pathType": "real-validation",
+      "passed": true
+    },
+    {
+      "name": "public status override cannot reveal draft and stock filtering is independent of category count",
+      "pathType": "real-service",
+      "passed": true
+    },
+    {
+      "name": "default category upserts remain in memory and do not replace pre-existing categories",
+      "pathType": "model-simulation",
+      "passed": true
+    },
+    {
+      "name": "loopback CORS accepted without credentials; external origin gets no permission",
+      "pathType": "fixture-boundary",
+      "passed": true
+    },
+    {
+      "name": "independent synthetic 503, malformed and empty wrappers are clearly labelled",
+      "pathType": "synthetic-wrapper-bypasses-controller",
+      "passed": true
+    },
+    {
+      "name": "synthetic delay still uses real service; aborted request cancels fixture timer",
+      "pathType": "synthetic-latency-real-service",
+      "passed": true
+    }
+  ],
+  "groupsPassed": 15,
+  "metrics": {
+    "fixture": "lineas-real-nest-simulated-models",
+    "startedAt": "2026-10-19T03:31:06.888Z",
+    "pid": 4740,
+    "requests": {
+      "categories": 8,
+      "products": 30
+    },
+    "realControllerRequests": {
+      "categories": 5,
+      "products": 26
+    },
+    "injectedResponses": {
+      "empty": 2,
+      "error": 2,
+      "malformed": 2
+    },
+    "syntheticLatencyRequests": 2,
+    "modelFindCalls": 17,
+    "modelCountCalls": 17,
+    "modelAggregateCalls": 5,
+    "categoryFindCalls": 5,
+    "categoryUpsertCalls": 25,
+    "categoryInsertedInMemory": 0,
+    "authorizationHeadersReceived": 0,
+    "completed": 37,
+    "closedBeforeResponse": 1,
+    "statuses": {
+      "200": 26,
+      "400": 9,
+      "503": 2
+    },
+    "state": {
+      "categories": {
+        "mode": "success",
+        "delayMs": 0
+      },
+      "products": {
+        "mode": "success",
+        "delayMs": 0
+      }
+    },
+    "pendingTimers": 0
+  },
+  "limits": [
+    "No MongoDB connection or real aggregation execution; find/sort/aggregate/upsert are in-memory model simulations.",
+    "503, malformed and forced-empty responses bypass controller/service and are synthetic fixture wrappers.",
+    "Delay is injected before routing; normal successful delayed responses use the real controller/service.",
+    "This report does not validate physical Expo Go, mobile UI, production data or deployment."
+  ],
+  "controls": {
+    "endpoint": "http://127.0.0.1:3212/__qa/state",
+    "method": "POST",
+    "body": {
+      "target": "all|categories|products",
+      "mode": "success|empty|error|malformed",
+      "delayMs": "integer 0..30000"
+    },
+    "metrics": "http://127.0.0.1:3212/__qa/metrics",
+    "finalState": {
+      "categories": {
+        "mode": "success",
+        "delayMs": 0
+      },
+      "products": {
+        "mode": "success",
+        "delayMs": 0
+      }
+    }
+  }
+}

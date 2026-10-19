@@ -1,0 +1,60 @@
+{
+  "activity": "Líneas o categorías",
+  "date": "2026-10-18",
+  "branch": "feature/lineas-categorias",
+  "phase": "design-accepted-api-functional-acceptance-pending",
+  "platform": "Expo Go",
+  "evidenceType": "human_chat_confirmation",
+  "userResponse": "Ya revisé el diseño de Líneas o categorías en Expo Go, amigo, y me gustó. Sigamos con la conexión a la API en la misma rama, manteniendo MVVM y Repository. ¿Qué punto marco en Trello?",
+  "designAcceptance": {
+    "status": "accepted_by_user",
+    "agentObservedPhysicalDevice": false,
+    "nativeScreenshotsProvided": false,
+    "historicalPreviewEvidence": "verificacion-diseno.json",
+    "trelloDesignCriterionExists": false,
+    "recordAs": "Visual acceptance comment; no functional checklist item checked."
+  },
+  "apiConnection": {
+    "authorizedByUser": true,
+    "sameBranch": true,
+    "architecture": "MVVM y Repository",
+    "implementationStatus": "implemented-technical-checks-passed-awaiting-user-functional-acceptance",
+    "nativeFunctionalAcceptance": "pending-user"
+  },
+  "checklist": {
+    "source": "User-provided Trello screenshot after the visual acceptance message",
+    "screenshotFollowupText": "mira son esos puntos",
+    "acceptedCriteria": 0,
+    "totalCriteria": 8,
+    "remainingCriteria": [
+      "Obtener líneas o categorías desde la API",
+      "Mostrar las categorías disponibles",
+      "Permitir seleccionar una categoría",
+      "Filtrar los productos según la categoría",
+      "Manejar categoría sin productos",
+      "Verificar navegación",
+      "Probar la funcionalidad",
+      "Revisar el código"
+    ]
+  },
+  "trello": {
+    "taskStatus": "En progreso",
+    "allEightCriteriaUncheckedInProvidedScreenshot": true,
+    "updatedByAgent": false,
+    "updateResponsibility": "user"
+  },
+  "limitations": [
+    "La confirmación acepta únicamente el diseño visual y autoriza continuar con la API en la misma rama.",
+    "La captura posterior muestra el checklist de Trello, no la aplicación nativa.",
+    "No acredita consulta real, filtrado, vacío, paginación, errores o prueba funcional completa en Expo Go.",
+    "No hay capturas nativas ni observación directa del teléfono por el agente.",
+    "No acredita TalkBack, escalado de fuente o movimiento reducido en un dispositivo físico.",
+    "Las comprobaciones técnicas de la API se registran por separado y no completan por sí solas el checklist humano."
+  ],
+  "delivery": {
+    "pullRequestOpened": false,
+    "pushPerformedForThisStage": false,
+    "humanReview": "pending",
+    "activityFullyCompleted": false
+  }
+}

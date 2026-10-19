@@ -1,20 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import type { ListProductLines } from '../../domain/useCases/listProductLines';
+import { createProductLinesController } from '../state/createProductLinesController';
 
 export function useProductLinesViewModel(listLines: ListProductLines) {
-  const [lines] = useState(() => listLines());
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [controller] = useState(() => createProductLinesController(listLines));
+  const state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getSnapshot);
+  useEffect(() => { controller.start(); return controller.stop; }, [controller]);
 
-  const items = lines.map((line, index) => ({
+  const items = state.lines.map((line, index) => ({
     ...line,
-    title: line.name.replace(/^Línea\s+/i, '').replace(/^./, (letter) => letter.toUpperCase()),
+    title: line.name.replace(/^L[ií]nea\s+/i, '').replace(/^./, (letter) => letter.toUpperCase()),
     number: String(index + 1).padStart(2, '0'),
-    selected: line.id === selectedId,
+    selected: line.id === state.selectedId,
   }));
 
-  function selectLine(id: string) {
-    if (lines.some((line) => line.id === id)) setSelectedId(id);
-  }
-
-  return { items, selectedLine: lines.find((line) => line.id === selectedId) ?? null, selectLine };
+  return { ...state, items, selectedLine: state.lines.find((line) => line.id === state.selectedId) ?? null,
+    selectLine: controller.selectLine, refresh: controller.refresh };
 }

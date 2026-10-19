@@ -8,7 +8,7 @@ import type { ListCatalog } from '../../domain/useCases/listCatalog';
 import { CatalogProductCard } from '../components/CatalogProductCard';
 import { useCatalogViewModel, type CatalogProductViewModel } from '../viewModels/useCatalogViewModel';
 
-export function CatalogScreen({ listCatalog }: { listCatalog: ListCatalog }) {
+export function CatalogScreen({ listCatalog, categoryName }: { listCatalog: ListCatalog; categoryName?: string }) {
   const vm = useCatalogViewModel(listCatalog);
   const { width, fontScale } = useWindowDimensions();
   const insets = useSafeAreaInsets();
@@ -77,6 +77,15 @@ export function CatalogScreen({ listCatalog }: { listCatalog: ListCatalog }) {
                 </View>
                 <Ionicons accessible={false} name="chevron-forward" size={18} color={colors.primary} />
               </Pressable>
+              {categoryName !== undefined && <View style={styles.filterPanel}>
+                <Text accessibilityRole="header" style={styles.filterTitle}>{categoryName}</Text>
+                <Pressable accessibilityRole="button" accessibilityLabel="Ver todos los productos"
+                  onPress={() => router.replace('/(tabs)/catalogo')}
+                  style={({ pressed }) => [styles.clearFilter, pressed && styles.pressed]}>
+                  <Text style={styles.clearFilterText}>Ver todos los productos</Text>
+                  <Ionicons accessible={false} name="close-circle-outline" size={18} color={colors.primaryDark} />
+                </Pressable>
+              </View>}
               {vm.error && vm.products.length > 0 && <View accessibilityLiveRegion="polite" style={styles.notice}>
                 <Text style={styles.noticeText}>{vm.error} Se conserva la última colección cargada.</Text>
               </View>}
@@ -84,7 +93,7 @@ export function CatalogScreen({ listCatalog }: { listCatalog: ListCatalog }) {
             <Reveal delay={60} style={styles.inset}>
               <View style={[styles.collectionRow, largeText && styles.collectionRowStacked]}>
                 <View style={styles.collectionCopy}>
-                  <Text accessibilityRole="header" style={styles.collectionTitle}>Nuestra colección</Text>
+                  <Text accessibilityRole="header" style={styles.collectionTitle}>{categoryName === undefined ? 'Nuestra colección' : 'Productos de esta línea'}</Text>
                   <Text style={styles.collectionCount}>{vm.status === 'loading' ? 'Buscando tus próximos aromas…'
                     : vm.status === 'error' ? 'La colección estará aquí al reconectar'
                     : `${vm.total} ${vm.total === 1 ? 'producto' : 'productos'} para descubrir`}</Text>
@@ -122,9 +131,11 @@ export function CatalogScreen({ listCatalog }: { listCatalog: ListCatalog }) {
               ? <ActivityIndicator accessibilityLabel="Cargando productos" color={colors.primary} size="large" />
               : <Ionicons accessible={false} name={vm.status === 'error' ? 'cloud-offline-outline' : 'leaf-outline'} color={colors.primary} size={34} />}
             <Text accessibilityRole="header" style={styles.stateTitle}>{vm.status === 'loading' ? 'Un momento para descubrir'
-              : vm.status === 'error' ? 'No pudimos cargar la colección' : 'Nuevos aromas están por llegar'}</Text>
+              : vm.status === 'error' ? 'No pudimos cargar la colección' : categoryName === undefined ? 'Nuevos aromas están por llegar' : 'Esta línea aún no tiene productos'}</Text>
             <Text style={styles.stateCopy}>{vm.status === 'loading' ? 'Estamos preparando el catálogo para ti.'
-              : vm.status === 'error' ? vm.error : 'Por ahora no hay productos disponibles. Puedes volver a consultar en un momento.'}</Text>
+              : vm.status === 'error' ? vm.error : categoryName === undefined
+                ? 'Por ahora no hay productos disponibles. Puedes volver a consultar en un momento.'
+                : 'Puedes consultar otra línea o volver a ver todos los productos.'}</Text>
             {vm.status !== 'loading' && <Pressable accessibilityRole="button" onPress={() => { void vm.refresh(); }}
               style={({ pressed }) => [styles.actionButton, pressed && styles.pressed]}>
               <Text style={styles.actionText}>{vm.status === 'error' ? 'Reintentar' : 'Volver a consultar'}</Text>
@@ -178,6 +189,10 @@ const styles = StyleSheet.create({
   linesEntryCopy: { flex: 1 },
   linesEntryTitle: { color: colors.primaryDark, fontSize: 14, fontWeight: '600', lineHeight: 21 },
   linesEntryDescription: { color: colors.textMuted, fontSize: 11, lineHeight: 17, marginTop: 2 },
+  filterPanel: { backgroundColor: '#F0F6EB', borderColor: '#D5E2CE', borderRadius: 15, borderWidth: 1, marginTop: 12, paddingHorizontal: 14, paddingTop: 12 },
+  filterTitle: { color: colors.primaryDark, fontSize: 16, fontWeight: '700', lineHeight: 23 },
+  clearFilter: { alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', gap: 8, minHeight: 44 },
+  clearFilterText: { color: colors.primaryDark, flexShrink: 1, fontSize: 12, lineHeight: 19 },
   notice: { backgroundColor: '#F8EFE5', borderRadius: 12, padding: 12, marginTop: 8 },
   noticeText: { color: '#79543B', fontSize: 12, lineHeight: 19 },
   collectionRow: { alignItems: 'center', flexDirection: 'row', gap: 12, justifyContent: 'space-between', marginBottom: 17, marginTop: 28 },

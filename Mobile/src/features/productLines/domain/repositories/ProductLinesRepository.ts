@@ -1,5 +1,7 @@
 import type { ProductLine } from '../models/ProductLine';
 
+export type ProductLinesRequestOptions = { signal?: AbortSignal };
+
 export interface ProductLinesRepository {
-  list(): readonly ProductLine[];
+  list(options?: ProductLinesRequestOptions): Promise<readonly ProductLine[]>;
 }
