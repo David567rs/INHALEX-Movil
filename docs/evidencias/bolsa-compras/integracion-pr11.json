@@ -1,0 +1,57 @@
+{
+  "number": 11,
+  "url": "https://github.com/David567rs/INHALEX-Movil/pull/11",
+  "title": "Implementar Bolsa de compras con MVVM y Repository",
+  "author": "ZenaidaGR",
+  "state": "closed",
+  "head": "feature/bolsa-compras",
+  "headSha": "d68a9698ff5142875d6a36878173d3d88cfc8c20",
+  "base": "develop",
+  "merged": true,
+  "mergedAt": "2026-10-19T10:55:19Z",
+  "mergedBy": "David567rs",
+  "mergeCommit": "559a15464e7cd778b2956b6e217855e5d26a77b0",
+  "reviews": [
+    {
+      "reviewer": "David567rs",
+      "state": "APPROVED",
+      "commit": "d68a9698ff5142875d6a36878173d3d88cfc8c20",
+      "submittedAt": "2026-10-19T10:55:10Z",
+      "url": "https://github.com/David567rs/INHALEX-Movil/pull/11#pullrequestreview-5570508016"
+    }
+  ],
+  "checks": [
+    {
+      "name": "Backend verification",
+      "status": "completed",
+      "conclusion": "success",
+      "sha": "d68a9698ff5142875d6a36878173d3d88cfc8c20",
+      "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39240456771/job/118019735606",
+      "startedAt": "2026-10-19T10:51:41Z",
+      "completedAt": "2026-10-19T10:52:14Z"
+    },
+    {
+      "name": "Mobile verification",
+      "status": "completed",
+      "conclusion": "success",
+      "sha": "d68a9698ff5142875d6a36878173d3d88cfc8c20",
+      "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39240456591/job/118019734410",
+      "startedAt": "2026-10-19T10:51:40Z",
+      "completedAt": "2026-10-19T10:52:29Z"
+    }
+  ],
+  "acceptance": {
+    "criteriaAccepted": 10,
+    "criteriaTotal": 10,
+    "finalCriterion": "Revisar el código",
+    "source": "Revisión formal APPROVED de David567rs sobre el HEAD final, antes del merge; no nueva prueba nativa"
+  },
+  "trello": {
+    "userConfirmedUpdated": true,
+    "userQuote": "Amigo, ya actualicé Trello. Actualicemos INHALEX-Movil e INHALEX-Movil-Zenaida con develop antes de empezar la siguiente actividad.",
+    "agentReadBoard": false,
+    "agentModifiedBoard": false
+  },
+  "localSynchronizationReceipt": "C:/Users/David/AppData/Local/Temp/inhalex-sync-after-pr11.json",
+  "recordLocation": "Recibo operativo temporal; incorporar cierre documental en la siguiente rama de actividad para conservar ambos develop limpios"
+}
