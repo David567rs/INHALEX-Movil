@@ -106,20 +106,24 @@ export function ProductDetailScreen({ productId, getProduct }: { productId: stri
             </Pressable>
 
             <View style={[styles.actions, stackActions && styles.stackedActions]}>
-              <Pressable disabled accessibilityRole="button" accessibilityLabel="Favoritos, próximamente"
-                accessibilityState={{ disabled: true }} style={[styles.action, stackActions && styles.stackedAction]}>
-                <Ionicons accessible={false} name="heart-outline" size={22} color={colors.textMuted} />
+              <Pressable accessibilityRole="button" accessibilityLabel="Ir a Favoritos"
+                accessibilityHint="Abre la pestaña de Favoritos"
+                onPress={() => router.navigate('/(tabs)/favoritos')}
+                style={({ pressed }) => [styles.action, stackActions && styles.stackedAction, pressed && styles.pressed]}>
+                <Ionicons accessible={false} name="heart-outline" size={22} color={colors.primaryDark} />
                 <View style={styles.actionCopy}>
                   <Text style={styles.actionTitle}>Favoritos</Text>
-                  <Text style={styles.comingSoon}>Próximamente</Text>
+                  <Text style={styles.actionHint}>Ver favoritos</Text>
                 </View>
               </Pressable>
-              <Pressable disabled accessibilityRole="button" accessibilityLabel="Bolsa de compras, próximamente"
-                accessibilityState={{ disabled: true }} style={[styles.action, stackActions && styles.stackedAction]}>
-                <Ionicons accessible={false} name="bag-handle-outline" size={22} color={colors.textMuted} />
+              <Pressable accessibilityRole="button" accessibilityLabel="Ir a Bolsa de compras"
+                accessibilityHint="Abre la pestaña de Bolsa"
+                onPress={() => router.navigate('/(tabs)/bolsa')}
+                style={({ pressed }) => [styles.action, stackActions && styles.stackedAction, pressed && styles.pressed]}>
+                <Ionicons accessible={false} name="bag-handle-outline" size={22} color={colors.primaryDark} />
                 <View style={styles.actionCopy}>
                   <Text style={styles.actionTitle}>Bolsa de compras</Text>
-                  <Text style={styles.comingSoon}>Próximamente</Text>
+                  <Text style={styles.actionHint}>Ver bolsa</Text>
                 </View>
               </Pressable>
             </View>
@@ -189,11 +193,11 @@ const styles = StyleSheet.create({
   returnButton: { alignItems: 'center', marginTop: 12, minHeight: 44, paddingHorizontal: 15, paddingVertical: 11 },
   actions: { alignItems: 'stretch', flexDirection: 'row', gap: 10, marginTop: 20 },
   stackedActions: { flexDirection: 'column' },
-  action: { alignItems: 'center', backgroundColor: '#F0F3EE', borderColor: colors.border, borderRadius: 16, borderWidth: 1, flex: 1, flexDirection: 'row', gap: 9, minHeight: 72, paddingHorizontal: 13, paddingVertical: 14 },
+  action: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 16, borderWidth: 1, flex: 1, flexDirection: 'row', gap: 9, minHeight: 72, paddingHorizontal: 13, paddingVertical: 14 },
   stackedAction: { flex: 0 },
   actionCopy: { flex: 1 },
-  actionTitle: { color: colors.textMuted, fontSize: 12, fontWeight: '600', lineHeight: 20 },
-  comingSoon: { color: colors.textMuted, fontSize: 10, lineHeight: 17, marginTop: 1 },
+  actionTitle: { color: colors.primaryDark, fontSize: 12, fontWeight: '600', lineHeight: 20 },
+  actionHint: { color: colors.textMuted, fontSize: 10, lineHeight: 17, marginTop: 1 },
   missing: { alignItems: 'center', paddingHorizontal: 8, paddingVertical: 45 },
   missingTitle: { color: colors.text, fontSize: 23, fontWeight: '600', lineHeight: 31, marginTop: 18, textAlign: 'center' },
   missingCopy: { color: colors.textMuted, fontSize: 13, lineHeight: 22, marginTop: 10, textAlign: 'center' },

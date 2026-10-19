@@ -2,7 +2,7 @@
   "activity": "Detalle de producto",
   "date": "2026-10-18",
   "branch": "feature/detalle-producto",
-  "phase": "five-detail-criteria-and-catalogue-navigation-accepted-pr-preparation",
+  "phase": "native-five-criteria-accepted-navigation-accesses-web-verified-opening-pr",
   "platform": "Expo Go",
   "evidenceType": "human_chat_confirmation",
   "userResponse": "Ya revisé el diseño de Detalle de producto en Expo Go, amigo, y me gustó.",
@@ -35,11 +35,23 @@
     "agentObservedPhysicalDevice": false,
     "nativeScreenshotsProvided": false
   },
+  "accessScopeClarification": {
+    "date": "2026-10-18",
+    "source": "Direct user instruction in chat",
+    "userResponse": "lo de favoritos y bolsa de compras solo es el acceso y el icono como el corazon que le puedes poner al producto para agregarlo a favoritos, no es la funcionalidad, solo agregar el acceso",
+    "criteria": [5, 6],
+    "interpretation": "Navigable heart and bag icons open the existing tabs; saving favorites and adding products to the bag are separate activities.",
+    "implementedAndWebVerified": true,
+    "technicalEvidence": "verificacion-accesos.json",
+    "nativeAcceptanceOfNewAccesses": "pending-user",
+    "nativeAcceptanceDoesNotFollowFromRequestAlone": true
+  },
   "checklist": {
     "source": "User-provided nine-item Trello screenshot, design acceptance and subsequent functional chat confirmation",
     "acceptedCriteria": 5,
     "totalCriteria": 9,
     "acceptedCriterionNumbers": [1, 2, 3, 4, 7],
+    "implementedAndTechnicallyVerifiedCriterionNumbers": [1, 2, 3, 4, 5, 6, 7],
     "acceptedCriteriaNames": [
       "Crear pantalla de detalle",
       "Obtener información del producto seleccionado",
@@ -55,6 +67,10 @@
     ]
   },
   "trello": {
+    "newAccessCriteriaReadyToMarkAfterNativeCheck": [
+      "Agregar acceso a favoritos",
+      "Agregar acceso a bolsa de compras"
+    ],
     "criteriaReadyToMark": [
       "Crear pantalla de detalle",
       "Obtener información del producto seleccionado",
@@ -63,18 +79,20 @@
       "Manejar errores al cargar el producto"
     ],
     "criteriaMarkedByUserConfirmed": false,
+    "previousTrelloUpdateReportedByUser": true,
+    "newAccessCriteriaMarkedByUserConfirmed": false,
     "updatedByAgent": false,
     "updateResponsibility": "user"
   },
   "limitations": [
     "La confirmación inicial acepta el diseño visual; la confirmación posterior acepta los datos completos y su cambio entre productos, completando los criterios 1 a 4.",
     "No hay observación directa del teléfono ni capturas nativas del agente.",
-    "La confirmación posterior acepta error/reintento. Favoritos, Bolsa, prueba funcional completa y revisión de código siguen pendientes.",
+    "La confirmación posterior acepta error/reintento. La comprobación nativa de los nuevos accesos, prueba funcional completa y revisión siguen pendientes.",
     "Los snapshots técnicos del diseño y de la API se conservan como historia con su aceptación de aquel momento; no se reescriben por la confirmación humana posterior.",
-    "Favoritos y Bolsa continúan Próximamente, sin funcionalidad aceptada.",
+    "Los accesos navegan a Favoritos y Bolsa; sus pantallas muestran En preparación. No guardan favoritos ni agregan productos. Esas funciones no forman parte de los criterios de acceso aclarados por el usuario.",
     "No acredita pruebas físicas de TalkBack, escalado de fuente o movimiento reducido.",
     "Catálogo reúne 9/9 criterios aceptados en la rama mediante la evidencia acumulada; la integración de navegación en develop sigue pendiente del PR de Detalle.",
-    "La nueva aceptación de navegación no completa Favoritos, Bolsa ni la prueba funcional completa de Detalle: su checklist permanece 5/9."
+    "La navegación al catálogo no acredita por sí sola los accesos recién añadidos. Se conservan 5/9 aceptados por el usuario; 5 y 6 están implementados y verificados en web, listos para comprobar en Expo Go."
   ],
   "errorRetryConfirmation": {
     "date": "2026-10-18",
@@ -107,11 +125,13 @@
     "detailFullFunctionalityAccepted": false
   },
   "nextStep": {
-    "status": "prepare-detail-pull-request-description",
+    "status": "open-authorized-detail-pull-request-and-request-review",
     "base": "develop",
     "head": "feature/detalle-producto",
     "humanReviewer": "ZenaidaGR",
-    "pendingDependencies": ["Favoritos", "Bolsa de compras"],
+    "futureSeparateFunctions": ["Guardar favoritos", "Añadir productos a la bolsa"],
+    "newAccessesImplemented": true,
+    "newAccessesNativeCheck": "pending-user",
     "detailChecklistStays": "5/9",
     "draftDescription": "../../PR-DETALLE-PRODUCTO.md"
   },
