@@ -149,12 +149,12 @@
     ]
   },
   "nextStep": {
-    "status": "prepare-pull-request",
+    "status": "pending-peer-review",
     "guide": "../../CONEXION-BOLSA-COMPRAS.md",
-    "flow": "Publicar feature/bolsa-compras como ZenaidaGR, abrir PR hacia develop y solicitar revisión real a David567rs; esperar aprobación y CI antes de integrar",
+    "flow": "David567rs debe revisar el PR#11, comprobar CI sobre el HEAD vigente y enviar su revisión real; mantener abierto y sin fusionar hasta completar revisión/checks y la autorización correspondiente",
     "technicalEvidence": "verificacion-api.json",
     "technicalVerificationStatus": "Aprobada: 369 pruebas, TypeScript, lint, Doctor21/21, Android/web y QA web simulada; consultar verificacion-api.json",
-    "purpose": "Revisión real del criterio10; no fusionar por la autorización de apertura"
+    "purpose": "Revisión real del criterio10; su solicitud no representa aprobación"
   },
   "trello": {
     "agentReadBoard": false,
@@ -167,5 +167,15 @@
     "Las pruebas técnicas y el diseño no sustituyen la aceptación funcional ni la revisión real de David567rs",
     "Las pruebas HTTP aisladas usan API y almacenamiento simulados, sin escrituras en MongoDB real ni prueba de SecureStore nativo",
     "Recorrido nativo aceptado por reporte del usuario; no acredita observación directa del dispositivo, TalkBack, texto ampliado ni prueba física entre dos cuentas distintas"
-  ]
+  ],
+  "pullRequest": {
+    "number": 11,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/11",
+    "author": "ZenaidaGR",
+    "head": "feature/bolsa-compras",
+    "base": "develop",
+    "reviewer": "David567rs",
+    "state": "open",
+    "review": "pending"
+  }
 }

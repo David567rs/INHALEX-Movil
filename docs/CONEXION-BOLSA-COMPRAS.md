@@ -70,7 +70,7 @@ Se conserva el checklist exacto de la captura del usuario:
 
 El diseño y el recorrido completo están aceptados por el usuario en Expo Go: **9/10**. Solo falta la revisión real de David567rs; el marcado del usuario todavía no está confirmado. El agente no observó directamente el dispositivo ni leyó o modificó Trello. La revisión real de David567rs queda para el futuro PR de ZenaidaGR hacia `develop`.
 
-Las comprobaciones técnicas de esta conexión pasaron: 369 pruebas (47 de Bolsa), TypeScript, lint, Doctor 21/21 y exportaciones Android 1455 / web 1003. La QA web comprobó agregar, cantidad, total, vacío, error/reintento,401 y cierre de sesión a 320/397 px con sesión y transporte simulados. La ruta QA se retiró antes de las exportaciones. Los resultados se registran en [verificacion-api.json](evidencias/bolsa-compras/verificacion-api.json). Las pruebas HTTP aisladas usan una API y almacenamiento simulados; no acreditan escrituras en MongoDB real, SecureStore nativo ni aceptación en Expo Go. Los resultados históricos del diseño o de Favoritos conservan su propio alcance. Los cambios permanecen locales, sin commit, publicación de rama ni PR en esta etapa.
+Las comprobaciones técnicas de esta conexión pasaron: 369 pruebas (47 de Bolsa), TypeScript, lint, Doctor 21/21 y exportaciones Android 1455 / web 1003. La QA web comprobó agregar, cantidad, total, vacío, error/reintento,401 y cierre de sesión a 320/397 px con sesión y transporte simulados. La ruta QA se retiró antes de las exportaciones. Los resultados se registran en [verificacion-api.json](evidencias/bolsa-compras/verificacion-api.json). Las pruebas HTTP aisladas usan una API y almacenamiento simulados; no acreditan escrituras en MongoDB real, SecureStore nativo ni aceptación en Expo Go. Los resultados históricos del diseño o de Favoritos conservan su propio alcance. El resultado técnico conserva el estado de aquel hito. La implementación se publicó después mediante el PR #11; consulta el estado vigente al final.
 
 ## Límites de cantidad, aceptados por el usuario
 
@@ -115,3 +115,7 @@ El usuario confirmó exactamente: «Amigo, la bolsa se conservó al reabrir, se 
 ## Revisión pendiente
 
 La revisión técnica de agentes no sustituye **Revisar el código** (10). Mantener la tarjeta en progreso y conservar el PR abierto hasta los checks y la revisión de David567rs. El PR se integrará mediante merge commit hacia develop después de la autorización correspondiente.
+
+## PR #11 abierto hacia develop
+
+[Implementar Bolsa de compras con MVVM y Repository](https://github.com/David567rs/INHALEX-Movil/pull/11) fue abierto por **ZenaidaGR**, desde `feature/bolsa-compras`, con revisión solicitada a **David567rs**. El registro de apertura está en [preparacion-pr11.json](evidencias/bolsa-compras/preparacion-pr11.json). Bolsa mantiene 9/10 y **Revisar el código** pendiente. Consultar los checks del HEAD vigente; todavía no hay aprobación ni merge. Conservar la tarjeta en progreso hasta revisión/integración.
