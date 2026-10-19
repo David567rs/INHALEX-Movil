@@ -58,6 +58,14 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
                 <Text accessibilityRole="header" style={styles.title}>Un aroma para ti<Text style={styles.titleDot}>.</Text></Text>
                 <Text style={styles.description}>Pequeñas esencias para acompañar tu día.</Text>
               </View>
+              <Pressable accessibilityRole="button" accessibilityLabel="Abrir búsqueda de productos"
+                accessibilityHint="Busca productos por nombre o palabra clave"
+                onPress={() => router.push('/busqueda-productos')}
+                style={({ pressed }) => [styles.searchEntry, pressed && styles.pressed]}>
+                <Ionicons accessible={false} name="search-outline" size={21} color={colors.primary} />
+                <Text style={styles.searchEntryText}>Buscar productos</Text>
+                <Ionicons accessible={false} name="arrow-forward" size={18} color={colors.primary} />
+              </Pressable>
               <Pressable
                 accessibilityRole="button"
                 accessibilityLabel="Actualizar catálogo"
@@ -185,6 +193,8 @@ const styles = StyleSheet.create({
   title: { color: colors.text, fontSize: 31, fontWeight: '700', letterSpacing: -1, lineHeight: 38, marginTop: 7 },
   titleDot: { color: colors.primary },
   description: { color: colors.textMuted, fontSize: 13, lineHeight: 21, marginTop: 6 },
+  searchEntry: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 16, borderWidth: 1, flexDirection: 'row', gap: 12, marginTop: 19, minHeight: 56, paddingHorizontal: 16, paddingVertical: 12 },
+  searchEntryText: { color: colors.textMuted, flex: 1, fontSize: 14, minWidth: 0 },
   refreshButton: { alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', gap: 8, marginTop: 10, minHeight: 44, paddingRight: 12 },
   refreshText: { color: colors.primary, fontSize: 12, fontWeight: '600' },
   linesEntry: { alignItems: 'center', backgroundColor: '#EAF1E5', borderColor: '#DDE8D5', borderRadius: 17, borderWidth: 1, flexDirection: 'row', gap: 12, marginTop: 12, minHeight: 76, padding: 14 },

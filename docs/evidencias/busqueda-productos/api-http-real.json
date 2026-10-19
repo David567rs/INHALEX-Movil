@@ -1,0 +1,81 @@
+{
+  "clientDate": "2026-10-19",
+  "timezone": "America/Mexico_City",
+  "readOnly": true,
+  "transport": "Actual mobile use case + Repository + HttpClient against running Nest/MongoDB API3200",
+  "credentials": "omitted; no Authorization",
+  "literalSearch": true,
+  "results": [
+    {
+      "term": "Lavanda",
+      "total": 1,
+      "names": [
+        "Lavanda"
+      ],
+      "totalPages": 1
+    },
+    {
+      "term": "LAVANDA",
+      "total": 1,
+      "names": [
+        "Lavanda"
+      ],
+      "totalPages": 1
+    },
+    {
+      "term": "menta",
+      "total": 2,
+      "names": [
+        "Menta",
+        "Hierbabuena"
+      ],
+      "totalPages": 1
+    },
+    {
+      "term": "café",
+      "total": 1,
+      "names": [
+        "Café"
+      ],
+      "totalPages": 1
+    },
+    {
+      "term": "cafe",
+      "total": 0,
+      "names": [],
+      "totalPages": 1
+    },
+    {
+      "term": "no-existe-inhalex-qa-842",
+      "total": 0,
+      "names": [],
+      "totalPages": 1
+    },
+    {
+      "term": "[",
+      "total": 0,
+      "names": [],
+      "totalPages": 1
+    },
+    {
+      "term": ".*",
+      "total": 0,
+      "names": [],
+      "totalPages": 1
+    }
+  ],
+  "calls": [
+    "/api/products?page=1&limit=20&search=Lavanda",
+    "/api/products?page=1&limit=20&search=LAVANDA",
+    "/api/products?page=1&limit=20&search=menta",
+    "/api/products?page=1&limit=20&search=caf%C3%A9",
+    "/api/products?page=1&limit=20&search=cafe",
+    "/api/products?page=1&limit=20&search=no-existe-inhalex-qa-842",
+    "/api/products?page=1&limit=20&search=%5C%5B",
+    "/api/products?page=1&limit=20&search=%5C.%5C*",
+    "/api/products?page=1&limit=100"
+  ],
+  "mappedProductFieldsOnly": true,
+  "databaseMutations": false,
+  "phoneObserved": false
+}

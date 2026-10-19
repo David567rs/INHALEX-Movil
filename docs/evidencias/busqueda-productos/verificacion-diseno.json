@@ -1,0 +1,60 @@
+{
+  "clientDate": "2026-10-19",
+  "timezone": "America/Mexico_City",
+  "workspace": "C:/Users/David/Documents/INHALEX-Movil-Zenaida",
+  "branch": "feature/busqueda-productos",
+  "baseCommit": "50d2152f1d23d46f413f2cbc8d81e32914e19143",
+  "stage": "design-only-local-uncommitted",
+  "architecture": {
+    "layers": "View -> ViewModel -> GetSearchPreview -> SearchPreviewRepository -> local examples",
+    "composition": "bootstrap/createSearchPreviewAction.ts",
+    "queryOwner": "useProductSearchViewModel",
+    "httpInSearch": false,
+    "filtersProducts": false,
+    "realSearchResults": false,
+    "examplesNavigateToDetail": false,
+    "fiveTabsPreserved": true
+  },
+  "automated": {
+    "typecheck": "passed",
+    "lint": "passed-no-warnings",
+    "existingMobileTests": { "passed": 236, "failed": 0 },
+    "expoDoctor": { "passed": 21, "total": 21 },
+    "androidExport": { "status": "passed", "modules": 1432, "bundle": "entry-60b06072a1c7cdb4a379c454d3c9eebb.hbc" },
+    "webExport": { "status": "passed", "bundle": "entry-b1f628ffd17c9f5d70b3e59f783019dd.js" },
+    "independentSourceReview": "no-actionable-issues"
+  },
+  "webQA": {
+    "url": "http://localhost:8083/busqueda-productos",
+    "browserZoom": "110%",
+    "observedCssWidths": [291, 321, 392],
+    "horizontalOverflowObserved": false,
+    "minimumMeasuredInteractiveControlHeightCssPx": 45.99,
+    "preservesExactInput": "  té de limón  ",
+    "clearEmptiesInput": true,
+    "suggestionOnlyFillsInput": "Menta",
+    "searchButtonDisabled": true,
+    "examplesStayStatic": true,
+    "navigation": ["direct search route", "back fallback to catalog", "five tabs present", "catalog entry to search"],
+    "catalogApiLimitation": "Catalog showed connection error in browser. API health returned 200 without Access-Control-Allow-Origin for localhost:8083. CORS was preserved; no live search tested.",
+    "screenshots": ["diseno-principal-web.png", "diseno-texto-web.png", "diseno-compacto-web.png", "diseno-tarjetas-web.png"]
+  },
+  "runtime": {
+    "apiPort": 3200,
+    "apiPreserved": true,
+    "davidMetroPort": 8082,
+    "davidMetroPreserved": true,
+    "zenaidaMetroPort": 8083,
+    "expoGoLanUrl": "exp://192.168.1.77:8083"
+  },
+  "preservation": {
+    "serverEnvSha256": "D9B2404F2A8BA429C2A8A3A454CFB72326A42AB013F462E01E5CEFDD59E233BB",
+    "stashCommit": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "gitUser": "ZenaidaGR",
+    "credentialUser": "ZenaidaGR",
+    "davidWorkingTreeUnchanged": true
+  },
+  "nativeAcceptance": { "status": "pending-user-expo-go-review", "directAgentDeviceObservation": false },
+  "trello": { "totalCriteria": 8, "acceptedCriteria": 0, "technicallyReadyAfterNativeReview": [1, 2], "modifiedByAgent": false },
+  "delivery": { "commitCreated": false, "branchPublished": false, "pullRequestCreated": false, "futureReviewer": "David567rs" }
+}

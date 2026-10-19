@@ -28,6 +28,7 @@ export default function RootLayout() {
           <Stack.Screen name="register" />
           <Stack.Screen name="sign-in" />
           <Stack.Screen name="lineas-categorias" />
+          <Stack.Screen name="busqueda-productos" />
           <Stack.Screen name="producto/[id]" />
         </Stack>
       </AuthSessionProvider>

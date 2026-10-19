@@ -1,0 +1,36 @@
+{
+  "activity": "Búsqueda de productos",
+  "date": "2026-10-19",
+  "branch": "feature/busqueda-productos",
+  "base": "develop",
+  "baseCommit": "50d2152f1d23d46f413f2cbc8d81e32914e19143",
+  "responsibleAccount": "ZenaidaGR",
+  "requestedHumanReviewer": "David567rs",
+  "nativeAcceptance": "expo-go-aceptacion.json",
+  "acceptedCriteria": 7,
+  "totalCriteria": 8,
+  "humanCodeReview": "pending",
+  "checksRepeatedBeforePublication": {
+    "mobileTests": { "command": "npm --prefix Mobile test", "passed": 280, "failed": 0 },
+    "typecheck": { "command": "npm run typecheck:mobile", "status": "passed" },
+    "lint": { "command": "npm run lint:mobile", "status": "passed" },
+    "independentTechnicalReview": { "status": "no_actionable_findings", "countsAsHumanApproval": false }
+  },
+  "previousTechnicalEvidence": {
+    "file": "verificacion-api.json",
+    "expoDoctor": "21/21",
+    "androidAndWebExports": "passed",
+    "repeatedDuringPrPreparation": false
+  },
+  "remoteAuthenticationVerified": "ZenaidaGR",
+  "liveServicesChanged": false,
+  "backendChanged": false,
+  "dependenciesChanged": false,
+  "trello": {
+    "userReportedDifferentTermsMarked": true,
+    "updatedByAgent": false,
+    "reviewCriterionComplete": false
+  },
+  "remoteCi": "pending_publication",
+  "merged": false
+}
