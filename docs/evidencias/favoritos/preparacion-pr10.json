@@ -1,0 +1,28 @@
+{
+  "activity": "Favoritos",
+  "recordedDate": "2026-10-19",
+  "repository": "David567rs/INHALEX-Movil",
+  "pullRequest": {
+    "number": 10,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/10",
+    "title": "Implementar Favoritos con MVVM y Repository",
+    "author": "ZenaidaGR",
+    "head": "feature/favoritos",
+    "base": "develop",
+    "headAtOpening": "8dbd613d3c6b470fb52370c65a4c7d3d54b16a26",
+    "stateAtOpening": "open",
+    "draft": false,
+    "requestedReviewersConfirmed": ["David567rs"],
+    "approval": "Pendiente de revisión real de David567rs",
+    "merge": "No realizado; fuera del alcance de apertura del PR",
+    "currentHeadAndCi": "Consultar el PR y sus checks vigentes; este registro precede al commit documental de enlace"
+  },
+  "commitsAtOpening": [
+    { "shaPrefix": "782c250", "subject": "docs(search): registrar integración del PR 9", "author": "ZenaidaGR" },
+    { "sha": "8dbd613d3c6b470fb52370c65a4c7d3d54b16a26", "subject": "feat(favorites): conectar favoritos con MVVM y Repository", "author": "ZenaidaGR" }
+  ],
+  "acceptance": { "criteria": 8, "total": 9, "source": "expo-go-aceptacion.json", "remaining": "Revisar el código" },
+  "localChecks": "verificacion-pr.json",
+  "trello": { "agentReadOrModifiedBoard": false, "recommendedCriterion": "Probar la funcionalidad", "cardState": "En progreso hasta revisión e integración" },
+  "authentication": "La identidad de la credencial local se verificó como ZenaidaGR antes de crear el PR; no se guardaron ni imprimieron tokens"
+}

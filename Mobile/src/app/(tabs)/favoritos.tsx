@@ -1,5 +1,5 @@
-import { PreparationScreen } from '@/features/shell/presentation/screens/PreparationScreen';
+import { FavoritesScreen } from '@/features/favorites/presentation/screens/FavoritesScreen';
 
 export default function FavoritesRoute() {
-  return <PreparationScreen section="favoritos" />;
+  return <FavoritesScreen />;
 }

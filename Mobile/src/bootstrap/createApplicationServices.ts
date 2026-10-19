@@ -13,6 +13,11 @@ import { createLoginUser, type LoginUserAction } from '../features/auth/domain/u
 import { ApiSessionRepository } from '../features/auth/data/repositories/ApiSessionRepository';
 import { SessionError } from '../features/auth/domain/errors/SessionError';
 import { createVerifySession } from '../features/auth/domain/useCases/verifySession';
+import { ApiFavoritesRepository } from '../features/favorites/data/repositories/ApiFavoritesRepository';
+import { FavoritesError } from '../features/favorites/domain/errors/FavoritesError';
+import { createFavoritesActions } from '../features/favorites/domain/useCases/createFavoritesActions';
+import type { FavoritesActions } from '../features/favorites/domain/repositories/FavoritesRepository';
+import { createFavoritesController } from '../features/favorites/presentation/state/createFavoritesController';
 
 export interface ApplicationServicesOptions {
   environment?: Environment;
@@ -36,7 +41,7 @@ export function createApplicationServices(options: ApplicationServicesOptions = 
 }
 
 /** Lazy API composition: an empty store never needs environment configuration or HTTP. */
-export function createApplicationAuthSession(options: Omit<ApplicationServicesOptions, 'getAccessToken'> = {}) {
+function createApplicationAuthRuntime(options: Omit<ApplicationServicesOptions, 'getAccessToken'> = {}) {
   let action: LoginUserAction | undefined;
   const verifySession = createVerifySession(new ApiSessionRepository((token) => {
     try {
@@ -63,7 +68,42 @@ export function createApplicationAuthSession(options: Omit<ApplicationServicesOp
     }
     return action(form, requestOptions);
   }, createSessionTokenStore(), verifySession);
-  return runtime.session;
+  return runtime;
+}
+
+export function createApplicationAuthSession(options: Omit<ApplicationServicesOptions, 'getAccessToken'> = {}) {
+  return createApplicationAuthRuntime(options).session;
+}
+
+/** One private credential source, one public session and one personal collection per app. */
+export function createApplicationRuntime(options: Omit<ApplicationServicesOptions, 'getAccessToken'> = {}) {
+  const auth = createApplicationAuthRuntime(options);
+  let actions: FavoritesActions | undefined;
+  function favoritesActions(): FavoritesActions {
+    if (!actions) {
+      try {
+        const environment = options.environment ?? readEnvironment();
+        const client = new HttpClient({
+          baseUrl: environment.apiUrl,
+          isDevelopment: environment.isDevelopment,
+          requestTimeoutMs: environment.requestTimeoutMs,
+          fetch: options.fetch,
+          getAccessToken: auth.getAccessToken,
+        });
+        actions = createFavoritesActions(new ApiFavoritesRepository(client));
+      } catch {
+        throw new FavoritesError('Favoritos no está disponible en este momento. Inténtalo más tarde.', 'configuration');
+      }
+    }
+    return actions;
+  }
+  const favorites = createFavoritesController(auth.session, {
+    list: async (requestOptions) => favoritesActions().list(requestOptions),
+    add: async (id, requestOptions) => favoritesActions().add(id, requestOptions),
+    remove: async (id, requestOptions) => favoritesActions().remove(id, requestOptions),
+  });
+  // No transport or credential is exposed to the React tree.
+  return Object.freeze({ session: auth.session, favorites });
 }
 
 /** Defer configuration until submission so navigation never depends on the API. */

@@ -1,0 +1,50 @@
+{
+  "activity": "Favoritos",
+  "branch": "feature/favoritos",
+  "date": "2026-10-19",
+  "source": "Mensaje del usuario en el chat",
+  "design": {
+    "accepted": true,
+    "quote": "ya revisé el diseño de Favoritos en Expo Go y me gustó. Sigamos con la conexión a la API en la misma rama, manteniendo MVVM y Repository.",
+    "agentObservedDevice": false
+  },
+  "functionalAcceptance": {
+    "acceptedCriteria": 8,
+    "totalCriteria": 9,
+    "status": "Recorrido funcional aceptado por el usuario en Expo Go; revisión real pendiente",
+    "acceptedCriterionIds": [1, 2, 3, 4, 5, 6, 7, 8],
+    "pendingCriterionIds": [9],
+    "confirmations": [
+      {
+        "date": "2026-10-19",
+        "quote": "ya pude guardar, actualizar y quitar favoritos en Expo Go. Sigamos con la prueba del estado vacío.",
+        "context": "Respuesta al recorrido guiado: guardar desde Detalle, ver lista, actualizar, comprobar corazón y quitar",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-19",
+        "quote": "apareció «Aún no tienes favoritos», se mantuvo al actualizar y «Explorar catálogo» abrió Catálogo. Sigamos con la prueba de error y reintento.",
+        "context": "Vacío de la cuenta autenticada conservado tras actualizar y navegación al catálogo",
+        "acceptedCriterionIds": [6],
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-19",
+        "quote": "Amigo, fallaron Quitar y Actualizar sin perder el producto. Reinicié el backend y Reintentar recuperó la lista sin errores. ¿Qué marco en Trello y qué sigue?",
+        "context": "Fallos de eliminación y lectura conservaron el producto; recuperación tras reiniciar la API local y pulsar Reintentar",
+        "acceptedCriterionIds": [7],
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-19",
+        "quote": "Amigo, el favorito permaneció al reabrir Expo Go, se ocultó al cerrar sesión y volvió al ingresar con la misma cuenta. Abre el PR de Favoritos hacia develop para que David567rs lo revise.",
+        "context": "Recorrido final de reapertura, limpieza al cerrar sesión y recuperación de la colección al ingresar de nuevo con la misma cuenta",
+        "acceptedCriterionIds": [8],
+        "agentObservedDevice": false
+      }
+    ],
+    "nextTest": "Revisión real de David567rs sobre el PR de Favoritos de ZenaidaGR hacia develop"
+  },
+  "trello": { "agentReadOrModifiedBoard": false },
+  "limitations": ["Aceptación textual del usuario; sin observación directa del teléfono", "Sin capturas nativas ni prueba física de TalkBack", "Revisión real de David567rs pendiente", "Aislamiento entre dos cuentas cubierto por pruebas automatizadas, sin confirmación física específica", "El fallo de descarga de imagen remota tiene fallback técnico; sin aceptación física específica de ese escenario"]
+}

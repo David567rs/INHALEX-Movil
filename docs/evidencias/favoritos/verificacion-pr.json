@@ -1,0 +1,43 @@
+{
+  "activity": "Favoritos",
+  "date": "2026-10-19",
+  "branch": "feature/favoritos",
+  "base": "852614afd801cfa67a5025ac6128e1803e69f32f",
+  "purpose": "Comprobaciones finales antes de publicar el PR, después del fallback de imagen",
+  "typecheck": "passed",
+  "lint": "passed",
+  "mobileTests": { "passed": 322, "failed": 0, "newFavoritesTests": 42 },
+  "doctor": { "passed": 21, "total": 21 },
+  "androidExport": { "status": "passed", "modules": 1444, "bundle": "entry-25fc50d8d77057682d49c8ef72b5f9b8.hbc" },
+  "webExport": { "status": "passed", "modules": 992, "bundle": "entry-a5ad691208b9432614dad057e1f10e51.js" },
+  "review": {
+    "technical": "Revisión independiente de dominio, datos, controller, composición y presentación",
+    "resolvedFinding": "FavoriteCard ahora muestra el icono de hoja existente si falla la imagen remota, con fallo asociado al valor de la imagen",
+    "pendingTechnicalFindings": 0,
+    "humanReview": "Pendiente de David567rs; la revisión técnica no sustituye su aprobación en GitHub"
+  },
+  "nativeAcceptance": {
+    "source": "Mensajes del usuario en Expo Go registrados en expo-go-aceptacion.json",
+    "acceptedCriteria": 8,
+    "totalCriteria": 9,
+    "scenarios": ["Guardar desde Detalle", "Lista y actualización", "Quitar", "Vacío y acceso a Catálogo", "Errores de lectura y escritura conservan producto", "Recuperación tras reintento", "Reapertura", "Limpieza al salir", "Recuperación al reingresar con la misma cuenta"],
+    "agentObservedDevice": false,
+    "notPhysicallyVerified": ["Dos cuentas distintas", "TalkBack", "Texto ampliado", "Fallo remoto de imagen"]
+  },
+  "earlierEvidence": {
+    "connection": "verificacion-api.json conserva el snapshot anterior",
+    "design": "verificacion-diseno.json conserva el snapshot visual",
+    "httpIntegration": "HTTP real aislado con API y almacenamiento simulados; no mutaciones del agente en cuentas reales"
+  },
+  "preservation": {
+    "serverEnvironmentSha256": "D9B2404F2A8BA429C2A8A3A454CFB72326A42AB013F462E01E5CEFDD59E233BB",
+    "stash": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "davidClone": "develop limpio",
+    "runningPorts": [3200, 8082, 8083],
+    "backendOrDependenciesChanged": false,
+    "temporaryQaRouteRemoved": true,
+    "temporaryQaServerClosed": true
+  },
+  "remoteCi": "Consultar la CI del HEAD vigente en el PR; esta evidencia es local",
+  "trelloReadOrModifiedByAgent": false
+}
