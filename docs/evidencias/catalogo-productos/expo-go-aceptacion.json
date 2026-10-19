@@ -2,7 +2,8 @@
   "activity": "Catálogo de productos",
   "date": "2026-10-17",
   "branch": "feature/catalogo-productos",
-  "phase": "loading-empty-accepted-real-backend-restored",
+  "phase": "nine-criteria-accepted-in-branch-detail-integration-pending",
+  "lastUpdated": "2026-10-18",
   "platform": "Expo Go",
   "evidenceType": "human_chat_confirmation",
   "userResponse": "Ya revisé el Catálogo en Expo Go, amigo, y me gustó. Sigamos con la conexión a la API en la misma rama, manteniendo MVVM y Repository. ¿Qué punto puedo marcar en Trello?",
@@ -12,7 +13,10 @@
     "Mostrar nombre, imagen, precio y datos principales",
     "Manejar errores de conexión",
     "Manejar estado de carga",
-    "Mostrar mensaje cuando no existan productos"
+    "Mostrar mensaje cuando no existan productos",
+    "Verificar navegación al detalle del producto",
+    "Probar la funcionalidad",
+    "Revisar el código"
   ],
   "designAcceptance": {
     "status": "accepted_by_user",
@@ -24,9 +28,9 @@
     "authorizedByUser": true,
     "branch": "feature/catalogo-productos",
     "architecture": "MVVM y Repository",
-    "status": "six_criteria_accepted_by_user",
+    "status": "catalogue-criteria-accepted-in-branch-detail-integration-pending",
     "results": "El usuario confirma productos, fotos, precios y Actualizar catálogo en Expo Go.",
-    "validation": "Consulta, actualización, error/reintento, carga y vacío aceptados por el usuario. El vacío se verificó con HTTP temporal simulado de 1500 ms. Paginación nativa y criterios restantes pendientes.",
+    "validation": "Consulta, presentación, actualización, error/reintento, carga y vacío aceptados previamente. La confirmación posterior acepta navegación con filtro y retorno sin filtro; la revisión de Catálogo corresponde al PR #6. No se atribuye paginación física a esas respuestas.",
     "acceptedByDesignConfirmation": false,
     "acceptedBySubsequentFunctionalConfirmation": true
   },
@@ -41,16 +45,15 @@
     "attachedScreenshot": "Trello checklist; not a native app screenshot"
   },
   "checklist": {
-    "acceptedCriteria": 6,
+    "acceptedCriteria": 9,
     "totalCriteria": 9,
-    "remainingCriteria": [
-      "Verificar navegación al detalle del producto",
-      "Probar la funcionalidad",
-      "Revisar el código"
-    ],
-    "detailNavigationDependency": "Pendiente de la actividad feature/detalle-producto, posterior según el plan; no implementada ni aceptada."
+    "acceptedCriterionNumbers": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    "remainingCriteria": [],
+    "functionalAcceptanceBasis": "Six previous functional criteria, recorded real PR #6 review, and the final user-confirmed detail navigation complete the accumulated catalogue checks.",
+    "detailNavigationDependency": "Implementada y aceptada en feature/detalle-producto; su revisión e integración en develop siguen pendientes.",
+    "fullyIntegratedInDevelop": false
   },
-  "nextNativeTest": {
+  "historicalNextNativeTestAfterEmptyFixture": {
     "status": "real_backend_restored_awaiting_native_refresh",
     "backend": "local laptop",
     "steps": [
@@ -75,7 +78,7 @@
     "healthHttp200": true,
     "realRepositoryMappedProducts": 16,
     "evidence": "backend-restaurado.json",
-    "nativeRefreshAfterRestoration": "pending-user"
+    "nativeRefreshAfterRestoration": "Not separately reported at the restoration event; later real product data and navigation were accepted in the Detalle activity."
   },
   "errorRetryConfirmation": {
     "date": "2026-10-17",
@@ -89,15 +92,20 @@
     "nativeLoadingIndicatorExplicitlyConfirmed": false
   },
   "trello": {
-    "taskStatus": "En progreso",
+    "recommendedStatus": "Keep the card open until the new detail navigation is merged into develop.",
     "criteriaThatMayBeMarked": [
       "Diseñar pantalla del catálogo",
       "Obtener productos desde la API",
       "Mostrar nombre, imagen, precio y datos principales",
       "Manejar errores de conexión",
       "Manejar estado de carga",
-      "Mostrar mensaje cuando no existan productos"
+      "Mostrar mensaje cuando no existan productos",
+      "Verificar navegación al detalle del producto",
+      "Probar la funcionalidad",
+      "Revisar el código"
     ],
+    "currentBoardStatusVerifiedByAgent": false,
+    "newCriteriaMarkedByUserConfirmed": false,
     "updatedByAgent": false,
     "updateResponsibility": "user"
   },
@@ -108,7 +116,7 @@
     "La evidencia anterior de la vista previa local conserva su alcance y sus precios de demostración.",
     "No confirma pruebas específicas de TalkBack, escalado de fuente nativo o movimiento reducido en dispositivo."
   ],
-  "delivery": {
+  "prOpeningSnapshot": {
     "pullRequestOpened": true,
     "pushPerformedForThisStage": true,
     "oneActivityPullRequest": true,
@@ -127,5 +135,31 @@
       "detailNavigationCriterion": "pending; not implemented or marked complete",
       "trelloChangedByAgent": false
     }
+  },
+  "navigationConfirmation": {
+    "date": "2026-10-18",
+    "implementationBranch": "feature/detalle-producto",
+    "userResponse": "Sí, amigo, se conserva la categoría al volver del detalle y, con «Ver todos», regresa a «Nuestra colección» sin filtro.",
+    "evidenceType": "human_chat_confirmation",
+    "categoryPreservedOnReturn": true,
+    "viewAllReturnsUnfilteredCollection": true,
+    "agentObservedPhysicalDevice": false,
+    "nativeScreenshotsProvided": false,
+    "newlySatisfiedCriteria": [
+      "Verificar navegación al detalle del producto",
+      "Probar la funcionalidad"
+    ],
+    "fullCatalogueTestBasis": "Accumulated catalogue API, presentation, loading, empty, error/retry checks and final navigation; not a new claim about native pagination or accessibility."
+  },
+  "delivery": {
+    "cataloguePullRequest": 6,
+    "catalogueMergeRecorded": true,
+    "catalogueHumanReviewRecorded": "ZenaidaGR APPROVED on b98cbdc61e9b052dd4009300795ed4c4f0242bde",
+    "recordedIntegrationEvidence": "integracion-pr6.json",
+    "detailNavigationBranch": "feature/detalle-producto",
+    "detailNavigationReview": "pending",
+    "detailNavigationMergedIntoDevelop": false,
+    "activityFullyIntegrated": false,
+    "recommendedTrelloCompletion": "after detail PR integration"
   }
 }

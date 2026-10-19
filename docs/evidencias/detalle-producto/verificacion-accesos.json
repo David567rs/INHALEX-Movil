@@ -1,0 +1,52 @@
+{
+  "clientDate": "2026-10-18",
+  "activity": "Detalle de producto",
+  "branch": "feature/detalle-producto",
+  "scopeClarifiedByUser": "Criterios 5 y 6: icono y acceso a las pestañas Favoritos y Bolsa; guardar favoritos y añadir a la bolsa pertenecen a sus actividades posteriores.",
+  "implementation": {
+    "favoritesIcon": "heart-outline",
+    "favoritesActionLabel": "Ir a Favoritos",
+    "favoritesRoute": "/(tabs)/favoritos",
+    "bagIcon": "bag-handle-outline",
+    "bagActionLabel": "Ir a Bolsa de compras",
+    "bagRoute": "/(tabs)/bolsa",
+    "navigation": "router.navigate",
+    "savesFavorite": false,
+    "addsToBag": false,
+    "pretendsSuccess": false,
+    "newApiOrPersistence": false
+  },
+  "webQa": {
+    "status": "passed",
+    "source": "Actual ProductDetailScreen with an injected public product snapshot in temporary detalle-accesos-qa.tsx, plus existing real tab routes.",
+    "publicDataSource": "Read-only GET of Toronjil from local backend 3200; only presentation fields copied.",
+    "sizes": ["393x852", "320x568"],
+    "favoritesDestination": "Favoritos / Un espacio para tus aromas / EN PREPARACIÓN",
+    "bagDestination": "Bolsa / Tu bolsa empieza aquí / EN PREPARACIÓN",
+    "correctTabSelected": true,
+    "fiveTabsPreserved": true,
+    "minimumButtonHeightPx": 72,
+    "noHorizontalOverflow": true,
+    "compactButtonsStacked": true,
+    "screenshots": ["accesos-web.png", "accesos-compacto-web.png", "acceso-favoritos-web.png", "acceso-bolsa-web.png"],
+    "nativePhoneObservedByAgent": false,
+    "newAccessNativeUserAcceptance": "pending",
+    "temporaryQaRouteRemoved": true
+  },
+  "checks": {
+    "typecheck": "passed",
+    "lint": { "status": "passed", "warnings": 0 },
+    "mobileTests": { "passed": 236, "failed": 0 },
+    "expoDoctor": { "passed": 21, "total": 21 },
+    "androidExport": { "status": "passed", "modules": 1426 },
+    "webExport": { "status": "passed", "modules": 974 },
+    "finalSourceAndBundlesHaveNoQaRoute": true
+  },
+  "checklist": {
+    "previousNativeAcceptedCriteria": [1, 2, 3, 4, 7],
+    "newAccessCriteriaImplementedAndWebVerified": [5, 6],
+    "criteriaReadyToMarkAfterCheckingNativeNavigation": 7,
+    "completeNativeFunctionalTest": "pending-new-access-check",
+    "humanReview": "pending-ZenaidaGR"
+  }
+}

@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '@/core/theme/colors';
 import { getCatalogImage } from '../assets/catalogImages';
 import type { CatalogProductViewModel } from '../viewModels/useCatalogViewModel';
@@ -8,17 +8,19 @@ import type { CatalogProductViewModel } from '../viewModels/useCatalogViewModel'
 interface CatalogProductCardProps {
   product: CatalogProductViewModel;
   horizontal: boolean;
+  onPress: () => void;
 }
 
-/** Informative product card; detail and purchase actions have their own activities. */
-export function CatalogProductCard({ product, horizontal }: CatalogProductCardProps) {
+export function CatalogProductCard({ product, horizontal, onPress }: CatalogProductCardProps) {
   const [failedImage, setFailedImage] = useState<string | null>(null);
   const source = product.image !== failedImage ? getCatalogImage(product.image) : null;
   return (
-    <View
-      accessible
+    <Pressable
+      accessibilityRole="button"
+      accessibilityHint="Abre la información del producto"
       accessibilityLabel={`${product.name}. ${product.aromaNote}. ${product.originalPriceLabel ? `Oferta: ${product.priceLabel}. Antes: ${product.originalPriceLabel}.` : `Precio: ${product.priceLabel}.`} ${product.inStock ? 'Disponible' : 'Agotado'}.`}
-      style={[styles.card, horizontal && styles.horizontal]}
+      onPress={onPress}
+      style={({ pressed }) => [styles.card, horizontal && styles.horizontal, pressed && styles.pressed]}
     >
       <View style={[styles.artwork, horizontal && styles.horizontalArtwork]}>
         {source ? <Image
@@ -41,8 +43,12 @@ export function CatalogProductCard({ product, horizontal }: CatalogProductCardPr
           <Text style={styles.price}>{product.priceLabel}</Text>
           <Text style={[styles.stock, !product.inStock && styles.outOfStock]}>{product.inStock ? 'Disponible' : 'Agotado'}</Text>
         </View>
+        <View accessible={false} style={styles.detailLink}>
+          <Text style={styles.detailLinkText}>Ver detalle</Text>
+          <Ionicons name="arrow-forward" size={16} color={colors.primaryDark} />
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 
@@ -64,4 +70,7 @@ const styles = StyleSheet.create({
   originalPrice: { color: colors.textMuted, fontSize: 11, lineHeight: 17, textDecorationLine: 'line-through' },
   stock: { color: colors.primary, fontSize: 10, lineHeight: 16, marginTop: 5 },
   outOfStock: { color: '#8A4E3B' },
+  pressed: { opacity: 0.72 },
+  detailLink: { alignItems: 'center', flexDirection: 'row', gap: 7, marginTop: 12, minHeight: 24 },
+  detailLinkText: { color: colors.primaryDark, fontSize: 11, fontWeight: '600' },
 });

@@ -1,0 +1,39 @@
+{
+  "clientDate": "2026-10-18",
+  "verifiedAt": "2026-10-19T05:26:04.087Z",
+  "backend": "http://localhost:3200/api",
+  "scope": "Read-only HTTP real: HttpClient -> ApiProductDetailRepository -> GetProductDetail. No database mutation or device automation.",
+  "passed": true,
+  "products": [
+    {
+      "id": "69a7d21b350f57ff952f6e8f",
+      "name": "Toronjil",
+      "presentation": "10ml",
+      "origin": "100% Natural",
+      "benefitsCount": 3,
+      "extendedDescription": true,
+      "slugMatches": true
+    },
+    {
+      "id": "69a7d21b350f57ff952f6e96",
+      "name": "Mirra y Azafran",
+      "presentation": "10ml",
+      "origin": "100% Natural",
+      "benefitsCount": 3,
+      "extendedDescription": true,
+      "slugMatches": true
+    }
+  ],
+  "unknownProduct404": true,
+  "invalidRouteWithoutHttp": true,
+  "privateFieldsExcluded": true,
+  "noAuthorizationOrCookies": true,
+  "getRequests": [
+    "/api/products/69a7d21b350f57ff952f6e8f",
+    "/api/products/toronjil",
+    "/api/products/69a7d21b350f57ff952f6e96",
+    "/api/products/mirra-y-azafran",
+    "/api/products/000000000000000000000000"
+  ],
+  "nativeApiAcceptance": "pending-user"
+}

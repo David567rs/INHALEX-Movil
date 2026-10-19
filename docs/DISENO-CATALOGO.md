@@ -1,6 +1,6 @@
 # Diseño de Catálogo
 
-Documento histórico del diseño de Catálogo, aceptado en Expo Go y después conectado a la API. El [PR #6](https://github.com/David567rs/INHALEX-Movil/pull/6) quedó integrado el 17 de octubre de 2026 en `fc13bbf`, con aprobación de ZenaidaGR y ambas CI correctas. El estado actual es 7/9: siguen pendientes navegación al detalle y prueba completa. La [evidencia de integración](evidencias/catalogo-productos/integracion-pr6.json) complementa las evidencias previas. La etapa vigente prepara el diseño local de Líneas o categorías; todavía no está aceptado ni conectado a la API.
+Documento histórico del diseño de Catálogo, aceptado en Expo Go y después conectado a la API. El [PR #6](https://github.com/David567rs/INHALEX-Movil/pull/6) quedó integrado el 17 de octubre de 2026 en `fc13bbf`, con aprobación de ZenaidaGR y ambas CI correctas. El PR #6 dejó 7/9 (histórico). El estado vigente es 9/9 aceptados en la rama de Detalle, con integración de la navegación en `develop` todavía pendiente; la tarjeta sigue abierta hasta el merge. La [evidencia de integración](evidencias/catalogo-productos/integracion-pr6.json) complementa las evidencias previas. El siguiente paso es preparar el PR de Detalle con dependencias explícitas, sin crearlo ni publicarlo todavía.
 
 ## Origen y recursos
 
@@ -55,6 +55,6 @@ La QA del catálogo se realizó con la API de 3200 apagada, sin consultas del ca
 
 El usuario aceptó el diseño y después productos, fotografías, precios, actualización, error/reintento, carga y vacío mediante confirmaciones del chat. Esas respuestas y sus límites permanecen en [expo-go-aceptacion.json](evidencias/catalogo-productos/expo-go-aceptacion.json); no constituyen capturas nativas ni observación directa del dispositivo por el agente.
 
-La aprobación real de ZenaidaGR y el merge del PR #6 completan la revisión de código y elevan el estado a 7/9. La [evidencia de integración](evidencias/catalogo-productos/integracion-pr6.json) registra el HEAD final y CI. Siguen pendientes navegación al detalle, dependiente de `feature/detalle-producto`, y prueba completa. El contrato y las comprobaciones históricas están en [CONEXION-CATALOGO.md](CONEXION-CATALOGO.md).
+La aprobación real de ZenaidaGR y el merge del PR #6 completaron la revisión de código y dejaron 7/9 en esa etapa histórica. La [evidencia de integración](evidencias/catalogo-productos/integracion-pr6.json) registra el HEAD final y CI. Las confirmaciones posteriores y pruebas acumuladas completan ahora 9/9 aceptados en rama; queda pendiente integrar la navegación con el PR de Detalle hacia `develop`, manteniendo la tarjeta abierta hasta el merge. El contrato y las comprobaciones históricas están en [CONEXION-CATALOGO.md](CONEXION-CATALOGO.md).
 
 La siguiente etapa prepara solo el diseño local de Líneas o categorías en `feature/lineas-categorias`; no se declara aceptación ni conexión a la API. El [plan](PLAN-DE-TRABAJO.md) conserva el orden y los pendientes.
