@@ -52,4 +52,4 @@ La aprobación real de ZenaidaGR sobre el HEAD final `6e787da` completa «Revisa
 
 Las 206 pruebas, TypeScript, lint, Doctor y exportaciones Android 1415/web 963 pertenecen a la conexión integrada. La API aislada usó componentes Nest reales con modelos Mongo simulados. La QA web y la aceptación reportada por el usuario no acreditan TalkBack, escalado de fuente o movimiento reducido físicos.
 
-Detalle continúa en `feature/detalle-producto`; su estado vigente y aceptación están en [la conexión de Detalle](CONEXION-DETALLE-PRODUCTO.md). Catálogo conserva 7/9: navegación al detalle y prueba completa siguen pendientes. Se mantiene Catálogo → Categorías → Detalle; esta vista previa no cierra esas dependencias.
+Detalle continúa en `feature/detalle-producto`; su estado vigente y aceptación están en [la conexión de Detalle](CONEXION-DETALLE-PRODUCTO.md). Catálogo tiene 9/9 aceptados en rama; la integración de la navegación mediante el PR de Detalle sigue pendiente y la tarjeta permanece abierta hasta el merge. Se mantiene Catálogo → Categorías → Detalle; Detalle conserva 5/9 y sus dependencias de Favoritos/Bolsa, prueba completa y revisión.

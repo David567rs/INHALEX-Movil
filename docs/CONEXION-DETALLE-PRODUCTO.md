@@ -37,7 +37,7 @@ La ruta y los archivos temporales de control se retiraron y el servidor 3216 se 
 
 El [registro del diseño inicial](evidencias/detalle-producto/verificacion-diseno.json) conserva la vista previa de snapshots en memoria, 206 pruebas y exportaciones Android 1422/web 970. Su QA web por inyección de snapshots pertenece a esa etapa, separada de esta consulta GET.
 
-El usuario confirmó: «Ya probé el Detalle en Expo Go, amigo: aparecen los datos completos y cambian al abrir otro producto.». Esto acepta consulta y presentación de datos base y adicionales, junto con el diseño ya aceptado: hito previo 4/9. Los registros técnicos conservan la aceptación de su momento; el estado humano vigente está en expo-go-aceptacion.json. No hay observación directa del teléfono ni nuevas capturas nativas; TalkBack, escalado de fuente y movimiento reducido físicos tampoco se acreditan. Catálogo mantiene 7/9: la navegación y conservación del filtro en su recorrido completo todavía esperan aceptación explícita, al igual que su prueba completa.
+El usuario confirmó: «Ya probé el Detalle en Expo Go, amigo: aparecen los datos completos y cambian al abrir otro producto.». Esto acepta consulta y presentación de datos base y adicionales, junto con el diseño ya aceptado: hito previo 4/9. Los registros técnicos conservan la aceptación de su momento; el estado humano vigente está en expo-go-aceptacion.json. No hay observación directa del teléfono ni nuevas capturas nativas; TalkBack, escalado de fuente y movimiento reducido físicos tampoco se acreditan. La confirmación posterior de navegación y las pruebas acumuladas dejan Catálogo 9/9 aceptados en rama; su integración y cierre de tarjeta esperan el merge del PR de Detalle.
 
 ## Error y reintento aceptados
 
@@ -49,9 +49,11 @@ El 18 de octubre de 2026 el usuario confirmó: «Sí, amigo, apareció el aviso,
 4. Desde `C:\Users\David\Documents\INHALEX-Movil` ejecuta `npm run dev:server` y espera a que Nest esté listo.
 5. Pulsa «Reintentar» para recuperar el producto. El criterio de errores queda aceptado por la confirmación textual, sin observación física del agente.
 
-## Próxima prueba de navegación
+## Navegación aceptada
 
-Propuesta pendiente de resultado: Catálogo → «Encuentra tu línea» → seleccionar línea → «Ver productos de esta línea» → «Ver detalle» → flecha para volver conservando el filtro. Después «Ver todos los productos» → otro producto → flecha para volver a «Nuestra colección». Todavía no se acepta este recorrido ni se marca prueba funcional completa. Catálogo conserva 7/9.
+El 18 de octubre de 2026 el usuario confirmó: «Sí, amigo, se conserva la categoría al volver del detalle y, con «Ver todos», regresa a «Nuestra colección» sin filtro.». La evidencia procede del chat, sin observación directa del dispositivo ni nuevas capturas. Esta aceptación, las pruebas previas y la revisión real del PR #6 completan Catálogo 9/9 aceptados en rama. La navegación todavía debe integrarse en `develop` mediante el PR de Detalle y la tarjeta permanece abierta hasta el merge.
+
+Detalle conserva 5/9 (1, 2, 3, 4 y 7): esta navegación no acepta Favoritos, Bolsa, prueba completa ni revisión de Detalle. El siguiente paso es [preparar el PR con dependencias explícitas](PR-DETALLE-PRODUCTO.md), sin crearlo ni publicarlo todavía.
 
 ## Checklist: 5/9
 
@@ -65,4 +67,4 @@ Propuesta pendiente de resultado: Catálogo → «Encuentra tu línea» → sele
 - [ ] Probar la funcionalidad.
 - [ ] Revisar el código.
 
-El usuario administra Trello; el agente no modificó el tablero ni afirma que el usuario haya marcado los puntos aceptados. Catálogo conserva 7/9, con navegación al detalle y prueba completa pendientes de aceptación explícita de su recorrido completo y filtro. Se mantiene Catálogo → Categorías → Detalle.
+El usuario administra Trello; el agente no modificó el tablero ni afirma que el usuario haya marcado los puntos aceptados. Catálogo tiene 9/9 aceptados en rama, con integración de la navegación pendiente y tarjeta abierta hasta el merge. Se mantiene Catálogo → Categorías → Detalle.

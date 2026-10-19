@@ -239,11 +239,11 @@ Recorrido aceptado de reintento, reproducible desde la copia de David:
 
 La [guía móvil](../Mobile/README.md#comprobación-en-expo-go-aceptada) incluye los comandos para ambas terminales y la configuración LAN. Se conserva el entorno existente y las credenciales del servidor. El PR #5 está integrado y el usuario confirmó su tarjeta «Terminado».
 
-## Catálogo de productos integrado: 7/9
+## Catálogo: 9/9 aceptados en rama, integración pendiente
 
 El [PR #6](https://github.com/David567rs/INHALEX-Movil/pull/6) quedó cerrado y fusionado en `develop` por ZenaidaGR a las `2026-10-17T12:42:43Z`. Su aprobación a las `2026-10-17T12:42:14Z` corresponde al HEAD final `b98cbdc61e9b052dd4009300795ed4c4f0242bde`. [Backend CI](https://github.com/David567rs/INHALEX-Movil/actions/runs/39033399079) y [Mobile CI](https://github.com/David567rs/INHALEX-Movil/actions/runs/39033399082) concluyeron con `success` sobre ese HEAD.
 
-El merge `fc13bbf7afcd0ee81e9f0f7dadce8931852d9b78` tiene padres `d5171b2510a1ba6a17fa0d95d4e01a61cbbff7fb` y `b98cbdc61e9b052dd4009300795ed4c4f0242bde`. La [evidencia de integración](evidencias/catalogo-productos/integracion-pr6.json) registra esos hechos. El usuario había autorizado abrir el PR con pendientes para conservar el orden Catálogo → Categorías → Detalle. La aprobación real completa ahora la revisión de código; no completa los otros criterios pendientes.
+El merge `fc13bbf7afcd0ee81e9f0f7dadce8931852d9b78` tiene padres `d5171b2510a1ba6a17fa0d95d4e01a61cbbff7fb` y `b98cbdc61e9b052dd4009300795ed4c4f0242bde`. La [evidencia de integración](evidencias/catalogo-productos/integracion-pr6.json) registra esos hechos. El usuario había autorizado abrir el PR con pendientes para conservar el orden Catálogo → Categorías → Detalle. En aquel momento la aprobación real completó la revisión de código y dejó 7/9; ese hecho histórico se conserva.
 
 - [x] Diseñar pantalla del catálogo.
 - [x] Obtener productos desde la API.
@@ -251,11 +251,11 @@ El merge `fc13bbf7afcd0ee81e9f0f7dadce8931852d9b78` tiene padres `d5171b2510a1ba
 - [x] Manejar estado de carga.
 - [x] Mostrar mensaje cuando no existan productos.
 - [x] Manejar errores de conexión.
-- [ ] Verificar navegación al detalle del producto.
-- [ ] Probar la funcionalidad.
+- [x] Verificar navegación al detalle del producto.
+- [x] Probar la funcionalidad.
 - [x] Revisar el código.
 
-Catálogo queda 7/9. Detalle depende de `feature/detalle-producto`, posterior en el plan, y la prueba completa sigue pendiente. La integración no convierte la tarjeta en 9/9. El usuario indicó «listo» después de la guía de Trello; el agente no comprobó ni modificó el tablero en vivo.
+El merge del PR #6 dejó 7/9 (histórico). La aceptación posterior en Expo Go de categoría conservada y colección completa sin filtro, junto con las pruebas funcionales acumuladas y la revisión real del PR #6, deja Catálogo 9/9 aceptados en rama. La navegación aún debe integrarse en `develop` mediante el PR de Detalle; la tarjeta permanece abierta hasta ese merge, sin declararla Terminado. En aquella etapa del PR #6 el usuario indicó «listo» después de la guía de Trello; el agente no comprobó ni modificó el tablero en vivo.
 
 Se conserva la [aceptación funcional previa](evidencias/catalogo-productos/expo-go-aceptacion.json), reportada por el usuario desde Expo Go, y la [QA web](evidencias/catalogo-productos/api-verificacion.json). El [contrato de conexión](CONEXION-CATALOGO.md) describe paginación pública, estados, mapeo y recursos recuperados; el [diseño](DISENO-CATALOGO.md) conserva la vista previa histórica. Las 179 pruebas y exportaciones aprobadas pertenecen a Catálogo. El fixture de API utilizó Controller/Service/ValidationPipe reales y modelos Mongo simulados; no se presenta como una prueba de MongoDB real.
 
@@ -282,7 +282,7 @@ David continúa en `feature/detalle-producto`, creada desde `b0b9856`. Zenaida p
 
 El 18 de octubre de 2026 el usuario confirmó: «Ya revisé el diseño de Detalle de producto en Expo Go, amigo, y me gustó.». Ese mensaje aceptó el diseño (1/9 en ese momento). La confirmación posterior de datos completos y cambio al abrir otro producto completó los criterios 1 a 4; la confirmación de error/recuperación añade el criterio 7: 5/9, según [la aceptación textual](evidencias/detalle-producto/expo-go-aceptacion.json). No hay observación directa del dispositivo ni capturas nativas y el agente no marcó Trello.
 
-La [conexión a la API](CONEXION-DETALLE-PRODUCTO.md) está implementada y verificada técnicamente en la misma rama con MVVM y Repository: GET público `/products/:idOrSlug`, datos base y `longDescription`, `benefits`, `presentation` y `origin` disponibles. Pasaron 236/236 pruebas (30 nuevas: 22 de dominio/datos y 8 del controlador), TypeScript, lint sin advertencias, Doctor 21/21 y exportaciones Android 1426/web 974. La [evidencia](evidencias/detalle-producto/verificacion-api.json) distingue HTTP real de lectura en 3200 y QA web mediante HTTP temporal 3216 con snapshots públicos por CORS original, sin modificarlo. Los temporales se retiraron y el backend, configuración, autenticación y `.env` se conservaron. El usuario ya aceptó consulta, presentación de datos base y adicionales y cambio de producto en Expo Go; el conteo actual 5/9 incorpora además la confirmación de aviso, datos conservados y recuperación tras reiniciar backend y pulsar Reintentar. La prueba propuesta de navegación con filtro y colección completa todavía no tiene resultado. Favoritos y Bolsa siguen deshabilitados, «Próximamente»; sus capacidades dependen de actividades posteriores de Zenaida.
+La [conexión a la API](CONEXION-DETALLE-PRODUCTO.md) está implementada y verificada técnicamente en la misma rama con MVVM y Repository: GET público `/products/:idOrSlug`, datos base y `longDescription`, `benefits`, `presentation` y `origin` disponibles. Pasaron 236/236 pruebas (30 nuevas: 22 de dominio/datos y 8 del controlador), TypeScript, lint sin advertencias, Doctor 21/21 y exportaciones Android 1426/web 974. La [evidencia](evidencias/detalle-producto/verificacion-api.json) distingue HTTP real de lectura en 3200 y QA web mediante HTTP temporal 3216 con snapshots públicos por CORS original, sin modificarlo. Los temporales se retiraron y el backend, configuración, autenticación y `.env` se conservaron. El usuario ya aceptó consulta, presentación de datos base y adicionales y cambio de producto en Expo Go; el conteo actual 5/9 incorpora además la confirmación de aviso, datos conservados y recuperación tras reiniciar backend y pulsar Reintentar. La navegación con filtro y colección completa fue aceptada por el usuario. Catálogo queda 9/9 aceptados en rama, pendiente de integrar la navegación; Detalle mantiene 5/9, con Favoritos, Bolsa, prueba completa y revisión pendientes. El siguiente paso es preparar el PR de Detalle con esas dependencias explícitas, sin crearlo ni publicarlo todavía. Favoritos y Bolsa siguen deshabilitados, «Próximamente»; sus capacidades dependen de actividades posteriores de Zenaida.
 
 La captura de Trello contiene exactamente estos nueve criterios:
 
@@ -296,4 +296,4 @@ La captura de Trello contiene exactamente estos nueve criterios:
 - [ ] Probar la funcionalidad.
 - [ ] Revisar el código.
 
-El [diseño inicial](DISENO-DETALLE-PRODUCTO.md) y [su verificación](evidencias/detalle-producto/verificacion-diseno.json) se conservan como snapshot histórico: datos del Catálogo en memoria, QA web por inyección de snapshots debido a CORS y checks de la etapa visual. Los snapshots técnicos conservan la aceptación de su momento; el estado humano actual 5/9 está en expo-go-aceptacion.json, sin reescribir esos resultados. Error/reintento está aceptado. Prueba completa y revisión siguen pendientes, al igual que Favoritos y Bolsa. No se declara PR o push nuevo. Catálogo mantiene 7/9, con navegación al detalle y prueba completa pendientes, y el orden Catálogo → Categorías → Detalle.
+El [diseño inicial](DISENO-DETALLE-PRODUCTO.md) y [su verificación](evidencias/detalle-producto/verificacion-diseno.json) se conservan como snapshot histórico: datos del Catálogo en memoria, QA web por inyección de snapshots debido a CORS y checks de la etapa visual. Los snapshots técnicos conservan la aceptación de su momento; el estado humano actual 5/9 está en expo-go-aceptacion.json, sin reescribir esos resultados. Error/reintento está aceptado. Prueba completa y revisión siguen pendientes, al igual que Favoritos y Bolsa. No se declara PR o push nuevo. Catálogo mantiene 9/9 aceptados en rama, con integración de navegación pendiente y tarjeta abierta hasta el merge, y el orden Catálogo → Categorías → Detalle.

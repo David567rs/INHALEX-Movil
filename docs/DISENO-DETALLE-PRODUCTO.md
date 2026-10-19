@@ -59,4 +59,4 @@ Fuente: captura enviada por el usuario al iniciar Detalle y confirmaciones poste
 - [ ] Probar la funcionalidad.
 - [ ] Revisar el código.
 
-Catálogo conserva 7/9: navegación al detalle y prueba completa siguen pendientes. Esta vista previa no los cierra. Se mantiene el orden Catálogo → Categorías → Detalle.
+La aceptación posterior de navegación y las pruebas acumuladas dejan Catálogo 9/9 aceptados en rama. La integración de la navegación mediante el PR de Detalle sigue pendiente y la tarjeta permanece abierta hasta el merge. Detalle mantiene 5/9; la navegación no acepta Favoritos, Bolsa, prueba completa o revisión de esa actividad. Se mantiene el orden Catálogo → Categorías → Detalle.

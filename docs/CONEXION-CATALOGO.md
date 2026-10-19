@@ -2,7 +2,7 @@
 
 Estado vigente al 18 de octubre de 2026: Catálogo está integrado mediante el [PR #6](https://github.com/David567rs/INHALEX-Movil/pull/6) en `develop`, merge `fc13bbf7afcd0ee81e9f0f7dadce8931852d9b78`. ZenaidaGR aprobó el HEAD final `b98cbdc61e9b052dd4009300795ed4c4f0242bde` y fusionó el PR el 17 de octubre, con Backend CI y Mobile CI correctas. La [evidencia de integración](evidencias/catalogo-productos/integracion-pr6.json) conserva fechas, padres y ejecuciones.
 
-La revisión de código está completada: Catálogo queda 7/9, con navegación al detalle y prueba de funcionalidad completa pendientes. El usuario autorizó conservar esos pendientes para mantener Catálogo → Categorías → Detalle. La nueva rama `feature/lineas-categorias` prepara solo diseño local, todavía sin API ni aceptación. Las comprobaciones descritas aquí son históricas de Catálogo; no se atribuyen a Líneas.
+El checklist de Catálogo reúne **9/9 criterios aceptados en la rama**, por sus comprobaciones acumuladas y la nueva confirmación de navegación con filtro y regreso a la colección sin filtro. Esa navegación vive en `feature/detalle-producto`: su revisión e integración en `develop` siguen pendientes del PR de Detalle. Mantén la tarjeta abierta hasta ese merge; el agente no modificó Trello. Los resultados de API, CI y merge del PR #6 descritos aquí conservan su alcance histórico.
 
 ## Recorrido y contrato público
 
@@ -64,7 +64,7 @@ npm run dev:mobile
 
 Abre Catálogo y verifica carga de productos, nombres, fotografías, precios y disponibilidad; alterna cuadrícula/lista y prueba «Cargar más» cuando existan más de 20. Comprueba actualización, un fallo de conexión con aviso/reintento y conservación de datos. La configuración LAN y Expo Go permanece descrita en [Mobile/README.md](../Mobile/README.md).
 
-La aceptación funcional del usuario completó seis criterios de Catálogo. La posterior aprobación real de ZenaidaGR elevó el total a 7/9. Siguen pendientes navegación al detalle, dependiente de `feature/detalle-producto`, y prueba de funcionalidad completa. La integración del PR #6 no declara ambos criterios realizados; la [evidencia de integración](evidencias/catalogo-productos/integracion-pr6.json) conserva el cierre y la revisión.
+La aceptación funcional inicial completó seis criterios de Catálogo. La aprobación real de ZenaidaGR elevó aquel hito a 7/9, conservado en la [evidencia de integración](evidencias/catalogo-productos/integracion-pr6.json). La posterior navegación aceptada en la rama de Detalle completa los dos criterios restantes mediante la evidencia acumulada; todavía requiere integrar esa rama.
 
 ## Prueba local de error y reintento aceptada
 
@@ -86,4 +86,12 @@ El helper `scripts/qa/catalog-empty.cjs`, mediante `npm run qa:catalog:empty`, p
 3. En Expo Go pulsa «Actualizar catálogo» y comprueba «Actualizando…», después cero productos, el mensaje vacío y «Volver a consultar».
 4. Detén solo el fixture con `Ctrl+C`, ejecuta `npm run dev:server`, espera a Nest y pulsa «Actualizar catálogo» para recuperar productos reales.
 
-El usuario confirmó exactamente: «Sí, amigo, vi «Actualizando…» y luego «Nuevos aromas están por llegar». Ya marqué esos dos puntos en Trello. Ahora ayúdame a restaurar el backend real.». Quedan aceptados «Manejar estado de carga» y «Mostrar mensaje cuando no existan productos», con seis criterios funcionales en esa etapa; la posterior revisión eleva el total actual a 7/9. La fuente es el chat, sin observación directa del teléfono por el agente. El usuario afirmó que marcó ambos puntos; el agente no actualiza Trello. No se modificó la base para simular el caso. El backend real quedó restaurado: Nest listo en 3200, health 200 y 16 productos verificados mediante GET y el caso de uso/Repository/cliente/mapeador reales ([evidencia](evidencias/catalogo-productos/backend-restaurado.json)). Metro 8082 se conservó. El refresco posterior en Expo Go sigue pendiente de confirmación del usuario. Los resultados técnicos de 179 pruebas son históricos y no se repitieron para registrar esta aceptación.
+El usuario confirmó exactamente: «Sí, amigo, vi «Actualizando…» y luego «Nuevos aromas están por llegar». Ya marqué esos dos puntos en Trello. Ahora ayúdame a restaurar el backend real.». Quedan aceptados «Manejar estado de carga» y «Mostrar mensaje cuando no existan productos», con seis criterios funcionales en esa etapa; la posterior revisión elevó el hito histórico a 7/9. La fuente es el chat, sin observación directa del teléfono por el agente. El usuario afirmó que marcó ambos puntos; el agente no actualiza Trello. No se modificó la base para simular el caso. El backend real quedó restaurado: Nest listo en 3200, health 200 y 16 productos verificados mediante GET y el caso de uso/Repository/cliente/mapeador reales ([evidencia](evidencias/catalogo-productos/backend-restaurado.json)). Metro 8082 se conservó. El refresco posterior en Expo Go sigue pendiente de confirmación del usuario. Los resultados técnicos de 179 pruebas son históricos y no se repitieron para registrar esta aceptación.
+
+## Navegación aceptada desde Detalle: 9/9 en la rama
+
+El 18 de octubre de 2026 el usuario confirmó: «Sí, amigo, se conserva la categoría al volver del detalle y, con «Ver todos», regresa a «Nuestra colección» sin filtro.». Catálogo → categoría → producto → volver conserva el filtro; «Ver todos los productos» → otro detalle → volver muestra la colección general. La fuente es el chat, sin observación directa del dispositivo ni nuevas capturas nativas.
+
+La consulta, presentación, actualización, carga, vacío y error/reintento ya aceptados, la revisión del PR #6 y este último recorrido completan «Verificar navegación al detalle del producto» y «Probar la funcionalidad». Catálogo reúne 9/9 criterios aceptados en la rama. Esta respuesta no acredita paginación, TalkBack o fuente ampliada físicos.
+
+La [aceptación vigente](evidencias/catalogo-productos/expo-go-aceptacion.json) distingue esos resultados del snapshot de integración del PR #6, que conserva su hito 7/9. La navegación nueva vive en feature/detalle-producto, pendiente de revisión e integración en develop. Conserva abierta la tarjeta de Catálogo hasta ese merge. Detalle sigue 5/9, con Favoritos, Bolsa, prueba completa y revisión pendientes; la [descripción del PR preparada](PR-DETALLE-PRODUCTO.md) documenta esas dependencias.
