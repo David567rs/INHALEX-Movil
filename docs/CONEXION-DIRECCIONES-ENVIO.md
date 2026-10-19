@@ -1,5 +1,7 @@
 # Conexión de Direcciones de envío
 
+El [PR #13](https://github.com/David567rs/INHALEX-Movil/pull/13) ya está abierto por David567rs desde `feature/direcciones-envio` hacia `develop`, con revisión solicitada y confirmada a ZenaidaGR. Direcciones continúa **9/10**; revisión e integración pendientes. La CI debe consultarse sobre el HEAD vigente. El recibo de apertura está en `docs/evidencias/direcciones-envio/preparacion-pr13.json`.
+
 La actividad continúa solo en `C:\Users\David\Documents\INHALEX-Movil`, rama `feature/direcciones-envio`, desde `27d2495`. David567rs es responsable y ZenaidaGR revisará el futuro PR a `develop`. El usuario aceptó el diseño y autorizó la conexión: «Amigo, ya revisé el diseño de Direcciones en Expo Go y me gustó. Sigamos con la conexión a la API en la misma rama feature/direcciones-envio, manteniendo MVVM y Repository.».
 
 La [aceptación textual](evidencias/direcciones-envio/expo-go-aceptacion.json) completa **9/10**, criterios 1 a 9: diseño, alta/lista, validación, edición/eliminación, principal, vacío, error/reintento y recorrido final de sesión. Los casos de validación reportados fueron campos vacíos, etiqueta de una letra, teléfono de nueve dígitos y CP de cuatro, sin atribuir límites superiores u otros casos. El agente no observó el teléfono ni leyó o modificó Trello; su marcado no está confirmado. Mantener la tarjeta **En progreso** hasta revisión e integración. El [diseño](DISENO-DIRECCIONES-ENVIO.md) y sus verificaciones se conservan como historia.

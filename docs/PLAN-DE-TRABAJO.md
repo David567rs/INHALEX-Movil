@@ -540,3 +540,10 @@ Ya están aceptados diseño, alta/lista, edición/eliminación, principal, valid
 El usuario autoriza commit y publicación de `feature/direcciones-envio` desde la copia de David, PR de David567rs hacia `develop` y solicitud de revisión a ZenaidaGR. El estado es preparación autorizada; todavía no se declara PR abierto ni número o URL. No fusionar por esta solicitud. La verificación previa registra 485 pruebas, TypeScript/lint, Doctor 21/21 y exportaciones; sus snapshots se conservan. Las comprobaciones finales de preparación se registrarán por separado con resultados reales y la CI se consultará sobre el HEAD publicado.
 
 Mantener MVVM y Repository, configuración, servicios, identidades, stash, cinco pestañas y la otra copia. El cierre documental anterior de Perfil/PR #12 permanece como está. Esta actualización no ejecuta pruebas ni modifica código.
+
+
+## Estado vigente: PR #13 de Direcciones abierto (9/10)
+
+El [PR #13](https://github.com/David567rs/INHALEX-Movil/pull/13), Implementar Direcciones de envío con MVVM y Repository, está abierto por David567rs desde feature/direcciones-envio hacia develop. GitHub confirmó a ZenaidaGR como revisora solicitada. La implementación publicada es eeca4d86474e002f3a454dfd8de8b756bae1f70f; el recibo está en docs/evidencias/direcciones-envio/preparacion-pr13.json. Consultar la CI del HEAD vigente después del enlace documental: no se declara aprobada por los resultados locales.
+
+Direcciones permanece 9/10: el usuario aceptó el recorrido en Expo Go, incluida reapertura y salida/reingreso con la misma cuenta. Solo Revisar el código (10) espera revisión real de ZenaidaGR. El agente no observó el teléfono ni leyó o modificó Trello; mantener la tarjeta En progreso hasta revisión e integración. No hay aprobación ni merge. Esta actualización enlaza el PR sin cambiar código funcional y conserva configuración, servicios, identidades, stash y la otra copia.
