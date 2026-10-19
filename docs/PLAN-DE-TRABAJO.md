@@ -276,24 +276,24 @@ La [evidencia de integración](evidencias/lineas-categorias/integracion-pr7.json
 
 El [contrato y QA de Líneas](CONEXION-LINEAS-CATEGORIAS.md) conserva los límites: vacío con datos sintéticos, modelos Mongo simulados en la API aislada, confirmaciones de Expo Go mediante chat y capturas web. Las 206 pruebas y las exportaciones anteriores pertenecen a Líneas, sin revalidar por sí solas Detalle.
 
-## Detalle de producto: API verificada técnicamente, 1/9
+## Detalle de producto: datos aceptados en Expo Go, 4/9
 
 David continúa en `feature/detalle-producto`, creada desde `b0b9856`. Zenaida permanece en `develop`; se conservaron `Server/.env` y su stash `81196109270f00fa7edf03a8a8ec6f8bdc963131`.
 
-El 18 de octubre de 2026 el usuario confirmó: «Ya revisé el diseño de Detalle de producto en Expo Go, amigo, y me gustó.». La [aceptación textual](evidencias/detalle-producto/expo-go-aceptacion.json) completa únicamente «Crear pantalla de detalle»: 1/9. No hay observación directa del dispositivo ni capturas nativas y el agente no marcó Trello.
+El 18 de octubre de 2026 el usuario confirmó: «Ya revisé el diseño de Detalle de producto en Expo Go, amigo, y me gustó.». Ese mensaje aceptó el diseño (1/9 en ese momento). La confirmación posterior de datos completos y cambio al abrir otro producto completa los criterios 1 a 4: 4/9, según [la aceptación textual](evidencias/detalle-producto/expo-go-aceptacion.json). No hay observación directa del dispositivo ni capturas nativas y el agente no marcó Trello.
 
-La [conexión a la API](CONEXION-DETALLE-PRODUCTO.md) está implementada y verificada técnicamente en la misma rama con MVVM y Repository: GET público `/products/:idOrSlug`, datos base y `longDescription`, `benefits`, `presentation` y `origin` disponibles. Pasaron 236/236 pruebas (30 nuevas: 22 de dominio/datos y 8 del controlador), TypeScript, lint sin advertencias, Doctor 21/21 y exportaciones Android 1426/web 974. La [evidencia](evidencias/detalle-producto/verificacion-api.json) distingue HTTP real de lectura en 3200 y QA web mediante HTTP temporal 3216 con snapshots públicos por CORS original, sin modificarlo. Los temporales se retiraron y el backend, configuración, autenticación y `.env` se conservaron. La aceptación funcional de API en Expo Go sigue pendiente; no se suman criterios solo por el código. Favoritos y Bolsa siguen deshabilitados, «Próximamente»; sus capacidades dependen de actividades posteriores de Zenaida.
+La [conexión a la API](CONEXION-DETALLE-PRODUCTO.md) está implementada y verificada técnicamente en la misma rama con MVVM y Repository: GET público `/products/:idOrSlug`, datos base y `longDescription`, `benefits`, `presentation` y `origin` disponibles. Pasaron 236/236 pruebas (30 nuevas: 22 de dominio/datos y 8 del controlador), TypeScript, lint sin advertencias, Doctor 21/21 y exportaciones Android 1426/web 974. La [evidencia](evidencias/detalle-producto/verificacion-api.json) distingue HTTP real de lectura en 3200 y QA web mediante HTTP temporal 3216 con snapshots públicos por CORS original, sin modificarlo. Los temporales se retiraron y el backend, configuración, autenticación y `.env` se conservaron. El usuario ya aceptó consulta, presentación de datos base y adicionales y cambio de producto en Expo Go; el conteo 4/9 se apoya en esa confirmación, sin sumar criterios solo por el código. La prueba guiada de error/reintento queda en progreso, sin resultado recibido, manteniendo Metro 8082 y deteniendo solo API 3200. Favoritos y Bolsa siguen deshabilitados, «Próximamente»; sus capacidades dependen de actividades posteriores de Zenaida.
 
 La captura de Trello contiene exactamente estos nueve criterios:
 
 - [x] Crear pantalla de detalle.
-- [ ] Obtener información del producto seleccionado.
-- [ ] Mostrar nombre, descripción, precio e imagen.
-- [ ] Mostrar información adicional disponible.
+- [x] Obtener información del producto seleccionado.
+- [x] Mostrar nombre, descripción, precio e imagen.
+- [x] Mostrar información adicional disponible.
 - [ ] Agregar acceso a favoritos.
 - [ ] Agregar acceso a bolsa de compras.
 - [ ] Manejar errores al cargar el producto.
 - [ ] Probar la funcionalidad.
 - [ ] Revisar el código.
 
-El [diseño inicial](DISENO-DETALLE-PRODUCTO.md) y [su verificación](evidencias/detalle-producto/verificacion-diseno.json) se conservan como snapshot histórico: datos del Catálogo en memoria, QA web por inyección de snapshots debido a CORS y checks de la etapa visual. No se trasladan esos resultados a la API verificada técnicamente, todavía sin aceptación funcional nativa ni se atribuye aceptación nativa adicional. No se declara PR o push nuevo. Catálogo mantiene 7/9, con navegación al detalle y prueba completa pendientes, y el orden Catálogo → Categorías → Detalle.
+El [diseño inicial](DISENO-DETALLE-PRODUCTO.md) y [su verificación](evidencias/detalle-producto/verificacion-diseno.json) se conservan como snapshot histórico: datos del Catálogo en memoria, QA web por inyección de snapshots debido a CORS y checks de la etapa visual. Los snapshots técnicos conservan la aceptación de su momento; el estado humano actual 4/9 está en expo-go-aceptacion.json, sin reescribir esos resultados. Error/reintento, prueba completa y revisión siguen pendientes, al igual que Favoritos y Bolsa. No se declara PR o push nuevo. Catálogo mantiene 7/9, con navegación al detalle y prueba completa pendientes, y el orden Catálogo → Categorías → Detalle.

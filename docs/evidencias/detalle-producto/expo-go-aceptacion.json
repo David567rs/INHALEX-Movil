@@ -2,7 +2,7 @@
   "activity": "Detalle de producto",
   "date": "2026-10-18",
   "branch": "feature/detalle-producto",
-  "phase": "design-accepted-api-technically-verified-awaiting-user",
+  "phase": "four-criteria-accepted-error-and-retry-pending",
   "platform": "Expo Go",
   "evidenceType": "human_chat_confirmation",
   "userResponse": "Ya revisé el diseño de Detalle de producto en Expo Go, amigo, y me gustó.",
@@ -22,19 +22,31 @@
     "status": "implemented-and-technically-verified",
     "technicalEvidence": "verificacion-api.json",
     "realHttpEvidence": "api-http-real.json",
-    "nativeFunctionalAcceptance": "pending-user",
-    "acceptedByDesignConfirmation": false
+    "nativeFunctionalAcceptance": "complete-data-and-product-change-accepted-by-user",
+    "acceptedByDesignConfirmation": false,
+    "acceptedBySubsequentFunctionalConfirmation": true
+  },
+  "functionalConfirmation": {
+    "date": "2026-10-18",
+    "userResponse": "Ya probé el Detalle en Expo Go, amigo: aparecen los datos completos y cambian al abrir otro producto.",
+    "evidenceType": "human_chat_confirmation",
+    "completeProductDataVisible": true,
+    "openingAnotherProductUpdatesData": true,
+    "agentObservedPhysicalDevice": false,
+    "nativeScreenshotsProvided": false
   },
   "checklist": {
-    "source": "User-provided nine-item Trello screenshot and subsequent design acceptance in chat",
-    "acceptedCriteria": 1,
+    "source": "User-provided nine-item Trello screenshot, design acceptance and subsequent functional chat confirmation",
+    "acceptedCriteria": 4,
     "totalCriteria": 9,
-    "acceptedCriterionNumbers": [1],
-    "acceptedCriteriaNames": ["Crear pantalla de detalle"],
-    "remainingCriteria": [
+    "acceptedCriterionNumbers": [1, 2, 3, 4],
+    "acceptedCriteriaNames": [
+      "Crear pantalla de detalle",
       "Obtener información del producto seleccionado",
       "Mostrar nombre, descripción, precio e imagen",
-      "Mostrar información adicional disponible",
+      "Mostrar información adicional disponible"
+    ],
+    "remainingCriteria": [
       "Agregar acceso a favoritos",
       "Agregar acceso a bolsa de compras",
       "Manejar errores al cargar el producto",
@@ -43,20 +55,34 @@
     ]
   },
   "trello": {
-    "criterionReadyToMark": "Crear pantalla de detalle",
-    "criterionMarkedByUserConfirmed": false,
+    "criteriaReadyToMark": [
+      "Crear pantalla de detalle",
+      "Obtener información del producto seleccionado",
+      "Mostrar nombre, descripción, precio e imagen",
+      "Mostrar información adicional disponible"
+    ],
+    "criteriaMarkedByUserConfirmed": false,
     "updatedByAgent": false,
     "updateResponsibility": "user"
   },
   "limitations": [
-    "La confirmación acepta únicamente el diseño visual en Expo Go.",
+    "La confirmación inicial acepta el diseño visual; la confirmación posterior acepta los datos completos y su cambio entre productos, completando los criterios 1 a 4.",
     "No hay observación directa del teléfono ni capturas nativas del agente.",
-    "No acepta todavía la consulta nueva de Detalle, sus datos adicionales, errores o prueba funcional completa.",
-    "Los checks y la QA de snapshots del diseño anterior se conservan como historia, separados de los resultados técnicos de la conexión y de la aceptación funcional que continúa pendiente.",
+    "No acepta todavía errores/reintento, Favoritos, Bolsa, prueba funcional completa o revisión de código.",
+    "Los snapshots técnicos del diseño y de la API se conservan como historia con su aceptación de aquel momento; no se reescriben por la confirmación humana posterior.",
     "Favoritos y Bolsa continúan Próximamente, sin funcionalidad aceptada.",
     "No acredita pruebas físicas de TalkBack, escalado de fuente o movimiento reducido.",
-    "Catálogo permanece 7/9; no se cierran sus pendientes mediante esta aceptación visual."
+    "Catálogo permanece 7/9; la aceptación explícita de navegación/filtro en su recorrido completo y la prueba completa siguen pendientes."
   ],
+  "nextNativeTest": {
+    "criterion": "Manejar errores al cargar el producto",
+    "status": "guided-manual-test-in-progress-awaiting-user-result",
+    "backendPort": 3200,
+    "keepMetroPort": 8082,
+    "requestTimeoutSeconds": 15,
+    "scope": "Refresh the same loaded detail, stop only backend, expect notice with data preserved, restart npm run dev:server from repository root and retry.",
+    "nativeResultReceived": false
+  },
   "delivery": {
     "pullRequestOpened": false,
     "pushPerformedForThisStage": false,

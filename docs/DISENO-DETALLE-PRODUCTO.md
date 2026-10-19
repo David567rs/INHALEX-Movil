@@ -1,8 +1,8 @@
 # Diseño de Detalle de producto
 
-Estado del 18 de octubre de 2026: diseño aceptado por el usuario en Expo Go, con «Crear pantalla de detalle» completado (1/9). David continúa en `feature/detalle-producto`, creada desde `develop` en `b0b9856f7470d8f9b76a8de2d462b29ac3f2d4eb`. La [conexión a la API](CONEXION-DETALLE-PRODUCTO.md) está implementada y verificada técnicamente en la misma rama, pendiente de aceptación funcional en Expo Go; [su evidencia](evidencias/detalle-producto/verificacion-api.json) se registra por separado. Este documento conserva la implementación y QA históricas del diseño inicial, sin PR o push nuevo.
+Estado del 18 de octubre de 2026: diseño aceptado por el usuario en Expo Go, con «Crear pantalla de detalle» completado (hito histórico 1/9); la confirmación posterior de datos completos y cambio de producto deja el estado actual en 4/9. David continúa en `feature/detalle-producto`, creada desde `develop` en `b0b9856f7470d8f9b76a8de2d462b29ac3f2d4eb`. La [conexión a la API](CONEXION-DETALLE-PRODUCTO.md) está implementada y verificada técnicamente en la misma rama, con datos y cambio de producto aceptados en Expo Go, pero error/reintento y prueba completa aún pendientes; [su evidencia](evidencias/detalle-producto/verificacion-api.json) se registra por separado. Este documento conserva la implementación y QA históricas del diseño inicial, sin PR o push nuevo.
 
-El usuario confirmó: «Ya revisé el diseño de Detalle de producto en Expo Go, amigo, y me gustó.». La [aceptación textual](evidencias/detalle-producto/expo-go-aceptacion.json) completa solo «Crear pantalla de detalle»: **1/9**, sin observación directa del teléfono ni capturas nativas. El snapshot anterior de [verificación visual](evidencias/detalle-producto/verificacion-diseno.json) conserva su estado previo 0/9. El agente no marcó Trello.
+El usuario confirmó: «Ya revisé el diseño de Detalle de producto en Expo Go, amigo, y me gustó.». Ese mensaje aceptó el diseño (1/9). La [confirmación textual posterior](evidencias/detalle-producto/expo-go-aceptacion.json) de datos completos y cambio al abrir otro producto completa los criterios 1 a 4: **4/9**, sin observación directa del teléfono ni capturas nativas. El snapshot anterior de [verificación visual](evidencias/detalle-producto/verificacion-diseno.json) conserva su estado previo 0/9. El agente no marcó Trello.
 
 ## Datos y límites del diseño inicial
 
@@ -45,14 +45,14 @@ El recorrido visual consistía en abrir un producto ya cargado, comprobar su pre
 - [Safe Area Context para SDK 57](https://docs.expo.dev/versions/v57.0.0/sdk/safe-area-context/).
 - React Native 0.86: [Pressable](https://reactnative.dev/docs/0.86/pressable), [Image](https://reactnative.dev/docs/0.86/image), [accesibilidad](https://reactnative.dev/docs/0.86/accessibility), [ScrollView](https://reactnative.dev/docs/0.86/scrollview), [Text](https://reactnative.dev/docs/0.86/text) y [useWindowDimensions](https://reactnative.dev/docs/0.86/usewindowdimensions).
 
-## Checklist exacto de Trello: 1/9
+## Checklist exacto de Trello: 4/9
 
-Fuente: captura enviada por el usuario al iniciar Detalle y confirmación posterior del diseño. Solo se acepta la primera casilla; no se atribuyen resultados de la API en desarrollo a las restantes:
+Fuente: captura enviada por el usuario al iniciar Detalle y confirmaciones posteriores del diseño y de los datos de API. Se aceptan los criterios 1 a 4; los otros cinco siguen pendientes:
 
 - [x] Crear pantalla de detalle.
-- [ ] Obtener información del producto seleccionado.
-- [ ] Mostrar nombre, descripción, precio e imagen.
-- [ ] Mostrar información adicional disponible.
+- [x] Obtener información del producto seleccionado.
+- [x] Mostrar nombre, descripción, precio e imagen.
+- [x] Mostrar información adicional disponible.
 - [ ] Agregar acceso a favoritos.
 - [ ] Agregar acceso a bolsa de compras.
 - [ ] Manejar errores al cargar el producto.

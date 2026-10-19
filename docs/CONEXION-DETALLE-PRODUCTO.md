@@ -1,6 +1,6 @@
 # Conexión de Detalle de producto
 
-Estado del 18 de octubre de 2026: conexión implementada y verificada técnicamente en `feature/detalle-producto`, pendiente de aceptación funcional en Expo Go. El usuario aceptó únicamente el [diseño](DISENO-DETALLE-PRODUCTO.md): **1/9**, «Crear pantalla de detalle», registrado en [la confirmación textual](evidencias/detalle-producto/expo-go-aceptacion.json). No se declara PR, push o CI remota de esta actividad.
+Estado del 18 de octubre de 2026: conexión implementada y verificada técnicamente en `feature/detalle-producto`, con datos completos y cambio entre productos confirmados por el usuario en Expo Go. La [aceptación textual](evidencias/detalle-producto/expo-go-aceptacion.json) completa los criterios 1 a 4: **4/9**. Favoritos, Bolsa, errores, prueba completa y revisión siguen pendientes. No hay observación directa del teléfono, nuevas capturas nativas ni cambios del agente en Trello. No se declara PR, push o CI remota de esta actividad.
 
 ## Contrato y arquitectura
 
@@ -33,22 +33,32 @@ Capturas web: [producto](evidencias/detalle-producto/api-producto-web.png), [inf
 
 La ruta y los archivos temporales de control se retiraron y el servidor 3216 se detuvo. No quedaron referencias QA en el código ni en los bundles finales. Backend 3200 y Metro 8082 se conservaron activos; los `.env` de ambas copias permanecieron intactos y la copia de Zenaida quedó limpia en `develop` sobre `b0b9856`.
 
-## Historia y aceptación pendiente
+## Historia y aceptación humana
 
 El [registro del diseño inicial](evidencias/detalle-producto/verificacion-diseno.json) conserva la vista previa de snapshots en memoria, 206 pruebas y exportaciones Android 1422/web 970. Su QA web por inyección de snapshots pertenece a esa etapa, separada de esta consulta GET.
 
-La API todavía no fue probada por el usuario en Expo Go. No hay aceptación adicional, observación directa del teléfono ni capturas nativas; TalkBack, escalado de fuente y movimiento reducido físicos tampoco se acreditan. Los checks técnicos no convierten el checklist en 2/9. Catálogo mantiene 7/9, con navegación al detalle y prueba completa pendientes de la integración funcional.
+El usuario confirmó: «Ya probé el Detalle en Expo Go, amigo: aparecen los datos completos y cambian al abrir otro producto.». Esto acepta consulta y presentación de datos base y adicionales, junto con el diseño ya aceptado: 4/9. Los registros técnicos conservan la aceptación de su momento; el estado humano vigente está en expo-go-aceptacion.json. No hay observación directa del teléfono ni nuevas capturas nativas; TalkBack, escalado de fuente y movimiento reducido físicos tampoco se acreditan. Catálogo mantiene 7/9: la navegación y conservación del filtro en su recorrido completo todavía esperan aceptación explícita, al igual que su prueba completa.
 
-## Checklist: 1/9
+## Prueba de error y reintento pendiente
+
+Recorrido manual preparado/en progreso, sin resultado del usuario recibido todavía. La API local usa 3200 y el timeout configurado es 15 segundos; conserva Expo Go y Metro 8082 abiertos:
+
+1. Con el backend activo, abre un producto y pulsa «Actualizar producto» para partir del mismo detalle con datos cargados.
+2. Pulsa Ctrl+C únicamente en la terminal del backend local; conserva Expo Go y Metro.
+3. En ese detalle pulsa «Actualizar producto» y espera hasta unos 15 segundos: se espera un aviso conservando los datos, todavía sin dar este resultado por observado.
+4. Desde `C:\Users\David\Documents\INHALEX-Movil` ejecuta `npm run dev:server` y espera a que Nest esté listo.
+5. Pulsa «Reintentar» y comprueba recuperación y desaparición del aviso. El criterio de errores seguirá pendiente hasta confirmar el resultado.
+
+## Checklist: 4/9
 
 - [x] Crear pantalla de detalle.
-- [ ] Obtener información del producto seleccionado.
-- [ ] Mostrar nombre, descripción, precio e imagen.
-- [ ] Mostrar información adicional disponible.
+- [x] Obtener información del producto seleccionado.
+- [x] Mostrar nombre, descripción, precio e imagen.
+- [x] Mostrar información adicional disponible.
 - [ ] Agregar acceso a favoritos.
 - [ ] Agregar acceso a bolsa de compras.
 - [ ] Manejar errores al cargar el producto.
 - [ ] Probar la funcionalidad.
 - [ ] Revisar el código.
 
-El usuario administra Trello; el agente no modificó el tablero ni afirma que el usuario haya marcado la casilla aceptada. Catálogo conserva 7/9, con navegación al detalle y prueba completa pendientes hasta la integración funcional. Se mantiene Catálogo → Categorías → Detalle.
+El usuario administra Trello; el agente no modificó el tablero ni afirma que el usuario haya marcado los puntos aceptados. Catálogo conserva 7/9, con navegación al detalle y prueba completa pendientes de aceptación explícita de su recorrido completo y filtro. Se mantiene Catálogo → Categorías → Detalle.
