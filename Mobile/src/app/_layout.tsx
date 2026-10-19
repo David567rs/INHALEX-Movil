@@ -2,18 +2,20 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useState } from 'react';
-import { createApplicationAuthSession } from '@/bootstrap/createApplicationServices';
+import { createApplicationRuntime } from '@/bootstrap/createApplicationServices';
 import { AuthSessionProvider } from '@/features/auth/presentation/context/AuthSessionProvider';
+import { FavoritesProvider } from '@/features/favorites/presentation/context/FavoritesProvider';
 import { colors } from '@/core/theme/colors';
 import { useReducedMotion } from '@/shared/hooks/useReducedMotion';
 
 export default function RootLayout() {
   const reducedMotion = useReducedMotion();
-  const [session] = useState(() => createApplicationAuthSession());
+  const [runtime] = useState(() => createApplicationRuntime());
 
   return (
     <SafeAreaProvider>
-      <AuthSessionProvider session={session}>
+      <AuthSessionProvider session={runtime.session}>
+        <FavoritesProvider controller={runtime.favorites}>
         <StatusBar style="dark" />
         <Stack
           initialRouteName="(tabs)"
@@ -31,6 +33,7 @@ export default function RootLayout() {
           <Stack.Screen name="busqueda-productos" />
           <Stack.Screen name="producto/[id]" />
         </Stack>
+        </FavoritesProvider>
       </AuthSessionProvider>
     </SafeAreaProvider>
   );

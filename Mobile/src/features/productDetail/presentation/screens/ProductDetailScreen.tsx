@@ -3,6 +3,7 @@ import { router } from 'expo-router';
 import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
+import { FavoriteProductButton } from '@/features/favorites/presentation/components/FavoriteProductButton';
 import { Reveal } from '@/shared/components/Motion';
 import type { GetProductDetail } from '../../domain/useCases/getProductDetail';
 import { ProductDetailImage } from '../components/ProductDetailImage';
@@ -104,6 +105,8 @@ export function ProductDetailScreen({ productId, getProduct }: { productId: stri
                 : <Ionicons accessible={false} name="refresh-outline" size={17} color={colors.primary} />}
               <Text style={styles.refreshText}>{vm.refreshing ? 'Actualizando…' : vm.error ? 'Reintentar' : 'Actualizar producto'}</Text>
             </Pressable>
+
+            <FavoriteProductButton product={product} />
 
             <View style={[styles.actions, stackActions && styles.stackedActions]}>
               <Pressable accessibilityRole="button" accessibilityLabel="Ir a Favoritos"

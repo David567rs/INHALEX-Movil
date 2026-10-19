@@ -1,6 +1,18 @@
 # INHALEX: base móvil
 
-Proyecto Expo SDK 57 con React Native, TypeScript y Expo Router, identidad INHALEX y cinco pestañas. Registro, Login, Persistencia, Catálogo, Líneas y Detalle están integrados. El [PR #8](https://github.com/David567rs/INHALEX-Movil/pull/8) quedó aprobado y fusionado por ZenaidaGR en `develop` (`50d2152`); Detalle y Catálogo completaron sus criterios. La actividad actual es la [conexión de Búsqueda de productos](../docs/CONEXION-BUSQUEDA-PRODUCTOS.md), en `INHALEX-Movil-Zenaida`, rama `feature/busqueda-productos`, con MVVM y Repository. El usuario aceptó diseño, escritura/borrado y resultados reales de `Lavanda` con foto y precio en Expo Go, y confirmó contextualmente las guías sin coincidencias, error/reintento y distintos términos (`LAVANDA`, `Menta` y `Lavanda` con espacios exteriores): 7/8 criterios. La última aceptación procede de su respuesta en el chat «dale ya quedó, y cada que acabes sugiereme el siguiente texto porque ya no aparece», sin observación directa del dispositivo ni cambios en Trello por el agente. El [PR #9](https://github.com/David567rs/INHALEX-Movil/pull/9) de ZenaidaGR está abierto hacia `develop`, con revisión solicitada a David567rs; solo queda pendiente esa revisión real, sin aprobación ni merge. La CI del HEAD vigente está pendiente de verificación; no se declara aprobada. Las actividades siguen el [plan](../docs/PLAN-DE-TRABAJO.md).
+Proyecto Expo SDK 57 con React Native, TypeScript y Expo Router, identidad INHALEX y cinco pestañas. Registro, Login, Persistencia, Catálogo, Líneas, Detalle y Búsqueda están integrados. El [PR #9](https://github.com/David567rs/INHALEX-Movil/pull/9) de ZenaidaGR quedó aprobado por David567rs sobre `22042d7`, con Backend CI y Mobile CI correctos, y fusionado por él a `develop` en `852614a` el 19 de octubre de 2026: Búsqueda **8/8** y Trello actualizado según confirmó el usuario. La [evidencia de integración](../docs/evidencias/busqueda-productos/integracion-pr9.json) conserva los identificadores completos. La actividad actual es la [conexión de Favoritos](../docs/CONEXION-FAVORITOS.md), en la copia de Zenaida y rama `feature/favoritos`, con MVVM y Repository autenticado. El usuario aceptó el recorrido completo de Favoritos en Expo Go, incluidos reapertura, cierre de sesión y reingreso: **8/9**. Se prepara el PR hacia develop para revisión real de David567rs. Las actividades siguen el [plan](../docs/PLAN-DE-TRABAJO.md).
+
+## Probar Favoritos conectado a la API
+
+El diseño de Favoritos ya fue aceptado por el usuario en Expo Go. La [conexión a la API](../docs/CONEXION-FAVORITOS.md) se implementa en la misma rama `feature/favoritos`, con Repository autenticado y estado compartido entre la lista y el corazón del Detalle. Esta actualización prevalece sobre los estados históricos de diseño que contiene este README. El usuario confirmó guardar, actualizar, quitar, vacío, error/reintento, reapertura, limpieza al salir y recuperación al reingresar: **8/9** aceptados. Autorizó abrir el PR de ZenaidaGR hacia develop para la revisión real de David567rs; esa revisión es el único criterio pendiente.
+
+Reutiliza el QR de Metro de Zenaida (`8083`) y el backend en `3200`. Inicia sesión, abre un producto del Catálogo y pulsa **Guardar en favoritos**. Comprueba que aparece en **Favoritos**, actualiza la lista y entra en su Detalle; el corazón debe seguir marcado. Vuelve a la lista y prueba **Quitar**. Las muestras anteriores ya no aparecen en la aplicación normal. Mantén pendientes en Trello los criterios funcionales hasta confirmar sus pruebas. Se conservan las cinco pestañas.
+
+Si Metro de Zenaida no estuviera activo, desde `C:\Users\David\Documents\INHALEX-Movil-Zenaida`:
+
+```sh
+npm --prefix Mobile run start -- --port 8083
+```
 
 ## Probar la conexión de Búsqueda en la copia de Zenaida
 

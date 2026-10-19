@@ -1,0 +1,90 @@
+{
+  "activity": "Favoritos",
+  "phase": "design-only",
+  "date": "2026-10-19",
+  "repositoryCopy": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+  "branch": "feature/favoritos",
+  "baseCommit": "852614afd801cfa67a5025ac6128e1803e69f32f",
+  "responsibleAccount": "ZenaidaGR",
+  "futureReviewer": "David567rs",
+  "architecture": "View -> useFavoritesPreviewViewModel -> ReadFavoritesPreview -> FavoritesPreviewRepository -> LocalFavoritesPreviewRepository; bootstrap composes the dependencies",
+  "scope": {
+    "sampleProductCount": 3,
+    "sampleProducts": ["Lavanda", "Eucalipto", "Menta"],
+    "samplePricesAreRealApiPrices": false,
+    "sampleAssets": "Existing bundled Catalog photos and INHALEX brand",
+    "previewModes": ["Con productos", "Sin favoritos"],
+    "previewLabelVisible": true,
+    "heartsAreDecorative": true,
+    "removeControlsDisabled": true,
+    "favoritesApiCalls": false,
+    "favoritesMutations": false,
+    "persistentStorage": false,
+    "authenticationChanged": false,
+    "syntheticIdsNavigateToDetail": false
+  },
+  "checks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "existingMobileTests": { "passed": 280, "failed": 0, "newTestsAddedForStaticPreview": false },
+    "expoDoctor": { "passed": 21, "total": 21 },
+    "androidExport": {
+      "status": "passed-after-final-accessibility-change",
+      "modules": 1440,
+      "bundle": "entry-ef11ea30e4671223e9b570311e8e468b.hbc"
+    },
+    "webExport": {
+      "status": "passed-after-final-accessibility-change",
+      "modules": 988,
+      "bundle": "entry-48a6fd89cbe4a8f685dfefecc3cac580.js"
+    },
+    "independentReview": "One decorative-accessibility finding fixed with aria-hidden, accessibilityElementsHidden and no-hide-descendants; browser AX confirmed hidden decorative groups",
+    "diffWhitespace": "passed"
+  },
+  "webVisualVerification": {
+    "url": "http://localhost:8083/favoritos",
+    "cssWidths": [320, 397],
+    "horizontalOverflow": false,
+    "collectionAndEmptyState": "passed at both widths",
+    "bundledImagesLoaded": 4,
+    "compactCardsStackVertically": true,
+    "activeRadioMinHeight": 46,
+    "emptyCatalogButtonMinHeight": 52,
+    "disabledRemoveConfirmed": true,
+    "tabCount": 5,
+    "tabs": ["Inicio", "Catálogo", "Favoritos", "Bolsa", "Cuenta"],
+    "catalogNavigation": "Explorar catálogo opens /catalogo; Favoritos tab returns to the preview",
+    "catalogDataLoadedInWeb": false,
+    "catalogWebLimit": "Existing API CORS restriction for origin 8083; no backend or CORS changes",
+    "temporaryViewportOverrideReset": true,
+    "screenshots": [
+      "diseno-coleccion-web.png",
+      "diseno-vacio-web.png",
+      "diseno-compacto-web.png",
+      "diseno-tarjetas-compactas-web.png",
+      "diseno-vacio-compacto-web.png"
+    ]
+  },
+  "preservation": {
+    "serverEnvAndIdentities": true,
+    "zenaidaStash": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "davidCloneCleanAtDevelop852614a": true,
+    "dependencyFilesUnchanged": true,
+    "liveProcessesUnchanged": { "api3200": 32064, "metro8082": 28288, "metro8083": 13476 }
+  },
+  "trello": {
+    "source": "User-provided screenshot",
+    "acceptedCriteria": 0,
+    "totalCriteria": 9,
+    "dedicatedDesignCriterionExists": false,
+    "updatedByAgent": false
+  },
+  "nativeAcceptance": {
+    "design": "pending-user-review-in-Expo-Go",
+    "agentObservedPhysicalDevice": false,
+    "nativeScreenshotsProvided": false,
+    "nativeScreenReaderTested": false,
+    "nativeLargeTextTested": false
+  },
+  "delivery": { "committed": false, "pushed": false, "pullRequest": null, "merged": false }
+}

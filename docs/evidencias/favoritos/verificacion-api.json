@@ -1,0 +1,72 @@
+{
+  "activity": "Favoritos - conexión a la API",
+  "date": "2026-10-19",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+  "branch": "feature/favoritos",
+  "base": "852614afd801cfa67a5025ac6128e1803e69f32f",
+  "status": "Implementado y verificado técnicamente; aceptación funcional en Expo Go pendiente",
+  "architecture": {
+    "pattern": "MVVM y Repository con composición en bootstrap",
+    "sharedState": "FavoritesController único para lista y corazón de Detalle",
+    "credentialBoundary": "JWT privado; UI recibe snapshot público y acciones",
+    "endpoints": ["GET /api/favorites", "PUT /api/favorites/:productId", "DELETE /api/favorites/:productId"],
+    "backendChanged": false,
+    "dependenciesChanged": false,
+    "previewCodeRemoved": true,
+    "tabsPreserved": 5
+  },
+  "automated": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "mobileTests": { "passed": 322, "failed": 0, "previous": 280, "new": 42 },
+    "newTests": { "useCases": 8, "repository": 15, "controller": 18, "isolatedHttpIntegration": 1 },
+    "backendFavoritesServiceTests": { "passed": 4, "failed": 0, "database": "Modelos simulados, sin MongoDB real" },
+    "doctor": { "passed": 21, "total": 21 },
+    "androidExport": { "status": "passed", "modules": 1444, "bundle": "entry-d851a2b089b9074ba7622eecb5ab265f.hbc" },
+    "webExport": { "status": "passed", "bundle": "entry-b15f273deaa7c5d5d282c424e5359bb2.js" },
+    "isolatedHttp": {
+      "transport": "HTTP real en puerto efímero de loopback",
+      "api": "Servidor de contrato simulado en memoria; no Nest/MongoDB real",
+      "session": "createAuthSession real, almacenamiento simulado",
+      "checks": ["Bearer privado", "Sin consulta anónima", "Guardado confirmado", "Nueva lectura", "Proyección pública", "Eliminación fallida conserva fila", "Eliminación confirmada", "503 conserva lista y reintento recupera", "Logout limpia síncronamente", "Aislamiento entre cuentas", "401 bloquea", "Nuevo login recupera colección del servidor simulado"],
+      "serverClosed": true
+    }
+  },
+  "webQa": {
+    "status": "passed",
+    "temporaryRoute": "src/app/favorites-qa.tsx",
+    "routeRemovedBeforeFinalChecksAndExports": true,
+    "sessionAndApi": "Simuladas; componentes, ViewModel, controller, casos de uso, Repository y HttpClient reales",
+    "widthsCss": [397, 320],
+    "checks": ["Colección con foto y precio", "Guardar/quitar sincroniza corazón y lista", "Vacío tras quitar último producto", "Actualizar conserva guardado", "Fallo 503 al quitar conserva producto", "Fallo 503 al leer conserva colección", "Reintento elimina aviso", "401 limpia y bloquea", "Anónimo muestra login", "Cinco pestañas en ruta normal", "Sin desbordamiento horizontal a 320", "Imágenes cargadas", "Botones quitar de 44 y 54 píxeles"],
+    "reentryLimit": "Salir de la ruta QA abre sign-in con el provider raíz real del navegador; no prueba reingreso de la sesión falsa o de SecureStore nativo",
+    "viewportRestored": true,
+    "captures": ["api-coleccion-qa-web.png", "api-vacio-qa-web.png", "api-error-escritura-qa-web.png", "api-error-lectura-qa-web.png", "api-compacto-qa-web.png", "api-sesion-caducada-qa-web.png", "api-sin-sesion-web.png"]
+  },
+  "realBackendReadOnly": {
+    "port": 3200,
+    "health": "ok",
+    "database": "connected",
+    "favoritesWithoutBearer": 401,
+    "authenticatedWrites": "No ejecutadas contra cuentas reales por el agente"
+  },
+  "preservation": {
+    "runningPorts": [3200, 8082, 8083],
+    "environmentSha256": "D9B2404F2A8BA429C2A8A3A454CFB72326A42AB013F462E01E5CEFDD59E233BB",
+    "stash": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "davidClone": "develop sin cambios",
+    "agentChangedBackendConfiguration": false,
+    "agentStoppedExistingServices": false
+  },
+  "acceptance": {
+    "design": "Aceptado por el usuario en Expo Go",
+    "functionalCriteriaAccepted": 0,
+    "totalCriteria": 9,
+    "nextNativeTest": "Guardar desde Detalle, ver lista, actualizar, comprobar corazón y quitar",
+    "nativeWritesAndEmptyAndErrorRetry": "Pendientes de confirmación del usuario",
+    "nativeTalkBackAndLargeText": "No probados físicamente",
+    "codeReview": "Revisión técnica de agentes sin defectos pendientes; revisión real de David567rs pendiente del futuro PR",
+    "trelloReadOrModifiedByAgent": false
+  },
+  "delivery": { "commit": null, "pullRequest": null, "state": "Cambios locales en la misma rama" }
+}
