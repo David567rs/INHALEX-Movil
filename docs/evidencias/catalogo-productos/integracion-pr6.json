@@ -1,0 +1,75 @@
+{
+  "activity": "Catálogo de productos",
+  "recordedDate": "2026-10-18",
+  "repository": "David567rs/INHALEX-Movil",
+  "pullRequest": {
+    "number": 6,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/6",
+    "author": "David567rs",
+    "head": "feature/catalogo-productos",
+    "base": "develop",
+    "finalHeadSha": "b98cbdc61e9b052dd4009300795ed4c4f0242bde",
+    "state": "closed",
+    "merged": true,
+    "mergedBy": "ZenaidaGR",
+    "mergedAt": "2026-10-17T12:42:43Z",
+    "mergeMethod": "merge_commit",
+    "mergeCommitSha": "fc13bbf7afcd0ee81e9f0f7dadce8931852d9b78",
+    "mergeCommitParents": [
+      "d5171b2510a1ba6a17fa0d95d4e01a61cbbff7fb",
+      "b98cbdc61e9b052dd4009300795ed4c4f0242bde"
+    ]
+  },
+  "humanReview": {
+    "reviewer": "ZenaidaGR",
+    "state": "APPROVED",
+    "submittedAt": "2026-10-17T12:42:14Z",
+    "commitSha": "b98cbdc61e9b052dd4009300795ed4c4f0242bde"
+  },
+  "requiredChecks": [
+    {
+      "workflow": "Backend CI",
+      "runId": 39033399079,
+      "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39033399079",
+      "headSha": "b98cbdc61e9b052dd4009300795ed4c4f0242bde",
+      "conclusion": "success"
+    },
+    {
+      "workflow": "Mobile CI",
+      "runId": 39033399082,
+      "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39033399082",
+      "headSha": "b98cbdc61e9b052dd4009300795ed4c4f0242bde",
+      "conclusion": "success"
+    }
+  ],
+  "checklist": {
+    "acceptedCriteria": 7,
+    "totalCriteria": 9,
+    "reviewCodeCompleted": true,
+    "remainingCriteria": [
+      "Verificar navegación al detalle del producto",
+      "Probar la funcionalidad"
+    ],
+    "detailDependency": "feature/detalle-producto",
+    "integrationDoesNotMeanAllCriteriaComplete": true
+  },
+  "trello": {
+    "source": "El usuario indicó listo después de la guía de actualización.",
+    "liveBoardReadByAgent": false,
+    "boardUpdatedByAgent": false
+  },
+  "localCopies": {
+    "synchronizedCommitSha": "fc13bbf7afcd0ee81e9f0f7dadce8931852d9b78",
+    "davidCurrentBranch": "feature/lineas-categorias",
+    "zenaidaCurrentBranch": "develop",
+    "envFilesPreserved": true,
+    "zenaidaStashPreserved": "81196109270f00fa7edf03a8a8ec6f8bdc963131"
+  },
+  "nextStage": {
+    "activity": "Líneas o categorías",
+    "scope": "Solo diseño con datos locales, MVVM y Repository.",
+    "designAccepted": false,
+    "apiConnected": false,
+    "newValidationResultsClaimed": false
+  }
+}
