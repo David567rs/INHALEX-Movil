@@ -1,6 +1,6 @@
 # INHALEX: base móvil
 
-La actividad actual es únicamente el **diseño de Seguimiento del pedido**, en `C:\Users\David\Documents\INHALEX-Movil`, rama `feature/seguimiento-pedido`, desde `develop` en `930d202`. Se conserva MVVM, Repository local de lectura y composición en bootstrap; no consulta pedidos reales ni modifica HTTP, autenticación, almacenamiento o backend. **0/8**, con revisión visual pendiente: el checklist no tiene un criterio independiente de diseño.
+El usuario aceptó el **diseño de Seguimiento del pedido** de `34b4f83` en Expo Go y autorizó conectar la API en `C:\Users\David\Documents\INHALEX-Movil`, rama `feature/seguimiento-pedido`, base `930d202`, manteniendo MVVM, Repository y commits por etapa. La aceptación visual se guarda en un commit documental separado; la conexión está en preparación. **0/8** criterios funcionales pendientes: el checklist no tiene criterio independiente de diseño.
 
 La ruta `/seguimiento-pedido`, desde **Cuenta → Seguimiento del pedido**, permite revisar seis composiciones con **Vista previa** y datos `EJEMPLO-...`: **En revisión / Confirmado / Completado / Cancelado / Pedido no encontrado / Error de conexión**. Son muestras en memoria; no indican envío o entrega ni inventan fechas de etapas. En Expo Go de David (**8082**), recarga, revisa esos seis diseños, regresa a Cuenta y comprueba las cinco pestañas.
 

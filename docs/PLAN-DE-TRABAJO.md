@@ -1,6 +1,6 @@
 # Plan de trabajo de INHALEX Movil
 
-**Actividad vigente:** diseño de **Seguimiento del pedido** terminado y verificado técnicamente, de David, en `feature/seguimiento-pedido` desde `develop` en `930d202`, con MVVM y Repository local de lectura. El checklist permanece **0/8** y la aceptación visual en Expo Go está pendiente; no hay criterio independiente de diseño. Cierre de Historial en `49df3b3` y diseño en su propio commit local; API y aceptación tendrán sus commits cuando correspondan. No se publica la rama ni se abre PR ahora. El último apartado prevalece sobre los snapshots anteriores; Historial sigue integrado **9/9** mediante el PR #15.
+**Actividad vigente:** diseño de **Seguimiento del pedido** aceptado en Expo Go y conexión API autorizada en `feature/seguimiento-pedido`, David, base `930d202`. Diseño guardado en `34b4f83`, aceptación en commit documental separado y conexión en preparación con MVVM y Repository. **0/8** criterios funcionales pendientes; no hay criterio independiente de diseño. No se publica la rama ni se abre PR ahora. El último apartado prevalece; Historial sigue integrado **9/9** mediante el PR #15.
 
 Acuerdos del 14 de octubre de 2026 para reiniciar la aplicación móvil con un repositorio independiente, aprovechar el backend y el código anterior, y documentar el flujo de trabajo del profesor desde el inicio.
 
@@ -763,3 +763,9 @@ La [verificación propia](evidencias/seguimiento-pedido/verificacion-diseno.json
 El diseño se guarda en un commit local exclusivo `feat(orders): diseñar seguimiento del pedido`, según [VERSIONAMIENTO.md](VERSIONAMIENTO.md); obtener su SHA de Git. API y aceptaciones posteriores tendrán commits separados cuando el usuario autorice cada fase y se cuente con sus resultados. Se conservaron entornos, dependencias, identidades, stash, backend y ambos Metro; Zenaida permanece limpia en `develop` `930d202`. No hay publicación, PR, revisión o merge de Seguimiento.
 
 Próximo paso: revisar las seis composiciones en Expo Go de David **8082**, desde Cuenta; esperar el reporte del usuario antes de conectar la API. La revisión futura del PR hacia `develop` corresponde a ZenaidaGR. Conservar servicios, entornos, dependencias, identidades, stash y la copia de Zenaida; no empezar Avisos o funcionalidades adicionales en esta etapa visual.
+
+## Estado vigente: aceptación visual y autorización de conexión de Seguimiento
+
+El usuario reportó: «Amigo, ya revisé el diseño de Seguimiento en Expo Go y me gustó. Sigamos con la API en feature/seguimiento-pedido, manteniendo MVVM, Repository y commits por etapa.». Se acepta el diseño de `34b4f83` y se registra esa aceptación en un commit documental propio. No hay observación directa del dispositivo ni acceso a Trello por el agente; **0/8** continúa hasta la aceptación funcional correspondiente.
+
+La conexión conserva la misma rama, responsables, arquitectura y orden. Tendrá un commit independiente tras comprobar contrato, aislamiento por cuenta, actualización, no encontrado y errores. Después se guiarán las pruebas reales en Expo Go. No se autoriza publicación, PR o integración por esta solicitud; ZenaidaGR revisará el futuro PR hacia `develop`. Conservar ambas copias y servicios.

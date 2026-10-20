@@ -8,8 +8,8 @@
   "date": "2026-10-20",
   "source": "Solicitud del usuario de iniciar únicamente el diseño de Seguimiento, acuerdo de commits por fase y captura de ocho criterios sin marcar",
   "design": {
-    "accepted": false,
-    "status": "awaiting-user-visual-review-in-expo-go",
+    "accepted": true,
+    "status": "accepted-by-user-in-expo-go",
     "agentObservedDevice": false,
     "apiConnected": false,
     "guide": "../../DISENO-SEGUIMIENTO-PEDIDO.md",
@@ -42,7 +42,7 @@
     "backendChanged": false,
     "fiveTabsPreserved": true,
     "acceptedCriterionIds": [],
-    "quote": null
+    "quote": "Amigo, ya revisé el diseño de Seguimiento en Expo Go y me gustó. Sigamos con la API en feature/seguimiento-pedido, manteniendo MVVM, Repository y commits por etapa."
   },
   "functionalAcceptance": {
     "acceptedCriteria": 0,
@@ -58,7 +58,7 @@
       7,
       8
     ],
-    "status": "Diseño terminado y verificado técnicamente; aceptación visual en Expo Go y funcionalidad real pendientes. 0/8",
+    "status": "Diseño aceptado por el usuario. Conexión API autorizada en la misma rama; 0/8 criterios funcionales pendientes de pruebas y revisión.",
     "confirmations": [],
     "criteria": [
       {
@@ -132,7 +132,7 @@
     },
     "api": {
       "separateCommitPlanned": true,
-      "implementationAuthorizedYet": false
+      "implementationAuthorizedYet": true
     },
     "acceptance": {
       "separateCommitPlanned": true,
@@ -148,9 +148,8 @@
     "futureReviewer": "ZenaidaGR",
     "futureBase": "develop"
   },
-  "nextStep": "Revisar las seis composiciones en Expo Go de David (8082), desde Cuenta. Esperar el reporte del usuario antes de la API; 0/8 mientras solo haya muestras.",
+  "nextStep": "Implementar la conexión de Seguimiento en la misma rama, verificarla y guardar el commit de API separado; después guiar pruebas funcionales en Expo Go.",
   "limitations": [
-    "La revisión visual de Seguimiento en Expo Go todavía no está aceptada por el usuario.",
     "Las seis composiciones son sintéticas y no acreditan estado, actualización o errores de un pedido real.",
     "El diseño muestra hechos del pedido de ejemplo, sin promesas logísticas o fechas de etapas inventadas.",
     "No hay HTTP, autenticación nueva, almacenamiento, modificación del backend o escritura de pedidos.",
