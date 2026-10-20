@@ -14,6 +14,29 @@ const isError = (kind, status = null) => (error) => {
   return true;
 };
 
+test('idempotency option only adds its bounded transport header to POST', async () => {
+  const calls = [];
+  const api = client({ fetch: async (_url, options) => { calls.push(options); return jsonResponse({ ok: true }); } });
+  const key = 'mobile-order-test-key-123';
+  await api.request('/orders/confirm', { method: 'POST', body: { items: [] }, idempotencyKey: key });
+  await api.request('/orders/draft/preview', { method: 'POST', body: { items: [] } });
+  assert.equal(calls[0].headers['Idempotency-Key'], key);
+  assert.equal(calls[1].headers['Idempotency-Key'], undefined);
+  assert.equal(calls[0].headers['Content-Type'], 'application/json');
+});
+
+test('idempotency option rejects malformed keys and non-POST requests before token or fetch access', async () => {
+  let reads = 0; let calls = 0;
+  const api = client({ getAccessToken: () => { reads++; return 'token'; }, fetch: async () => { calls++; return jsonResponse({}); } });
+  for (const key of ['', 'short', ' key-with-valid-length-123 ', 'bad\r\nHeader: key-123', 'a'.repeat(101), null, 1234]) {
+    await assert.rejects(api.request('/orders/confirm', { method: 'POST', idempotencyKey: key }), isError('invalid-request'));
+  }
+  for (const method of ['GET', 'PUT', 'PATCH', 'DELETE', undefined]) {
+    await assert.rejects(api.request('/orders/confirm', { method, idempotencyKey: 'a'.repeat(16) }), isError('invalid-request'));
+  }
+  assert.equal(reads, 0); assert.equal(calls, 0);
+});
+
 test('JSON requests use injected fetch, current bearer token and an adapter parser', async () => {
   let token = 'first-token';
   const calls = [];

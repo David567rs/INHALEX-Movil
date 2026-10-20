@@ -17,9 +17,9 @@
     "connectionInSameBranchAuthorized": true
   },
   "functionalAcceptance": {
-    "acceptedCriteria": 9,
+    "acceptedCriteria": 10,
     "totalCriteria": 10,
-    "status": "Criterios 1 a 9 aceptados en Expo Go, incluida reapertura y salida/reingreso con la misma cuenta; revisión real de ZenaidaGR pendiente",
+    "status": "Criterios 1 a 9 aceptados por el usuario en Expo Go; criterio 10 completado por aprobación real de ZenaidaGR y merge del PR #13",
     "acceptedCriterionIds": [
       1,
       2,
@@ -29,11 +29,10 @@
       6,
       7,
       8,
-      9
-    ],
-    "pendingCriterionIds": [
+      9,
       10
     ],
+    "pendingCriterionIds": [],
     "confirmations": [
       {
         "date": "2026-10-19",
@@ -141,14 +140,15 @@
       {
         "id": 10,
         "text": "Revisar el código",
-        "accepted": false
+        "accepted": true,
+        "source": "Revisión APPROVED de ZenaidaGR sobre b022340c3d4e0f222966c1d6f9bc57100a693fea a las 2026-10-19T22:07:51Z; ver integracion-pr13.json. No añade aceptación nativa"
       }
     ]
   },
   "nextStep": {
-    "status": "pull-request-open-awaiting-peer-review",
+    "status": "integrated-in-develop",
     "guide": "../../CONEXION-DIRECCIONES-ENVIO.md",
-    "flow": "PR #13 de David567rs abierto desde feature/direcciones-envio hacia develop; ZenaidaGR solicitada como revisora. Consultar CI del HEAD vigente; aprobación y merge pendientes.",
+    "flow": "PR #13 aprobado y fusionado por ZenaidaGR a develop en 1808ba1cbcd8940c84759395c6818ee950aa140d; Backend CI y Mobile CI correctas sobre el HEAD aprobado. Ambas copias sincronizadas antes del diseño de Creación de pedido.",
     "publicationAuthorizedByUser": true,
     "reviewer": "ZenaidaGR",
     "technicalEvidence": "verificacion-api.json",
@@ -156,22 +156,23 @@
     "pullRequest": "https://github.com/David567rs/INHALEX-Movil/pull/13",
     "reviewRequested": true,
     "implementationCommitSha": "eeca4d86474e002f3a454dfd8de8b756bae1f70f",
-    "publicationEvidence": "preparacion-pr13.json"
+    "publicationEvidence": "preparacion-pr13.json",
+    "integrationEvidence": "integracion-pr13.json"
   },
   "trello": {
     "agentReadBoard": false,
     "agentModifiedBoard": false,
     "userConfirmedCriteriaMarked": false,
-    "status": "Criterios 1 a 9 aceptados, 9/10; solo Revisar el código pendiente. Marcado real del usuario no confirmado"
+    "status": "10/10 por aceptación funcional del usuario y revisión de ZenaidaGR; puede marcar Revisar el código y cerrar la tarjeta. Marcado final real del usuario no confirmado"
   },
   "limitations": [
     "Aceptación visual textual del usuario; sin observación directa del dispositivo por el agente",
-    "Formulario, pantalla, flujo positivo, validaciones, vacío, error/reintento y reapertura/salida/reingreso confirmados textualmente; solo revisión real pendiente",
+    "Formulario, pantalla, flujo positivo, validaciones, vacío, error/reintento y reapertura/salida/reingreso confirmados textualmente; revisión real de ZenaidaGR e integración acreditadas por GitHub por separado",
     "La aceptación de error/reintento corresponde al caso reportado de Guardar y Reintentar; no se atribuyen nuevas pruebas físicas de timeout u otras mutaciones",
     "La aceptación de validación cubre solo los casos reportados; no se atribuyen pruebas físicas de límites superiores u otros formatos",
     "Las muestras Casa/Trabajo y el borrador pertenecen al diseño histórico y no completan los criterios 5, 6 o 7",
     "Seleccionar corresponde a establecer dirección principal de la cuenta, sin checkout ni creación de pedido",
     "Sin nueva aceptación de pruebas físicas de teclado, TalkBack, texto ampliado o aislamiento entre dos cuentas distintas",
-    "Commit, publicación y apertura de PR autorizados por el usuario; no hay autorización de merge ni revisión formal aceptada por anticipado"
+    "La aprobación y el merge de ZenaidaGR ya ocurrieron y se registran como evidencia real; el agente no emitió una revisión del compañero ni modificó Trello"
   ]
 }

@@ -1,0 +1,185 @@
+{
+  "activity": "Creación de pedido",
+  "phase": "Cierre de pruebas y retirada de QA temporal",
+  "checkedAt": "2026-10-19T20:00:05.5089470-06:00",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+  "branch": "feature/creacion-pedido",
+  "baseCommit": "1808ba1cbcd8940c84759395c6818ee950aa140d",
+  "userReport": {
+    "quote": "Amigo, se conservó el recibo al fallar la limpieza. Tras Reabrir prueba y reintentar quedaron 1 pedido, 1 confirmación y 0 unidades. Ya salí de la prueba. ¿Qué sigue?",
+    "source": "Mensaje del usuario en este chat",
+    "phoneObservedByAgent": false,
+    "syntheticScenario": true,
+    "cleanupFailure": {
+      "unitsRemaining": 0,
+      "userExitedTest": true,
+      "orders": 1,
+      "confirmationRequests": 1,
+      "receiptPreserved": true
+    },
+    "previousLostResponse": {
+      "unitsRemaining": 0,
+      "confirmationRequests": 2,
+      "orders": 1
+    },
+    "scope": "Reabrir prueba recreó controladores con backend sintético conservado; no demuestra continuidad del backend ficticio al cerrar el proceso ni contadores en MongoDB real"
+  },
+  "removal": {
+    "completed": true,
+    "files": [
+      {
+        "path": "Mobile/src/app/qa-recuperacion-pedido.tsx",
+        "removed": true
+      },
+      {
+        "path": "Mobile/src/features/orderCreation/testing/OrderRecoveryQaScreen.tsx",
+        "removed": true
+      },
+      {
+        "path": "Mobile/src/features/orderCreation/testing/createOrderRecoveryQaRuntime.ts",
+        "removed": true
+      },
+      {
+        "path": "Mobile/src/features/orderCreation/testing/createOrderRecoveryQaStore.ts",
+        "removed": true
+      },
+      {
+        "path": "Mobile/src/features/orderCreation/testing/createOrderRecoveryQaStore.web.ts",
+        "removed": true
+      }
+    ],
+    "screen": "Mobile/src/features/orderCreation/presentation/screens/OrderCreationScreen.tsx",
+    "restoredSha256": "C1C7E97E1580E4896942E377597EAD41949F4E1CEEC0A2EE5942BF45AA776037",
+    "matchesPreQaBackup": true,
+    "temporaryScreenHashCheckedBeforeRestore": "A4B1C802B72F1BB16FD410210670FB10A660FDEDCD2263BF25D15DCF4EEF8F8C",
+    "sourceAndTestsQaReferences": [],
+    "temporaryEntryRemoved": true
+  },
+  "checks": {
+    "typecheck": {
+      "exitCode": 0,
+      "command": "npm run typecheck"
+    },
+    "lint": {
+      "exitCode": 0,
+      "command": "npm run lint"
+    },
+    "tests": {
+      "failed": 0,
+      "log": "TEMP/inhalex-order-after-qa-tests.log",
+      "exitCode": 0,
+      "passed": 558,
+      "command": "npm test"
+    },
+    "doctor": {
+      "total": 21,
+      "exitCode": 0,
+      "passed": 21,
+      "command": "npx --yes expo-doctor@1.21.5"
+    },
+    "android": {
+      "modules": 1498,
+      "exitCode": 0,
+      "bundle": "_expo/static/js/android/entry-5743ce7d877fede69a9123cd966852f7.hbc",
+      "log": "TEMP/inhalex-order-after-qa-android.log",
+      "command": "npm run export:android"
+    },
+    "web": {
+      "modules": 1047,
+      "exitCode": 0,
+      "bundle": "_expo/static/js/web/entry-45d1aad7b4c4fb5f6504fed64db7cc34.js",
+      "log": "TEMP/inhalex-order-after-qa-web.log",
+      "command": "npm run export:web"
+    },
+    "diffCheck": {
+      "exitCode": 0,
+      "command": "git diff --check"
+    },
+    "scope": "Comprobaciones ejecutadas después de retirar la herramienta temporal; sin nuevas pruebas para esta retirada"
+  },
+  "preservation": {
+    "checkedAt": "2026-10-19T19:59:11.8824235-06:00",
+    "copies": [
+      {
+        "path": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+        "branch": "feature/creacion-pedido",
+        "head": "1808ba1cbcd8940c84759395c6818ee950aa140d",
+        "envPreserved": true,
+        "dependenciesPreserved": true,
+        "namePreserved": true,
+        "emailPreserved": true,
+        "credentialUserPreserved": true,
+        "stash": [],
+        "stashPreserved": true,
+        "clean": false
+      },
+      {
+        "path": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+        "branch": "develop",
+        "head": "1808ba1cbcd8940c84759395c6818ee950aa140d",
+        "envPreserved": true,
+        "dependenciesPreserved": true,
+        "namePreserved": true,
+        "emailPreserved": true,
+        "credentialUserPreserved": true,
+        "stash": [
+          "81196109270f00fa7edf03a8a8ec6f8bdc963131"
+        ],
+        "stashPreserved": true,
+        "clean": true
+      }
+    ],
+    "protectedChanges": [],
+    "services": [
+      {
+        "LocalPort": 8083,
+        "OwningProcess": 13476
+      },
+      {
+        "LocalPort": 8082,
+        "OwningProcess": 28288
+      },
+      {
+        "LocalPort": 3200,
+        "OwningProcess": 30692
+      }
+    ]
+  },
+  "acceptance": {
+    "accepted": 10,
+    "total": 11,
+    "acceptedCriterionIds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "pendingCriterionIds": [
+      11
+    ],
+    "pending": "Revisar el código, mediante revisión real de ZenaidaGR",
+    "trelloReadByAgent": false,
+    "trelloModifiedByAgent": false,
+    "userConfirmedTrelloMarked": false,
+    "recommendedTrelloStatus": "En progreso"
+  },
+  "publication": {
+    "authorizedByUser": false,
+    "commitCreated": false,
+    "pushed": false,
+    "pullRequestCreated": false,
+    "formalReviewCompleted": false,
+    "merged": false
+  },
+  "historicalEvidence": [
+    "verificacion-api.json",
+    "qa-recuperacion-verificacion.json"
+  ],
+  "nextStep": "Marcar Probar la funcionalidad en Trello y solicitar abrir el PR de feature/creacion-pedido hacia develop para ZenaidaGR; mantener Revisar el código pendiente."
+}

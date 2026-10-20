@@ -13,13 +13,14 @@ export interface CartState {
   readonly error: string | null;
   readonly mutationError: string | null;
   readonly notice: string | null;
+  readonly checkoutLocked: boolean;
 }
 
 function initialState(auth: AuthSessionState): CartState {
   return Object.freeze({
     status: auth.status === 'authenticated' ? 'loading' : auth.status,
     cart: null, loaded: false, refreshing: false, pendingProductId: null,
-    error: auth.message, mutationError: null, notice: null,
+    error: auth.message, mutationError: null, notice: null, checkoutLocked: false,
   });
 }
 
@@ -27,7 +28,7 @@ function expiredState(): CartState {
   return Object.freeze({
     status: 'session-expired', cart: null, loaded: false, refreshing: false,
     pendingProductId: null, mutationError: null, notice: null,
-    error: 'Tu sesión ya no es válida. Inicia sesión de nuevo para consultar tu bolsa.',
+    error: 'Tu sesión ya no es válida. Inicia sesión de nuevo para consultar tu bolsa.', checkoutLocked: false,
   });
 }
 
@@ -56,6 +57,7 @@ export function createCartController(session: AuthSession, actions: CartActions)
   let expiredSession: AuthSessionState | null = null;
   let unsubscribeSession: (() => void) | null = null;
   let pendingOperation: AbortController | null = null;
+  let checkoutLease: symbol | null = null;
   const listeners = new Set<() => void>();
 
   function publish(patch: Partial<CartState>) {
@@ -70,6 +72,7 @@ export function createCartController(session: AuthSession, actions: CartActions)
     generation++;
     pendingOperation?.abort();
     pendingOperation = null;
+    checkoutLease = null;
   }
 
   function current(auth: AuthSessionState, requestId: number, controller: AbortController) {
@@ -87,7 +90,7 @@ export function createCartController(session: AuthSession, actions: CartActions)
   async function refresh(): Promise<void> {
     const auth = observedSession;
     if (!active || auth?.status !== 'authenticated' || session.getSnapshot() !== auth
-      || state.status === 'session-expired' || pendingOperation) return;
+      || state.status === 'session-expired' || pendingOperation || checkoutLease) return;
     const controller = new AbortController();
     const requestId = generation;
     pendingOperation = controller;
@@ -116,7 +119,7 @@ export function createCartController(session: AuthSession, actions: CartActions)
   async function mutate(productId: string, operation: (signal: AbortSignal) => Promise<Cart>, notice: string): Promise<void> {
     const auth = observedSession;
     if (!active || auth?.status !== 'authenticated' || session.getSnapshot() !== auth
-      || state.status !== 'ready' || !state.loaded || pendingOperation) return;
+      || state.status !== 'ready' || !state.loaded || pendingOperation || checkoutLease) return;
     const controller = new AbortController();
     const requestId = generation;
     pendingOperation = controller;
@@ -179,6 +182,29 @@ export function createCartController(session: AuthSession, actions: CartActions)
       state = auth === expiredSession ? expiredState() : initialState(auth);
     },
     refresh,
+    /** Private composition port: checkout holds the same lock as cart writes. */
+    acquireCheckout() {
+      const auth = observedSession;
+      if (!active || auth?.status !== 'authenticated' || session.getSnapshot() !== auth
+        || state.status === 'session-expired' || pendingOperation || checkoutLease) return null;
+      const token = Symbol('checkout');
+      const requestId = generation;
+      checkoutLease = token;
+      const isCurrent = () => active && checkoutLease === token && generation === requestId
+        && observedSession === auth && session.getSnapshot() === auth;
+      publish({ checkoutLocked: true });
+      if (!isCurrent()) return null;
+      return {
+        isCurrent,
+        release(cart?: Cart) {
+          if (!isCurrent()) return;
+          checkoutLease = null;
+          if (cart) publish({ checkoutLocked: false, status: 'ready', loaded: true,
+            cart: confirmedCart(cart), error: null, mutationError: null, notice: null });
+          else publish({ checkoutLocked: false });
+        },
+      };
+    },
     add: (product: CatalogProduct, quantity = 1) => mutate(product.id,
       (signal) => actions.add(product.id, quantity, { signal }), 'Producto agregado a tu bolsa.'),
     updateQuantity: (productId: string, quantity: number) => {

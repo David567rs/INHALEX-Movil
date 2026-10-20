@@ -1,0 +1,363 @@
+{
+  "activity": "Creación de pedido",
+  "branch": "feature/creacion-pedido",
+  "baseCommit": "1808ba1cbcd8940c84759395c6818ee950aa140d",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+  "date": "2026-10-19",
+  "source": "Aceptaciones textuales del usuario de recorridos reales y ambos escenarios simulados guiados de recuperación en Expo Go; checklist de su captura",
+  "design": {
+    "accepted": true,
+    "status": "accepted-by-user-in-expo-go",
+    "agentObservedDevice": false,
+    "apiConnected": false,
+    "guide": "../../DISENO-CREACION-PEDIDO.md",
+    "route": "/creacion-pedido",
+    "entry": "Bolsa → Mostrar diseño de pedido",
+    "presentationModes": [
+      "Con productos",
+      "Sin dirección",
+      "Bolsa vacía"
+    ],
+    "dataSource": "Muestras sintéticas locales, de solo lectura y en memoria; no representa la cuenta ni la bolsa real",
+    "productArithmetic": "129 * 2 + 119 = 377 MXN; envío por definir",
+    "confirmOrderEnabled": false,
+    "acceptedCriterionIds": [],
+    "quote": "Amigo, ya revisé el diseño de Creación de pedido en Expo Go y me gustó. Sigamos con la conexión a la API en la misma rama feature/creacion-pedido, manteniendo MVVM y Repository.",
+    "historicalSnapshot": true,
+    "snapshotScope": "Etapa de diseño sintético; apiConnected:false y confirmOrderEnabled:false describen ese hito histórico, no la implementación actual",
+    "acceptanceRegisteredAt": "2026-10-20T01:05:04Z"
+  },
+  "functionalAcceptance": {
+    "acceptedCriteria": 10,
+    "totalCriteria": 11,
+    "status": "Recorrido funcional y ambos escenarios simulados aceptados; montaje QA retirado y comprobaciones finales aprobadas:10/11. Solo Revisar el código11 espera revisión real de ZenaidaGR",
+    "acceptedCriterionIds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "pendingCriterionIds": [
+      11
+    ],
+    "confirmations": [
+      {
+        "reportedAt": "2026-10-20T01:21:36.0212983Z",
+        "source": "Mensaje directo del usuario",
+        "quote": "Amigo, revisé el resumen, seleccioné la dirección y confirmé. Apareció la referencia En revisión y la bolsa quedó vacía. ¿Qué marco en Trello y qué sigue?",
+        "acceptedCriterionIds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          9
+        ],
+        "agentObservedDevice": false,
+        "scope": "Recorrido positivo: resumen, dirección, confirmación con referencia En revisión y Bolsa vacía. No acredita doble toque, error/reintento o recuperación."
+      },
+      {
+        "reportedAt": "2026-10-20T01:26:12.233856Z",
+        "source": "Mensaje directo del usuario",
+        "quote": "Amigo, rechazó los campos vacíos, el nombre de una letra, el correo inválido y el teléfono de nueve dígitos. Corregí los datos y la bolsa conservó el producto. ¿Qué sigue?",
+        "acceptedCriterionIds": [],
+        "partialCriterionIds": [
+          10
+        ],
+        "agentObservedDevice": false,
+        "scope": "Se rechazaron campos vacíos, nombre de una letra, correo inválido y teléfono de nueve dígitos; tras corregirlos Bolsa conservó el producto. No agrega un criterio al checklist ni acredita duplicados/error/reintento."
+      },
+      {
+        "reportedAt": "2026-10-20T01:28:04.8320578Z",
+        "source": "Mensaje directo del usuario",
+        "quote": "Amigo, apareció «Tu pedido empieza en la bolsa», se mantuvo al actualizar y «Explorar catálogo» abrió Catálogo. ¿Qué sigue?",
+        "acceptedCriterionIds": [],
+        "partialCriterionIds": [
+          10
+        ],
+        "agentObservedDevice": false,
+        "scope": "Mostró Tu pedido empieza en la bolsa; actualizar conservó el vacío; Explorar catálogo abrió Catálogo. Evidencia parcial del criterio10, sin aceptar otro criterio ni atribuir revisión física al agente."
+      },
+      {
+        "reportedAt": "2026-10-20T01:30:14.3298883Z",
+        "source": "Mensaje directo del usuario",
+        "quote": "Amigo, sin dirección apareció «Un destino para tu selección» y Confirmar quedó bloqueado. Agregar dirección abrió Direcciones y, al volver sin crear una, siguió bloqueado. ¿Qué sigue?",
+        "acceptedCriterionIds": [],
+        "partialCriterionIds": [
+          10
+        ],
+        "agentObservedDevice": false,
+        "scope": "Sin dirección mostró Un destino para tu selección y Confirmar bloqueado; Agregar dirección abrió Direcciones y volver sin crear conservó el bloqueo. No añade criterio ni acredita error de red, duplicados o recuperación."
+      },
+      {
+        "reportedAt": "2026-10-20T01:32:19.9254899Z",
+        "source": "Mensaje directo del usuario",
+        "quote": "Amigo, fallaron Confirmar y Reintentar sin perder los datos ni la nota. Reinicié el backend y Reintentar recuperó el resumen y habilitó Confirmar, sin mostrar una referencia nueva. ¿Qué marco en Trello y qué sigue?",
+        "acceptedCriterionIds": [
+          8
+        ],
+        "partialCriterionIds": [
+          10
+        ],
+        "agentObservedDevice": false,
+        "scope": "Confirmar y Reintentar fallaron con API apagada sin perder datos/nota; al reiniciar, Reintentar recuperó resumen y habilitó Confirmar sin referencia nueva. Acepta manejo de fallo previo al POST; no acredita respuesta perdida tras crear, duplicados o limpieza pendiente."
+      },
+      {
+        "reportedAt": "2026-10-20T01:37:54.1924172Z",
+        "source": "Mensaje directo del usuario",
+        "quote": "Amigo, hice dos toques rápidos en Confirmar: se bloqueó el botón, apareció el recibo En revisión y la bolsa quedó vacía. ¿Qué marco en Trello y qué sigue?",
+        "acceptedCriterionIds": [
+          6
+        ],
+        "partialCriterionIds": [
+          10
+        ],
+        "agentObservedDevice": false,
+        "referenceProvided": false,
+        "scope": "Confirmar bloqueó dos toques rápidos, mostró recibo En revisión y Bolsa quedó vacía. Aceptación del caso nativo de doble toque junto al código y tests previos, sin afirmar unicidad consultada en MongoDB ni recuperación tras respuesta perdida."
+      },
+      {
+        "reportedAt": "2026-10-20T01:39:38Z",
+        "source": "Mensaje directo del usuario",
+        "quote": "Amigo, al reabrir la bolsa siguió vacía y no apareció otro recibo. Al cerrar sesión pidió ingresar y, al volver con la misma cuenta, continuó vacía. ¿Qué sigue?",
+        "acceptedCriterionIds": [],
+        "partialCriterionIds": [
+          10
+        ],
+        "agentObservedDevice": false,
+        "scope": "Después del pedido terminado, Bolsa siguió vacía al reabrir y no apareció otro recibo; cerrar sesión pidió ingresar y reingresar con la misma cuenta conservó Bolsa vacía. No añade criterio ni acredita respuesta perdida tras crear, limpieza pendiente o recuperación duradera de un backend simulado."
+      },
+      {
+        "reportedAt": "2026-10-20T01:54:57.1158870Z",
+        "source": "Mensaje directo del usuario tras la guía de Expo Go",
+        "quote": "Amigo, en la prueba simulada recuperé la confirmación después de Reabrir prueba. Apareció el recibo y quedaron 1 pedido, 2 confirmaciones y 0 unidades. Sigamos con la prueba de limpieza pendiente.",
+        "acceptedCriterionIds": [],
+        "partialCriterionIds": [
+          10
+        ],
+        "agentObservedDevice": false,
+        "scope": "Prueba temporal con transporte/datos sintéticos: controladores recreados mediante Reabrir prueba, recibo recuperado y contadores1pedido/2confirmaciones/0unidades. No acredita API real, MongoDB o continuidad del backend simulado al cerrar Expo Go."
+      },
+      {
+        "reportedAt": "2026-10-20T01:55:56Z",
+        "source": "Mensaje directo del usuario tras la guía de Expo Go",
+        "quote": "Amigo, se conservó el recibo al fallar la limpieza. Tras Reabrir prueba y reintentar quedaron 1 pedido, 1 confirmación y 0 unidades. Ya salí de la prueba. ¿Qué sigue?",
+        "acceptedCriterionIds": [],
+        "partialCriterionIds": [10],
+        "agentObservedDevice": false,
+        "scope": "Prueba temporal con transporte/datos sintéticos: se conservó el recibo ante fallo de limpieza y, tras Reabrir prueba y reintentar, los contadores terminaron1pedido/1confirmación/0unidades. El usuario informó haber salido de la prueba. No acredita llamadas a la API real, conteos en MongoDB, observación directa del dispositivo o supervivencia del backend simulado al cerrar Expo Go."
+      }
+    ],
+    "criteria": [
+      {
+        "id": 1,
+        "text": "Verificar productos de la bolsa",
+        "accepted": true
+      },
+      {
+        "id": 2,
+        "text": "Verificar cantidades y total",
+        "accepted": true
+      },
+      {
+        "id": 3,
+        "text": "Seleccionar dirección de envío",
+        "accepted": true
+      },
+      {
+        "id": 4,
+        "text": "Mostrar resumen del pedido",
+        "accepted": true
+      },
+      {
+        "id": 5,
+        "text": "Enviar solicitud de creación de pedido a la API",
+        "accepted": true
+      },
+      {
+        "id": 6,
+        "text": "Evitar la creación duplicada del pedido",
+        "accepted": true
+      },
+      {
+        "id": 7,
+        "text": "Mostrar confirmación cuando el pedido se cree correctamente",
+        "accepted": true
+      },
+      {
+        "id": 8,
+        "text": "Manejar errores durante la creación",
+        "accepted": true
+      },
+      {
+        "id": 9,
+        "text": "Limpiar o actualizar la bolsa después de confirmar",
+        "accepted": true
+      },
+      {
+        "id": 10,
+        "text": "Probar la funcionalidad",
+        "accepted": true,
+        "source": "Recorridos reportados por el usuario, ambos escenarios simulados de recuperación y retirada QA con comprobaciones finales aprobadas; ver cierre-pruebas-y-retiro-qa.json. No añade observación directa del dispositivo"
+      },
+      {
+        "id": 11,
+        "text": "Revisar el código",
+        "accepted": false
+      }
+    ]
+  },
+  "trello": {
+    "agentReadBoard": false,
+    "agentModifiedBoard": false,
+    "userConfirmedCriteriaMarked": true,
+    "userConfirmedMarkedCriterionIds": [10],
+    "userReportQuote": "Amigo, ya marqué «Probar la funcionalidad». Abre el PR de Creación de pedido desde feature/creacion-pedido hacia develop para que Zenaida lo revise.",
+    "reportScope": "El usuario solo confirmó el marcado del criterio10; no se confirma marcado de otros criterios ni lectura del tablero por el agente",
+    "status": "Aceptados1-10=10/11. El usuario confirmó marcar Probar la funcionalidad10. Revisar el código11 sigue pendiente de ZenaidaGR; mantener En progreso. El agente no accedió al tablero ni confirma otros marcados."
+  },
+  "nextStep": {
+    "status": "pull-request-open-awaiting-peer-review",
+    "flow": "PR #14 abierto por David567rs desde feature/creacion-pedido hacia develop; GitHub confirmó a ZenaidaGR como revisora solicitada. Mantener10/11 y solo criterio11 pendiente de revisión real. Sin aprobación ni merge; consultar CI del HEAD vigente después del enlace documental.",
+    "publicationAuthorizedByUser": true,
+    "publicationAuthorization": {
+      "registeredAt": "2026-10-20T02:01:32Z",
+      "quote": "Amigo, ya marqué «Probar la funcionalidad». Abre el PR de Creación de pedido desde feature/creacion-pedido hacia develop para que Zenaida lo revise.",
+      "author": "David567rs",
+      "head": "feature/creacion-pedido",
+      "base": "develop",
+      "scope": "Commit y publicación de la actividad, abrir PR hacia develop y solicitar revisión real a ZenaidaGR; sin aprobación ni merge anticipados"
+    },
+    "reviewer": "ZenaidaGR",
+    "pullRequestNumber": 14,
+    "pullRequest": "https://github.com/David567rs/INHALEX-Movil/pull/14",
+    "title": "Implementar Creación de pedido con MVVM y Repository",
+    "author": "David567rs",
+    "state": "open",
+    "draft": false,
+    "merged": false,
+    "reviewRequested": true,
+    "headAtOpening": "93940dd5b597929ae5be978546907a10be943994",
+    "baseAtOpening": "1808ba1cbcd8940c84759395c6818ee950aa140d",
+    "publicationEvidence": "preparacion-pr14.json",
+    "ciSnapshotAtOpening": {
+      "head": "93940dd5b597929ae5be978546907a10be943994",
+      "backendRunId": 39356903357,
+      "mobileRunId": 39356903516,
+      "status": "in-progress-at-opening",
+      "scope": "Snapshot del HEAD de implementación al abrir; consultar de nuevo el HEAD vigente después del enlace documental, sin declarar CI final aprobada"
+    }
+  },
+  "limitations": [
+    "El usuario reportó pruebas en Expo Go; el agente no observó el dispositivo ni consultó pedidos o MongoDB para verificarlas.",
+    "Aceptados1-10 (10/11) tras retirar QA y verificar; solo revisión real de ZenaidaGR11 pendiente. Trello no fue leído ni modificado por el agente.",
+    "El criterio6 se acepta con alcance de doble toque bloqueado, usando reporte nativo y verificación técnica previa; no acredita consulta de unicidad en MongoDB.",
+    "No se proporcionó referencia exacta del pedido de la prueba de doble toque.",
+    "La reapertura/salida/reingreso del pedido ya terminado está aceptada como evidencia parcial del10; no se observó el dispositivo ni se consultó la API real para verificarla.",
+    "El fallo contra la API local reportado fue anterior al POST. Respuesta perdida y limpieza pendiente se probaron mediante transporte/datos simulados; no se provocaron ni verificaron esos fallos poscreación contra la API real.",
+    "El usuario reportó ambos escenarios guiados de recuperación en Expo Go. El agente no observó el teléfono ni instrumentó SecureStore nativo; el reporte no equivale a una inspección directa de ese módulo.",
+    "En el montaje temporal ya retirado, Reabrir prueba recreó controladores sobre el mismo backend simulado en memoria. No demostró supervivencia del backend ficticio al cierre completo de Expo Go o del proceso.",
+    "El agente no creó pedidos contra la API real; la verificación técnica previa usa transporte/almacenamiento sintéticos.",
+    "GET de Bolsa seguido de DELETE no es atómico frente a cambios desde otro dispositivo; la lease protege operaciones locales.",
+    "El PR14 está abierto y ZenaidaGR fue solicitada; aprobación real, merge y CI del HEAD final permanecen pendientes de verificación. Trello no fue leído ni modificado por el agente; solo se confirmó textualmente el marcado del criterio10."
+  ],
+  "apiImplementation": {
+    "status": "functional-acceptance-complete-qa-removed-pr14-open-awaiting-peer-review",
+    "guide": "../../CONEXION-CREACION-PEDIDO.md",
+    "verification": "verificacion-api.json",
+    "functionalCriteriaAccepted": 10,
+    "realApiOrdersCreatedByAgent": false,
+    "agentObservedDevice": false,
+    "userAuthorizedConnection": true,
+    "authorizationQuote": "Amigo, ya revisé el diseño de Creación de pedido en Expo Go y me gustó. Sigamos con la conexión a la API en la misma rama feature/creacion-pedido, manteniendo MVVM y Repository.",
+    "stage": "MVVM y Repository autenticado, recuperación idempotente y limpieza condicionada de Bolsa"
+  },
+  "controlledRecoveryTestPlan": {
+    "status": "historical-user-accepted-qa-removed-and-verified",
+    "historicalSnapshot": true,
+    "entryLabel": "Prueba de recuperación",
+    "visibleEntryLabel": "Prueba de recuperación · simulada",
+    "historicalRoute": "/qa-recuperacion-pedido",
+    "developmentOnly": true,
+    "temporary": true,
+    "agentObservedDevice": false,
+    "realOrdersCreated": false,
+    "transport": "Simulado y separado de la API real; View, ViewModel, controlador y Repository reales",
+    "nativeStorage": "SecureStore QA aislado configurado; el usuario reportó ambos recorridos guiados con controladores recreados. El agente no observó el dispositivo ni instrumentó el módulo nativo.",
+    "webStorage": "Solo memoria, sin persistencia de navegador",
+    "scenarios": [
+      "Probar respuesta perdida",
+      "Probar limpieza pendiente"
+    ],
+    "controllerRemountScope": "Remontar el controlador sobre el mismo backend simulado de la pantalla; no cerrar Expo Go ni afirmar persistencia del backend simulado entre procesos",
+    "acceptedCriterionIds": [],
+    "technicalVerification": "qa-recuperacion-verificacion.json",
+    "webVerification": {
+      "source": "QA web ejecutada por el agente principal sobre la pantalla temporal real con transporte y sesión simulados",
+      "viewports": [
+        "397x1000",
+        "320x820"
+      ],
+      "horizontalOverflow": 0,
+      "consoleErrors": 0,
+      "lostResponseAfterControllerReopenAndRetry": {
+        "createdOrders": 1,
+        "confirmationPosts": 2,
+        "cartUnits": 0
+      },
+      "cleanupAfterControllerReopenAndRetry": {
+        "createdOrders": 1,
+        "confirmationPosts": 1,
+        "cartUnits": 0
+      },
+      "screenshots": [
+        "qa-recuperacion-respuesta-web.png",
+        "qa-recuperacion-limpieza-web.png"
+      ],
+      "nativeAcceptance": false,
+      "scope": "Controladores recreados sobre el mismo runtime, backend simulado y almacenamiento en memoria; no acredita SecureStore nativo ni supervivencia del backend ficticio entre procesos"
+    },
+    "nextNativeScenario": null,
+    "externalNavigationWithinQa": false,
+    "realCredentialOrHttpFallback": false,
+    "requiresRemovalAfterTesting": true,
+    "userReportedAcceptance": {
+      "lostConfirmation": {
+        "accepted": true,
+        "quote": "Amigo, en la prueba simulada recuperé la confirmación después de Reabrir prueba. Apareció el recibo y quedaron 1 pedido, 2 confirmaciones y 0 unidades. Sigamos con la prueba de limpieza pendiente.",
+        "createdOrders": 1,
+        "confirmationPosts": 2,
+        "cartUnits": 0,
+        "transport": "Simulado",
+        "agentObservedDevice": false
+      },
+      "cleanupFailure": {
+        "accepted": true,
+        "quote": "Amigo, se conservó el recibo al fallar la limpieza. Tras Reabrir prueba y reintentar quedaron 1 pedido, 1 confirmación y 0 unidades. Ya salí de la prueba. ¿Qué sigue?",
+        "createdOrders": 1,
+        "confirmationPosts": 1,
+        "cartUnits": 0,
+        "userReportedExit": true,
+        "transport": "Simulado",
+        "agentObservedDevice": false,
+        "scope": "Recibo conservado y limpieza recuperada con controladores recreados sobre el mismo backend sintético. Sin observación directa del dispositivo ni verificación de API real o MongoDB"
+      }
+    },
+    "removalVerification": {
+      "status": "completed",
+      "completed": true,
+      "evidence": "cierre-pruebas-y-retiro-qa.json",
+      "orderScreenRestoredSha256": "C1C7E97E1580E4896942E377597EAD41949F4E1CEEC0A2EE5942BF45AA776037",
+      "removedFileCount": 5,
+      "sourceAndTestsContainQaReferences": false,
+      "finalChecks": {"typecheck": "passed", "lint": "passed", "testsPassed": 558, "testsTotal": 558, "expoDoctorVersion": "1.21.5", "expoDoctorChecksPassed": 21, "expoDoctorChecksTotal": 21, "androidExport": "passed", "webExport": "passed"}
+    }
+  }
+}

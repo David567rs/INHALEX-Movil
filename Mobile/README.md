@@ -1,10 +1,37 @@
 # INHALEX: base móvil
 
-El [PR #13](https://github.com/David567rs/INHALEX-Movil/pull/13) ya está abierto por David567rs desde `feature/direcciones-envio` hacia `develop`, con revisión solicitada y confirmada a ZenaidaGR. Direcciones continúa **9/10**; revisión e integración pendientes. La CI debe consultarse sobre el HEAD vigente. El recibo de apertura está en `docs/evidencias/direcciones-envio/preparacion-pr13.json`.
+La actividad actual es la **conexión de Creación de pedido a la API**, en `C:\Users\David\Documents\INHALEX-Movil`, rama `feature/creacion-pedido`, desde `develop` en `1808ba1`, manteniendo MVVM y Repository. El [PR #14](https://github.com/David567rs/INHALEX-Movil/pull/14) está abierto por David567rs y la revisión está solicitada a ZenaidaGR. El recorrido aceptado y las comprobaciones finales completan **10/11 criterios**, del 1 al 10; solo falta **Revisar el código (11)** mediante su revisión real. Consulta la [guía de conexión](../docs/CONEXION-CREACION-PEDIDO.md), la [aceptación](../docs/evidencias/creacion-pedido/expo-go-aceptacion.json), el [cierre de pruebas](../docs/evidencias/creacion-pedido/cierre-pruebas-y-retiro-qa.json) y la [preparación del PR](../docs/evidencias/creacion-pedido/preparacion-pr14.json). El usuario confirmó marcar Probar la funcionalidad; el agente no leyó ni modificó Trello. Mantener En progreso hasta revisión e integración. Los estados posteriores de este README son históricos.
+
+El recorrido vigente usa datos autenticados de Bolsa, Direcciones y Perfil, cotiza con POST `/orders/draft/preview` y confirma con POST `/orders/confirm`, Bearer y una clave idempotente. El Repository, los casos de uso y el controlador se componen en bootstrap; la vista no conoce HTTP, credenciales ni claves privadas. La selección de dirección solo afecta al pedido, sin modificar la principal. El contacto es editable y el resumen presenta precios y cantidades del servidor, incidencias, subtotal de productos y **Envío: Por definir**; no inventa un total cobrado ni pago completado.
+
+En nativo, un intento por cuenta se guarda en SecureStore antes de enviar y el recibo confirmado se guarda antes de limpiar Bolsa. Una respuesta incierta requiere reintentar explícitamente con la misma entrada y clave. Un recibo confirmado permite recuperar solo la actualización de Bolsa; su fallo conserva el recibo y evita crear otro pedido. Web conserva la recuperación únicamente en memoria, igual que su sesión: no garantiza continuidad tras una recarga completa. La lease de checkout bloquea modificaciones locales; la limpieza exige comparar la Bolsa actual, la entrada original y los productos normalizados confirmados. GET seguido de DELETE no garantiza atomicidad frente a otro dispositivo, limitación del backend existente.
+
+## Pruebas terminadas y herramienta temporal retirada
+
+El usuario aceptó ambos escenarios simulados en Expo Go: respuesta perdida recuperada tras **Reabrir prueba** y reintentar con **1 pedido / 2 confirmaciones / 0 unidades**; limpieza pendiente con recibo conservado y recuperación con **1 pedido / 1 confirmación / 0 unidades**. Informó que salió de la prueba. Son datos sintéticos y reportes del usuario; el agente no observó el teléfono ni verificó esos contadores en la API real o MongoDB. Reabrir prueba creó controladores nuevos conservando el backend sintético, sin cerrar completamente Expo Go.
+
+La ruta QA, sus cuatro archivos de soporte y los accesos/props temporales ya se retiraron. La pantalla normal se restauró verificando su hash contra el respaldo previo. Tras la retirada pasaron TypeScript, lint, **558/558 pruebas**, Doctor **21/21**, exportaciones Android (1498 módulos) y web (1047 módulos). La [verificación temporal](../docs/evidencias/creacion-pedido/qa-recuperacion-verificacion.json) se conserva como registro histórico separado. Antes de publicar volvieron a pasar TypeScript, lint y las 558 pruebas. El PR #14 está abierto y la revisión de ZenaidaGR solicitada; revisión formal e integración pendientes. Consultar la CI sobre el HEAD publicado vigente, sin equiparar sus resultados a los locales. No se inicia otra actividad.
+
+## Primera prueba funcional en Expo Go (aceptada por el usuario)
+
+Reutiliza el QR de David (**8082**) y recarga. Con una **cuenta de prueba**, una dirección ficticia válida y un producto de prueba en Bolsa:
+
+1. Abre **Bolsa → Continuar con mi pedido** y revisa los productos, cantidades, subtotal, incidencias y envío por definir.
+2. Elige una dirección guardada y revisa contacto y notas; no debe cambiar la principal de la cuenta.
+3. Confirma y observa el bloqueo durante el envío, incluido un segundo toque rápido. Espera el recibo con referencia y estado **En revisión**.
+4. Vuelve a Bolsa: debe quedar vacía si los productos y cantidades coincidían; si se detectaron cambios o ajustes, revisa el aviso y la colección conservada.
+
+El usuario ya confirmó este recorrido positivo: **7/11**, criterios 1, 2, 3, 4, 5, 7 y 9. El agente no creó pedidos contra la API real ni observó el teléfono. La [verificación técnica de la API](../docs/evidencias/creacion-pedido/verificacion-api.json) conserva su snapshot previo separado de esta aceptación. La [guía de diseño](../docs/DISENO-CREACION-PEDIDO.md) y sus 485 pruebas, Doctor y exportaciones son snapshots históricos de muestras. Mantener En progreso; pendientes duplicados, errores, prueba completa y revisión. Sin commit, publicación o PR hasta la solicitud correspondiente.
+
+Se conservan identidad INHALEX, cinco pestañas, servicios, configuración y alcance de las otras actividades. La copia de Zenaida y su respaldo no forman parte de esta implementación. No iniciar Historial, Seguimiento ni Avisos.
+
+## Etapas anteriores: registro histórico
 
 Proyecto Expo SDK 57 con React Native, TypeScript y Expo Router, identidad INHALEX y cinco pestañas. Registro, Login, Persistencia, Catálogo, Líneas, Detalle, Búsqueda, Favoritos, Bolsa y Perfil están integrados. El [PR #12](https://github.com/David567rs/INHALEX-Movil/pull/12) de David567rs fue aprobado por ZenaidaGR sobre `ef60a37`, con Backend CI y Mobile CI correctos, y fusionado por ella a `develop` en `27d2495` el 19 de octubre de 2026. La revisión real completa **Perfil 10/10** y el usuario confirmó Trello actualizado; la [evidencia de integración](../docs/evidencias/perfil-usuario/integracion-pr12.json) conserva el recibo verificado. La actividad actual es la [conexión de Direcciones de envío](../docs/CONEXION-DIRECCIONES-ENVIO.md), solo en la copia de David, rama `feature/direcciones-envio`, con MVVM y Repository autenticado. El usuario aceptó el recorrido completo en Expo Go: **9/10**, criterios 1 a 9, y autorizó preparar el PR. Solo falta la revisión real de ZenaidaGR; mantener Trello **En progreso** hasta revisión e integración, sin marcado confirmado por el usuario. Este estado prevalece sobre las etapas históricas del README. Las actividades siguen el [plan](../docs/PLAN-DE-TRABAJO.md).
 
-## Direcciones: preparación del PR autorizada
+## Direcciones: preparación del PR autorizada (hito histórico)
+
+> Direcciones ya está **10/10**, aprobada y fusionada con el PR #13. Los párrafos siguientes conservan la guía y el estado 9/10 anterior a su revisión.
 
 El usuario confirmó exactamente: «Amigo, las direcciones y la principal se conservaron al reabrir, se ocultaron al cerrar sesión y volvieron al ingresar con la misma cuenta. Abre el PR de Direcciones hacia develop para que Zenaida lo revise.». La [aceptación](../docs/evidencias/direcciones-envio/expo-go-aceptacion.json) completa **Probar la funcionalidad** (9): **9/10**. El agente no observó el teléfono ni leyó o modificó Trello; no se atribuye una prueba física entre dos cuentas distintas.
 

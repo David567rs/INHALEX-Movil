@@ -1,0 +1,156 @@
+{
+  "activity": "Creación de pedido",
+  "stage": "Diseño visual con muestras locales",
+  "checkedAt": "2026-10-19T23:16:28.5604190Z",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+  "branch": "feature/creacion-pedido",
+  "baseCommit": "1808ba1cbcd8940c84759395c6818ee950aa140d",
+  "checks": {
+    "typecheck": {
+      "exitCode": 0,
+      "command": "npm run typecheck"
+    },
+    "lint": {
+      "exitCode": 0,
+      "command": "npm run lint"
+    },
+    "tests": {
+      "command": "npm test",
+      "scope": "Pruebas existentes de la app; no se agregaron pruebas que dupliquen el diseño estático",
+      "newTests": 0,
+      "exitCode": 0,
+      "failed": 0,
+      "passed": 485
+    },
+    "doctor": {
+      "exitCode": 0,
+      "total": 21,
+      "command": "npm run doctor",
+      "passed": 21
+    },
+    "android": {
+      "exitCode": 0,
+      "modules": 1485,
+      "bundles": [
+        "entry-feac0a521a11da25197458fbd6e31118.hbc"
+      ],
+      "command": "npm run export:android"
+    },
+    "web": {
+      "exitCode": 0,
+      "modules": 1033,
+      "bundles": [
+        "entry-53120e2318857cf1724eeaf55da0558c.js"
+      ],
+      "command": "npm run export:web"
+    }
+  },
+  "architecture": {
+    "selectionPersisted": false,
+    "compositionRoot": "Mobile/src/bootstrap/createOrderPreviewAction.ts, inyectada desde src/app/creacion-pedido.tsx",
+    "confirmHandlerPresent": false,
+    "path": "Vista → useOrderPreviewViewModel → GetOrderPreview → OrderPreviewRepository → PreviewOrderRepository",
+    "confirmEnabled": false,
+    "httpRepositoryUsed": false,
+    "orderCreated": false,
+    "realCartAccessedByPreview": false,
+    "realAddressesAccessedByPreview": false,
+    "data": "Snapshot sintético readonly congelado en memoria; productos/cliente/direcciones de ejemplo"
+  },
+  "webQa": {
+    "origin": "http://localhost:8082",
+    "verified": [
+      "Rótulo Vista previa y datos de ejemplo",
+      "Dos productos con imágenes locales de Lavanda y Menta",
+      "Cantidades2x129+1x119=subtotal377 MXN; envío por definir",
+      "Casa/Trabajo cambian indicador radio y resumen; aria-checked explícito",
+      "Sin dirección muestra Por seleccionar y Agregar dirección inactivo",
+      "Bolsa vacía muestra estado y acceso Explorar catálogo",
+      "Confirmar pedido deshabilitado sin handler",
+      "Volver a Bolsa anónima conserva cinco pestañas",
+      "Reentrada reinicia composición y selección de muestra",
+      "No se observó desbordamiento horizontal en320/397"
+    ],
+    "consoleErrors": 0,
+    "cssViewports": [
+      {
+        "width": 320,
+        "horizontalOverflow": false,
+        "height": 820
+      },
+      {
+        "width": 397,
+        "horizontalOverflow": false,
+        "height": 847
+      }
+    ],
+    "viewportNote": "Zoom del navegador 110%; override352x902/437x932 produjo CSS320x820/397x847 medidos por DOM. Override restaurado al terminar",
+    "platform": "Navegador web; no dispositivo físico",
+    "captures": [
+      "diseno-web-320.png",
+      "diseno-web-397.png",
+      "direccion-ejemplo-web-320.png",
+      "resumen-web-320.png",
+      "resumen-web-397.png",
+      "sin-direccion-web-320.png",
+      "bolsa-vacia-web-320.png",
+      "acceso-bolsa-web-320.png"
+    ],
+    "route": "/creacion-pedido",
+    "preexistingWebWarnings": [
+      "shadow props de componentes existentes",
+      "Animated useNativeDriver usa fallback JS en web"
+    ],
+    "notExercised": [
+      "Datos reales de una bolsa autenticada",
+      "Checkout/API/creación/idempotencia/limpieza",
+      "Aceptación nativa/teclado/TalkBack/texto ampliado"
+    ]
+  },
+  "preserved": {
+    "identities": true,
+    "zenaidaHead": "1808ba1cbcd8940c84759395c6818ee950aa140d",
+    "zenaidaBranch": "develop",
+    "zenaidaClean": true,
+    "zenaidaStash": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "servicesRestarted": false,
+    "envFiles": true,
+    "ports": [
+      {
+        "LocalPort": 3200,
+        "OwningProcess": 30280
+      },
+      {
+        "LocalPort": 8082,
+        "OwningProcess": 28288
+      },
+      {
+        "LocalPort": 8083,
+        "OwningProcess": 13476
+      }
+    ],
+    "serverSource": true,
+    "dependencyFiles": true
+  },
+  "review": {
+    "replacesPeerReview": false,
+    "agentReview": "Sin hallazgos accionables de alcance/MVVM/selección temporal"
+  },
+  "nativeAcceptance": {
+    "criteriaAccepted": 0,
+    "criteriaTotal": 11,
+    "accepted": false,
+    "agentObservedDevice": false
+  },
+  "publication": {
+    "pullRequestOpened": false,
+    "pushed": false,
+    "committed": false
+  },
+  "documentation": [
+    "https://docs.expo.dev/versions/v57.0.0/",
+    "https://docs.expo.dev/versions/v57.0.0/sdk/router/",
+    "https://reactnative.dev/docs/pressable",
+    "https://reactnative.dev/docs/accessibility"
+  ]
+}

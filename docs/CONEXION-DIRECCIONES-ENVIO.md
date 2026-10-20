@@ -1,6 +1,8 @@
 # Conexión de Direcciones de envío
 
-El [PR #13](https://github.com/David567rs/INHALEX-Movil/pull/13) ya está abierto por David567rs desde `feature/direcciones-envio` hacia `develop`, con revisión solicitada y confirmada a ZenaidaGR. Direcciones continúa **9/10**; revisión e integración pendientes. La CI debe consultarse sobre el HEAD vigente. El recibo de apertura está en `docs/evidencias/direcciones-envio/preparacion-pr13.json`.
+El [PR #13](https://github.com/David567rs/INHALEX-Movil/pull/13) quedó aprobado y fusionado por ZenaidaGR a `develop` el 19 de octubre de 2026, en `1808ba1cbcd8940c84759395c6818ee950aa140d`. Backend CI y Mobile CI terminaron correctamente sobre el HEAD aprobado `b022340c3d4e0f222966c1d6f9bc57100a693fea`. La [evidencia de integración](evidencias/direcciones-envio/integracion-pr13.json) completa **10/10**, incluida la revisión real; no añade prueba nativa. El marcado final de Trello no fue confirmado por el usuario y el agente no accedió al tablero. La actividad siguiente es solo el [diseño de Creación de pedido](DISENO-CREACION-PEDIDO.md), en su propia rama.
+
+> Los hitos 9/10 y de PR futuro descritos abajo son históricos, anteriores a la aprobación y el merge. El contrato y la guía de pruebas siguen como referencia de Direcciones integrada.
 
 La actividad continúa solo en `C:\Users\David\Documents\INHALEX-Movil`, rama `feature/direcciones-envio`, desde `27d2495`. David567rs es responsable y ZenaidaGR revisará el futuro PR a `develop`. El usuario aceptó el diseño y autorizó la conexión: «Amigo, ya revisé el diseño de Direcciones en Expo Go y me gustó. Sigamos con la conexión a la API en la misma rama feature/direcciones-envio, manteniendo MVVM y Repository.».
 
