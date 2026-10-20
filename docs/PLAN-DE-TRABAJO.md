@@ -1,6 +1,6 @@
 # Plan de trabajo de INHALEX Movil
 
-**Estado actual:** Avisos está **7/9**, criterios 1-7 aceptados por reportes del usuario. Actualizar y Reintentar fallaron conservando avisos y detalle; al reiniciar el backend, Reintentar recuperó los datos y quitó el aviso. Se acepta Manejar errores de carga (7), solo lectura GET; no acredita fallo de marcado PATCH. Helper retirado en `bb32a17`, vacío aceptado en `7d97f85`; resultados técnicos anteriores conservan su fase. Sigue reapertura y continuidad de sesión de la misma cuenta para Probar la funcionalidad (8); revisión real David567rs (9) pendiente. Trello no confirmado; el agente no observó el teléfono ni accedió al tablero. Esta etapa solo documenta el reporte, sin cambios de código o nuevos checks de ejecución.
+**Estado actual:** Avisos está **8/9**, criterios 1-8 aceptados por reportes del usuario, Zenaida, `feature/avisos`. La continuidad de la misma cuenta y lectura quedó aceptada; el usuario autorizó el PR hacia `develop` para David567rs. Apertura en preparación, todavía sin PR creado, revisión solicitada o CI remota confirmadas. Solo **Revisar el código** (9) sigue pendiente; mantener En progreso y marcado Trello no confirmado. No se atribuye observación del teléfono, prueba de otra cuenta o acceso al tablero al agente. Commits por fase y resultados técnicos históricos preservados; esta aceptación es documental.
 
 Acuerdos del 14 de octubre de 2026 para reiniciar la aplicación móvil con un repositorio independiente, aprovechar el backend y el código anterior, y documentar el flujo de trabajo del profesor desde el inicio.
 
@@ -915,8 +915,14 @@ Tras la aceptación `7d97f85`, se retiraron los dos archivos temporales y la ent
 
 Mantener **6/9** y En progreso, sin inferir marcado Trello. Ahora sigue la [prueba humana GET de error/reintento](CONEXION-AVISOS.md#siguiente-prueba-error-y-reintento-de-lectura), sin marcar avisos ni cambiar datos: backend detenido solo por el usuario, aplicación/Metros/WiFi conservados, error con datos retenidos y recuperación al reiniciar. Criterios 7-9 y revisión real David567rs pendientes; sin publicación o PR.
 
-## Estado vigente: Avisos, error y reintento de carga aceptados (7/9)
+## Snapshot histórico: Avisos, error y reintento de carga aceptados (7/9)
 
 El usuario confirmó fallos de Actualizar y Reintentar sin perder avisos o detalle, y recuperación tras reiniciar el backend. La cita exacta y el alcance GET están en `docs/evidencias/avisos/expo-go-aceptacion.json`; el criterio 7 se acepta por su reporte, sin observación del dispositivo por el agente ni prueba nativa de fallo del marcado. Puede marcar Manejar errores de carga y mantener En progreso, 7/9; marcado no confirmado.
 
 La retirada temporal quedó en `bb32a17`. Esta aceptación se guarda en un commit documental separado, conservando historial y resultados técnicos anteriores. Sigue la prueba de reapertura y continuidad por cuenta; 8 y revisión real de David567rs (9) siguen pendientes. No se publica ni abre PR por este reporte, ni se cambian código, backend, servicios, dependencias o la copia de David.
+
+## Estado vigente: Avisos, aceptación funcional completa y PR autorizado (8/9)
+
+El usuario reportó regreso de los avisos al reabrir, ocultación al salir, recuperación con la misma cuenta, lectura conservada y Actualizar funcionando. Se acepta **Probar la funcionalidad** (8), con cita exacta en [la aceptación](evidencias/avisos/expo-go-aceptacion.json), sin observación del teléfono por el agente ni prueba de otra cuenta. Los criterios 1-8 están aceptados: **8/9**; puede marcar el 8 y mantener En progreso, pero ese marcado no está confirmado.
+
+El usuario también autorizó abrir `feature/avisos` → `develop`, con revisión real de **David567rs**. La publicación está en preparación: no se anticipan número, URL, solicitud de revisión o CI remota. Primero se registra esta aceptación en su commit separado y se completan las comprobaciones finales. Se preservan `58c1f7b`, `bb32a17` y el resto de fases y resultados anteriores. **Revisar el código** (9) queda pendiente hasta la revisión real; sin cambios funcionales, servicios, backend, evidencias históricas o copia de David en esta fase documental.

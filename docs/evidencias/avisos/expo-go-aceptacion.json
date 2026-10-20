@@ -86,7 +86,7 @@
     "snapshotScope": "Diseño local histórico aceptado; la conexión posterior está autorizada y se registra por separado"
   },
   "functionalAcceptance": {
-    "acceptedCriteria": 7,
+    "acceptedCriteria": 8,
     "totalCriteria": 9,
     "acceptedCriterionIds": [
       1,
@@ -95,13 +95,13 @@
       4,
       5,
       6,
-      7
+      7,
+      8
     ],
     "pendingCriterionIds": [
-      8,
       9
     ],
-    "status": "7/9; recorrido positivo, vacío controlado y error/reintento de carga aceptados por reportes del usuario. Helper retirado; prueba completa de continuidad por cuenta y revisión real pendientes.",
+    "status": "8/9; criterios funcionales1-8 aceptados por reportes del usuario, incluida continuidad de la misma cuenta y lectura conservada. PR autorizado en preparación; solo revisión real9 pendiente.",
     "confirmations": [
       {
         "date": "2026-10-20",
@@ -140,6 +140,14 @@
         "quote": "Amigo, Actualizar y Reintentar fallaron sin perder los avisos ni el detalle. Reinicié el backend y Reintentar recuperó los datos y quitó el aviso. ¿Qué marco en Trello y qué sigue?",
         "criterionIds": [7],
         "scope": "Error de lectura con backend local detenido, conservación de avisos y detalle y recuperación al reintentar tras reiniciar el backend. No acredita fallo de PATCH, reapertura o cambio de sesión.",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario después del recorrido de continuidad en Expo Go",
+        "quote": "Amigo, los avisos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta. Se conservó la lectura y Actualizar funciona. Abre el PR de Avisos hacia develop para que David567rs lo revise.",
+        "criterionIds": [8],
+        "scope": "Reapertura, ocultación al cerrar sesión, regreso con la misma cuenta, lectura conservada y actualización. No acredita una segunda cuenta ni restauración de la pantalla exacta. Incluye autorización expresa para abrir PR, todavía no creado.",
         "agentObservedDevice": false
       }
     ],
@@ -182,7 +190,7 @@
       {
         "id": 8,
         "text": "Probar la funcionalidad",
-        "accepted": false
+        "accepted": true
       },
       {
         "id": 9,
@@ -196,7 +204,7 @@
     "agentReadBoard": false,
     "agentModifiedBoard": false,
     "userConfirmedCriteriaMarked": false,
-    "guidance": "Puede marcar Manejar errores de carga (7): criterios1-7 aceptados,7/9. Mantener En progreso; prueba completa8 y revisión real9 pendientes. Marcado no confirmado."
+    "guidance": "Puede marcar Probar la funcionalidad (8): criterios1-8 aceptados,8/9. Mantener En progreso y Revisar el código (9) pendiente hasta revisión real de David567rs. Marcado no confirmado."
   },
   "architecture": {
     "pattern": "MVVM y Repository",
@@ -213,7 +221,7 @@
       "Reseñas",
       "Confirmación de recepción"
     ],
-    "authorizedNow": "Conexión a la API de Avisos en la misma rama, con MVVM, Repository y commits por etapa",
+    "authorizedNow": "Abrir PR de Avisos desde feature/avisos hacia develop para David567rs, después de registrar la aceptación y completar comprobaciones finales",
     "otherActivitiesChecklistOrAssignmentInferred": false
   },
   "phaseCommits": {
@@ -266,20 +274,36 @@
       "source": "Reporte textual del usuario sobre interfaz controlada0/0",
       "agentObservedDevice": false
     },
+    "loadErrorAcceptance": {
+      "commit": "58c1f7b",
+      "criterionId": 7,
+      "source": "Reporte textual del usuario sobre errores de carga GET y recuperación",
+      "agentObservedDevice": false
+    },
+    "sessionContinuityAcceptance": {
+      "separateCommitRequired": true,
+      "criterionId": 8,
+      "source": "Reporte textual de continuidad de la misma cuenta y autorización de PR",
+      "agentObservedDevice": false
+    },
     "conventionSource": "../../VERSIONAMIENTO.md"
   },
   "publication": {
     "branchPushed": false,
     "pullRequestCreated": false,
     "merged": false,
-    "publicationAuthorizedByUser": false,
+    "publicationAuthorizedByUser": true,
+    "status": "authorized-in-preparation-not-created",
+    "authorizationQuote": "Amigo, los avisos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta. Se conservó la lectura y Actualizar funciona. Abre el PR de Avisos hacia develop para que David567rs lo revise.",
+    "reviewRequestConfirmed": false,
+    "remoteCiConfirmed": false,
     "futureReviewer": "David567rs",
     "futureBase": "develop"
   },
   "connection": {
     "authorized": true,
     "implemented": true,
-    "status": "positive-flow-controlled-empty-and-load-retry-accepted-awaiting-session-continuity",
+    "status": "functional-acceptance-complete-authorized-pr-in-preparation",
     "sameBranchRequired": "feature/avisos",
     "futureReviewer": "David567rs",
     "technicalVerification": "verificacion-api.json",
@@ -306,7 +330,7 @@
     "polling": false,
     "newStorage": false,
     "backendChanged": false,
-    "nativeFunctionalAcceptancePending": true,
+    "nativeFunctionalAcceptancePending": false,
     "agentObservedDevice": false,
     "agentAuthenticatedRealApiReads": false,
     "agentRealApiWrites": false,
@@ -379,16 +403,17 @@
       "healthAndMetrosHttp200": true
     }
   },
-  "nextStep": "Con backend y Metros activos, cerrar Expo Go por completo, reabrir el proyecto Zenaida8083 y consultar Cuenta → Avisos. Comprobar avisos y estado de lectura al abrir el mismo aviso; Actualizar debe funcionar. Cerrar sesión en Cuenta, comprobar que Avisos pide ingresar sin datos anteriores; ingresar con la misma cuenta y verificar avisos y Actualizar. No exigir restaurar la pantalla o selección exactas. Criterio8 pendiente del reporte; revisión9 requiere a David567rs y PR solicitado expresamente.",
+  "nextStep": "Registrar esta aceptación de continuidad en su commit separado; completar comprobaciones finales y publicar el PR autorizado desde feature/avisos hacia develop para David567rs. Todavía no existe PR o solicitud de revisión confirmados ni CI remota que citar. Mantener criterio9 pendiente hasta revisión real y Trello En progreso, sin inferir marcado.",
   "limitations": [
     "La aceptación visual procede del reporte del usuario, sin observación directa del dispositivo por el agente.",
     "La verificación de API pasó; QA usa sesión/fetch sintéticos y sus capturas son web, sin sustituir Expo Go, TalkBack o texto ampliado nativo.",
     "La QA web de API se retiró en 1b9d572; el helper temporal DEV posterior de vacío también fue retirado tras su aceptación 7d97f85, sin repetir suite, Doctor o exports.",
     "Abrir el detalle no marca leído; solo el botón explícito escribe. No hay marcado masivo, polling, persistencia o push.",
     "No se asignan checklist, responsable o rama para Reseñas o Confirmación de recepción.",
-    "Los criterios1-7 se aceptan por reportes del usuario, sin observación del dispositivo ni acceso a Trello; el marcado no está confirmado.",
+    "Los criterios1-8 se aceptan por reportes del usuario, sin observación del dispositivo ni acceso a Trello; el marcado no está confirmado.",
     "El criterio6 se acepta por el reporte de la interfaz controlada0/0 en Expo Go; no equivale a filtro No leídos vacío ni acredita una API o cuenta reales vacías. El helper y acceso DEV ya están retirados.",
-    "El helper histórico no hacía HTTP ni usaba token/almacén/cuenta reales; RootLayout y runtime global no cambiaron, y la app podía continuar sus lecturas normales."
+    "El helper histórico no hacía HTTP ni usaba token/almacén/cuenta reales; RootLayout y runtime global no cambiaron, y la app podía continuar sus lecturas normales.",
+    "La continuidad reportada corresponde a la misma cuenta; no acredita una segunda cuenta o restauración de la pantalla exacta. La revisión real9 sigue pendiente aunque el PR esté autorizado."
   ],
   "loadErrorAcceptance": {
     "date": "2026-10-20",
@@ -405,6 +430,26 @@
     "trelloMarkedConfirmed": false,
     "changesInThisStage": "Solo documentación y commit de aceptación; sin cambios funcionales, servicios, credenciales, cuenta, backend o dependencias.",
     "newAutomatedOrBrowserChecks": false,
+    "historicalTechnicalResultsPreserved": true
+  },
+  "sessionContinuityAcceptance": {
+    "date": "2026-10-20",
+    "criterionId": 8,
+    "accepted": true,
+    "source": "Reporte textual del usuario sobre Expo Go",
+    "quote": "Amigo, los avisos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta. Se conservó la lectura y Actualizar funciona. Abre el PR de Avisos hacia develop para que David567rs lo revise.",
+    "reopenedNotificationsReturnedReported": true,
+    "signedOutNotificationsHiddenReported": true,
+    "sameAccountNotificationsReturnedReported": true,
+    "readStatePreservedReported": true,
+    "refreshWorksReported": true,
+    "anotherAccountTestAccepted": false,
+    "exactScreenRestorationRequired": false,
+    "agentObservedDevice": false,
+    "trelloMarkedConfirmed": false,
+    "prAuthorized": true,
+    "prCreated": false,
+    "reviewCriterion9Accepted": false,
     "historicalTechnicalResultsPreserved": true
   },
   "emptyTest": {

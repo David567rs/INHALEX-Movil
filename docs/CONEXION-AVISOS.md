@@ -2,9 +2,9 @@
 
 Actividad de ZenaidaGR en `C:\Users\David\Documents\INHALEX-Movil-Zenaida`, rama `feature/avisos`, basada en `develop` `0f0b764a4ad78e40f12112c4debcd7982ccdfd2c`. David567rs revisará el futuro PR hacia `develop`. El cierre anterior está separado en `6610412`, el diseño en `1f383f3` y su aceptación/autorización de API en `46c86aa`.
 
-El usuario aceptó el diseño y autorizó conectar la API en la misma rama, con MVVM, Repository y commits por etapa. La conexión está verificada en `1b9d572`; el recorrido positivo (`fcc0c72`), vacío controlado (`7d97f85`) y error/reintento de carga fueron aceptados por reportes de Expo Go. El montaje `21ece6e` se retiró en `bb32a17`, con TypeScript/lint aprobados en esa etapa. Quedan pendientes continuidad por cuenta, prueba completa y revisión real; esta aceptación solo actualiza documentación.
+El usuario aceptó diseño, recorrido positivo, vacío controlado, error/reintento y continuidad de la misma cuenta por reportes de Expo Go. La conexión está en `1b9d572`, el helper se retiró en `bb32a17` y las fases previas conservan sus resultados. La aceptación funcional está completa; solo queda revisión real. El usuario autorizó abrir el PR `feature/avisos` → `develop` para David567rs, todavía en preparación y sin PR creado o CI remota declarada.
 
-Avisos está **7/9**: criterios 1-7 aceptados por reportes del usuario. El criterio 6 acredita una interfaz controlada0/0 y el 7 una prueba GET de carga y recuperación; no prueban una API vacía ni fallo de marcado PATCH. Los criterios 8 y 9 siguen pendientes. La [aceptación vigente](evidencias/avisos/expo-go-aceptacion.json) conserva las fuentes textuales; el [diseño](DISENO-AVISOS.md) y las verificaciones anteriores son historia. El agente no observó el teléfono ni leyó o modificó Trello, y el marcado no está confirmado.
+Avisos está **8/9**: criterios 1-8 aceptados por reportes del usuario. El criterio 6 acredita interfaz controlada 0/0, el 7 una prueba GET de carga/recuperación y el 8 continuidad de la misma cuenta; no acreditan una API vacía, fallo de marcado PATCH o prueba de otra cuenta. Solo el criterio 9 sigue pendiente. La [aceptación vigente](evidencias/avisos/expo-go-aceptacion.json) conserva las fuentes textuales; el [diseño](DISENO-AVISOS.md) y las verificaciones anteriores son historia. El agente no observó el teléfono ni leyó o modificó Trello, y el marcado no está confirmado.
 
 ## Contrato existente del backend
 
@@ -47,7 +47,7 @@ Si ese GET posterior falla, **el aviso confirmado permanece leído**. Se informa
 
 Red, timeout o 5xx conservan el último snapshot confirmado de la misma autorización y ofrecen recuperación explícita. Los payloads, correos, metadata o diagnósticos del servidor no se exponen como mensajes de pantalla. El error de marcado 400 se presenta de forma segura y permite recuperar la bandeja, sin mostrar datos ajenos o forzar un estado leído.
 
-## Criterios de Trello: 7/9
+## Criterios de Trello: 8/9
 
 - [x] Crear sección de avisos
 - [x] Obtener avisos disponibles
@@ -56,10 +56,10 @@ Red, timeout o 5xx conservan el último snapshot confirmado de la misma autoriza
 - [x] Permitir consultar el detalle
 - [x] Mostrar mensaje si no existen avisos
 - [x] Manejar errores de carga
-- [ ] Probar la funcionalidad
+- [x] Probar la funcionalidad
 - [ ] Revisar el código
 
-Los reportes del usuario aceptan 1-7; el 6 corresponde a la bandeja vacía controlada y el 7 a error/reintento GET de carga. Las pruebas técnicas no completan 8 o 9 por anticipado. La revisión formal corresponde a David567rs desde su cuenta, en un futuro PR de ZenaidaGR. Puede marcarse el 7 y mantenerse Trello En progreso; el agente no verifica ni realiza ese marcado.
+Los reportes del usuario aceptan 1-8; el 6 corresponde a la bandeja vacía controlada, el 7 a error/reintento GET y el 8 a continuidad de la misma cuenta. El criterio 9 requiere revisión real de David567rs desde su cuenta en el PR autorizado, todavía en preparación. Puede marcarse el 8 y mantenerse Trello En progreso; el agente no verifica ni realiza ese marcado.
 
 ## Snapshot histórico: primera prueba funcional, aceptada por reporte del usuario
 
@@ -180,13 +180,15 @@ El montaje temporal ya está retirado. No hace falta marcar como leído ni cambi
 6. Pulsar **Reintentar**. Debe recuperar el mismo aviso, quitar el aviso de error y conservar el contexto de la cuenta. Solo se prueba carga GET, sin PATCH. Reportar el resultado antes de aceptar **Manejar errores de carga** (7).
 
 Error/reintento (7), prueba completa y continuidad por cuenta (8) y revisión real de David567rs (9) siguen pendientes. No hay publicación o PR autorizado por este reporte.
-## Estado vigente: error y reintento aceptados (7/9)
+## Snapshot histórico: error y reintento aceptados (7/9)
 
 El usuario confirmó exactamente: «Amigo, Actualizar y Reintentar fallaron sin perder los avisos ni el detalle. Reinicié el backend y Reintentar recuperó los datos y quitó el aviso. ¿Qué marco en Trello y qué sigue?». Se acepta **Manejar errores de carga** (7) por la prueba guiada de lectura GET: conserva avisos y detalle durante los fallos y recupera datos al restablecer el backend. No se atribuye una prueba nativa de error de PATCH, continuidad de sesión o inspección del servidor al agente.
 
 Puede marcar el criterio 7 y mantener En progreso, **7/9**. El agente no observó Expo Go ni leyó o modificó Trello; el marcado no está confirmado. Esta fase solo actualiza documentación y conserva el historial y los checks técnicos anteriores, sin cambios de código, backend, servicios, entorno o dependencias. El helper fue retirado en `bb32a17`. Probar la funcionalidad (8) y la revisión real de David567rs (9) siguen pendientes.
 
-## Siguiente prueba: reapertura y continuidad por cuenta
+<a id="siguiente-prueba-reapertura-y-continuidad-por-cuenta"></a>
+
+## Guía histórica: reapertura y continuidad por cuenta
 
 Con backend y Metros funcionando, usar Expo Go de Zenaida **8083**:
 
@@ -197,3 +199,13 @@ Con backend y Metros funcionando, usar Expo Go de Zenaida **8083**:
 5. Reportar el resultado antes de aceptar **Probar la funcionalidad** (8). No se exige una segunda cuenta ni se cambia el backend o el estado de lectura para esta prueba.
 
 Solo después del reporte se prepara el PR cuando el usuario lo solicite expresamente; **Revisar el código** (9) requiere revisión real de David567rs. Esta guía no anticipa resultados de sesión ni aprobación.
+
+<a id="estado-actual-avisos-pr-en-preparacion"></a>
+
+## Estado vigente: continuidad aceptada y PR autorizado en preparación (8/9)
+
+El usuario confirmó exactamente: «Amigo, los avisos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta. Se conservó la lectura y Actualizar funciona. Abre el PR de Avisos hacia develop para que David567rs lo revise.». Se acepta **Probar la funcionalidad** (8) por continuidad de la misma cuenta, lectura conservada y actualización. El reporte no exige restaurar la pantalla exacta ni acredita otra cuenta; el agente no observó el teléfono ni ejecutó estas acciones.
+
+Avisos queda **8/9**, criterios 1-8 aceptados. Puede marcar el 8 y mantener En progreso; el marcado no está confirmado. **Revisar el código** (9) requiere revisión real de David567rs y sigue pendiente. El mensaje autoriza publicar la rama y abrir el PR de ZenaidaGR desde `feature/avisos` hacia `develop`: **está en preparación, todavía no creado**, sin número, URL, solicitud de revisión o CI remota confirmados.
+
+Esta aceptación se registra en su commit documental separado antes de las comprobaciones finales y la publicación. Se preservan las fases `58c1f7b`, `bb32a17` y anteriores y todos sus resultados técnicos; no se escriben un SHA nuevo ni comprobaciones aún no comunicadas. Esta edición no cambia código, backend, servicios, dependencias, credenciales, evidencias históricas o la copia de David.
