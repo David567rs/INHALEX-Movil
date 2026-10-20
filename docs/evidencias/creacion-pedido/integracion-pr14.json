@@ -1,0 +1,86 @@
+{
+  "number": 14,
+  "url": "https://github.com/David567rs/INHALEX-Movil/pull/14",
+  "title": "Implementar Creación de pedido con MVVM y Repository",
+  "author": "David567rs",
+  "state": "closed",
+  "head": "feature/creacion-pedido",
+  "headSha": "50196363f46ac4028809506f7e4cf552009cd2c4",
+  "base": "develop",
+  "merged": true,
+  "mergedAt": "2026-10-20T02:08:44Z",
+  "mergedBy": "ZenaidaGR",
+  "mergeCommit": "77b9ab5aa8ca4171669ddda8b42adee028cefc59",
+  "mergeParents": [
+    "1808ba1cbcd8940c84759395c6818ee950aa140d",
+    "50196363f46ac4028809506f7e4cf552009cd2c4"
+  ],
+  "reviews": [
+    {
+      "reviewer": "ZenaidaGR",
+      "state": "APPROVED",
+      "commit": "50196363f46ac4028809506f7e4cf552009cd2c4",
+      "submittedAt": "2026-10-20T02:08:35Z",
+      "url": "https://github.com/David567rs/INHALEX-Movil/pull/14#pullrequestreview-5579968969"
+    }
+  ],
+  "checks": [
+    {
+      "status": "completed",
+      "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39357046873",
+      "name": "Backend CI",
+      "runId": 39357046873,
+      "conclusion": "success",
+      "sha": "50196363f46ac4028809506f7e4cf552009cd2c4"
+    },
+    {
+      "status": "completed",
+      "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39357046851",
+      "name": "Mobile CI",
+      "runId": 39357046851,
+      "conclusion": "success",
+      "sha": "50196363f46ac4028809506f7e4cf552009cd2c4"
+    }
+  ],
+  "acceptedCriteria": 11,
+  "totalCriteria": 11,
+  "pendingCriterionIds": [],
+  "completedBy": "Aprobación real de ZenaidaGR completa Revisar el código11, seguida de merge. No añade pruebas nativas nuevas",
+  "evidenceSource": "Metadatos, reviews, commit y CI GitHub verificados; captura aportada por el usuario",
+  "verifiedAt": "2026-10-19T20:12:14.1815301-06:00",
+  "trelloReadByAgent": false,
+  "trelloModifiedByAgent": false,
+  "userPreviouslyConfirmedMarkedCriterionIds": [
+    10
+  ],
+  "trelloFinalUpdateConfirmedByUser": true,
+  "recommendedTrelloStatus": "Terminado",
+  "synchronization": {
+    "performed": true,
+    "checkedAt": "2026-10-19T20:16:06.1290416-06:00",
+    "commit": "77b9ab5aa8ca4171669ddda8b42adee028cefc59",
+    "bothOnDevelop": true,
+    "bothClean": false,
+    "davidLocalDocumentationChangesPreserved": true,
+    "zenaidaClean": true,
+    "environmentsPreserved": true,
+    "dependenciesPreserved": true,
+    "identitiesPreserved": true,
+    "stashPreserved": true,
+    "zenaidaStash": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "servicesRestarted": false,
+    "servicePorts": [
+      3200,
+      8082,
+      8083
+    ],
+    "serviceHttpStatuses": [
+      200,
+      200,
+      200
+    ],
+    "source": "Recibo local TEMP/inhalex-sincronizacion-pr14.json; seis cambios documentales conservados en David, sin commit ni push nuevo"
+  },
+  "localChanges": "Documentación de cierre conservada y actualizada en David al sincronizar ambas copias con develop; sin commits o push nuevos ni siguiente actividad.",
+  "trelloUpdateSource": "El usuario informó: Amigo, ya actualicé Trello. No hubo lectura o modificación del tablero por el agente."
+}

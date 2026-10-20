@@ -37,6 +37,11 @@ import { OrderCreationError } from '../features/orderCreation/domain/errors/Orde
 import type { OrderCreationActions } from '../features/orderCreation/domain/repositories/OrderCreationRepository';
 import { createOrderCreationActions } from '../features/orderCreation/domain/useCases/orderCreationActions';
 import { createOrderCreationController } from '../features/orderCreation/presentation/state/createOrderCreationController';
+import { ApiOrderHistoryRepository } from '../features/orderHistory/data/repositories/ApiOrderHistoryRepository';
+import { OrderHistoryError } from '../features/orderHistory/domain/errors/OrderHistoryError';
+import type { OrderHistoryActions } from '../features/orderHistory/domain/repositories/OrderHistoryRepository';
+import { createOrderHistoryActions } from '../features/orderHistory/domain/useCases/orderHistoryActions';
+import { createOrderHistoryController } from '../features/orderHistory/presentation/state/createOrderHistoryController';
 
 export interface ApplicationServicesOptions {
   environment?: Environment;
@@ -211,8 +216,28 @@ export function createApplicationRuntime(options: Omit<ApplicationServicesOption
     readCart: (requestOptions) => getOrderActions().readCart(requestOptions),
     clearCart: (requestOptions) => getOrderActions().clearCart(requestOptions),
   }, { attemptStore: createOrderAttemptStore(), createKey: randomUUID, cart });
+  let historyActions: OrderHistoryActions | undefined;
+  function getHistoryActions(): OrderHistoryActions {
+    if (!historyActions) {
+      try {
+        const environment = options.environment ?? readEnvironment();
+        historyActions = createOrderHistoryActions(new ApiOrderHistoryRepository(new HttpClient({
+          baseUrl: environment.apiUrl, isDevelopment: environment.isDevelopment,
+          requestTimeoutMs: environment.requestTimeoutMs, fetch: options.fetch,
+          getAccessToken: auth.getAccessToken,
+        })));
+      } catch {
+        throw new OrderHistoryError('El historial no está disponible en este momento. Inténtalo más tarde.', 'configuration');
+      }
+    }
+    return historyActions;
+  }
+  const orderHistory = createOrderHistoryController(auth.authorizationSession, {
+    list: (cursor, requestOptions) => getHistoryActions().list(cursor, requestOptions),
+    get: (id, requestOptions) => getHistoryActions().get(id, requestOptions),
+  });
   // No transport, recovery key or credential is exposed to the React tree.
-  return Object.freeze({ session: auth.session, favorites, cart, profile, shippingAddresses, orderCreation });
+  return Object.freeze({ session: auth.session, favorites, cart, profile, shippingAddresses, orderCreation, orderHistory });
 }
 
 /** Defer configuration until submission so navigation never depends on the API. */

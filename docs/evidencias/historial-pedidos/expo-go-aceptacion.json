@@ -1,0 +1,341 @@
+{
+  "activity": "Historial de pedidos",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+  "branch": "feature/historial-pedidos",
+  "baseCommit": "77b9ab5aa8ca4171669ddda8b42adee028cefc59",
+  "date": "2026-10-20",
+  "source": "Aceptación visual textual del usuario en Expo Go y autorización de conexión a la API; checklist de su captura de Trello",
+  "design": {
+    "accepted": true,
+    "status": "accepted-by-user-in-expo-go",
+    "historicalSnapshot": true,
+    "snapshotScope": "Etapa de diseño sintético aceptada; apiConnected:false describe esa vista previa histórica, no la conexión posterior implementada",
+    "agentObservedDevice": false,
+    "apiConnected": false,
+    "guide": "../../DISENO-HISTORIAL-PEDIDOS.md",
+    "technicalVerification": "verificacion-diseno.json",
+    "route": "/historial-pedidos",
+    "entry": "Cuenta → Historial de pedidos",
+    "entryAccessibilityLabel": "Mostrar diseño de historial",
+    "entryAccessibilityHint": "Vista previa de tus pedidos",
+    "availableWithoutSessionForPreview": true,
+    "presentationModes": [
+      "Con pedidos",
+      "Sin pedidos"
+    ],
+    "localFilters": [
+      "Todos",
+      "En curso",
+      "Completados"
+    ],
+    "localFilterValues": [
+      "all",
+      "in-progress",
+      "completed"
+    ],
+    "dataSource": "Tres muestras sintéticas locales de solo lectura, sin pedidos de la cuenta ni transporte HTTP",
+    "exampleReferences": [
+      "EJEMPLO-001",
+      "EJEMPLO-002",
+      "EJEMPLO-003"
+    ],
+    "exampleDatesNewestFirst": [
+      "19 de octubre de 2026",
+      "16 de octubre de 2026",
+      "10 de octubre de 2026"
+    ],
+    "exampleProductSubtotalsMxn": [
+      547,
+      348,
+      507
+    ],
+    "exampleStatusLabels": [
+      "En revisión",
+      "Confirmado",
+      "Completado"
+    ],
+    "exampleSummaryLabels": [
+      "Pedido recibido",
+      "Confirmado por INHALEX",
+      "Pedido completado"
+    ],
+    "emptyTitle": "Aún no tienes pedidos",
+    "emptySubtitle": "Cuando hagas tu primer pedido, su historia comenzará aquí.",
+    "emptyAction": {
+      "label": "Explorar catálogo",
+      "route": "/catalogo"
+    },
+    "orderSelection": "Resumen visual de la muestra seleccionada, en memoria",
+    "persistence": false,
+    "acceptedCriterionIds": [
+      1
+    ],
+    "quote": "Amigo, ya revisé el diseño de Historial en Expo Go y me gustó. Sigamos con la conexión a la API en la misma rama feature/historial-pedidos, manteniendo MVVM y Repository."
+  },
+  "functionalAcceptance": {
+    "acceptedCriteria": 8,
+    "totalCriteria": 9,
+    "acceptedCriterionIds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "pendingCriterionIds": [
+      9
+    ],
+    "status": "Validación funcional cerrada por reportes de Expo Go: 8/9 (criterios1–8). Pendiente revisión formal del código por ZenaidaGR",
+    "confirmations": [
+      {
+        "source": "Mensaje directo del usuario",
+        "quote": "Amigo, ya revisé el diseño de Historial en Expo Go y me gustó. Sigamos con la conexión a la API en la misma rama feature/historial-pedidos, manteniendo MVVM y Repository.",
+        "acceptedCriterionIds": [
+          1
+        ],
+        "agentObservedDevice": false,
+        "scope": "Acepta únicamente Crear pantalla de historial y autoriza conectar la API en la misma rama. No acredita pedidos reales, orden, selección, vacío o recuperación de la conexión."
+      },
+      {
+        "source": "Mensaje directo del usuario",
+        "quote": "Amigo, aparecen mis pedidos con fecha, subtotal y estado. El resumen y Actualizar historial funcionan.",
+        "acceptedCriterionIds": [
+          2,
+          3,
+          5
+        ],
+        "agentObservedDevice": false,
+        "scope": "Acepta lectura de pedidos propios, fecha/subtotal/estado, selección del resumen y actualización. No confirma orden, paginación, vacío, errores, aislamiento completo, revisión ni marcado en Trello."
+      },
+      {
+        "source": "Mensaje directo del usuario",
+        "quote": "Amigo, apareció «Aún no tienes pedidos», se mantuvo al actualizar y «Explorar catálogo» abrió Catálogo.",
+        "acceptedCriterionIds": [
+          6
+        ],
+        "agentObservedDevice": false,
+        "scope": "Acepta el mensaje sin pedidos, su permanencia tras Actualizar historial y navegación Explorar catálogo. No confirma por inferencia orden, errores, aislamiento completo de sesión, revisión o marcado en Trello."
+      },
+      {
+        "source": "Mensaje directo del usuario",
+        "quote": "Amigo, apareció el aviso y se conservaron los pedidos y el resumen. Al reiniciar el backend y pulsar Reintentar, desapareció el aviso y se recuperaron los datos.",
+        "acceptedCriterionIds": [
+          7
+        ],
+        "agentObservedDevice": false,
+        "scope": "Acepta aviso de conexión, conservación de pedidos y resumen, y recuperación al reiniciar el backend y pulsar Reintentar. No confirma por inferencia segundo reintento con API detenida, orden, filtros físicos, recorrido final de sesión, revisión o marcado en Trello."
+      },
+      {
+        "source": "Mensaje directo del usuario",
+        "quote": "Amigo, el orden y los filtros funcionan. Los pedidos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron al ingresar con la misma cuenta.",
+        "acceptedCriterionIds": [
+          4,
+          8
+        ],
+        "agentObservedDevice": false,
+        "scope": "Acepta orden y filtros, recuperación tras reabrir Expo Go, ocultación del historial al cerrar sesión y recuperación al ingresar con la misma cuenta. Completa el recorrido funcional junto a las pruebas positivas, vacío y error/reintento anteriores. No acredita paginación física de más de20 pedidos, accesibilidad nativa ampliada, aprobación de código, marcado en Trello o autorización de publicación."
+      }
+    ],
+    "criteria": [
+      {
+        "id": 1,
+        "text": "Crear pantalla de historial",
+        "accepted": true
+      },
+      {
+        "id": 2,
+        "text": "Obtener pedidos desde la API",
+        "accepted": true
+      },
+      {
+        "id": 3,
+        "text": "Mostrar fecha, total y estado",
+        "accepted": true
+      },
+      {
+        "id": 4,
+        "text": "Ordenar los pedidos de forma clara",
+        "accepted": true
+      },
+      {
+        "id": 5,
+        "text": "Permitir seleccionar un pedido",
+        "accepted": true
+      },
+      {
+        "id": 6,
+        "text": "Mostrar mensaje si no existen pedidos",
+        "accepted": true
+      },
+      {
+        "id": 7,
+        "text": "Manejar errores de conexión",
+        "accepted": true
+      },
+      {
+        "id": 8,
+        "text": "Probar la funcionalidad",
+        "accepted": true
+      },
+      {
+        "id": 9,
+        "text": "Revisar el código",
+        "accepted": false
+      }
+    ]
+  },
+  "trello": {
+    "source": "Captura adjunta del usuario",
+    "agentReadBoard": false,
+    "agentModifiedBoard": false,
+    "userConfirmedCriteriaMarked": true,
+    "observedInUserScreenshot": "Snapshot inicial: En progreso; nueve criterios sin marcar",
+    "guidance": "El usuario confirmó marcar criterios4y8. Mantener En progreso con8/9 aceptados y Revisar el código pendiente de ZenaidaGR; no se atribuye acceso al tablero al agente ni marcado de otros criterios en esta respuesta.",
+    "userConfirmedMarkedCriterionIds": [
+      4,
+      8
+    ],
+    "userConfirmationQuote": "Amigo, ya marqué esos dos puntos. Abre el PR de Historial desde `feature/historial-pedidos` hacia `develop` para que Zenaida lo revise."
+  },
+  "architecture": {
+    "pattern": "MVVM y Repository",
+    "view": "OrderHistoryPreviewScreen",
+    "viewModel": "useOrderHistoryPreviewViewModel",
+    "useCase": "LoadOrderHistoryPreview, construido por createLoadOrderHistoryPreview",
+    "repositoryContract": "OrderHistoryPreviewRepository",
+    "repositoryImplementation": "LocalOrderHistoryPreviewRepository",
+    "composition": "createOrderHistoryPreviewAction() en bootstrap compone la dependencia local y la ruta inyecta loadPreview en la pantalla",
+    "fiveTabsPreserved": true,
+    "historicalSnapshot": true
+  },
+  "publication": {
+    "authorizedByUser": true,
+    "commitCreated": true,
+    "branchPushed": true,
+    "pullRequestCreated": true,
+    "merged": false,
+    "futureReviewer": "ZenaidaGR",
+    "futureBase": "develop",
+    "requestQuote": "Amigo, ya marqué esos dos puntos. Abre el PR de Historial desde `feature/historial-pedidos` hacia `develop` para que Zenaida lo revise.",
+    "status": "pull-request-open-review-requested",
+    "number": 15,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/15",
+    "author": "David567rs",
+    "headAtOpening": "726101a8606ee92ad1a184c28d9649d6129fdf7b",
+    "reviewRequested": true,
+    "requestedReviewers": [
+      "ZenaidaGR"
+    ]
+  },
+  "technicalDesignVerification": {
+    "source": "verificacion-diseno.json",
+    "historicalSnapshot": true,
+    "scope": "Comprobaciones propias del diseño con muestras locales; no aceptación de pedidos reales ni observación de Expo Go",
+    "typecheck": "passed",
+    "lint": "passed-after-final-accessibility-adjustment",
+    "tests": {
+      "passed": 558,
+      "failed": 0,
+      "newTests": 0,
+      "existingSuiteRerun": true
+    },
+    "expoDoctor": {
+      "version": "1.21.5",
+      "passed": 21,
+      "total": 21
+    },
+    "androidExport": {
+      "passed": true,
+      "modules": 1504
+    },
+    "webExport": {
+      "passed": true,
+      "modules": 1053
+    },
+    "webQa": {
+      "viewportsCss": [
+        {
+          "width": 397,
+          "height": 1000
+        },
+        {
+          "width": 320,
+          "height": 820
+        }
+      ],
+      "horizontalOverflowPixels": 0,
+      "orderedReferencesVerified": [
+        "EJEMPLO-001",
+        "EJEMPLO-002",
+        "EJEMPLO-003"
+      ],
+      "filterCountsVerified": {
+        "Todos": 3,
+        "En curso": 2,
+        "Completados": 1
+      },
+      "selectedSummariesVerified": [
+        "EJEMPLO-001",
+        "EJEMPLO-002"
+      ],
+      "filterAndScenarioResetSelection": true,
+      "accessibleStatesVerified": [
+        "checked",
+        "aria-pressed",
+        "aria-expanded"
+      ],
+      "emptyCompositionVerified": true,
+      "exploreCatalogRouteVerified": "/catalogo",
+      "catalogApiAcceptanceAdded": false,
+      "returnToAccountAndReentryVerified": true,
+      "registrationEntryReachableAt320": true,
+      "fiveTabsPreserved": true,
+      "consoleErrors": 0,
+      "preexistingConsoleWarnings": [
+        "shadow*",
+        "useNativeDriver web fallback",
+        "pointerEvents"
+      ],
+      "screenshots": [
+        "diseno-web-397.png",
+        "diseno-web-320.png",
+        "resumen-ejemplo-web-397.png",
+        "vacio-web-320.png",
+        "acceso-cuenta-web-320.png"
+      ]
+    },
+    "nativeAcceptancePending": true,
+    "nativeAcceptancePendingSnapshotScope": "El diseño todavía esperaba aceptación al realizar estas comprobaciones; la aceptación visual posterior del usuario está registrada en design",
+    "agentObservedDevice": false
+  },
+  "apiImplementation": {
+    "status": "implemented-technically-verified-functionally-accepted-awaiting-peer-review",
+    "guide": "../../CONEXION-HISTORIAL-PEDIDOS.md",
+    "technicalVerification": "verificacion-api.json",
+    "technicalVerificationStatus": "passed-current-implementation-results",
+    "apiConnected": true,
+    "currentAcceptedCriteria": 8,
+    "totalCriteria": 9,
+    "functionalAcceptancePending": false,
+    "operations": [
+      "GET /orders/me",
+      "GET /orders/me?cursor=...",
+      "GET /orders/me/:id"
+    ],
+    "authentication": "Bearer privado de la cuenta activa, fuera del estado público y la vista",
+    "scope": "Consulta personal de historial y resumen; sin tracking, escritura, persistencia o repetición de compra",
+    "publicationAuthorizedByUser": true
+  },
+  "nextStep": "ZenaidaGR revisa y aprueba PR15 desde su cuenta sobre HEAD vigente; esperar Backend CI/Mobile CI de ese commit. Mantener8/9,Revisar código pendiente yTrelloEnprogreso hasta revisión. Sinmerge por esta solicitud.",
+  "limitations": [
+    "Validación funcional cerrada por reporte textual del usuario: 8/9. Queda pendiente la revisión formal de código por ZenaidaGR.",
+    "Los datos del snapshot de diseño son ejemplos y no representan información de una cuenta.",
+    "Las 558 pruebas, exportaciones y QA web de technicalDesignVerification pertenecen al diseño histórico; no son resultados técnicos de la conexión actual.",
+    "La conexión de solo lectura está implementada y verificada técnicamente; no añade seguimiento, persistencia, repetición de compra o creación de pedidos.",
+    "El agente no observó el dispositivo ni leyó o modificó Trello; los reportes textuales del usuario son la fuente de aceptación funcional.",
+    "Los resultados técnicos actuales están en verificacion-api.json y los del diseño en verificacion-diseno.json; ninguno constituye aceptación funcional nativa."
+  ]
+}
