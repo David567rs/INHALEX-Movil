@@ -1,0 +1,211 @@
+{
+  "activity": "Historial de pedidos",
+  "stage": "Conexión a la API",
+  "checkedAt": "2026-10-20T02:14:23.8763649-06:00",
+  "workspace": "C:/Users/David/Documents/INHALEX-Movil",
+  "branch": "feature/historial-pedidos",
+  "baseCommit": "77b9ab5aa8ca4171669ddda8b42adee028cefc59",
+  "architecture": "View → ViewModel/controller → acciones → Repository → HttpClient; dependencias inyectadas en bootstrap, JWT privado",
+  "scope": {
+    "tokenInPublicState": false,
+    "historyStoredOnDevice": false,
+    "fiveTabsPreserved": true,
+    "trackingImplemented": false,
+    "readOnly": true,
+    "opaqueCursor": true,
+    "sampleDataInProductiveRoute": false,
+    "realOrdersCreated": false,
+    "historyApiConnected": true,
+    "routes": [
+      "GET /orders/me",
+      "GET /orders/me?cursor=...",
+      "GET /orders/me/:id"
+    ],
+    "sessionIsolation": true,
+    "pageSize": 20,
+    "realOrdersModified": false
+  },
+  "checks": {
+    "review": {
+      "domainRepositoryAndController": "Sin hallazgos materiales pendientes; corrección de refresh que cancela detalle cubierta por regresión",
+      "formalReviewByZenaida": false,
+      "presentationAndComposition": "Sin hallazgos materiales en UI/Provider/ViewModel/bootstrap/ruta"
+    },
+    "tests": {
+      "total": 618,
+      "newHistoryTests": 60,
+      "repository": 15,
+      "passed": 618,
+      "domain": 6,
+      "command": "npm test",
+      "controller": 31,
+      "exitCode": 0,
+      "limitations": "HTTP de pruebas con servidor loopback temporal y datos ficticios, sin MongoDB ni pedidos reales",
+      "failed": 0,
+      "httpLoopback": 8
+    },
+    "diffCheck": {
+      "exitCode": 0
+    },
+    "typecheck": {
+      "exitCode": 0,
+      "command": "npm run typecheck"
+    },
+    "webExport": {
+      "exitCode": 0,
+      "modules": 1057,
+      "command": "npm run export:web"
+    },
+    "doctor": {
+      "exitCode": 0,
+      "passed": 21,
+      "total": 21,
+      "command": "npx --yes expo-doctor@1.21.5"
+    },
+    "lint": {
+      "exitCode": 0,
+      "command": "npm run lint"
+    },
+    "androidExport": {
+      "exitCode": 0,
+      "modules": 1508,
+      "command": "npm run export:android"
+    }
+  },
+  "webQa": {
+    "realAuthenticatedBackendRead": false,
+    "temporaryQaRouteRemovedBeforeExports": true,
+    "syntheticAuthenticatedTransport": true,
+    "temporaryTabClosed": true,
+    "verified": [
+      "Lista ordenada por fecha y referencia, estados y subtotales MXN",
+      "Selección despliega productos y dirección histórica",
+      "En curso excluye cancelados y completados; Completados excluye pendientes",
+      "Fallo de actualización conserva lista y detalle, reintento recupera",
+      "Fallo de detalle conserva lista y permite reintentar",
+      "Vacío confirmado distinto de carga/error",
+      "401 oculta historial y pide sesión",
+      "Ruta real anónima abre Inicio de sesión sin exponer pedidos",
+      "Regreso a Cuenta conserva cinco pestañas"
+    ],
+    "viewports": [
+      {
+        "horizontalOverflow": 0,
+        "width": 397,
+        "height": 1000
+      },
+      {
+        "horizontalOverflow": 0,
+        "width": 320,
+        "height": 820
+      }
+    ],
+    "screenshots": [
+      "api-resumen-sintetico-397.png",
+      "api-error-conserva-sintetico-397.png",
+      "api-vacio-sintetico-320.png",
+      "api-ruta-real-anonimo-397.png"
+    ],
+    "viewportOverrideReset": true,
+    "knownSharedWarnings": [
+      "shadow style props deprecated",
+      "Animated.useNativeDriver fallback web"
+    ],
+    "consoleErrors": []
+  },
+  "preservation": {
+    "copies": [
+      {
+        "path": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+        "branch": "feature/historial-pedidos",
+        "head": "77b9ab5aa8ca4171669ddda8b42adee028cefc59",
+        "clean": false,
+        "envPreserved": true,
+        "dependenciesPreserved": true,
+        "namePreserved": true,
+        "emailPreserved": true,
+        "credentialUserPreserved": true,
+        "stashPreserved": true,
+        "stash": []
+      },
+      {
+        "path": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+        "branch": "develop",
+        "head": "77b9ab5aa8ca4171669ddda8b42adee028cefc59",
+        "clean": true,
+        "envPreserved": true,
+        "dependenciesPreserved": true,
+        "namePreserved": true,
+        "emailPreserved": true,
+        "credentialUserPreserved": true,
+        "stashPreserved": true,
+        "stash": [
+          "81196109270f00fa7edf03a8a8ec6f8bdc963131"
+        ]
+      }
+    ],
+    "services": [
+      {
+        "LocalPort": 8083,
+        "OwningProcess": 13476
+      },
+      {
+        "LocalPort": 8082,
+        "OwningProcess": 28288
+      },
+      {
+        "LocalPort": 3200,
+        "OwningProcess": 26352
+      }
+    ],
+    "http": [
+      {
+        "url": "http://localhost:3200/api/orders/me",
+        "statusCode": 401
+      },
+      {
+        "url": "http://localhost:8082/status",
+        "statusCode": 200
+      },
+      {
+        "url": "http://localhost:8083/status",
+        "statusCode": 200
+      }
+    ],
+    "servicesRestartedByAgent": false,
+    "temporaryQaRouteRemoved": true,
+    "protectedChanges": []
+  },
+  "acceptance": {
+    "trelloModifiedByAgent": false,
+    "functionalDeviceAcceptancePending": true,
+    "total": 9,
+    "phoneObservedByAgent": false,
+    "designAcceptedByUser": true,
+    "trelloReadByAgent": false,
+    "accepted": 1,
+    "acceptedCriterionIds": [
+      1
+    ]
+  },
+  "limitations": [
+    "Las pruebas técnicas y QA web sintética no acreditan Expo Go físico, TalkBack o texto ampliado nativo.",
+    "Solo se comprobó la respuesta401 real sin Bearer; pedidos autenticados del usuario pendientes de su recorrido en Expo Go.",
+    "No se implementa seguimiento, cancelación, repetición de compra, pagos o entrega."
+  ],
+  "publication": {
+    "pushed": false,
+    "merged": false,
+    "commitCreated": false,
+    "pullRequestCreated": false
+  },
+  "documentation": {
+    "guide": "../../CONEXION-HISTORIAL-PEDIDOS.md",
+    "acceptance": "expo-go-aceptacion.json",
+    "consultedDocs": [
+      "https://docs.expo.dev/versions/v57.0.0/sdk/router/",
+      "https://react.dev/reference/react/useSyncExternalStore"
+    ]
+  },
+  "nextStep": "Expo Go David8082, cuenta con pedido previo → Cuenta → Historial → comparar datos reales → abrir resumen → Actualizar historial; esperar reporte antes de aceptar criterios2–9."
+}

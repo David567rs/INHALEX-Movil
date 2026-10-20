@@ -1,0 +1,225 @@
+{
+  "activity": "Historial de pedidos",
+  "stage": "Solo diseño",
+  "checkedAt": "2026-10-19T20:33:37.6921216-06:00",
+  "workspace": "C:/Users/David/Documents/INHALEX-Movil",
+  "branch": "feature/historial-pedidos",
+  "baseCommit": "77b9ab5aa8ca4171669ddda8b42adee028cefc59",
+  "architecture": "View → ViewModel → caso de uso → contrato Repository → Repository local, compuesto en bootstrap e inyectado por ruta",
+  "scope": {
+    "sampleUnitCounts": [
+      3,
+      2,
+      3
+    ],
+    "historyApiConnected": false,
+    "realOrdersCreated": false,
+    "fiveTabsPreserved": true,
+    "sampleOrders": 3,
+    "persistentStorage": false,
+    "trackingImplemented": false,
+    "sampleSubtotalsMXN": [
+      547,
+      348,
+      507
+    ],
+    "sampleStates": [
+      "En revisión",
+      "Confirmado",
+      "Completado"
+    ],
+    "newSessionAccess": false,
+    "sampleReferences": [
+      "EJEMPLO-001",
+      "EJEMPLO-002",
+      "EJEMPLO-003"
+    ]
+  },
+  "checks": {
+    "lint": {
+      "exitCode": 0,
+      "afterFinalAccessibilityChanges": true,
+      "command": "npm run lint"
+    },
+    "android": {
+      "exitCode": 0,
+      "command": "npm run export:android",
+      "modules": 1504,
+      "log": "TEMP/inhalex-history-design-android-final.log"
+    },
+    "tests": {
+      "log": "TEMP/inhalex-history-design-tests.log",
+      "exitCode": 0,
+      "newTests": 0,
+      "passed": 558,
+      "failed": 0,
+      "command": "npm test"
+    },
+    "independentReview": "Sin hallazgos materiales; revisión acotada de alcance, capas, navegación y composición",
+    "typecheck": {
+      "exitCode": 0,
+      "afterFinalAccessibilityChanges": true,
+      "command": "npm run typecheck"
+    },
+    "doctor": {
+      "exitCode": 0,
+      "total": 21,
+      "command": "npx --yes expo-doctor@1.21.5",
+      "passed": 21
+    },
+    "diffCheck": {
+      "exitCode": 0
+    },
+    "web": {
+      "exitCode": 0,
+      "command": "npm run export:web",
+      "modules": 1053,
+      "log": "TEMP/inhalex-history-design-web-final.log"
+    }
+  },
+  "browserQa": {
+    "catalogApiAcceptance": false,
+    "selectedSummaries": [
+      "EJEMPLO-001: Lavanda2 + Menta1 =547MXN",
+      "EJEMPLO-002: Confirmado por INHALEX; aria-expanded=true"
+    ],
+    "listAndDateOrderVerified": true,
+    "surface": "IAB web, sesión anónima; datos locales de muestra",
+    "filters": {
+      "inProgress": 2,
+      "completed": 1,
+      "all": 3
+    },
+    "scenarioRadioCheckedVerified": true,
+    "screenshots": [
+      "diseno-web-397.png",
+      "diseno-web-320.png",
+      "resumen-ejemplo-web-397.png",
+      "vacio-web-320.png",
+      "acceso-cuenta-web-320.png"
+    ],
+    "returnToAccountAndReentryVerified": true,
+    "viewports": [
+      {
+        "width": 397,
+        "horizontalOverflow": 0,
+        "height": 1000
+      },
+      {
+        "width": 320,
+        "horizontalOverflow": 0,
+        "height": 820
+      }
+    ],
+    "catalogNote": "Se comprobó solo la apertura de /catalogo; la carga API del módulo existente no forma parte de esta aceptación visual.",
+    "emptyDescription": "Cuando hagas tu primer pedido, su historia comenzará aquí.",
+    "filterPressedVerified": true,
+    "accountRegistrationStillReachable": true,
+    "catalogNavigationVerified": true,
+    "emptyTitle": "Aún no tienes pedidos",
+    "accountFiveTabsVerified": true,
+    "consoleErrors": [],
+    "consoleWarnings": [
+      "Aviso web de componentes compartidos: shadow* style props deprecated",
+      "Fallback web de Animated.useNativeDriver a JS",
+      "Aviso web de navegación existente: props.pointerEvents deprecated"
+    ],
+    "scenarioAndFilterResetSelection": true,
+    "entryFromAnonymousAccountVerified": true,
+    "viewportOverrideReset": true,
+    "temporaryTabClosed": true
+  },
+  "preservation": {
+    "services": [
+      {
+        "LocalPort": 8083,
+        "OwningProcess": 13476
+      },
+      {
+        "LocalPort": 8082,
+        "OwningProcess": 28288
+      },
+      {
+        "LocalPort": 3200,
+        "OwningProcess": 33116
+      }
+    ],
+    "copies": [
+      {
+        "path": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+        "branch": "feature/historial-pedidos",
+        "head": "77b9ab5aa8ca4171669ddda8b42adee028cefc59",
+        "clean": false,
+        "envPreserved": true,
+        "dependenciesPreserved": true,
+        "namePreserved": true,
+        "emailPreserved": true,
+        "credentialUserPreserved": true,
+        "stashPreserved": true,
+        "stash": []
+      },
+      {
+        "path": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+        "branch": "develop",
+        "head": "77b9ab5aa8ca4171669ddda8b42adee028cefc59",
+        "clean": true,
+        "envPreserved": true,
+        "dependenciesPreserved": true,
+        "namePreserved": true,
+        "emailPreserved": true,
+        "credentialUserPreserved": true,
+        "stashPreserved": true,
+        "stash": [
+          "81196109270f00fa7edf03a8a8ec6f8bdc963131"
+        ]
+      }
+    ],
+    "http": [
+      {
+        "url": "http://localhost:3200/api/products?limit=1",
+        "statusCode": 200
+      },
+      {
+        "url": "http://localhost:8082/status",
+        "statusCode": 200
+      },
+      {
+        "url": "http://localhost:8083/status",
+        "statusCode": 200
+      }
+    ],
+    "previousClosureDocumentsPreserved": true,
+    "protectedChanges": [],
+    "servicesRestarted": false
+  },
+  "acceptance": {
+    "trelloReadByAgent": false,
+    "source": "Checklist exacto de la captura aportada por el usuario; revisión Expo Go pendiente",
+    "total": 9,
+    "phoneObservedByAgent": false,
+    "designAcceptedByUser": false,
+    "trelloModifiedByAgent": false,
+    "accepted": 0
+  },
+  "limitations": [
+    "La QA web no acredita Expo Go físico, TalkBack, texto ampliado o teclado nativo.",
+    "Las muestras de fecha, estado, subtotales, filtro, resumen y vacío no acreditan comportamiento de la API real.",
+    "No se implementa seguimiento ni se promete envío, pago o entrega."
+  ],
+  "documentation": {
+    "guide": "../../DISENO-HISTORIAL-PEDIDOS.md",
+    "consultedDocs": [
+      "https://docs.expo.dev/versions/v57.0.0/",
+      "https://docs.expo.dev/router/introduction/",
+      "https://reactnative.dev/docs/pressable",
+      "https://reactnative.dev/docs/accessibility"
+    ],
+    "acceptance": "expo-go-aceptacion.json"
+  },
+  "publication": {
+    "pushed": false,
+    "commitCreated": false,
+    "pullRequestCreated": false
+  },
+  "nextStep": "Revisión visual en Expo Go de David8082, Cuenta→Historial de pedidos; esperar aceptación antes de conectar API en la misma rama."
+}

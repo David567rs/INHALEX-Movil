@@ -51,6 +51,10 @@ const result = spawnSync(process.execPath, [
   path.join(__dirname, 'OrderAttemptStore.test.cjs'),
   path.join(__dirname, 'OrderCreationController.test.cjs'),
   path.join(__dirname, 'OrderCreationHttpIntegration.test.cjs'),
+  path.join(__dirname, 'OrderHistoryDomain.test.cjs'),
+  path.join(__dirname, 'OrderHistoryRepository.test.cjs'),
+  path.join(__dirname, 'OrderHistoryController.test.cjs'),
+  path.join(__dirname, 'OrderHistoryHttpIntegration.test.cjs'),
 ], { stdio: 'inherit' });
 
 if (result.error) console.error(result.error.message);

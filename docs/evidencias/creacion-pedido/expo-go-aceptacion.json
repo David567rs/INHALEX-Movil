@@ -28,9 +28,9 @@
     "acceptanceRegisteredAt": "2026-10-20T01:05:04Z"
   },
   "functionalAcceptance": {
-    "acceptedCriteria": 10,
+    "acceptedCriteria": 11,
     "totalCriteria": 11,
-    "status": "Recorrido funcional y ambos escenarios simulados aceptados; montaje QA retirado y comprobaciones finales aprobadas:10/11. Solo Revisar el código11 espera revisión real de ZenaidaGR",
+    "status": "Recorrido funcional aceptado y revisión real de ZenaidaGR completada sobre el HEAD final, con ambas CI correctas y PR14 fusionado hacia develop:11/11. No añade pruebas nativas nuevas",
     "acceptedCriterionIds": [
       1,
       2,
@@ -41,11 +41,10 @@
       7,
       8,
       9,
-      10
-    ],
-    "pendingCriterionIds": [
+      10,
       11
     ],
+    "pendingCriterionIds": [],
     "confirmations": [
       {
         "reportedAt": "2026-10-20T01:21:36.0212983Z",
@@ -210,7 +209,8 @@
       {
         "id": 11,
         "text": "Revisar el código",
-        "accepted": false
+        "accepted": true,
+        "source": "Revisión APPROVED real de ZenaidaGR sobre50196363f46ac4028809506f7e4cf552009cd2c4 a2026-10-20T02:08:35Z y merge posterior; ver integracion-pr14.json. No añade prueba nativa"
       }
     ]
   },
@@ -218,14 +218,33 @@
     "agentReadBoard": false,
     "agentModifiedBoard": false,
     "userConfirmedCriteriaMarked": true,
-    "userConfirmedMarkedCriterionIds": [10],
+    "userConfirmedMarkedCriterionIds": [10, 11],
     "userReportQuote": "Amigo, ya marqué «Probar la funcionalidad». Abre el PR de Creación de pedido desde feature/creacion-pedido hacia develop para que Zenaida lo revise.",
-    "reportScope": "El usuario solo confirmó el marcado del criterio10; no se confirma marcado de otros criterios ni lectura del tablero por el agente",
-    "status": "Aceptados1-10=10/11. El usuario confirmó marcar Probar la funcionalidad10. Revisar el código11 sigue pendiente de ZenaidaGR; mantener En progreso. El agente no accedió al tablero ni confirma otros marcados."
+    "reportScope": "El criterio10 fue reportado explícitamente antes del PR. El nuevo ya actualicé Trello, en respuesta a la guía de marcar11 y mover a Terminado, confirma textualmente ese cierre contextual; no hay observación del tablero ni confirmación separada de otros marcados por el agente",
+    "userConfirmedFinalUpdate": true,
+    "userReportedCardStatus": "Terminado",
+    "userFinalUpdateReport": {
+      "registeredAt": "2026-10-20T02:15:53Z",
+      "quote": "Amigo, ya actualicé Trello. Actualicemos INHALEX-Movil e INHALEX-Movil-Zenaida con develop antes de empezar la siguiente actividad.",
+      "scope": "Reporte del usuario tras la guía de completar Revisar el código11 y cerrar la tarjeta; no lectura ni modificación en vivo por el agente"
+    },
+    "status": "Creación de pedido11/11 integrada. Cierre de Trello y Terminado reportados por el usuario tras la guía; el agente no leyó ni modificó el tablero."
   },
   "nextStep": {
-    "status": "pull-request-open-awaiting-peer-review",
-    "flow": "PR #14 abierto por David567rs desde feature/creacion-pedido hacia develop; GitHub confirmó a ZenaidaGR como revisora solicitada. Mantener10/11 y solo criterio11 pendiente de revisión real. Sin aprobación ni merge; consultar CI del HEAD vigente después del enlace documental.",
+    "status": "complete-both-checkouts-on-develop-awaiting-user-next-activity",
+    "flow": "Creación de pedido11/11 integrada y cierre de Trello reportado por el usuario. Ambas copias ya están en develop77b9ab5aa8ca4171669ddda8b42adee028cefc59: David conservó sus documentos locales de cierre sin cambios en su contenido y Zenaida está limpia. Quedan listas para que el usuario elija la siguiente actividad; no se inició ninguna nueva ni se autoriza commit/publicación adicional por esta sincronización.",
+    "checkoutSynchronization": {
+      "branch": "develop",
+      "commit": "77b9ab5aa8ca4171669ddda8b42adee028cefc59",
+      "davidPath": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+      "zenaidaPath": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+      "davidClosureDocumentsPreserved": true,
+      "zenaidaClean": true,
+      "stashMutated": false,
+      "nextActivityStarted": false,
+      "evidence": "integracion-pr14.json",
+      "localReceipt": "inhalex-sincronizacion-pr14.json"
+    },
     "publicationAuthorizedByUser": true,
     "publicationAuthorization": {
       "registeredAt": "2026-10-20T02:01:32Z",
@@ -240,13 +259,33 @@
     "pullRequest": "https://github.com/David567rs/INHALEX-Movil/pull/14",
     "title": "Implementar Creación de pedido con MVVM y Repository",
     "author": "David567rs",
-    "state": "open",
+    "state": "closed",
     "draft": false,
-    "merged": false,
+    "merged": true,
     "reviewRequested": true,
     "headAtOpening": "93940dd5b597929ae5be978546907a10be943994",
     "baseAtOpening": "1808ba1cbcd8940c84759395c6818ee950aa140d",
     "publicationEvidence": "preparacion-pr14.json",
+    "integrationEvidence": "integracion-pr14.json",
+    "mergedAt": "2026-10-20T02:08:44Z",
+    "mergedBy": "ZenaidaGR",
+    "mergeCommit": "77b9ab5aa8ca4171669ddda8b42adee028cefc59",
+    "approvedHead": "50196363f46ac4028809506f7e4cf552009cd2c4",
+    "peerReview": {
+      "reviewer": "ZenaidaGR",
+      "state": "APPROVED",
+      "commit": "50196363f46ac4028809506f7e4cf552009cd2c4",
+      "submittedAt": "2026-10-20T02:08:35Z",
+      "url": "https://github.com/David567rs/INHALEX-Movil/pull/14#pullrequestreview-5579968969"
+    },
+    "ciOnApprovedHead": {
+      "head": "50196363f46ac4028809506f7e4cf552009cd2c4",
+      "backendRunId": 39357046873,
+      "mobileRunId": 39357046851,
+      "status": "completed",
+      "backendConclusion": "success",
+      "mobileConclusion": "success"
+    },
     "ciSnapshotAtOpening": {
       "head": "93940dd5b597929ae5be978546907a10be943994",
       "backendRunId": 39356903357,
@@ -257,7 +296,7 @@
   },
   "limitations": [
     "El usuario reportó pruebas en Expo Go; el agente no observó el dispositivo ni consultó pedidos o MongoDB para verificarlas.",
-    "Aceptados1-10 (10/11) tras retirar QA y verificar; solo revisión real de ZenaidaGR11 pendiente. Trello no fue leído ni modificado por el agente.",
+    "Aceptados1-11 (11/11) tras revisión real y merge verificados en GitHub. No hay prueba nativa nueva y Trello no fue leído ni modificado por el agente.",
     "El criterio6 se acepta con alcance de doble toque bloqueado, usando reporte nativo y verificación técnica previa; no acredita consulta de unicidad en MongoDB.",
     "No se proporcionó referencia exacta del pedido de la prueba de doble toque.",
     "La reapertura/salida/reingreso del pedido ya terminado está aceptada como evidencia parcial del10; no se observó el dispositivo ni se consultó la API real para verificarla.",
@@ -266,13 +305,13 @@
     "En el montaje temporal ya retirado, Reabrir prueba recreó controladores sobre el mismo backend simulado en memoria. No demostró supervivencia del backend ficticio al cierre completo de Expo Go o del proceso.",
     "El agente no creó pedidos contra la API real; la verificación técnica previa usa transporte/almacenamiento sintéticos.",
     "GET de Bolsa seguido de DELETE no es atómico frente a cambios desde otro dispositivo; la lease protege operaciones locales.",
-    "El PR14 está abierto y ZenaidaGR fue solicitada; aprobación real, merge y CI del HEAD final permanecen pendientes de verificación. Trello no fue leído ni modificado por el agente; solo se confirmó textualmente el marcado del criterio10."
+    "PR14 cerrado y fusionado por ZenaidaGR, con revisión APPROVED y ambas CI correctas sobre50196363. El usuario reportó cierre contextual de Trello tras la guía, sin lectura del tablero por el agente. Ambas copias están en develop77b9ab5, con documentos locales de cierre conservados en David; no se creó otra rama o actividad ni se publicaron commits adicionales por esta sincronización."
   ],
   "apiImplementation": {
-    "status": "functional-acceptance-complete-qa-removed-pr14-open-awaiting-peer-review",
+    "status": "complete-pr14-reviewed-and-merged-in-develop",
     "guide": "../../CONEXION-CREACION-PEDIDO.md",
     "verification": "verificacion-api.json",
-    "functionalCriteriaAccepted": 10,
+    "functionalCriteriaAccepted": 11,
     "realApiOrdersCreatedByAgent": false,
     "agentObservedDevice": false,
     "userAuthorizedConnection": true,

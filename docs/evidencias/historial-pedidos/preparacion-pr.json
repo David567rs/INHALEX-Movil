@@ -1,0 +1,106 @@
+{
+  "activity": "Historial de pedidos",
+  "checkedAt": "2026-10-20T03:08:23.2896166-06:00",
+  "phase": "preparacion-autorizada",
+  "request": "Amigo, ya marqué esos dos puntos. Abre el PR de Historial desde `feature/historial-pedidos` hacia `develop` para que Zenaida lo revise.",
+  "branch": "feature/historial-pedidos",
+  "base": "develop",
+  "baseSha": "77b9ab5aa8ca4171669ddda8b42adee028cefc59",
+  "author": "David567rs",
+  "reviewer": "ZenaidaGR",
+  "acceptedCriteria": 8,
+  "totalCriteria": 9,
+  "reviewApproved": false,
+  "pullRequest": null,
+  "mergeAuthorized": false,
+  "checks": {
+    "doctor": {
+      "version": "1.20.4",
+      "total": 21,
+      "passed": 21
+    },
+    "temporaryQaRoutes": [],
+    "webExport": {
+      "modules": 1057,
+      "scope": "Verificación anterior de conexión antes del ajuste de etiqueta accesible, sin cambio visual",
+      "passed": true
+    },
+    "secretScan": {
+      "suspectFiles": [],
+      "scope": "Archivos de texto candidatos, patrones de credenciales comunes; .env y dependencias fuera del diff"
+    },
+    "lint": "passed",
+    "typecheck": "passed",
+    "tests": {
+      "failed": 0,
+      "passed": 618
+    },
+    "androidExport": {
+      "passed": true,
+      "modules": 1508
+    }
+  },
+  "accessibilityAdjustment": {
+    "reference": "https://reactnative.dev/docs/0.86/accessibility#accessibilitylabel",
+    "visualDesignChanged": false,
+    "scope": "Etiqueta de cada tarjeta añade fecha, estado, subtotal y unidades al nombre de acción/referencia",
+    "nativeTalkBackObserved": false
+  },
+  "preservation": {
+    "servicesRestartedByAgent": false,
+    "zenaidaClean": true,
+    "serverChanges": [],
+    "services": [
+      {
+        "LocalPort": 8083,
+        "OwningProcess": 13476
+      },
+      {
+        "LocalPort": 8082,
+        "OwningProcess": 28288
+      },
+      {
+        "LocalPort": 3200,
+        "OwningProcess": 37472
+      }
+    ],
+    "copies": [
+      {
+        "path": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+        "branch": "feature/historial-pedidos",
+        "head": "77b9ab5aa8ca4171669ddda8b42adee028cefc59",
+        "envPreserved": true,
+        "dependenciesPreserved": true,
+        "namePreserved": true,
+        "emailPreserved": true,
+        "credentialUserPreserved": true,
+        "stashPreserved": true,
+        "stash": []
+      },
+      {
+        "path": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+        "branch": "develop",
+        "head": "77b9ab5aa8ca4171669ddda8b42adee028cefc59",
+        "envPreserved": true,
+        "dependenciesPreserved": true,
+        "namePreserved": true,
+        "emailPreserved": true,
+        "credentialUserPreserved": true,
+        "stashPreserved": true,
+        "stash": [
+          "81196109270f00fa7edf03a8a8ec6f8bdc963131"
+        ]
+      }
+    ]
+  },
+  "ci": {
+    "headSha": null,
+    "status": "pendiente-apertura",
+    "runs": []
+  },
+  "review": {
+    "status": "pendiente-solicitud",
+    "requested": false,
+    "approved": false
+  }
+}
