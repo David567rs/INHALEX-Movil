@@ -46,21 +46,21 @@
     "snapshotScope": "Instantánea histórica de la etapa de diseño aceptada; la conexión posterior se registra en connection"
   },
   "functionalAcceptance": {
-    "acceptedCriteria": 5,
+    "acceptedCriteria": 6,
     "totalCriteria": 8,
     "acceptedCriterionIds": [
       1,
       2,
       3,
       4,
-      5
+      5,
+      6
     ],
     "pendingCriterionIds": [
-      6,
       7,
       8
     ],
-    "status": "Recorrido positivo, actualización y pedido no encontrado aceptados por el usuario en Expo Go: 5/8. Conexión/reintento, distintos estados y revisión real pendientes.",
+    "status": "Consulta, actualización, no encontrado y error/reintento aceptados por el usuario en Expo Go: 6/8. Distintos estados y revisión real pendientes.",
     "confirmations": [
       {
         "date": "2026-10-20",
@@ -83,6 +83,16 @@
           5
         ],
         "scope": "Aviso de pedido no encontrado, reintento que conserva el aviso y retorno al historial para abrir un pedido real. No hay observación directa del agente, inspección de MongoDB ni captura del estado HTTP en el teléfono.",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario",
+        "quote": "Amigo, Actualizar y Reintentar fallaron sin perder los datos. Reinicié el backend y Reintentar recuperó el mismo pedido y quitó el aviso. ¿Qué marco en Trello y qué sigue?",
+        "criterionIds": [
+          6
+        ],
+        "scope": "Actualizar y Reintentar fallaron conservando los datos; tras reiniciar el backend, Reintentar recuperó el mismo pedido y retiró el aviso. No acredita todavía distintos estados o reapertura/sesión.",
         "agentObservedDevice": false
       }
     ],
@@ -115,7 +125,7 @@
       {
         "id": 6,
         "text": "Manejar errores de conexión",
-        "accepted": false
+        "accepted": true
       },
       {
         "id": 7,
@@ -135,13 +145,14 @@
     "agentModifiedBoard": false,
     "userConfirmedCriteriaMarked": false,
     "observedInUserScreenshot": "Ocho criterios sin marcar",
-    "guidance": "El usuario puede marcar Manejar pedidos no encontrados (5), además de los criterios 1-4 ya aceptados. Mantener En progreso y dejar 6-8 pendientes. El agente no verificó el marcado en Trello.",
+    "guidance": "El usuario puede marcar Manejar errores de conexión (6), además de 1-5 ya aceptados. Mantener En progreso y dejar 7 y 8 pendientes. El agente no verificó el marcado en Trello.",
     "recommendedCriterionIds": [
       1,
       2,
       3,
       4,
-      5
+      5,
+      6
     ]
   },
   "architecture": {
@@ -175,8 +186,9 @@
     "acceptance": {
       "separateCommitPlanned": true,
       "requiresActualUserReport": true,
-      "currentCommitMessage": "docs(orders): aceptar pedido no encontrado en Expo Go",
-      "positiveFlowCommit": "3a4fb9e"
+      "currentCommitMessage": "docs(orders): aceptar error y reintento de seguimiento en Expo Go",
+      "positiveFlowCommit": "3a4fb9e",
+      "notFoundCommit": "4d3007e"
     },
     "conventionSource": "../../VERSIONAMIENTO.md",
     "designAcceptance": {
@@ -194,9 +206,9 @@
     "futureReviewer": "ZenaidaGR",
     "futureBase": "develop"
   },
-  "nextStep": "Probar error de conexión y reintento con un pedido real ya cargado: el usuario detiene solo el backend local, pulsa Actualizar seguimiento y Reintentar, comprueba que conserva el pedido, reinicia el mismo backend y vuelve a pulsar Reintentar. Esperar su reporte para aceptar el criterio 6.",
+  "nextStep": "Probar desde Historial los pedidos disponibles en Confirmado, Completado y Cancelado; revisar estado actual, línea de progreso, fechas reales o ausentes y Actualizar seguimiento. Esperar reporte antes de aceptar 7. Después reapertura/salida/reingreso y revisión real de Zenaida (8) en futuro PR autorizado.",
   "limitations": [
-    "El usuario reportó recorrido positivo, actualización y no encontrado en Expo Go; los criterios 6-8 siguen pendientes. El agente no observó el dispositivo ni inspeccionó el tráfico HTTP del teléfono.",
+    "El usuario reportó consulta, actualización, no encontrado y error/reintento en Expo Go: 6/8. Reportó disponibilidad de tres estados, pero sus pruebas siguen pendientes. El agente no observó el dispositivo ni inspeccionó el tráfico HTTP del teléfono.",
     "Los datos y modos del diseño son una instantánea histórica; la implementación actual consulta la API.",
     "La QA web usa datos sintéticos y las pruebas HTTP usan servidores loopback; no acreditan una consulta autenticada al servicio Nest/MongoDB real.",
     "No se agregaron escrituras de pedidos, almacenamiento, dependencias ni cambios al backend.",
@@ -205,7 +217,7 @@
   ],
   "connection": {
     "implemented": true,
-    "status": "partial-native-acceptance-5-of-8",
+    "status": "partial-native-acceptance-6-of-8",
     "technicalVerification": "verificacion-api.json",
     "guide": "../../CONEXION-SEGUIMIENTO-PEDIDO.md",
     "endpointsInOrder": [
@@ -223,7 +235,22 @@
       2,
       3,
       4,
-      5
+      5,
+      6
     ]
+  },
+  "stateTestPlanning": {
+    "question": "Para probar los estados sin modificar tus pedidos: ¿en tu Historial solo aparece «En revisión» o también tienes «Confirmado», «Completado» o «Cancelado»? Dime cuáles están disponibles.",
+    "answer": "los 3",
+    "source": "Respuesta textual del usuario a consulta de disponibilidad",
+    "interpretedAvailableStatuses": [
+      "confirmed",
+      "completed",
+      "cancelled"
+    ],
+    "interpretationCommunicatedToUser": true,
+    "functionalStateTestAccepted": false,
+    "criterionId": 7,
+    "scope": "Disponibilidad reportada de esos tres estados; no es una confirmación de que se probaron sus pantallas o actualizaciones."
   }
 }
