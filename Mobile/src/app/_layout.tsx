@@ -49,6 +49,7 @@ export default function RootLayout() {
           <Stack.Screen name="creacion-pedido" />
           <Stack.Screen name="historial-pedidos" />
           <Stack.Screen name="seguimiento-pedido" />
+          <Stack.Screen name="avisos" />
         </Stack>
         </OrderTrackingProvider>
         </OrderHistoryProvider>

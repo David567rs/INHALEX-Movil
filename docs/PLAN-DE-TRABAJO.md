@@ -1,6 +1,6 @@
 # Plan de trabajo de INHALEX Movil
 
-**Actividad vigente:** Seguimiento8/8 y Trello actualizado por reporte del usuario; ambas copias sincronizadas en develop `0f0b764`, iguales a origin/develop. David conserva el cierre documental local respaldado; Zenaida limpia y stash preservado. TypeScript/lint de ambos clones y HTTP200 de backend/Metro correctos; backend recargó en watch sin intervención de stop/start. Sigue Avisos, Zenaida, feature/avisos, esperando solicitud y tarjeta exacta para solo diseño. No iniciar por esta sincronización. El último apartado prevalece.
+**Actividad vigente:** Solo diseño de **Avisos**, ZenaidaGR, `INHALEX-Movil-Zenaida`, `feature/avisos` desde `develop` `0f0b764`, con MVVM/Repository/bootstrap. Cierre de Seguimiento separado en `6610412`, David intacto. Verificación propia aprobada: TypeScript/lint, 677 pruebas existentes, Doctor21/21, Android1529/web1078 y QA web sintética. **0/9**, revisión visual en Expo Go **8083** pendiente; commit local de diseño en preparación sin SHA anticipado. El usuario mostró Avisos, Reseñas y Confirmación de recepción como restantes; solo Avisos se inicia, sin inferir reparto o criterios de las otras dos. Sin HTTP, persistencia, push, API o PR por esta fase. El último apartado prevalece; Seguimiento sigue 8/8.
 
 Acuerdos del 14 de octubre de 2026 para reiniciar la aplicación móvil con un repositorio independiente, aprovechar el backend y el código anterior, y documentar el flujo de trabajo del profesor desde el inicio.
 
@@ -74,7 +74,25 @@ Antes de dividir la implementación se acordarán los contratos de sesión, prod
 
 ## Avisos
 
-Zenaida implementará una bandeja dentro de la app para consultar avisos del usuario, mostrar el estado leído y actualizarlo. El backend anterior cuenta con operaciones de listado, marcado individual y marcado de todos como leídos. Los criterios específicos se completarán con el checklist de la tarjeta antes de implementar esta actividad.
+Zenaida implementará una bandeja dentro de la app para consultar avisos del usuario, mostrar el estado leído y actualizarlo. El backend anterior cuenta con operaciones de listado, marcado individual y marcado de todos como leídos; esas operaciones no se conectan en la fase actual, autorizada únicamente para diseño en `INHALEX-Movil-Zenaida`, rama `feature/avisos`.
+
+La ruta `/avisos` se abre desde Cuenta, con MVVM, Repository local de solo lectura y bootstrap. Escenas **Bandeja/Sin avisos/Error de carga**, filtros **Todos/No leídos**, tres ejemplos y dos no leídos. Consultar el detalle solo cambia la selección local; no marca el aviso como leído. Se conservan las cinco pestañas y no se añade HTTP, persistencia, push o modificación de datos reales.
+
+Checklist exacto de la tarjeta, **0/9** hasta el reporte real correspondiente:
+
+- [ ] Crear sección de avisos
+- [ ] Obtener avisos disponibles
+- [ ] Mostrar título, mensaje y fecha
+- [ ] Diferenciar avisos leídos y no leídos
+- [ ] Permitir consultar el detalle
+- [ ] Mostrar mensaje si no existen avisos
+- [ ] Manejar errores de carga
+- [ ] Probar la funcionalidad
+- [ ] Revisar el código
+
+Después de aceptar el diseño en Expo Go podrá marcarse solo el criterio 1. Los ejemplos de contenido, estados, detalle, vacío o error no equivalen a aceptación funcional. La verificación técnica propia está aprobada y se distingue del reporte nativo aún pendiente; el agente no observó el dispositivo ni leyó o modificó Trello. David567rs revisará el futuro PR de ZenaidaGR. Ver [diseño](DISENO-AVISOS.md) y [aceptación inicial](evidencias/avisos/expo-go-aceptacion.json).
+
+El usuario mostró como tres actividades restantes **Avisos**, **Reseñas** y **Confirmación de recepción**. Se registra esa relación sin sustituir el historial del plan original ni asignar responsable, rama, criterios u orden adicional para Reseñas o Confirmación de recepción; sus alcances se acordarán cuando correspondan. La autorización actual se limita al diseño de Avisos.
 
 ## Procedimiento de cada PR
 
@@ -836,10 +854,20 @@ El usuario marca Revisar el código, adjunta el enlace del PR16, añade comentar
 
 David sigue en feature/seguimiento-pedido `90c1420` y Zenaida en develop `930d202`; no se sincroniza por esta consulta. El cierre documental queda local sin commit o push posterior al merge, para conservarlo al actualizar y guardarlo por separado conforme al acuerdo de etapas. No hay nuevas pruebas nativas, cambios funcionales, servicios, configuración, dependencias, identidad o stash. TypeScript/lint se verifican; los resultados anteriores de suites, Doctor y exportaciones conservan su alcance histórico.
 
-## Estado vigente: Trello confirmado y clones actualizados a develop tras PR #16
+## Snapshot histórico: Trello confirmado y clones actualizados a develop tras PR #16
 
 El usuario informó Trello actualizado y autorizó sincronizar ambas copias. Seguimiento permanece 8/8, PR16 aprobado e integrado. El agente no leyó ni modificó el tablero. Ambas copias están en develop `0f0b764a4ad78e40f12112c4debcd7982ccdfd2c`, iguales a origin/develop; las referencias avanzaron por fast-forward y no se reescribió historial.
 
 Se preservaron los seis documentos locales de cierre de David, con respaldo y hashes idénticos al cambiar de rama; después se actualizaron intencionalmente para registrar este hito y siguen sin commit/push. Zenaida quedó limpia con stash intacto; entornos, dependencias e identidades también. Ambos Metro conservaron sus procesos. El backend se recargó bajo node --watch y recuperó HTTP200 sin stop/start del agente; los tres servicios respondieron200. TypeScript/lint de ambos clones pasaron; no se repiten suites o exports. Recibo TEMP/inhalex-sincronizacion-pr16.json y evidencia en evidencias/seguimiento-pedido/integracion-pr16.json.
 
 La siguiente actividad es **Avisos**, responsable Zenaida y rama feature/avisos. Falta recibir la tarjeta/checklist exacto y la solicitud de empezar solo por diseño; mantener MVVM/Repository/bootstrap y la bandeja dentro de la app. No se crea la rama ni se implementa por actualizar develop. Conservar el cierre previo para guardarlo por separado y mantener servicios, entornos, identidades y stash.
+
+## Estado vigente: Avisos, solo diseño autorizado en Zenaida (0/9)
+
+El usuario autorizó solo el diseño de **Avisos**, en `C:\Users\David\Documents\INHALEX-Movil-Zenaida`, rama `feature/avisos`, desde `develop` `0f0b764`. ZenaidaGR es responsable y David567rs revisará su futuro PR. El cierre anterior de Seguimiento se guardó primero, separado, en `6610412`; David se conserva intacto. El diseño tendrá su propio commit tras las comprobaciones pertinentes; la API y las aceptaciones se registrarán por fases cuando estén autorizadas y reportadas.
+
+La bandeja visual `/avisos`, desde Cuenta y Metro **8083**, usa `NoticesPreviewScreen`, `useNoticesPreviewViewModel`, `LoadNoticesPreview`, `NoticesPreviewRepository` y `LocalNoticesPreviewRepository`, compuestos por `createNoticesPreviewAction()`. Presenta **Bandeja**, **Sin avisos** y **Error de carga**, con filtros **Todos/No leídos** y tres ejemplos, dos no leídos. El detalle es solo local y no marca leído. No hay HTTP, almacenamiento, push, cambios de estado reales, sesión o backend. Se conservan cinco pestañas, servicios, entornos, dependencias, identidades, stash y copia de David.
+
+Los nueve criterios exactos están en la sección [Avisos](#avisos), el [diseño](DISENO-AVISOS.md) y la [aceptación inicial](evidencias/avisos/expo-go-aceptacion.json): **0/9**, todos pendientes. Solo una aceptación visual posterior permitirá marcar **Crear sección de avisos**; no aceptar los demás por ejemplos o QA sintética. El agente no observó el teléfono ni accedió a Trello. El usuario mostró además **Reseñas** y **Confirmación de recepción** como restantes, sin acordar aquí sus criterios, reparto o ramas. No empezar esas actividades, API o PR por esta fase.
+
+La verificación propia pasó TypeScript/lint globales, repetidos tras `aria-pressed`, **677/677 pruebas existentes** sin nuevas, Doctor **1.20.4 21/21**, Android **1529** y web **1078** módulos finales. QA web sintética a **397×1000 / 320×820** comprobó bandeja 3/2/1, filtro, detalles y vuelta sin marcar leído, vacío/error/reintento de muestra, Cuenta/cinco pestañas, login alcanzable por scroll y reentrada con muestras iniciales. No hubo desbordamiento horizontal o errores de consola; controles nuevos >=44 px. Persisten tres avisos compartidos de sombras, fallback useNativeDriver y pointerEvents, sin atribuirlos a pruebas nativas. El recibo propio es `evidencias/avisos/verificacion-diseno.json`. Entornos, paquetes/locks, cierre de David, identidad, stash y procesos **33524/28288/13476** se conservaron. El commit propio de diseño se prepara ahora con SHA consultable en Git; la aceptación visual en Expo Go sigue pendiente.

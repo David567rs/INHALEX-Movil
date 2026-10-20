@@ -1,0 +1,215 @@
+{
+  "activity": "Avisos",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+  "branch": "feature/avisos",
+  "baseBranch": "develop",
+  "baseCommit": "0f0b764a4ad78e40f12112c4debcd7982ccdfd2c",
+  "priorActivityClosureCommit": "6610412",
+  "date": "2026-10-20",
+  "source": "Solicitud de solo diseño y checklist de la captura aportada por el usuario en esta conversación",
+  "responsible": "ZenaidaGR",
+  "futureReviewer": "David567rs",
+  "design": {
+    "authorized": true,
+    "accepted": false,
+    "status": "design-verified-awaiting-user-review",
+    "agentObservedDevice": false,
+    "apiConnected": false,
+    "guide": "../../DISENO-AVISOS.md",
+    "technicalVerification": "verificacion-diseno.json",
+    "technicalVerificationStatus": "passed-own-design-checks-and-synthetic-web-qa",
+    "route": "/avisos",
+    "entry": "Cuenta → Avisos",
+    "metroPort": 8083,
+    "dataSource": "Ejemplos locales en memoria mediante Repository de solo lectura",
+    "presentationModes": [
+      "Bandeja",
+      "Sin avisos",
+      "Error de carga"
+    ],
+    "filters": [
+      "Todos",
+      "No leídos"
+    ],
+    "sampleCount": 3,
+    "unreadSampleCount": 2,
+    "emptyMessage": "Aún no tienes avisos",
+    "errorMessage": "No pudimos cargar los avisos",
+    "detailScope": "Selección y detalle solo locales; abrir un ejemplo no cambia su estado leído",
+    "openingDetailMarksAsRead": false,
+    "httpRequests": false,
+    "authenticatedAccountDataUsed": false,
+    "storageUsed": false,
+    "pushNotifications": false,
+    "backendChanged": false,
+    "sessionChanged": false,
+    "fiveTabsPreservationRequired": true,
+    "fiveTabsPreservedInWebQa": true,
+    "verificationSummary": {
+      "typecheck": "passed-global-after-aria-pressed",
+      "lint": "passed-after-aria-pressed",
+      "existingMobileTestsPassed": 677,
+      "newMobileTests": 0,
+      "expoDoctorVersion": "1.20.4",
+      "expoDoctorChecksPassed": 21,
+      "expoDoctorChecksTotal": 21,
+      "androidModules": 1529,
+      "webModules": 1078,
+      "exportsAfterFinalAriaPressedAdjustment": true,
+      "webQaViewportsCss": [
+        "397x1000",
+        "320x820"
+      ],
+      "horizontalOverflow": false,
+      "newControlsMinimumCssPixels": 44,
+      "consoleErrors": 0,
+      "sharedExistingWarnings": [
+        "shadow* deprecated",
+        "useNativeDriver web fallback to JavaScript",
+        "pointerEvents deprecated"
+      ],
+      "evidenceScope": "Datos locales y capturas web sintéticas, no Expo Go, TalkBack o texto ampliado nativo",
+      "screenshots": [
+        "bandeja-web-397.png",
+        "bandeja-web-320.png",
+        "detalle-web-397.png",
+        "vacio-web-320.png",
+        "error-web-320.png",
+        "acceso-cuenta-web-320.png"
+      ]
+    },
+    "acceptedCriterionIds": [],
+    "userAcceptanceQuote": null
+  },
+  "functionalAcceptance": {
+    "acceptedCriteria": 0,
+    "totalCriteria": 9,
+    "acceptedCriterionIds": [],
+    "pendingCriterionIds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "status": "0/9; diseño verificado técnicamente, aceptación visual en Expo Go y criterios funcionales pendientes",
+    "confirmations": [],
+    "criteria": [
+      {
+        "id": 1,
+        "text": "Crear sección de avisos",
+        "accepted": false
+      },
+      {
+        "id": 2,
+        "text": "Obtener avisos disponibles",
+        "accepted": false
+      },
+      {
+        "id": 3,
+        "text": "Mostrar título, mensaje y fecha",
+        "accepted": false
+      },
+      {
+        "id": 4,
+        "text": "Diferenciar avisos leídos y no leídos",
+        "accepted": false
+      },
+      {
+        "id": 5,
+        "text": "Permitir consultar el detalle",
+        "accepted": false
+      },
+      {
+        "id": 6,
+        "text": "Mostrar mensaje si no existen avisos",
+        "accepted": false
+      },
+      {
+        "id": 7,
+        "text": "Manejar errores de carga",
+        "accepted": false
+      },
+      {
+        "id": 8,
+        "text": "Probar la funcionalidad",
+        "accepted": false
+      },
+      {
+        "id": 9,
+        "text": "Revisar el código",
+        "accepted": false
+      }
+    ]
+  },
+  "trello": {
+    "source": "Checklist de la captura proporcionada por el usuario",
+    "agentReadBoard": false,
+    "agentModifiedBoard": false,
+    "userConfirmedCriteriaMarked": false,
+    "guidance": "Mantener los nueve criterios pendientes. Después de aceptar el diseño real en Expo Go podrá marcarse solo Crear sección de avisos (1); los ejemplos no completan los criterios restantes."
+  },
+  "architecture": {
+    "pattern": "MVVM y Repository",
+    "composition": "NoticesPreviewScreen → useNoticesPreviewViewModel → LoadNoticesPreview → NoticesPreviewRepository → LocalNoticesPreviewRepository, compuesto por createNoticesPreviewAction()",
+    "domainModel": "NoticePreview",
+    "accountEntry": "NoticesEntry",
+    "domainIndependentOfReactNative": true,
+    "stateScope": "Escena, filtro y selección temporal de ejemplos en memoria"
+  },
+  "remainingActivitiesReportedByUser": {
+    "titles": [
+      "Avisos",
+      "Reseñas",
+      "Confirmación de recepción"
+    ],
+    "authorizedNow": "Solo diseño de Avisos",
+    "otherActivitiesChecklistOrAssignmentInferred": false
+  },
+  "phaseCommits": {
+    "userRequestedSeparateCommits": true,
+    "previousActivityClosure": {
+      "activity": "Seguimiento del pedido",
+      "commit": "6610412",
+      "alreadySaved": true,
+      "copiedFromDavidWithoutModifyingSource": true
+    },
+    "design": {
+      "localCommitAuthorized": true,
+      "createAfterOwnVerification": true,
+      "status": "verified-local-design-stage",
+      "commitSubject": "feat(notices): diseñar bandeja de avisos",
+      "commitReference": "Consultar Git: feat(notices): diseñar bandeja de avisos"
+    },
+    "api": {
+      "implementationAuthorizedYet": false,
+      "separateCommitRequiredWhenAuthorized": true
+    },
+    "acceptance": {
+      "requiresActualUserReport": true,
+      "separateCommitRequired": true
+    },
+    "conventionSource": "../../VERSIONAMIENTO.md"
+  },
+  "publication": {
+    "branchPushed": false,
+    "pullRequestCreated": false,
+    "merged": false,
+    "publicationAuthorizedByUser": false,
+    "futureReviewer": "David567rs",
+    "futureBase": "develop"
+  },
+  "nextStep": "Guardar el commit local propio del diseño ya verificado y revisarlo en Expo Go de Zenaida 8083. Esperar el reporte real antes de aceptar Crear sección de avisos (1) o autorizar API.",
+  "limitations": [
+    "No hay aceptación visual del usuario ni observación directa del dispositivo por el agente.",
+    "La verificación técnica propia pasó; sus capturas y QA usan datos web sintéticos y no sustituyen Expo Go, TalkBack o texto ampliado nativo.",
+    "Bandeja, vacío y error son escenas sintéticas sin consultas, fallos o reintentos reales de API.",
+    "Abrir el detalle no marca como leído y no hay sincronización, persistencia o push.",
+    "El agente no leyó ni modificó Trello; todos los criterios permanecen pendientes.",
+    "No se asignan checklist, responsable o rama para Reseñas o Confirmación de recepción."
+  ]
+}
