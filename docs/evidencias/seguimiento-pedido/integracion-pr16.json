@@ -1,0 +1,135 @@
+{
+  "number": 16,
+  "url": "https://github.com/David567rs/INHALEX-Movil/pull/16",
+  "title": "Implementar Seguimiento del pedido con MVVM y Repository",
+  "author": "David567rs",
+  "state": "closed",
+  "head": "feature/seguimiento-pedido",
+  "headSha": "90c1420bf0ed62a2109e76fc71d6d64f56940fd4",
+  "base": "develop",
+  "merged": true,
+  "mergedAt": "2026-10-20T12:22:49Z",
+  "mergedBy": "ZenaidaGR",
+  "mergeCommit": "0f0b764a4ad78e40f12112c4debcd7982ccdfd2c",
+  "mergeParents": [
+    "930d2023ecb801ce985acaad8dfad03657a998ae",
+    "90c1420bf0ed62a2109e76fc71d6d64f56940fd4"
+  ],
+  "verifiedAt": "2026-10-20T06:25:48.9171928-06:00",
+  "reviews": [
+    {
+      "reviewer": "ZenaidaGR",
+      "state": "APPROVED",
+      "commit": "90c1420bf0ed62a2109e76fc71d6d64f56940fd4",
+      "submittedAt": "2026-10-20T12:22:41Z",
+      "url": "https://github.com/David567rs/INHALEX-Movil/pull/16#pullrequestreview-5584905725",
+      "id": 5584905725
+    }
+  ],
+  "checks": [
+    {
+      "name": "Backend CI",
+      "id": 39421551212,
+      "headSha": "90c1420bf0ed62a2109e76fc71d6d64f56940fd4",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39421551212",
+      "updatedAt": "2026-10-20T12:21:23Z"
+    },
+    {
+      "name": "Mobile CI",
+      "id": 39421551173,
+      "headSha": "90c1420bf0ed62a2109e76fc71d6d64f56940fd4",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39421551173",
+      "updatedAt": "2026-10-20T12:22:06Z"
+    }
+  ],
+  "acceptedCriteria": 8,
+  "totalCriteria": 8,
+  "completedCriterionIds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "newNativeEvidence": false,
+  "trelloReadByAgent": false,
+  "trelloModifiedByAgent": false,
+  "trelloFinalUpdateConfirmedByUser": true,
+  "recommendedTrelloStatus": "Terminado",
+  "synchronization": {
+    "performed": true,
+    "checkedAt": "2026-10-20T12:38:07.9998750+00:00",
+    "commit": "0f0b764a4ad78e40f12112c4debcd7982ccdfd2c",
+    "bothOnDevelop": true,
+    "bothClean": false,
+    "davidLocalDocumentationChangesPreserved": true,
+    "protectedLocalDocumentationCount": 6,
+    "documentHashesMatchedBeforeAndAfterSwitch": true,
+    "backupRoot": "C:\\Users\\David\\AppData\\Local\\Temp\\inhalex-sincronizacion-pr16-20261020-123126",
+    "zenaidaClean": true,
+    "environmentsAndPackagesPreserved": true,
+    "identitiesPreserved": true,
+    "stashPreserved": true,
+    "zenaidaStash": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "servicesRestartedByAgent": false,
+    "metroProcessesPreserved": true,
+    "backendWatcherReloadObserved": true,
+    "backendProcessBefore": 16376,
+    "backendProcessAfter": 33524,
+    "backendWatcherProcess": 17456,
+    "serviceHttpStatuses": [
+      {
+        "url": "http://localhost:3200/api/health",
+        "status": 200
+      },
+      {
+        "url": "http://localhost:8082/status",
+        "status": 200
+      },
+      {
+        "url": "http://localhost:8083/status",
+        "status": 200
+      }
+    ],
+    "serviceProcesses": [
+      {
+        "LocalPort": 3200,
+        "OwningProcess": 33524
+      },
+      {
+        "LocalPort": 8082,
+        "OwningProcess": 28288
+      },
+      {
+        "LocalPort": 8083,
+        "OwningProcess": 13476
+      }
+    ],
+    "createdCommit": false,
+    "pushed": false,
+    "validation": {
+      "zenaidaTypecheck": "passed",
+      "scope": "Fuentes del merge aprobado en CI; sincronización sin cambios funcionales nuevos",
+      "davidLint": "passed",
+      "zenaidaLint": "passed",
+      "davidTypecheck": "passed",
+      "fullSuiteRerun": false
+    },
+    "source": "Backups y hashes de seis documentos de David idénticos antes/después del cambio; guards de ambos repos, fast-forward y HTTP200 en los tres servicios. El backend perdió brevemente el listener y se recuperó como hijo nuevo de node --watch; el agente no ejecutó stop/start."
+  },
+  "sources": [
+    "GitHub REST GET PR16 y padres del commit de merge",
+    "GitHub reviews: APPROVED con commit_id del HEAD final",
+    "GitHub Actions: Backend CI y Mobile CI success sobre el HEAD final",
+    "Captura adjunta del usuario: aprobación, merge y dos checks correctos"
+  ],
+  "localChanges": "Cierre documental local de David conservado y actualizado al sincronizar ambos clones con develop0f0b764. Sin nuevo commit o push; conservar el cierre para guardarlo por separado al iniciar la próxima actividad autorizada.",
+  "trelloUpdateSource": "Reporte directo del usuario tras la guía de cierre: Amigo, ya actualicé Trello. Actualicemos INHALEX-Movil e INHALEX-Movil-Zenaida con develop antes de empezar la siguiente actividad. El agente no leyó ni modificó Trello."
+}

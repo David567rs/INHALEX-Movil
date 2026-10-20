@@ -1,6 +1,6 @@
 # Plan de trabajo de INHALEX Movil
 
-**Actividad vigente:** [PR #16 de Seguimiento](https://github.com/David567rs/INHALEX-Movil/pull/16) abierto, David567rs, `feature/seguimiento-pedido` → `develop`, MVVM y Repository. Revisión solicitada a ZenaidaGR, sin aprobación o merge. **7/8** y sesión aceptada por el usuario; criterio8 pendiente. Sesión `5a2561d`, preparación `7f5e192`; checks locales aprobados. CI de apertura Backend success/Mobile en ejecución, consultar HEAD final tras enlace documental. Mantener Trello En progreso; agente sin acceso al tablero. El último apartado prevalece; Historial sigue 9/9.
+**Actividad vigente:** Seguimiento8/8 y Trello actualizado por reporte del usuario; ambas copias sincronizadas en develop `0f0b764`, iguales a origin/develop. David conserva el cierre documental local respaldado; Zenaida limpia y stash preservado. TypeScript/lint de ambos clones y HTTP200 de backend/Metro correctos; backend recargó en watch sin intervención de stop/start. Sigue Avisos, Zenaida, feature/avisos, esperando solicitud y tarjeta exacta para solo diseño. No iniciar por esta sincronización. El último apartado prevalece.
 
 Acuerdos del 14 de octubre de 2026 para reiniciar la aplicación móvil con un repositorio independiente, aprovechar el backend y el código anterior, y documentar el flujo de trabajo del profesor desde el inicio.
 
@@ -820,10 +820,26 @@ Se autoriza guardar esta aceptación en su propio commit documental, publicar la
 
 Se mantienen las fases separadas: diseño `34b4f83`, aceptación visual `14b8453`, API `c1ac906`, consulta/actualización `3a4fb9e`, no encontrado `4d3007e`, error/reintento `6791928` y estados `5afa8b5`. El cierre documental previo de Historial se transporta intencionalmente sin alterar su integración o 9/9. En la preparación actual pasaron TypeScript, lint, 677/677 pruebas móviles, Doctor 1.20.4 21/21 y exportación Android de 1521 módulos. Las 50 pruebas backend, web y QA siguen históricas de la API, sin repetirse ahora, y la CI remota espera el HEAD publicado. No cambiar implementación, servidor, servicios, entornos, dependencias, identidades, stash o copia de Zenaida; no empezar otra actividad. Ver [conexión](CONEXION-SEGUIMIENTO-PEDIDO.md) y [aceptación](evidencias/seguimiento-pedido/expo-go-aceptacion.json).
 
-## Estado vigente: PR #16 de Seguimiento abierto para Zenaida (7/8)
+## Snapshot histórico: PR #16 de Seguimiento abierto para Zenaida (7/8)
 
 El [PR #16](https://github.com/David567rs/INHALEX-Movil/pull/16) está abierto por David567rs desde `feature/seguimiento-pedido` hacia `develop`, sin borrador. GitHub confirmó la solicitud de revisión a ZenaidaGR sobre el HEAD de apertura `7f5e192`; base `930d202` del PR #15. El reporte final de sesión se guardó por separado en `5a2561d`, conservando los commits anteriores. Evidencia: `evidencias/seguimiento-pedido/apertura-pr16.json`. Criterios funcionales1-7 y reapertura/sesión aceptados; revisión8 pendiente, sin aprobación ni merge.
 
 La preparación repitió TypeScript/lint, 677 pruebas móviles, Doctor21/21 y Android1521. Los 50 tests backend, web1070 y QA sintética siguen históricos. Al consultar el primer HEAD, Backend CI 39420908587 fue success y Mobile CI 39420908777 seguía in_progress. El enlace documental cambia HEAD; consultar los checks finales sin atribuirles aprobación por este snapshot.
 
 Zenaida revisa Files changed y envía Approve desde su propia cuenta cuando esté conforme. El agente no aprueba por ella ni completa Trello8. Mantener En progreso y esperar revisión y checks vigentes antes de un merge commit autorizado. No iniciar Avisos, alterar servicios, entorno, dependencias, identidades, stash o la copia de Zenaida por esta apertura; el agente no observa el teléfono ni accede a Trello.
+
+## Snapshot histórico: Seguimiento integrado mediante PR #16 (8/8)
+
+ZenaidaGR aprobó el HEAD final `90c1420` del [PR #16](https://github.com/David567rs/INHALEX-Movil/pull/16) y lo fusionó en develop mediante `0f0b764a4ad78e40f12112c4debcd7982ccdfd2c`. Backend CI 39421551212 y Mobile CI 39421551173 fueron success sobre ese HEAD. Aprobación 2026-10-20T12:22:41Z; merge 12:22:49Z. La revisión real completa el criterio8 y Seguimiento **8/8**. Ver `evidencias/seguimiento-pedido/integracion-pr16.json`.
+
+El usuario marca Revisar el código, adjunta el enlace del PR16, añade comentario de aprobación/integración y mueve Trello a Terminado. Es una guía; el marcado aún no está confirmado y el agente no accede al tablero. Después solicita sincronizar INHALEX-Movil e INHALEX-Movil-Zenaida con develop antes de iniciar la siguiente actividad.
+
+David sigue en feature/seguimiento-pedido `90c1420` y Zenaida en develop `930d202`; no se sincroniza por esta consulta. El cierre documental queda local sin commit o push posterior al merge, para conservarlo al actualizar y guardarlo por separado conforme al acuerdo de etapas. No hay nuevas pruebas nativas, cambios funcionales, servicios, configuración, dependencias, identidad o stash. TypeScript/lint se verifican; los resultados anteriores de suites, Doctor y exportaciones conservan su alcance histórico.
+
+## Estado vigente: Trello confirmado y clones actualizados a develop tras PR #16
+
+El usuario informó Trello actualizado y autorizó sincronizar ambas copias. Seguimiento permanece 8/8, PR16 aprobado e integrado. El agente no leyó ni modificó el tablero. Ambas copias están en develop `0f0b764a4ad78e40f12112c4debcd7982ccdfd2c`, iguales a origin/develop; las referencias avanzaron por fast-forward y no se reescribió historial.
+
+Se preservaron los seis documentos locales de cierre de David, con respaldo y hashes idénticos al cambiar de rama; después se actualizaron intencionalmente para registrar este hito y siguen sin commit/push. Zenaida quedó limpia con stash intacto; entornos, dependencias e identidades también. Ambos Metro conservaron sus procesos. El backend se recargó bajo node --watch y recuperó HTTP200 sin stop/start del agente; los tres servicios respondieron200. TypeScript/lint de ambos clones pasaron; no se repiten suites o exports. Recibo TEMP/inhalex-sincronizacion-pr16.json y evidencia en evidencias/seguimiento-pedido/integracion-pr16.json.
+
+La siguiente actividad es **Avisos**, responsable Zenaida y rama feature/avisos. Falta recibir la tarjeta/checklist exacto y la solicitud de empezar solo por diseño; mantener MVVM/Repository/bootstrap y la bandeja dentro de la app. No se crea la rama ni se implementa por actualizar develop. Conservar el cierre previo para guardarlo por separado y mantener servicios, entornos, identidades y stash.
