@@ -99,7 +99,7 @@ export function NoticesScreen() {
           <Text accessibilityRole="header" style={styles.emptyTitle}>Tus avisos recientes están al día</Text>
           <Text style={styles.emptyCopy}>No hay avisos sin leer entre los recientes.{vm.unread !== null && vm.unread > 0
             ? ' El contador de tu cuenta incluye también avisos anteriores.' : ''}</Text>
-          <Action label="Ver todos los recientes" onPress={() => vm.selectFilter('all')} />
+          <Action label="Ver todos los recientes" disabled={vm.busy} onPress={() => vm.selectFilter('all')} />
         </View> : <View style={styles.list}>{vm.items.map((notice) => <SoftPressable key={notice.id} accessibilityRole="button"
           accessibilityLabel={`${notice.readAt ? 'Leído' : 'No leído'}. ${notice.title}. ${formatDate(notice.createdAt)}. Abrir detalle.`}
           onPress={() => vm.selectNotice(notice.id)} style={[styles.card, !notice.readAt && styles.unreadCard]}>
