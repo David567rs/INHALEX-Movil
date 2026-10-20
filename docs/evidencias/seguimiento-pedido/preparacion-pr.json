@@ -1,0 +1,74 @@
+{
+  "activity": "Seguimiento del pedido",
+  "phase": "pull-request-preparation",
+  "date": "2026-10-20",
+  "branch": "feature/seguimiento-pedido",
+  "baseBranch": "develop",
+  "baseCommit": "930d2023ecb801ce985acaad8dfad03657a998ae",
+  "implementationCommit": "c1ac906",
+  "mobileSourceTree": "ec53a418df2f4000f4c5858f83bdc1f434d4e095",
+  "mobileTestsTree": "77ba137eebbe1c3bdb630467f5cca5d0f346428b",
+  "checks": {
+    "typecheck": {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    "lint": {
+      "command": "npm run lint",
+      "exitCode": 0
+    },
+    "tests": {
+      "exitCode": 0,
+      "passed": 677,
+      "failed": 0,
+      "command": "npm test"
+    },
+    "doctor": {
+      "exitCode": 0,
+      "passed": 21,
+      "total": 21,
+      "version": "1.20.4",
+      "command": "npm run doctor"
+    },
+    "androidExport": {
+      "exitCode": 0,
+      "modules": 1521,
+      "command": "npm run export:android"
+    }
+  },
+  "historicalEvidence": {
+    "backendContractTests": 50,
+    "repeatedInThisPreparation": false,
+    "webQa": "Synthetic; route removed before final export",
+    "webExportModules": 1070,
+    "path": "verificacion-api.json"
+  },
+  "nativeAcceptance": {
+    "trelloReadOrChangedByAgent": false,
+    "criteriaAccepted": 7,
+    "criteriaTotal": 8,
+    "sessionAcceptedByUser": true,
+    "formalReviewByZenaidaPending": true,
+    "agentObservedDevice": false
+  },
+  "preservation": {
+    "envAndPackagesUnchanged": true,
+    "identityUnchanged": true,
+    "developUnchanged": true,
+    "zenaidaHeadUnchanged": true,
+    "zenaidaClean": true,
+    "zenaidaStashUnchanged": true,
+    "servicesUnchanged": true,
+    "noServerDiff": true,
+    "noTemporaryTrackingRoute": true
+  },
+  "publication": {
+    "merged": false,
+    "reviewRequested": false,
+    "status": "preparing",
+    "pullRequestCreated": false,
+    "branchPushed": false
+  },
+  "mergeAuthorized": false,
+  "sessionAcceptanceCommit": "5a2561d89c9ab2dca2068b269c799dce69923ae7"
+}
