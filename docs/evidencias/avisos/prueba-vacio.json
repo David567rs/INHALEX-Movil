@@ -6,10 +6,10 @@
   "branch": "feature/avisos",
   "priorPositiveAcceptanceCommit": "fcc0c72",
   "authorizationQuote": "No, preparemos una prueba controlada",
-  "status": "prepared-dev-only-awaiting-user-report",
-  "acceptedCriteria": 5,
+  "status": "accepted-controlled-ui-awaiting-separate-retirement",
+  "acceptedCriteria": 6,
   "totalCriteria": 9,
-  "criterion6Accepted": false,
+  "criterion6Accepted": true,
   "trelloChangedByAgent": false,
   "fixture": {
     "route": "/qa-avisos-vacio",
@@ -84,16 +84,30 @@
     "noRealAuthenticatedApiOperationByAgent": true,
     "noPushOrPr": true
   },
-  "pendingUserTest": [
+  "preparedUserTestSteps": [
     "En Expo Go de Zenaida8083, abrir Cuenta → Avisos → Probar bandeja vacía.",
     "Comprobar el banner de prueba y Aún no tienes avisos, antes y después de Actualizar avisos.",
     "Comprobar que Explorar catálogo abre Catálogo; regresar con Atrás a la prueba y pulsar Salir de la prueba.",
     "Confirmar que regresan los avisos reales y su estado de lectura sin cambios por la prueba."
   ],
-  "acceptanceScope": "Si el usuario confirma, el criterio6 se acepta por interfaz controlada0/0; no acredita una cuenta ni API reales vacías. No equivale a filtro No leídos vacío.",
-  "userReport": null,
+  "acceptanceScope": "El criterio6 se acepta por reporte de Expo Go sobre interfaz controlada0/0; no acredita una cuenta ni API reales vacías. No equivale a filtro No leídos vacío.",
+  "preparationCommit": "21ece6e",
+  "userReport": {
+    "date": "2026-10-20",
+    "source": "Mensaje textual del usuario después de la prueba controlada",
+    "quote": "Amigo, apareció «Aún no tienes avisos», se mantuvo al actualizar, «Explorar catálogo» abrió Catálogo y al salir volvieron mis avisos reales sin cambios. ¿Qué marco en Trello y qué sigue?",
+    "criterionId": 6,
+    "accepted": true,
+    "scope": "Mensaje de bandeja vacía con fixture local0/0, actualización y navegación; retorno a avisos reales sin cambios según el reporte",
+    "provesRealApiOrAccountEmpty": false,
+    "agentObservedDevice": false,
+    "trelloMarkedConfirmed": false
+  },
   "agentObservedDevice": false,
   "retirement": {
+    "authorized": true,
+    "status": "pending-next-separate-commit",
+    "completed": false,
     "requiredAfterUserReport": true,
     "separateCommit": true,
     "removeTemporaryRouteAndScreen": true,

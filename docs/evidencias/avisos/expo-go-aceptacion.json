@@ -86,22 +86,22 @@
     "snapshotScope": "Diseño local histórico aceptado; la conexión posterior está autorizada y se registra por separado"
   },
   "functionalAcceptance": {
-    "acceptedCriteria": 5,
+    "acceptedCriteria": 6,
     "totalCriteria": 9,
     "acceptedCriterionIds": [
       1,
       2,
       3,
       4,
-      5
+      5,
+      6
     ],
     "pendingCriterionIds": [
-      6,
       7,
       8,
       9
     ],
-    "status": "5/9; recorrido positivo guiado aceptado por reporte del usuario. Vacío, errores, prueba completa y revisión real pendientes.",
+    "status": "6/9; recorrido positivo y bandeja vacía controlada aceptados por reportes del usuario. Retirada del helper pendiente; errores, prueba completa y revisión real pendientes.",
     "confirmations": [
       {
         "date": "2026-10-20",
@@ -124,6 +124,14 @@
           5
         ],
         "scope": "Consulta de avisos reales, contenido según la guía previa, detalle, marcado explícito y actualización. No se atribuye prueba independiente del filtro Todos/No leídos, vacío o errores.",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario después de la prueba controlada en Expo Go",
+        "quote": "Amigo, apareció «Aún no tienes avisos», se mantuvo al actualizar, «Explorar catálogo» abrió Catálogo y al salir volvieron mis avisos reales sin cambios. ¿Qué marco en Trello y qué sigue?",
+        "criterionIds": [6],
+        "scope": "Interfaz de bandeja vacía con fixture local0/0, actualización, navegación y retorno a avisos reales sin cambios según el reporte. No acredita una cuenta o API reales vacías.",
         "agentObservedDevice": false
       }
     ],
@@ -156,7 +164,7 @@
       {
         "id": 6,
         "text": "Mostrar mensaje si no existen avisos",
-        "accepted": false
+        "accepted": true
       },
       {
         "id": 7,
@@ -180,7 +188,7 @@
     "agentReadBoard": false,
     "agentModifiedBoard": false,
     "userConfirmedCriteriaMarked": false,
-    "guidance": "Puede marcar Obtener avisos disponibles; Mostrar título, mensaje y fecha; Diferenciar avisos leídos y no leídos; Permitir consultar el detalle (2-5). Con Crear sección de avisos ya aceptado, 5/9. Mantener En progreso; marcado no confirmado."
+    "guidance": "Puede marcar Mostrar mensaje si no existen avisos (6), aceptado por interfaz controlada0/0. Criterios1-6 aceptados:6/9. Mantener En progreso; errores7, prueba completa8 y revisión9 pendientes. Marcado no confirmado."
   },
   "architecture": {
     "pattern": "MVVM y Repository",
@@ -239,6 +247,16 @@
       "acceptedCriterionIds": [2, 3, 4, 5],
       "agentObservedDevice": false
     },
+    "controlledEmptyPreparation": {
+      "commit": "21ece6e",
+      "source": "Montaje temporal DEV y sus comprobaciones propias"
+    },
+    "controlledEmptyAcceptance": {
+      "separateCommitRequired": true,
+      "criterionId": 6,
+      "source": "Reporte textual del usuario sobre interfaz controlada0/0",
+      "agentObservedDevice": false
+    },
     "conventionSource": "../../VERSIONAMIENTO.md"
   },
   "publication": {
@@ -252,7 +270,7 @@
   "connection": {
     "authorized": true,
     "implemented": true,
-    "status": "positive-flow-accepted-empty-test-pending",
+    "status": "positive-flow-and-controlled-empty-accepted-awaiting-helper-retirement-and-error-test",
     "sameBranchRequired": "feature/avisos",
     "futureReviewer": "David567rs",
     "technicalVerification": "verificacion-api.json",
@@ -352,23 +370,23 @@
       "healthAndMetrosHttp200": true
     }
   },
-  "nextStep": "En Expo Go 8083 recargar y abrir Cuenta → Avisos → Probar bandeja vacía, comprobar el banner y Aún no tienes avisos al abrir y actualizar, Explorar catálogo y regresar con Atrás, y Salir de la prueba. Comprobar los avisos reales y sus estados de lectura anteriores al volver. Esperar el reporte para aceptar el criterio 6 con alcance controlado; después retirar helper/entrada DEV en otro commit antes de exports finales/publicación/PR.",
+  "nextStep": "Retirar helper y entrada DEV en el siguiente commit separado y comprobar TypeScript/lint. Después guiar la prueba de carga GET: abrir un aviso real, detener solo el backend local manualmente conservando Metro/Expo Go/WiFi, Actualizar avisos y Reintentar fallan conservando lista/selección/estados; reiniciar el mismo backend y Reintentar recupera el mismo aviso. No marcar como leído ni ejecutar PATCH. Criterios7-9 pendientes hasta sus evidencias; sin publicación o PR.",
   "limitations": [
     "La aceptación visual procede del reporte del usuario, sin observación directa del dispositivo por el agente.",
     "La verificación de API pasó; QA usa sesión/fetch sintéticos y sus capturas son web, sin sustituir Expo Go, TalkBack o texto ampliado nativo.",
     "La QA web de API se retiró en 1b9d572; el helper temporal DEV posterior de vacío está preparado y se retirará antes de exports finales/publicación/PR.",
     "Abrir el detalle no marca leído; solo el botón explícito escribe. No hay marcado masivo, polling, persistencia o push.",
     "No se asignan checklist, responsable o rama para Reseñas o Confirmación de recepción.",
-    "Los criterios1-5 se aceptan por reportes del usuario, sin observación del dispositivo ni acceso a Trello; el marcado no está confirmado.",
-    "El helper de vacío pasó TypeScript/lint completos y QA web, pero el criterio 6 sigue pendiente del reporte de Expo Go; no equivale a filtro No leídos vacío ni acredita una API o cuenta reales vacías.",
+    "Los criterios1-6 se aceptan por reportes del usuario, sin observación del dispositivo ni acceso a Trello; el marcado no está confirmado.",
+    "El criterio6 se acepta por el reporte de la interfaz controlada0/0 en Expo Go; no equivale a filtro No leídos vacío ni acredita una API o cuenta reales vacías. El helper permanece hasta su retirada en el siguiente commit separado.",
     "El helper no hace HTTP ni usa token/almacén/cuenta reales; RootLayout y runtime global no cambian, y la app puede continuar sus lecturas normales."
   ],
   "emptyTest": {
     "authorized": true,
     "choiceQuote": "No, preparemos una prueba controlada",
-    "status": "prepared-dev-only-awaiting-user-report",
+    "status": "accepted-controlled-ui-awaiting-separate-retirement",
     "synthetic": true,
-    "criterionAccepted": false,
+    "criterionAccepted": true,
     "criterionId": 6,
     "agentObservedDevice": false,
     "realNotificationsMustBePreserved": true,
@@ -412,8 +430,19 @@
     "screenshots": ["prueba-vacio-web-320.png", "prueba-vacio-salida-web-320.png"],
     "repeatedMobileSuiteDoctorOrExports": false,
     "receipt": "prueba-vacio.json",
-    "userReport": null,
+    "userReport": {
+      "date": "2026-10-20",
+      "source": "Mensaje textual del usuario sobre Expo Go",
+      "quote": "Amigo, apareció «Aún no tienes avisos», se mantuvo al actualizar, «Explorar catálogo» abrió Catálogo y al salir volvieron mis avisos reales sin cambios. ¿Qué marco en Trello y qué sigue?",
+      "criterionId": 6,
+      "acceptedScope": "Interfaz de bandeja vacía con fixture local0/0; no acredita cuenta o API reales vacías",
+      "realNotificationsReturnedUnchangedReportedByUser": true,
+      "agentObservedDevice": false,
+      "trelloMarkedConfirmed": false
+    },
     "removalRequiredAfterUserReport": true,
+    "removalAuthorized": true,
+    "removalStatus": "pending-next-separate-commit",
     "removalInSeparateCommit": true,
     "mustBeRemovedBeforeFinalExportsPublicationOrPr": true
   }
