@@ -1,6 +1,6 @@
 # Plan de trabajo de INHALEX Movil
 
-**Actividad vigente:** [PR #15 de Historial de pedidos](https://github.com/David567rs/INHALEX-Movil/pull/15) abierto por David567rs desde `feature/historial-pedidos` hacia `develop`, con revisión solicitada y confirmada a ZenaidaGR. Permanece **8/9**, criterios 1–8 aceptados; solo falta **Revisar el código** (9). No hay aprobación o merge y la CI debe consultarse sobre el HEAD final. El usuario confirmó marcar 4 y 8. El último apartado prevalece sobre los snapshots anteriores; Creación de pedido sigue integrada **11/11** mediante el PR #14.
+**Estado vigente:** Historial de pedidos está integrado mediante el [PR #15](https://github.com/David567rs/INHALEX-Movil/pull/15), **9/9**, y el usuario confirmó el cierre de Trello. Ambas copias están en `develop`, commit `930d202`, iguales a `origin/develop`; David conserva sus documentos locales de cierre y Zenaida quedó limpia. La siguiente actividad es **Seguimiento del pedido**, de David, pero su diseño y rama esperan la solicitud del usuario. El último apartado prevalece sobre los snapshots anteriores; Creación de pedido sigue integrada **11/11** mediante el PR #14.
 
 Acuerdos del 14 de octubre de 2026 para reiniciar la aplicación móvil con un repositorio independiente, aprovechar el backend y el código anterior, y documentar el flujo de trabajo del profesor desde el inicio.
 
@@ -722,7 +722,7 @@ Se autoriza preparar commit/publicación de la rama de David567rs y PR hacia `de
 
 La base es `77b9ab5`, integración de Creación de pedido mediante el PR #14. Historial reutiliza los contratos del backend existente y añade la conexión móvil de solo lectura, con MVVM, Repository y bootstrap; no modifica el servidor, dependencias o configuración. La última verificación pasó TypeScript, lint y **618/618 pruebas**; la repetición para preparar la publicación todavía no tiene un resultado nuevo declarado. Doctor **21/21** y exportaciones Android **1508** / web **1057** módulos se conservan como snapshot vigente de la misma implementación. La QA web usa datos sintéticos; la aceptación de Expo Go procede de los reportes del usuario y el agente no observó el dispositivo. Mantener la tarjeta **En progreso**, servicios, entornos, identidades, dependencias, stash y la otra copia. La revisión técnica de agentes no sustituye a ZenaidaGR; no iniciar Seguimiento o Avisos.
 
-## Estado vigente: PR #15 de Historial abierto (8/9)
+## Snapshot histórico: PR #15 de Historial abierto (8/9)
 
 El [PR #15](https://github.com/David567rs/INHALEX-Movil/pull/15) está abierto por David567rs, desde `feature/historial-pedidos` hacia `develop`, sin borrador ni merge. GitHub confirmó `requested_reviewers=[ZenaidaGR]`. El commit de implementación y HEAD al abrir es `726101a8606ee92ad1a184c28d9649d6129fdf7b`; la base de la actividad sigue siendo `77b9ab5`, integración de Creación de pedido mediante el PR #14. Los documentos de cierre de ese PR se transportaron intencionalmente y conservan su alcance histórico.
 
@@ -731,3 +731,21 @@ Antes de publicar volvieron a pasar TypeScript, lint y **618/618 pruebas**. `npm
 Al abrir, Mobile CI `39398704705` y Backend CI `39398704687` estaban en progreso sobre el primer HEAD. El enlace documental añadirá otro HEAD; comprobar sus checks vigentes antes de declarar CI final aprobada o plantear integración. Historial permanece **8/9**, criterios 1–8 aceptados y **Revisar el código** (9) pendiente. Los marcados 4 y 8 están confirmados por el usuario, sin acceso a Trello por el agente; mantener la tarjeta **En progreso**.
 
 Siguiente paso: Zenaida abre el PR desde **ZenaidaGR**, revisa **Files changed** y, si está conforme, envía **Review changes → Approve → Submit review**. Esperar la confirmación de esa revisión y los checks del HEAD final; esta solicitud de apertura no autoriza el merge. La futura integración seguirá el flujo de merge commit hacia `develop`. Mantener MVVM/Repository, cinco pestañas, servicios, entornos, dependencias, identidades, stash y la otra copia. No iniciar Seguimiento o Avisos.
+
+## Snapshot histórico: PR #15 de Historial aprobado e integrado (9/9)
+
+GitHub confirma que el [PR #15](https://github.com/David567rs/INHALEX-Movil/pull/15) está cerrado y fusionado hacia `develop`. ZenaidaGR [aprobó el HEAD final](https://github.com/David567rs/INHALEX-Movil/pull/15#pullrequestreview-5583096544) `6a460b5e3b4df2aa0a8cce2ade1809ef8701d540` a las **2026-10-20T09:16:08Z** y realizó el merge a las **09:16:16Z**, en `930d2023ecb801ce985acaad8dfad03657a998ae`. Sus padres son `77b9ab5aa8ca4171669ddda8b42adee028cefc59` y `6a460b5e3b4df2aa0a8cce2ade1809ef8701d540`. Backend CI `39399080059` y Mobile CI `39399080064` completaron `success` sobre el mismo HEAD aprobado. Evidencia: `docs/evidencias/historial-pedidos/integracion-pr15.json`.
+
+La revisión formal completa **Revisar el código** (9): Historial queda **9/9**. El cierre no aporta nuevas pruebas de Expo Go ni observación directa del teléfono por el agente; los resultados técnicos previos se conservan. El usuario había confirmado marcar 4 y 8, pero todavía no confirmó el marcado de 9 ni el cierre de Trello. El agente no leyó ni modificó el tablero.
+
+Siguiente paso del usuario: marcar **Revisar el código**, adjuntar el enlace del PR #15, añadir comentario de cierre y mover la tarjeta a **Terminado**. Después solicitar actualizar ambas copias con `develop`. No sincronizar ni cambiar ramas por este cierre: David permanece en `feature/historial-pedidos` en `6a460b5` y Zenaida en `develop77b9ab5`. Este turno solo registra revisión e integración, sin nuevos commits, push, pruebas o cambios de código, servicios, configuración, dependencias, identidades o stash. El cierre del PR #14 y la historia técnica se conservan; la siguiente actividad espera el orden acordado y una solicitud del usuario.
+
+## Estado vigente: Trello confirmado y ambas copias actualizadas tras PR #15
+
+El usuario confirmó exactamente: «Amigo, ya actualicé Trello. Actualicemos INHALEX-Movil e INHALEX-Movil-Zenaida con develop antes de empezar la siguiente actividad.». Se registra su reporte del cierre de Trello; el agente no leyó ni modificó el tablero. Historial continúa **9/9**, integrado mediante el PR #15 con aprobación real de ZenaidaGR y ambas CI correctas sobre el HEAD final.
+
+Las dos copias quedaron en `develop`, commit `930d2023ecb801ce985acaad8dfad03657a998ae`, iguales a `origin/develop`. En David se avanzó `develop` mediante fast-forward comprobando el valor anterior `77b9ab5`, y se cambió desde la rama funcional en `6a460b5` tras verificar árbol idéntico entre esta y el merge. Los seis documentos locales de cierre se respaldaron en TEMP y conservaron sus hashes SHA256 antes y después del cambio de rama. En Zenaida se hizo `merge --ff-only` y el árbol quedó limpio. Los documentos de cierre siguen locales en David, sin nuevo commit o push.
+
+Se preservaron variables de entorno, dependencias, nombre/correo y usuario de credencial Git, y el stash de Zenaida `81196109270f00fa7edf03a8a8ec6f8bdc963131`. Los servicios backend **3200** y Metro **8082/8083** mantuvieron sus procesos **37472 / 28288 / 13476** y respondieron HTTP 200; no se reiniciaron ni se instalaron dependencias. Recibo: `TEMP/inhalex-sincronizacion-pr15.json`. Esta sincronización no agrega pruebas de dispositivo ni cambios funcionales.
+
+El próximo paso del plan es **Seguimiento del pedido**, de David, en `feature/seguimiento-pedido`, empezando solo por diseño con MVVM y Repository. Esperar la solicitud del usuario antes de crear esa rama o iniciar trabajo; no se empieza la actividad por esta sincronización. Conservar las dos copias, servicios, entornos, identidades y respaldo. Los cierres de PR #14/#15 y sus verificaciones históricas se conservan.

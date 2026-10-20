@@ -1,0 +1,114 @@
+{
+  "number": 15,
+  "url": "https://github.com/David567rs/INHALEX-Movil/pull/15",
+  "title": "Implementar Historial de pedidos con MVVM y Repository",
+  "author": "David567rs",
+  "state": "closed",
+  "head": "feature/historial-pedidos",
+  "headSha": "6a460b5e3b4df2aa0a8cce2ade1809ef8701d540",
+  "base": "develop",
+  "merged": true,
+  "mergedAt": "2026-10-20T09:16:16Z",
+  "mergedBy": "ZenaidaGR",
+  "mergeCommit": "930d2023ecb801ce985acaad8dfad03657a998ae",
+  "reviews": [
+    {
+      "reviewer": "ZenaidaGR",
+      "state": "APPROVED",
+      "commit": "6a460b5e3b4df2aa0a8cce2ade1809ef8701d540",
+      "submittedAt": "2026-10-20T09:16:08Z",
+      "url": "https://github.com/David567rs/INHALEX-Movil/pull/15#pullrequestreview-5583096544"
+    }
+  ],
+  "verifiedAt": "2026-10-20T03:17:53.3568461-06:00",
+  "mergeParents": [
+    "77b9ab5aa8ca4171669ddda8b42adee028cefc59",
+    "6a460b5e3b4df2aa0a8cce2ade1809ef8701d540"
+  ],
+  "checks": [
+    {
+      "status": "completed",
+      "headSha": "6a460b5e3b4df2aa0a8cce2ade1809ef8701d540",
+      "conclusion": "success",
+      "id": 39399080059,
+      "name": "Backend CI",
+      "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39399080059"
+    },
+    {
+      "status": "completed",
+      "headSha": "6a460b5e3b4df2aa0a8cce2ade1809ef8701d540",
+      "conclusion": "success",
+      "id": 39399080064,
+      "name": "Mobile CI",
+      "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39399080064"
+    }
+  ],
+  "acceptedCriteria": 9,
+  "totalCriteria": 9,
+  "completedCriterionIds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "newNativeEvidence": false,
+  "trelloReadByAgent": false,
+  "trelloModifiedByAgent": false,
+  "trelloFinalUpdateConfirmedByUser": true,
+  "recommendedTrelloStatus": "Terminado",
+  "synchronization": {
+    "performed": true,
+    "checkedAt": "2026-10-20T03:25:21.0954026-06:00",
+    "commit": "930d2023ecb801ce985acaad8dfad03657a998ae",
+    "bothOnDevelop": true,
+    "bothClean": false,
+    "davidLocalDocumentationChangesPreserved": true,
+    "protectedLocalDocumentationCount": 6,
+    "zenaidaClean": true,
+    "environmentsPreserved": true,
+    "dependenciesPreserved": true,
+    "identitiesPreserved": true,
+    "stashPreserved": true,
+    "zenaidaStash": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "servicesRestarted": false,
+    "servicePorts": [
+      3200,
+      8082,
+      8083
+    ],
+    "serviceProcesses": [
+      37472,
+      28288,
+      13476
+    ],
+    "serviceHttpStatuses": [
+      200,
+      200,
+      200
+    ],
+    "createdCommit": false,
+    "pushed": false,
+    "source": "Recibo local TEMP/inhalex-sincronizacion-pr15.json; hashes de seis documentos locales idénticos antes/después del cambio de rama, respaldados en TEMP. Davidconserva cierrelocal yZenaidaclean.",
+    "validation": {
+      "scope": "Sin nuevos cambios funcionales; fuentes iguales al árbol aprobado en CI",
+      "zenaidaLint": "passed",
+      "davidTypecheck": "passed",
+      "davidLint": "passed",
+      "fullSuiteRerun": false,
+      "zenaidaTypecheck": "passed"
+    }
+  },
+  "sources": [
+    "GitHub REST: PR15, reviews con commit_id y merged_by",
+    "GitHub connector: workflows del HEAD6a460b5",
+    "git fetch y padres del merge930d202",
+    "Captura adjunta del usuario muestra aprobación, merge y2checks correctos"
+  ],
+  "trelloUpdateSource": "Mensaje directo del usuario: Amigo, ya actualicé Trello. Actualicemos INHALEX-Movil e INHALEX-Movil-Zenaida con develop antes de empezar la siguiente actividad. El agente no leyó ni modificó Trello.",
+  "localChanges": "Documentación local de cierre conservada y actualizada en David al sincronizar ambas copias condevelop930d202; sin nuevo commit o push ni actividad siguiente."
+}
