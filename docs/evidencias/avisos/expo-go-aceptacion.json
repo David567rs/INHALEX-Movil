@@ -403,6 +403,9 @@
       "healthAndMetrosHttp200": true
     }
   },
+  "prPreparationReceipt": "verificacion-pr.json",
+  "sessionAcceptanceCommit": "d4b1238",
+  "finalMinorFixCommit": "e473e45",
   "nextStep": "Registrar esta aceptación de continuidad en su commit separado; completar comprobaciones finales y publicar el PR autorizado desde feature/avisos hacia develop para David567rs. Todavía no existe PR o solicitud de revisión confirmados ni CI remota que citar. Mantener criterio9 pendiente hasta revisión real y Trello En progreso, sin inferir marcado.",
   "limitations": [
     "La aceptación visual procede del reporte del usuario, sin observación directa del dispositivo por el agente.",
