@@ -1,6 +1,6 @@
 # Plan de trabajo de INHALEX Movil
 
-**Actividad vigente:** Seguimiento conectado y verificado técnicamente en `feature/seguimiento-pedido`, David, base `930d202`, con MVVM y Repository. Diseño `34b4f83`, aceptación visual `14b8453` y API en su propio commit local. **0/8** criterios funcionales pendientes del usuario; primera prueba en Expo Go: abrir un pedido desde Historial y Actualizar seguimiento. Pasaron 677 pruebas móviles, 50 backend, TypeScript/lint, Doctor y exportaciones Android/web. No publicar ni abrir PR ahora. El último apartado prevalece; Historial sigue integrado **9/9** mediante el PR #15.
+**Actividad vigente:** Seguimiento del pedido, David, `feature/seguimiento-pedido`, con MVVM y Repository. El usuario aceptó pedido correcto, información, estado y actualización en Expo Go: **4/8**, criterios 1-4. API `c1ac906`; aceptación en su propio commit documental. Siguen pendientes no encontrado (5), conexión/reintento (6), distintos estados (7) y revisión real de Zenaida (8). Siguiente prueba: enlace Expo Go a un ID de prueba, sin alterar pedidos o backend. Trello En progreso, sin atribuir marcados al agente. No publicar ni abrir PR. El último apartado prevalece; Historial sigue 9/9.
 
 Acuerdos del 14 de octubre de 2026 para reiniciar la aplicación móvil con un repositorio independiente, aprovechar el backend y el código anterior, y documentar el flujo de trabajo del profesor desde el inicio.
 
@@ -770,7 +770,7 @@ El usuario reportó: «Amigo, ya revisé el diseño de Seguimiento en Expo Go y 
 
 La conexión conserva la misma rama, responsables, arquitectura y orden. Tendrá un commit independiente tras comprobar contrato, aislamiento por cuenta, actualización, no encontrado y errores. Después se guiarán las pruebas reales en Expo Go. No se autoriza publicación, PR o integración por esta solicitud; ZenaidaGR revisará el futuro PR hacia `develop`. Conservar ambas copias y servicios.
 
-## Estado vigente: Seguimiento conectado, aceptación funcional pendiente (0/8)
+## Snapshot histórico: Seguimiento conectado, aceptación funcional pendiente (0/8)
 
 La conexión está terminada con MVVM, Repository y bootstrap, guardada en su propio commit local de API después del diseño `34b4f83` y aceptación visual `14b8453`. No hay publicación o PR. Las aceptaciones posteriores se registrarán en commits separados al recibir cada reporte real. La [guía de conexión](CONEXION-SEGUIMIENTO-PEDIDO.md) conserva los ocho criterios exactos sin marcar y el orden de pruebas.
 
@@ -779,3 +779,11 @@ GET autenticados `/orders/me/:id` y `/orders/me/:id/tracking` aportan el conjunt
 La [verificación propia](evidencias/seguimiento-pedido/verificacion-api.json) registra **677/677 pruebas móviles**, incluidas 59 nuevas, **50/50 del contrato backend**, TypeScript/lint, Doctor **21/21**, Android **1521** y web **1070** módulos. La ruta temporal de QA se retiró antes de exportar. QA web sintética a 397/320 px comprobó actualización/estados, fecha ausente, selección, errores/reintento, 401/403/404 y salida, sin desbordamientos o errores de consola. HTTP loopback usó transporte real contra fixtures, no MongoDB real. La lectura local sin Bearer respondió 401; no se consultaron pedidos reales autenticados ni hubo escrituras. Se conservaron servicios y configuración, y Zenaida sigue limpia en `develop` `930d202`.
 
 Siguiente paso: el usuario prueba en Expo Go **Cuenta → Historial → seleccionar un pedido → Ver seguimiento del pedido → Actualizar seguimiento** y reporta los datos reales. **0/8** hasta esa aceptación; no se marca Trello por pruebas técnicas. Después se guía no encontrado, error/reintento, estados disponibles y reapertura/sesión, respetando commits por fase. La revisión real queda para ZenaidaGR en el futuro PR autorizado. No avanzar a Avisos o publicación.
+
+## Estado vigente: Seguimiento con consulta y actualización aceptadas (4/8)
+
+El usuario confirmó en Expo Go «Amigo, Seguimiento muestra el pedido correcto y Actualizar seguimiento funciona. ¿Qué marco en Trello y qué sigue?». Se aceptan 1, 2, 3 y 4; se recomienda marcarlos en Trello y conservar En progreso. No hay observación directa del dispositivo ni lectura o cambios del tablero por el agente. Los criterios 5-8 siguen pendientes.
+
+El reporte se conserva en `evidencias/seguimiento-pedido/expo-go-aceptacion.json`, con commit documental propio después de API `c1ac906`, diseño `34b4f83` y aceptación visual `14b8453`. Esta etapa no cambia código o backend, no repite las suites históricas ni publica la rama. Se mantienen servicios, configuración, dependencias, identidades, stash y copia de Zenaida.
+
+Sigue **pedido no encontrado**: abrir un enlace/QR Expo Go del mismo Metro con `/seguimiento-pedido?id=000000000000000000000000`, esperar «No encontramos este pedido» sin datos anteriores, y volver con «Ver mis pedidos». No modificar un pedido real ni añadir controles técnicos al producto para fabricar este caso. Esperar el reporte; después se prueban error/reintento, distintos estados disponibles y reapertura/sesión, antes de preparar el PR autorizado hacia develop para ZenaidaGR.

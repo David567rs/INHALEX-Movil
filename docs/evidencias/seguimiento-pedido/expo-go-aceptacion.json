@@ -6,7 +6,7 @@
   "baseCommit": "930d2023ecb801ce985acaad8dfad03657a998ae",
   "priorActivityClosureCommit": "49df3b3",
   "date": "2026-10-20",
-  "source": "Aceptación del diseño reportada por el usuario y autorización para conectar la API en la misma rama con commits por etapa",
+  "source": "Aceptación visual y reportes funcionales textuales del usuario en esta conversación",
   "design": {
     "accepted": true,
     "status": "accepted-by-user-in-expo-go",
@@ -46,41 +46,56 @@
     "snapshotScope": "Instantánea histórica de la etapa de diseño aceptada; la conexión posterior se registra en connection"
   },
   "functionalAcceptance": {
-    "acceptedCriteria": 0,
+    "acceptedCriteria": 4,
     "totalCriteria": 8,
-    "acceptedCriterionIds": [],
-    "pendingCriterionIds": [
+    "acceptedCriterionIds": [
       1,
       2,
       3,
-      4,
+      4
+    ],
+    "pendingCriterionIds": [
       5,
       6,
       7,
       8
     ],
-    "status": "API implementada y verificada técnicamente; 0 de 8 criterios aceptados. Pruebas funcionales en Expo Go y revisión de Zenaida pendientes.",
-    "confirmations": [],
+    "status": "Recorrido positivo y actualización aceptados por el usuario en Expo Go: 4/8. No encontrado, conexión/reintento, distintos estados y revisión real pendientes.",
+    "confirmations": [
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario",
+        "quote": "Amigo, Seguimiento muestra el pedido correcto y Actualizar seguimiento funciona. ¿Qué marco en Trello y qué sigue?",
+        "criterionIds": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "scope": "Pedido correcto, información, estado y actualización del recorrido guiado; no acredita todavía distintos estados, 404, errores o sesión",
+        "agentObservedDevice": false
+      }
+    ],
     "criteria": [
       {
         "id": 1,
         "text": "Obtener estado del pedido desde la API",
-        "accepted": false
+        "accepted": true
       },
       {
         "id": 2,
         "text": "Mostrar información del pedido",
-        "accepted": false
+        "accepted": true
       },
       {
         "id": 3,
         "text": "Mostrar estado actual",
-        "accepted": false
+        "accepted": true
       },
       {
         "id": 4,
         "text": "Actualizar la información correctamente",
-        "accepted": false
+        "accepted": true
       },
       {
         "id": 5,
@@ -110,7 +125,13 @@
     "agentModifiedBoard": false,
     "userConfirmedCriteriaMarked": false,
     "observedInUserScreenshot": "Ocho criterios sin marcar",
-    "guidance": "Conservar los ocho criterios pendientes hasta la confirmación funcional del usuario y la revisión real. Las comprobaciones técnicas y los ejemplos sintéticos no completan criterios."
+    "guidance": "El usuario puede marcar los criterios 1, 2, 3 y 4 y mantener En progreso. Dejar 5, 6, 7 y 8 pendientes. El agente no verificó el marcado en Trello.",
+    "recommendedCriterionIds": [
+      1,
+      2,
+      3,
+      4
+    ]
   },
   "architecture": {
     "pattern": "MVVM y Repository",
@@ -136,11 +157,14 @@
       "separateCommitPlanned": true,
       "implementationAuthorizedYet": true,
       "commitMessage": "feat(orders): conectar seguimiento del pedido con la API",
-      "createAfterOwnVerification": true
+      "createAfterOwnVerification": true,
+      "commit": "c1ac906",
+      "commitCreated": true
     },
     "acceptance": {
       "separateCommitPlanned": true,
-      "requiresActualUserReport": true
+      "requiresActualUserReport": true,
+      "currentCommitMessage": "docs(orders): aceptar consulta y actualización de seguimiento en Expo Go"
     },
     "conventionSource": "../../VERSIONAMIENTO.md",
     "designAcceptance": {
@@ -158,9 +182,9 @@
     "futureReviewer": "ZenaidaGR",
     "futureBase": "develop"
   },
-  "nextStep": "Abrir un pedido existente desde Historial en Expo Go, comprobar los datos reales y pulsar Actualizar seguimiento; registrar la confirmación funcional después en su propio commit.",
+  "nextStep": "Probar pedido no encontrado mediante enlace Expo Go al ID de prueba 000000000000000000000000, sin modificar pedidos ni servidor. Esperar el reporte para aceptar el criterio 5; después error/reintento, distintos estados y reapertura/sesión.",
   "limitations": [
-    "La aceptación funcional de la API en Expo Go está pendiente; el agente no observó el dispositivo.",
+    "El usuario reportó el recorrido positivo y actualización en Expo Go; los criterios 5 a 8 siguen pendientes. El agente no observó el dispositivo.",
     "Los datos y modos del diseño son una instantánea histórica; la implementación actual consulta la API.",
     "La QA web usa datos sintéticos y las pruebas HTTP usan servidores loopback; no acreditan una consulta autenticada al servicio Nest/MongoDB real.",
     "No se agregaron escrituras de pedidos, almacenamiento, dependencias ni cambios al backend.",
@@ -169,7 +193,7 @@
   ],
   "connection": {
     "implemented": true,
-    "status": "technically-verified-awaiting-user-functional-acceptance",
+    "status": "partial-native-acceptance-4-of-8",
     "technicalVerification": "verificacion-api.json",
     "guide": "../../CONEXION-SEGUIMIENTO-PEDIDO.md",
     "endpointsInOrder": [
@@ -181,6 +205,12 @@
     "agentObservedDevice": false,
     "backendChanged": false,
     "newStorage": false,
-    "orderWrites": false
+    "orderWrites": false,
+    "acceptedCriterionIds": [
+      1,
+      2,
+      3,
+      4
+    ]
   }
 }

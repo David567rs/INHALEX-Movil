@@ -4,7 +4,7 @@ La actividad continúa en `C:\Users\David\Documents\INHALEX-Movil`, rama `featur
 
 El usuario aceptó el diseño y autorizó conectar la API en la misma rama. El diseño está guardado en el commit de fase `34b4f83` y su aceptación en `14b8453`, separados del cierre previo de Historial. La implementación conectada terminó su verificación técnica y se guarda en el commit local propio `feat(orders): conectar seguimiento del pedido con la API`; consultar el SHA en Git. No se publica la rama ni se abre un PR por esta fase.
 
-Seguimiento permanece **0/8**: el checklist no tiene un criterio independiente de diseño y todavía no hay aceptación funcional del usuario con pedidos reales. La [aceptación vigente](evidencias/seguimiento-pedido/expo-go-aceptacion.json) distingue las muestras históricas de la nueva conexión. El agente no observó el teléfono ni leyó o modificó Trello. El [diseño](DISENO-SEGUIMIENTO-PEDIDO.md) y sus resultados se conservan como historia.
+Seguimiento tiene **4/8** criterios aceptados: el usuario confirmó en Expo Go el pedido correcto y **Actualizar seguimiento**. Se aceptan 1-4: consulta, información, estado y actualización. No encontrado, errores, distintos estados y revisión siguen pendientes. La [aceptación vigente](evidencias/seguimiento-pedido/expo-go-aceptacion.json) conserva su reporte exacto. El agente no observó el teléfono ni leyó o modificó Trello; recomienda marcar 1-4 y mantener En progreso. El [diseño](DISENO-SEGUIMIENTO-PEDIDO.md) y sus resultados se conservan como historia.
 
 ## Contrato existente del backend
 
@@ -51,22 +51,22 @@ El controlador no consulta sin ID válido y sesión autenticada. Seleccionar otr
 
 Salir o cambiar la identidad de autorización oculta inmediatamente los datos personales. Este módulo no añade SecureStore, persistencia web, datos de seguimiento guardados entre cuentas o escritura de sesión. No modifica los datos de pedidos, historial, bolsa, direcciones o backend, ni añade POST/PATCH/DELETE, confirmación de recepción, cancelación o repetición de compra.
 
-## Criterios de Trello: 0/8
+## Criterios de Trello: 4/8
 
-- [ ] Obtener estado del pedido desde la API
-- [ ] Mostrar información del pedido
-- [ ] Mostrar estado actual
-- [ ] Actualizar la información correctamente
+- [x] Obtener estado del pedido desde la API
+- [x] Mostrar información del pedido
+- [x] Mostrar estado actual
+- [x] Actualizar la información correctamente
 - [ ] Manejar pedidos no encontrados
 - [ ] Manejar errores de conexión
 - [ ] Probar distintos estados del pedido
 - [ ] Revisar el código
 
-La aceptación del diseño no completa ninguno de estos criterios. Se esperará el reporte real de cada recorrido antes de marcarlo como aceptado. La revisión final corresponde a ZenaidaGR en el futuro PR; la revisión de agentes y las pruebas automatizadas no la sustituyen. Mantener Trello **En progreso**, sin atribuir al agente su lectura o marcado.
+El reporte funcional del usuario completa 1-4; la aceptación visual por sí sola no los completó. Se esperará el reporte de los casos pendientes antes de aceptarlos. La revisión final corresponde a ZenaidaGR en el futuro PR; la revisión de agentes y las pruebas automatizadas no la sustituyen. Mantener Trello **En progreso**, sin atribuir al agente su lectura o marcado.
 
-## Primera prueba real en Expo Go
+## Primera prueba real en Expo Go: consulta y actualización aceptadas
 
-La prueba del usuario comienza después de concluir las comprobaciones técnicas globales y guardar el commit propio de la API. Reutilizar el QR de Metro de David (**8082**) y el backend local habitual (**3200**), conservando el Metro de Zenaida y la configuración existente.
+El usuario reportó exactamente: «Amigo, Seguimiento muestra el pedido correcto y Actualizar seguimiento funciona. ¿Qué marco en Trello y qué sigue?». La aceptación corresponde al recorrido positivo guiado; no acredita todavía 404, errores/reintento, distintos estados o reapertura/sesión. API `c1ac906` y esta aceptación se conservan en commits separados. Los pasos siguientes conservan la guía del recorrido. Reutilizar el QR de Metro de David (**8082**) y el backend local habitual (**3200**), conservando el Metro de Zenaida y la configuración existente.
 
 1. Iniciar sesión con la cuenta de prueba que ya tiene pedidos. Abrir **Cuenta → Historial de pedidos** y seleccionar uno.
 2. Pulsar **Ver seguimiento del pedido**. Comprobar que aparece esa referencia real, su estado, fecha de creación, productos, unidades y subtotal; no deben verse rótulos de muestra o referencias `EJEMPLO-...`.
@@ -76,11 +76,25 @@ La prueba del usuario comienza después de concluir las comprobaciones técnicas
 
 Este recorrido solo consulta el pedido existente; no hace falta crear otro o cambiar su estado para probar la primera lectura. La entrada de Cuenta sin ID puede revisarse aparte: debe pedir elegir un pedido en Historial.
 
+## Siguiente prueba: pedido no encontrado (pendiente)
+
+La ruta ya admite un ID por enlace. Expo Go separa la ruta interna mediante `/--/`, según la [documentación SDK 57](https://docs.expo.dev/versions/v57.0.0/sdk/linking/#linkingcreateurlpath-namedparameters) y la [guía de enlaces en Expo Go](https://docs.expo.dev/linking/into-your-app/#test-a-link-using-expo-go). No se necesita una pantalla de pruebas ni controles técnicos en el producto.
+
+En la Wi-Fi verificada el 20 de octubre de 2026, el enlace de prueba es `exp://192.168.1.77:8082/--/seguimiento-pedido?id=000000000000000000000000`. La IP es local y puede cambiar; conservar la dirección del mismo Metro que utiliza el teléfono. El QR de esta guía se genera como artefacto temporal, fuera del código de la aplicación.
+
+1. Conservar backend y Metro activos y la misma cuenta iniciada; no detener el backend en esta prueba.
+2. Escanear el QR del enlace con Expo Go. Si la sesión necesitara restaurarse, esperar; si pidiera ingresar, iniciar sesión y volver a escanear el QR para retomar el ID de prueba.
+3. Esperar **No encontramos este pedido**, sin referencia, productos, dirección o subtotal del pedido anterior. El ID es sintácticamente válido; su ausencia se confirma con este resultado, sin modificar MongoDB o pedidos reales.
+4. Pulsar **Reintentar**, si aparece: debe mantenerse no encontrado con el backend activo.
+5. Pulsar **Ver mis pedidos** y abrir el seguimiento de un pedido real; debe volver a mostrar el pedido correcto.
+
+El criterio 5 continúa pendiente hasta el reporte del usuario. El enlace no crea o modifica pedidos, no cambia el servidor, ni prueba todos los escenarios de autorización. No confundir el QR preparado con un resultado observado por el agente en el dispositivo.
+
 ## Orden de las pruebas posteriores y commits
 
 Después de aceptar lectura normal y actualización se guiará **pedido no encontrado**, después **error y reintento**, después **distintos estados disponibles** y finalmente **reapertura, salida y reingreso**. Un montaje sintético posterior deberá identificarse expresamente; no se modificará un pedido real solo para fabricar estados o un 404. Los reportes necesarios se registrarán antes de aceptar cada criterio.
 
-Se conserva el acuerdo de commits por fase: diseño `34b4f83`, aceptación visual `14b8453`, conexión API en un commit propio después de su verificación, y aceptaciones funcionales posteriores en commits separados cuando existan los reportes. No se escribe por anticipado el SHA de la API. Solo después de las pruebas y una solicitud del usuario se preparará el PR de `feature/seguimiento-pedido` hacia `develop` para revisión de ZenaidaGR; no se abre ni integra ahora.
+Se conserva el acuerdo de commits por fase: diseño `34b4f83`, aceptación visual `14b8453`, API `c1ac906` y aceptación de consulta/actualización en el commit propio `docs(orders): aceptar consulta y actualización de seguimiento en Expo Go`. Las aceptaciones posteriores tendrán commits separados cuando existan sus reportes. Solo después de las pruebas y una solicitud del usuario se preparará el PR de `feature/seguimiento-pedido` hacia `develop` para revisión de ZenaidaGR; no se abre ni integra ahora.
 
 ## Verificación y límites actuales
 
@@ -90,4 +104,4 @@ QA web a **397×1000 / 320×820** usó sesión y acciones de dominio sintéticas
 
 Las pruebas de integración HTTP utilizan Node HTTP y puertos efímeros de loopback, con `HttpClient`, Repository, casos de uso y controlador reales, pero API, cuentas, tokens y datos sintéticos; sus servidores se cierran al terminar. Eso permite verificar transporte, recuperación y aislamiento del cliente, sin acreditar ownership de una API Nest/MongoDB real. Una eventual QA web con sesión o pedidos simulados deberá identificarse como sintética. El bloqueo de redirecciones con Node fetch no se presenta como prueba de todos los transportes nativos.
 
-La aceptación funcional en Expo Go sigue pendiente y procede de los reportes del usuario, no de una observación directa del teléfono por el agente. No se han autorizado escrituras o consultas reales autenticadas del agente para esta guía. TalkBack, texto ampliado y condiciones físicas de red tendrán su evidencia específica si se prueban. Se conservan servicios, configuración, dependencias, identidades, stash y la copia de Zenaida.
+La aceptación funcional en Expo Go es parcial (4/8) y procede del reporte del usuario, no de una observación directa del teléfono por el agente. El JSON de verificación técnica refleja el snapshot anterior de API; la aceptación vigente se registra por separado. Esta etapa documental no consulta pedidos reales autenticados ni realiza escrituras. TalkBack, texto ampliado y condiciones físicas de red tendrán su evidencia específica si se prueban. Se conservan servicios, configuración, dependencias, identidades, stash y la copia de Zenaida.
