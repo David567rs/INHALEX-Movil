@@ -1,6 +1,6 @@
 # Plan de trabajo de INHALEX Movil
 
-**Actividad vigente:** Seguimiento del pedido, David, `feature/seguimiento-pedido`, MVVM y Repository. **6/8** aceptados en Expo Go: 1-6, incluido error/reintento sin pérdida y recuperación tras reiniciar backend. API `c1ac906`, aceptación positiva `3a4fb9e`, no encontrado `4d3007e` y aceptación de error en su propio commit. Estados (7) y revisión real Zenaida (8) pendientes. El usuario reportó Confirmado, Completado y Cancelado disponibles («los 3»); sigue probarlos, no se aceptan por su disponibilidad. Luego reapertura/sesión. Puede marcar 6, mantener Trello En progreso; el agente no modifica tablero o servicios. No publicar ni abrir PR. El último apartado prevalece; Historial sigue 9/9.
+**Actividad vigente:** Seguimiento del pedido, David, `feature/seguimiento-pedido`, MVVM y Repository. **7/8** aceptados en Expo Go: 1-7, incluidos los tres estados con actualización y referencias correctas. API `c1ac906`, error/reintento `6791928` y aceptación de estados en su propio commit documental. Revisión real Zenaida (8) pendiente; sigue prueba de reapertura/salida/reingreso, sin criterio independiente. Puede marcar 7 y mantener Trello En progreso; el agente no accede al tablero ni modifica servicios. No publicar o abrir PR todavía. El último apartado prevalece; Historial sigue 9/9.
 
 Acuerdos del 14 de octubre de 2026 para reiniciar la aplicación móvil con un repositorio independiente, aprovechar el backend y el código anterior, y documentar el flujo de trabajo del profesor desde el inicio.
 
@@ -796,10 +796,18 @@ El hito se guarda en un commit documental separado después de `3a4fb9e` (recorr
 
 Sigue la guía de error/reintento: abrir un pedido real ya cargado, detener solo el backend desde su terminal y pulsar Actualizar seguimiento y Reintentar. Deben fallar conservando los datos. Reiniciar ese backend y Reintentar debe recuperar el pedido y quitar el aviso. Mantener ambos Metro activos y la red del teléfono; no modificar pedidos o estado. El criterio 6 espera el reporte. Después se prueban estados disponibles y reapertura/sesión antes del PR hacia develop con revisión real de ZenaidaGR. Consulta `CONEXION-SEGUIMIENTO-PEDIDO.md` y `evidencias/seguimiento-pedido/expo-go-aceptacion.json`.
 
-## Estado vigente: Seguimiento con error y reintento aceptados (6/8)
+## Snapshot histórico: Seguimiento con error y reintento aceptados (6/8)
 
 El usuario confirmó en Expo Go: «Amigo, Actualizar y Reintentar fallaron sin perder los datos. Reinicié el backend y Reintentar recuperó el mismo pedido y quitó el aviso. ¿Qué marco en Trello y qué sigue?». Se acepta 6; puede marcar **Manejar errores de conexión** y mantener En progreso. Los criterios 1-6 están aceptados y 7-8 pendientes. La evidencia es su mensaje, sin observación directa del dispositivo ni acceso a Trello por el agente.
 
 El reporte se registra en un commit documental separado después de `4d3007e` (no encontrado), `3a4fb9e` (recorrido positivo) y `c1ac906` (API). Se conservan código, contratos, servicios, configuración, dependencias, identidades, stash y copia de Zenaida. TypeScript/lint se verifican; suites, Doctor y exportaciones anteriores se conservan como evidencia histórica, sin repetirse en esta etapa. No hay push o PR.
 
 El usuario respondió «los 3» a la consulta sobre Confirmado, Completado y Cancelado; se registra como disponibilidad para probarlos. Sigue abrir cada pedido desde Historial, comprobar estado actual, línea de progreso y fechas presentes o ausentes, y pulsar Actualizar seguimiento. Cancelado debe ser terminal y no presentarse como Completado; no se fabrican confirmaciones o fechas. En revisión se puede revisar si existe. No alterar pedidos o backend. El criterio 7 espera su reporte; después reapertura/salida/reingreso y futuro PR autorizado para revisión real de Zenaida (8). Ver `CONEXION-SEGUIMIENTO-PEDIDO.md` y `evidencias/seguimiento-pedido/expo-go-aceptacion.json`.
+
+## Estado vigente: Seguimiento con distintos estados aceptados (7/8)
+
+El usuario confirmó en Expo Go: «Amigo, Confirmado, Completado y Cancelado muestran su estado y recorrido correctos. Actualizar funciona en los tres y las referencias coinciden con Historial. ¿Qué marco en Trello y qué sigue?». Se acepta 7; puede marcar **Probar distintos estados del pedido** y mantener En progreso. Los criterios 1-7 están aceptados y **Revisar el código** (8) espera a ZenaidaGR. La evidencia es su reporte, sin observación del dispositivo ni acceso a Trello por el agente.
+
+Se registra en un commit documental propio después de `6791928` (error/reintento), `4d3007e` (no encontrado), `3a4fb9e` (consulta/actualización) y `c1ac906` (API). No cambia implementación, servidor, servicios, entornos, dependencias, identidades, stash o copia de Zenaida. TypeScript/lint se verifican; suites, Doctor y exportaciones mantienen su alcance histórico. Sin push o PR.
+
+Sigue cerrar por completo y reabrir Expo Go con backend y Metro activos, esperar sesión y consultar un pedido conocido desde Historial y Seguimiento. Después cerrar sesión y comprobar que ambas vistas piden ingresar sin datos anteriores, reingresar con la misma cuenta y recuperar/actualizar el pedido. No exigir que la pantalla o selección sobrevivan al cierre. Este último recorrido espera el reporte y no añade un criterio de Trello; después se preparará el PR hacia develop para revisión real de Zenaida solo cuando el usuario lo solicite. Consultar `CONEXION-SEGUIMIENTO-PEDIDO.md` y `evidencias/seguimiento-pedido/expo-go-aceptacion.json`.

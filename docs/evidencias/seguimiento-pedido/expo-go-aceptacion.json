@@ -46,7 +46,7 @@
     "snapshotScope": "Instantánea histórica de la etapa de diseño aceptada; la conexión posterior se registra en connection"
   },
   "functionalAcceptance": {
-    "acceptedCriteria": 6,
+    "acceptedCriteria": 7,
     "totalCriteria": 8,
     "acceptedCriterionIds": [
       1,
@@ -54,13 +54,13 @@
       3,
       4,
       5,
-      6
+      6,
+      7
     ],
     "pendingCriterionIds": [
-      7,
       8
     ],
-    "status": "Consulta, actualización, no encontrado y error/reintento aceptados por el usuario en Expo Go: 6/8. Distintos estados y revisión real pendientes.",
+    "status": "Criterios 1-7 aceptados por reportes del usuario en Expo Go, incluidos Confirmado, Completado y Cancelado con actualización y referencias correctas: 7/8. Última prueba de reapertura/sesión y revisión real del código pendientes.",
     "confirmations": [
       {
         "date": "2026-10-20",
@@ -93,6 +93,16 @@
           6
         ],
         "scope": "Actualizar y Reintentar fallaron conservando los datos; tras reiniciar el backend, Reintentar recuperó el mismo pedido y retiró el aviso. No acredita todavía distintos estados o reapertura/sesión.",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario",
+        "quote": "Amigo, Confirmado, Completado y Cancelado muestran su estado y recorrido correctos. Actualizar funciona en los tres y las referencias coinciden con Historial. ¿Qué marco en Trello y qué sigue?",
+        "criterionIds": [
+          7
+        ],
+        "scope": "Confirmado, Completado y Cancelado muestran estado y recorrido correctos; actualización en los tres y referencias coincidentes con Historial. No acredita todavía reapertura/salida/reingreso ni revisión formal.",
         "agentObservedDevice": false
       }
     ],
@@ -130,7 +140,7 @@
       {
         "id": 7,
         "text": "Probar distintos estados del pedido",
-        "accepted": false
+        "accepted": true
       },
       {
         "id": 8,
@@ -145,14 +155,15 @@
     "agentModifiedBoard": false,
     "userConfirmedCriteriaMarked": false,
     "observedInUserScreenshot": "Ocho criterios sin marcar",
-    "guidance": "El usuario puede marcar Manejar errores de conexión (6), además de 1-5 ya aceptados. Mantener En progreso y dejar 7 y 8 pendientes. El agente no verificó el marcado en Trello.",
+    "guidance": "El usuario puede marcar Probar distintos estados del pedido (7), además de 1-6 aceptados. Mantener En progreso y Revisar el código (8) pendiente para Zenaida. No hay punto independiente de reapertura/sesión. El agente no verificó los marcados en Trello.",
     "recommendedCriterionIds": [
       1,
       2,
       3,
       4,
       5,
-      6
+      6,
+      7
     ]
   },
   "architecture": {
@@ -186,9 +197,10 @@
     "acceptance": {
       "separateCommitPlanned": true,
       "requiresActualUserReport": true,
-      "currentCommitMessage": "docs(orders): aceptar error y reintento de seguimiento en Expo Go",
+      "currentCommitMessage": "docs(orders): aceptar estados de seguimiento en Expo Go",
       "positiveFlowCommit": "3a4fb9e",
-      "notFoundCommit": "4d3007e"
+      "notFoundCommit": "4d3007e",
+      "connectionRetryCommit": "6791928"
     },
     "conventionSource": "../../VERSIONAMIENTO.md",
     "designAcceptance": {
@@ -206,9 +218,9 @@
     "futureReviewer": "ZenaidaGR",
     "futureBase": "develop"
   },
-  "nextStep": "Probar desde Historial los pedidos disponibles en Confirmado, Completado y Cancelado; revisar estado actual, línea de progreso, fechas reales o ausentes y Actualizar seguimiento. Esperar reporte antes de aceptar 7. Después reapertura/salida/reingreso y revisión real de Zenaida (8) en futuro PR autorizado.",
+  "nextStep": "Con backend y Metro activos, cerrar Expo Go por completo y reabrir el proyecto David; abrir Historial y Seguimiento de un pedido conocido. Cerrar sesión y verificar acceso de login sin pedidos previos. Reingresar con la misma cuenta, recuperar ese pedido y actualizar. Esperar reporte antes del futuro PR autorizado para revisión de Zenaida (8).",
   "limitations": [
-    "El usuario reportó consulta, actualización, no encontrado y error/reintento en Expo Go: 6/8. Reportó disponibilidad de tres estados, pero sus pruebas siguen pendientes. El agente no observó el dispositivo ni inspeccionó el tráfico HTTP del teléfono.",
+    "El usuario reportó los criterios 1-7 en Expo Go, incluidos tres estados y sus actualizaciones. Reapertura/sesión y revisión formal (8) siguen pendientes. El agente no observó el dispositivo ni inspeccionó su tráfico HTTP.",
     "Los datos y modos del diseño son una instantánea histórica; la implementación actual consulta la API.",
     "La QA web usa datos sintéticos y las pruebas HTTP usan servidores loopback; no acreditan una consulta autenticada al servicio Nest/MongoDB real.",
     "No se agregaron escrituras de pedidos, almacenamiento, dependencias ni cambios al backend.",
@@ -217,7 +229,7 @@
   ],
   "connection": {
     "implemented": true,
-    "status": "partial-native-acceptance-6-of-8",
+    "status": "partial-native-acceptance-7-of-8-session-check-pending",
     "technicalVerification": "verificacion-api.json",
     "guide": "../../CONEXION-SEGUIMIENTO-PEDIDO.md",
     "endpointsInOrder": [
@@ -236,7 +248,8 @@
       3,
       4,
       5,
-      6
+      6,
+      7
     ]
   },
   "stateTestPlanning": {
@@ -249,8 +262,17 @@
       "cancelled"
     ],
     "interpretationCommunicatedToUser": true,
-    "functionalStateTestAccepted": false,
+    "functionalStateTestAccepted": true,
     "criterionId": 7,
-    "scope": "Disponibilidad reportada de esos tres estados; no es una confirmación de que se probaron sus pantallas o actualizaciones."
+    "scope": "La disponibilidad inicial se complementa con el nuevo reporte funcional de Confirmado, Completado y Cancelado, registrado en confirmations para el criterio 7."
+  },
+  "sessionAcceptance": {
+    "status": "pending-user-report",
+    "reopenAccepted": false,
+    "signOutHidesOrderAccepted": false,
+    "sameAccountSignInAccepted": false,
+    "independentTrelloCriterion": false,
+    "agentObservedDevice": false,
+    "scope": "Comprobar restauración de sesión y lectura del pedido al reabrir, ausencia de datos tras salir y nueva lectura al ingresar con la misma cuenta; no exigir restauración exacta de la pantalla o selección."
   }
 }
