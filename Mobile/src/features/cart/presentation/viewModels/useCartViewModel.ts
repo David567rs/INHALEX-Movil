@@ -39,8 +39,8 @@ export function useCartViewModel() {
     subtotalLabel: `${formatter.format(cart.cart?.subtotal ?? 0)} ${currency}`,
     totalLabel: `${formatter.format(cart.cart?.subtotal ?? 0)} ${currency}`,
     busy: cart.status === 'checking' || cart.status === 'loading',
-    canMutate: cart.loaded && cart.status === 'ready' && !cart.refreshing && cart.pendingProductId === null,
-    canRefresh: !cart.refreshing && cart.pendingProductId === null,
+    canMutate: cart.loaded && cart.status === 'ready' && !cart.refreshing && cart.pendingProductId === null && !cart.checkoutLocked,
+    canRefresh: !cart.refreshing && cart.pendingProductId === null && !cart.checkoutLocked,
     restoreSession: session.restore, prepareSignIn, openingSignIn,
   };
 }

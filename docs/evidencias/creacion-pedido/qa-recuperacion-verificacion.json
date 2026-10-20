@@ -1,0 +1,164 @@
+{
+  "activity": "Creación de pedido - prueba temporal de recuperación",
+  "verifiedAt": "2026-10-20T01:48:51.7160898Z",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+  "branch": "feature/creacion-pedido",
+  "baseCommit": "1808ba1cbcd8940c84759395c6818ee950aa140d",
+  "status": "Implementada y verificada en web; pendiente de prueba del usuario en Expo Go",
+  "temporary": true,
+  "removeBeforePullRequest": true,
+  "route": "/qa-recuperacion-pedido",
+  "entry": "Bolsa → Revisar pedido pendiente → Prueba de recuperación · simulada",
+  "developmentOnly": true,
+  "isolation": {
+    "data": "Cuenta, direcciones, contacto, productos, pedidos y backend sintéticos",
+    "transport": "HttpClient y Repository reales con fetch inyectado sin fallback a red; origen qa.invalid nunca se consulta",
+    "session": "AuthSession sintética sin leer tokens o cuenta real",
+    "nativeStorage": "SecureOrderAttemptStore QA compartido por módulo, con claves inhalex.qa.order.attempt.<syntheticAccount> y keychainService inhalex.order.qa",
+    "webStorage": "MemoryOrderAttemptStore por runtime, sin localStorage o sessionStorage",
+    "externalNavigation": "Suprimida dentro de la vista de pedido simulada; solo Salir de la prueba abre la aplicación normal",
+    "realApiRequestsByHarness": false,
+    "realOrdersCreatedByAgent": false
+  },
+  "checks": {
+    "typecheck": {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    "lint": {
+      "command": "npm run lint",
+      "exitCode": 0
+    },
+    "regressionTests": {
+      "command": "npm test",
+      "passed": 558,
+      "failed": 0,
+      "newTests": 0,
+      "exitCode": 0,
+      "scope": "Suite de la implementación; los escenarios nuevos del montaje temporal se verificaron mediante UI web, no se añadieron tests unitarios de la herramienta temporal"
+    },
+    "android": {
+      "command": "npm run export:android",
+      "modules": 1502,
+      "exitCode": 0,
+      "output": "Mobile/dist/android"
+    },
+    "diffCheck": {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  },
+  "browserQa": {
+    "surface": "Navegador IAB, desarrollo web; almacenamiento en memoria",
+    "viewportChecks": [
+      {
+        "width": 397,
+        "height": 1000,
+        "horizontalOverflow": 0
+      },
+      {
+        "width": 320,
+        "height": 820,
+        "horizontalOverflow": 0
+      }
+    ],
+    "consoleErrors": [],
+    "entryAndExit": "La ruta normal anónima permite abrir la prueba; Salir restaura pantalla real con Iniciar sesión, sin fixtures",
+    "lostConfirmation": {
+      "initial": "0 pedidos, 0 confirmaciones, 2 unidades",
+      "afterSimulatedLoss": "1 pedido, 1 confirmación, 2 unidades; La confirmación está pendiente",
+      "afterNewControllers": "El aviso pendiente se recupera sin otro POST",
+      "afterExplicitRetry": "1 pedido, 2 confirmaciones, 0 unidades; recibo En revisión"
+    },
+    "cleanupFailure": {
+      "afterFailure": "1 pedido, 1 confirmación, 2 unidades; recibo preservado y Reintentar actualización de bolsa",
+      "afterNewControllers": "Recibo confirmado y actualización pendiente, sin otro POST",
+      "afterExplicitRetry": "1 pedido, 1 confirmación, 0 unidades; recuperación completada"
+    },
+    "screenshots": [
+      "qa-recuperacion-respuesta-web.png",
+      "qa-recuperacion-limpieza-web.png"
+    ]
+  },
+  "limitations": [
+    "No se observó el teléfono ni se probó SecureStore físico. Los resultados nativos requieren reporte del usuario.",
+    "Reabrir prueba crea controladores nuevos conservando backend y store del runtime. No cierra Expo Go ni simula continuidad del servidor al reiniciar el proceso.",
+    "Los pedidos son ficticios y la prueba no acredita fallos reales de la API, inventario o MongoDB.",
+    "La sesión web y el store QA web se pierden al recargar. La herramienta no promete recuperación nativa de su backend en memoria tras app kill.",
+    "No modifica el contrato del backend o el límite de concurrencia GET/DELETE entre dispositivos."
+  ],
+  "preservation": {
+    "copies": [
+      {
+        "path": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+        "branch": "feature/creacion-pedido",
+        "head": "1808ba1cbcd8940c84759395c6818ee950aa140d",
+        "envPreserved": true,
+        "dependenciesPreserved": true,
+        "namePreserved": true,
+        "emailPreserved": true,
+        "credentialUserPreserved": true,
+        "stash": [],
+        "clean": false
+      },
+      {
+        "path": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+        "branch": "develop",
+        "head": "1808ba1cbcd8940c84759395c6818ee950aa140d",
+        "envPreserved": true,
+        "dependenciesPreserved": true,
+        "namePreserved": true,
+        "emailPreserved": true,
+        "credentialUserPreserved": true,
+        "stash": [
+          "81196109270f00fa7edf03a8a8ec6f8bdc963131"
+        ],
+        "clean": true
+      }
+    ],
+    "services": [
+      {
+        "LocalPort": 8083,
+        "OwningProcess": 13476
+      },
+      {
+        "LocalPort": 8082,
+        "OwningProcess": 28288
+      },
+      {
+        "LocalPort": 3200,
+        "OwningProcess": 30692
+      }
+    ],
+    "protectedChanges": [],
+    "rollbackScreenBackup": "C:\\Users\\David\\AppData\\Local\\Temp\\inhalex-order-screen-before-recovery-qa.tsx",
+    "rollbackScreenBackupHash": "C1C7E97E1580E4896942E377597EAD41949F4E1CEEC0A2EE5942BF45AA776037",
+    "temporaryScreenHash": "A4B1C802B72F1BB16FD410210670FB10A660FDEDCD2263BF25D15DCF4EEF8F8C"
+  },
+  "removal": {
+    "files": [
+      "Mobile/src/app/qa-recuperacion-pedido.tsx",
+      "Mobile/src/features/orderCreation/testing/OrderRecoveryQaScreen.tsx",
+      "Mobile/src/features/orderCreation/testing/createOrderRecoveryQaRuntime.ts",
+      "Mobile/src/features/orderCreation/testing/createOrderRecoveryQaStore.ts",
+      "Mobile/src/features/orderCreation/testing/createOrderRecoveryQaStore.web.ts"
+    ],
+    "screen": "Retirar enlace y props temporales showRecoveryQaLink/allowExternalNavigation/allowReturn de OrderCreationScreen",
+    "backup": "C:\\Users\\David\\AppData\\Local\\Temp\\inhalex-order-screen-before-recovery-qa.tsx",
+    "backupHash": "C1C7E97E1580E4896942E377597EAD41949F4E1CEEC0A2EE5942BF45AA776037",
+    "expectedTemporaryScreenHash": "A4B1C802B72F1BB16FD410210670FB10A660FDEDCD2263BF25D15DCF4EEF8F8C",
+    "rule": "Antes de restaurar el backup verificar hash del screen actual; si cambió, fusionar manualmente para preservar nuevas ediciones. No restaurar checkout entero."
+  },
+  "acceptance": {
+    "accepted": 9,
+    "total": 11,
+    "pending": [
+      10,
+      11
+    ],
+    "phoneObserved": false,
+    "trelloRead": false,
+    "trelloModified": false
+  },
+  "nextStep": "En Expo Go de David8082, probar únicamente respuesta perdida: entrar a prueba, Probar respuesta perdida, Confirmar ejemplo, aviso pendiente y 1 pedido; Reabrir prueba sin cerrar Expo Go; Reintentar confirmación; recibo y contadores1/2/0. Esperar reporte antes del segundo escenario."
+}

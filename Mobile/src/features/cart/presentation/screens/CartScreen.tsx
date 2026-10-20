@@ -36,6 +36,14 @@ export function CartScreen() {
 
       </Reveal>
 
+      {vm.checkoutLocked && <Text accessibilityLiveRegion="polite" style={styles.notice}>Estamos confirmando tu pedido. Tu bolsa se actualizará al terminar.</Text>}
+      {(vm.status === 'error' || vm.loaded && vm.items.length === 0) && !needsSession && !recovering && <Pressable
+        accessibilityRole="button" accessibilityLabel="Revisar pedido pendiente"
+        onPress={() => router.push('/creacion-pedido')} style={styles.refreshButton}>
+        <Ionicons accessible={false} name="receipt-outline" size={18} color={colors.primaryDark} />
+        <Text style={styles.refreshText}>Revisar pedido pendiente</Text>
+      </Pressable>}
+
       {needsSession ? <StatusPanel title={vm.status === 'session-expired' ? 'Vuelve a iniciar sesión' : 'Tu selección te espera'}
         message={vm.status === 'session-expired' ? 'Inicia sesión de nuevo para consultar tu bolsa.' : 'Inicia sesión para agregar productos y preparar tu selección.'}
         actionLabel={vm.openingSignIn ? 'Abriendo…' : 'Iniciar sesión'} actionBusy={vm.openingSignIn}
@@ -91,12 +99,13 @@ export function CartScreen() {
               <View style={styles.totalCopy}><Text style={styles.totalTitle}>Total de productos</Text><Text style={styles.totalHint}>Solo productos · no incluye envío</Text></View>
               <Text style={styles.totalPrice}>{vm.totalLabel}</Text>
             </View>
-            <Pressable accessibilityRole="button" accessibilityLabel="Continuar con mi pedido, disponible en una etapa posterior"
-              accessibilityState={{ disabled: true }} disabled style={styles.continueButton}>
+            <Pressable accessibilityRole="button" accessibilityLabel="Continuar con mi pedido"
+              accessibilityState={{ disabled: !vm.canMutate }} disabled={!vm.canMutate}
+              onPress={() => router.push('/creacion-pedido')} style={[styles.continueButton, !vm.canMutate && styles.disabled]}>
               <Text style={styles.continueText}>Continuar con mi pedido</Text>
               <Ionicons accessible={false} name="arrow-forward" size={18} color={colors.white} />
             </Pressable>
-            <Text style={styles.summaryHint}>La compra y el envío se habilitarán en una etapa posterior.</Text>
+            <Text style={styles.summaryHint}>Revisa tus productos y tu dirección antes de confirmar.</Text>
           </View>
           <View style={styles.stageNote}>
             <View accessible={false} aria-hidden accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
@@ -186,7 +195,7 @@ const styles = StyleSheet.create({
   totalTitle: { color: colors.primaryDark, fontSize: 14, fontWeight: '800', lineHeight: 22 },
   totalHint: { color: colors.textMuted, fontSize: 10, lineHeight: 17, marginTop: 2 },
   totalPrice: { color: colors.primaryDark, flexShrink: 1, fontSize: 22, fontWeight: '800', lineHeight: 30 },
-  continueButton: { alignItems: 'center', backgroundColor: colors.primaryDark, borderRadius: 14, flexDirection: 'row', flexWrap: 'wrap', gap: 9, justifyContent: 'center', minHeight: 52, opacity: 0.55, padding: 14 },
+  continueButton: { alignItems: 'center', backgroundColor: colors.primaryDark, borderRadius: 14, flexDirection: 'row', flexWrap: 'wrap', gap: 9, justifyContent: 'center', minHeight: 52, padding: 14 },
   continueText: { color: colors.white, flexShrink: 1, fontSize: 12, fontWeight: '800', lineHeight: 21, textAlign: 'center' },
   summaryHint: { color: colors.textMuted, fontSize: 10, lineHeight: 17, marginTop: 11, textAlign: 'center' },
   stageNote: { alignItems: 'flex-start', flexDirection: 'row', gap: 7, marginBottom: 19, marginTop: 17 },

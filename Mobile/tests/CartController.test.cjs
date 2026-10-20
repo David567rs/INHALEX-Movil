@@ -407,3 +407,47 @@ test('quantity limits come from real domain actions: 1 and 25 pass, invalid valu
   }
   controller.stop();
 });
+
+test('checkout serializes cart operations and publishes only a current confirmed cart', async () => {
+  let reads = 0, writes = 0;
+  const { controller } = setup({ list: async () => { reads++; return cart([[A, 2]]); },
+    add: async () => { writes++; return cart([[A, 3]]); },
+    remove: async () => { writes++; return cart(); },
+    updateQuantity: async () => { writes++; return cart([[A, 1]]); } });
+  controller.start(); await tick();
+  const lease = controller.acquireCheckout();
+  assert.ok(lease && lease.isCurrent());
+  assert.equal(controller.getSnapshot().checkoutLocked, true);
+  assert.equal(controller.acquireCheckout(), null);
+  await controller.refresh(); await controller.add(product()); await controller.remove(A); await controller.updateQuantity(A, 1);
+  assert.equal(reads, 1); assert.equal(writes, 0);
+  const confirmed = cart(); lease.release(confirmed);
+  assert.equal(lease.isCurrent(), false);
+  assert.equal(controller.getSnapshot().checkoutLocked, false);
+  assert.equal(controller.getSnapshot().cart.totalItems, 0);
+  lease.release(cart([[A, 9]]));
+  assert.equal(controller.getSnapshot().cart.totalItems, 0);
+  controller.stop();
+});
+
+test('a checkout lease cannot overwrite a new account or survive stop', async () => {
+  const { controller, session } = setup({ list: async () => cart([[A, 2]]) });
+  controller.start(); await tick();
+  const old = controller.acquireCheckout(); assert.ok(old);
+  session.publish({ status: 'anonymous', user: null, message: null });
+  assert.equal(old.isCurrent(), false); old.release(cart([[A, 9]]));
+  assert.equal(controller.getSnapshot().cart, null);
+  session.publish(authenticated('user-b')); await tick();
+  const current = controller.acquireCheckout(); assert.ok(current);
+  old.release(cart()); assert.equal(current.isCurrent(), true);
+  controller.stop(); assert.equal(current.isCurrent(), false);
+  current.release(cart()); assert.equal(controller.getSnapshot().cart, null);
+});
+
+test('checkout cannot acquire while cart I/O is pending or the session is expired', async () => {
+  const pending = deferred();
+  const { controller } = setup({ list: async () => pending.promise });
+  controller.start(); assert.equal(controller.acquireCheckout(), null);
+  pending.reject(new CartError('Inicia sesión.', 'unauthorized')); await tick();
+  assert.equal(controller.acquireCheckout(), null); controller.stop();
+});

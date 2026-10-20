@@ -28,7 +28,7 @@ function hasUnsafeCharacters(value: string): boolean {
 }
 
 /** Frontend paths stay paths: the presentation layer resolves packaged assets without using the API origin. */
-function mapImage(value: unknown): string | null {
+export function mapCatalogImage(value: unknown): string | null {
   if (typeof value !== 'string' || !value || value.includes('\\') || hasUnsafeCharacters(value)) return null;
   let decoded: string;
   try { decoded = decodeURIComponent(value); }
@@ -74,7 +74,7 @@ export function mapCatalogProduct(value: unknown, now = Date.now()): CatalogProd
     aromas: [...value.aromas] as string[],
     price: hasPromotion ? value.promoPrice as number : value.price,
     currency: value.currency,
-    image: mapImage(value.image),
+    image: mapCatalogImage(value.image),
     inStock: value.inStock,
     originalPrice: hasPromotion ? value.price : null,
   };

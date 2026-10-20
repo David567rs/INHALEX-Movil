@@ -30,6 +30,13 @@ import { ApiShippingAddressRepository } from '../features/shippingAddresses/data
 import { ShippingAddressError } from '../features/shippingAddresses/domain/errors/ShippingAddressError';
 import { createShippingAddressActions, type ShippingAddressActions } from '../features/shippingAddresses/domain/useCases/shippingAddressActions';
 import { createShippingAddressesController } from '../features/shippingAddresses/presentation/state/createShippingAddressesController';
+import { randomUUID } from 'expo-crypto';
+import { ApiOrderCreationRepository } from '../features/orderCreation/data/repositories/ApiOrderCreationRepository';
+import { createOrderAttemptStore } from '../features/orderCreation/data/storage/createOrderAttemptStore';
+import { OrderCreationError } from '../features/orderCreation/domain/errors/OrderCreationError';
+import type { OrderCreationActions } from '../features/orderCreation/domain/repositories/OrderCreationRepository';
+import { createOrderCreationActions } from '../features/orderCreation/domain/useCases/orderCreationActions';
+import { createOrderCreationController } from '../features/orderCreation/presentation/state/createOrderCreationController';
 
 export interface ApplicationServicesOptions {
   environment?: Environment;
@@ -179,8 +186,33 @@ export function createApplicationRuntime(options: Omit<ApplicationServicesOption
     select: async (id, requestOptions) => getAddressActions().select(id, requestOptions),
     remove: async (id, requestOptions) => getAddressActions().remove(id, requestOptions),
   });
-  // No transport or credential is exposed to the React tree.
-  return Object.freeze({ session: auth.session, favorites, cart, profile, shippingAddresses });
+  let orderActions: OrderCreationActions | undefined;
+  function getOrderActions(): OrderCreationActions {
+    if (!orderActions) {
+      try {
+        const environment = options.environment ?? readEnvironment();
+        const client = new HttpClient({ baseUrl: environment.apiUrl, isDevelopment: environment.isDevelopment,
+          requestTimeoutMs: environment.requestTimeoutMs, fetch: options.fetch, getAccessToken: auth.getAccessToken });
+        orderActions = createOrderCreationActions(new ApiOrderCreationRepository(client, {
+          cart: { list: (requestOptions) => getCartActions().list(requestOptions) },
+          addresses: { list: (requestOptions) => getAddressActions().list(requestOptions) },
+          profile: { get: (requestOptions) => getProfileActions().get(requestOptions) },
+        }));
+      } catch {
+        throw new OrderCreationError('Los pedidos no están disponibles en este momento. Inténtalo más tarde.', 'configuration');
+      }
+    }
+    return orderActions;
+  }
+  const orderCreation = createOrderCreationController(auth.authorizationSession, {
+    load: (requestOptions) => getOrderActions().load(requestOptions),
+    preview: (items, requestOptions) => getOrderActions().preview(items, requestOptions),
+    confirm: (input, key, requestOptions) => getOrderActions().confirm(input, key, requestOptions),
+    readCart: (requestOptions) => getOrderActions().readCart(requestOptions),
+    clearCart: (requestOptions) => getOrderActions().clearCart(requestOptions),
+  }, { attemptStore: createOrderAttemptStore(), createKey: randomUUID, cart });
+  // No transport, recovery key or credential is exposed to the React tree.
+  return Object.freeze({ session: auth.session, favorites, cart, profile, shippingAddresses, orderCreation });
 }
 
 /** Defer configuration until submission so navigation never depends on the API. */

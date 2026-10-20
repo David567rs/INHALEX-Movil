@@ -1,0 +1,209 @@
+{
+  "activity": "Creación de pedido - conexión a la API",
+  "verifiedAt": "2026-10-20T01:17:41.9069879Z",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+  "branch": "feature/creacion-pedido",
+  "baseCommit": "1808ba1cbcd8940c84759395c6818ee950aa140d",
+  "scope": "MVVM, Repository, aplicación móvil y pruebas; backend sin modificar. Sin commit, push o PR.",
+  "checks": {
+    "typecheck": {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    "lint": {
+      "command": "npm run lint",
+      "exitCode": 0
+    },
+    "tests": {
+      "command": "npm test",
+      "exitCode": 0,
+      "passed": 558,
+      "failed": 0,
+      "baseline": 485,
+      "new": 73
+    },
+    "doctor": {
+      "command": "npx expo-doctor",
+      "version": "1.21.5",
+      "exitCode": 0,
+      "passed": 21,
+      "total": 21
+    },
+    "android": {
+      "command": "npm run export:android",
+      "exitCode": 0,
+      "modules": 1498,
+      "output": "Mobile/dist/android"
+    },
+    "web": {
+      "command": "npm run export:web",
+      "exitCode": 0,
+      "modules": 1047,
+      "output": "Mobile/dist/web"
+    },
+    "diffCheck": {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  },
+  "newTests": {
+    "domain": 8,
+    "repository": 15,
+    "attemptStore": 12,
+    "controller": 26,
+    "realLoopbackHttpIntegration": 7,
+    "sharedCartLease": 3,
+    "httpIdempotencyHeader": 2
+  },
+  "httpIntegration": {
+    "transport": "Sockets HTTP reales en loopback; servidor, sesión, cuenta e inventario sintéticos. No API real ni MongoDB.",
+    "scenarios": [
+      "Contexto autenticado, preview, confirmación y limpieza validada",
+      "Respuesta perdida conserva clave y recupera un pedido",
+      "Conflicto 409 actualiza resumen sin otro POST automático",
+      "Fallo de lectura o respuesta perdida de DELETE conserva recibo y reintenta solo limpieza",
+      "Bolsa modificada o cantidades ajustadas se conservan",
+      "Sesión 401 bloquea confirmación",
+      "Respuesta de confirmación malformada conserva intento incierto"
+    ]
+  },
+  "webQa": {
+    "url": "http://localhost:8082/qa-pedido",
+    "temporaryRouteRemoved": true,
+    "realUiControllersRepositories": true,
+    "transportAndSession": "Simulados en memoria, fetch inyectado; ningún POST real",
+    "cssViewports": [
+      {
+        "width": 320,
+        "height": 820,
+        "horizontalOverflow": 0
+      },
+      {
+        "width": 397,
+        "height": 847,
+        "horizontalOverflow": 0
+      }
+    ],
+    "scenarios": [
+      "Contacto inválido: error local y cero POST",
+      "Positivo: 1 pedido, 1 POST y 1 DELETE, recibo En revisión",
+      "Respuesta perdida: 1 pedido, 2 POST misma clave, 1 DELETE tras reintento explícito",
+      "Limpieza perdida: recibo conservado; reintento GET conserva contadores 1 POST/1 DELETE",
+      "Sin dirección: Confirmar deshabilitado",
+      "Bolsa vacía: Explorar catálogo",
+      "Conflicto: 0 pedidos, 1 POST, resumen actualizado para revisión"
+    ],
+    "consoleErrors": [],
+    "realAnonymousRoute": "Recarga /creacion-pedido: pide Iniciar sesión, sin datos de ejemplo",
+    "screenshots": [
+      "api-web-resumen-397-simulado.png",
+      "api-web-recibo-simulado.png",
+      "api-web-pendiente-simulado.png"
+    ]
+  },
+  "preservation": {
+    "copies": [
+      {
+        "path": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+        "branch": "feature/creacion-pedido",
+        "head": "1808ba1cbcd8940c84759395c6818ee950aa140d",
+        "status": [
+          " M AGENTS.md",
+          " M Mobile/README.md",
+          " M Mobile/src/app/_layout.tsx",
+          " M Mobile/src/bootstrap/createApplicationServices.ts",
+          " M Mobile/src/core/network/HttpClient.ts",
+          " M Mobile/src/features/cart/presentation/screens/CartScreen.tsx",
+          " M Mobile/src/features/cart/presentation/state/createCartController.ts",
+          " M Mobile/src/features/cart/presentation/viewModels/useCartViewModel.ts",
+          " M Mobile/src/features/catalog/data/mappers/mapCatalogPage.ts",
+          " M Mobile/tests/CartController.test.cjs",
+          " M Mobile/tests/HttpClient.test.cjs",
+          " M Mobile/tests/register-typescript.cjs",
+          " M Mobile/tests/run-tests.cjs",
+          " M docs/CONEXION-DIRECCIONES-ENVIO.md",
+          " M docs/PLAN-DE-TRABAJO.md",
+          " M docs/evidencias/direcciones-envio/expo-go-aceptacion.json",
+          "?? Mobile/src/app/creacion-pedido.tsx",
+          "?? Mobile/src/features/orderCreation/",
+          "?? Mobile/tests/OrderAttemptStore.test.cjs",
+          "?? Mobile/tests/OrderCreationController.test.cjs",
+          "?? Mobile/tests/OrderCreationDomain.test.cjs",
+          "?? Mobile/tests/OrderCreationHttpIntegration.test.cjs",
+          "?? Mobile/tests/OrderCreationRepository.test.cjs",
+          "?? docs/CONEXION-CREACION-PEDIDO.md",
+          "?? docs/DISENO-CREACION-PEDIDO.md",
+          "?? docs/evidencias/creacion-pedido/",
+          "?? docs/evidencias/direcciones-envio/integracion-pr13.json"
+        ],
+        "stash": [],
+        "envPreserved": true,
+        "dependenciesPreserved": true,
+        "namePreserved": true,
+        "emailPreserved": true,
+        "credentialUserPreserved": true
+      },
+      {
+        "path": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+        "branch": "develop",
+        "head": "1808ba1cbcd8940c84759395c6818ee950aa140d",
+        "status": [],
+        "stash": [
+          "81196109270f00fa7edf03a8a8ec6f8bdc963131"
+        ],
+        "envPreserved": true,
+        "dependenciesPreserved": true,
+        "namePreserved": true,
+        "emailPreserved": true,
+        "credentialUserPreserved": true
+      }
+    ],
+    "services": [
+      {
+        "LocalPort": 8083,
+        "OwningProcess": 13476
+      },
+      {
+        "LocalPort": 8082,
+        "OwningProcess": 28288
+      },
+      {
+        "LocalPort": 3200,
+        "OwningProcess": 30692
+      }
+    ],
+    "protectedChanges": [],
+    "qaRouteRemoved": true
+  },
+  "httpChecks": [
+    {
+      "url": "http://localhost:3200/api/products?limit=1",
+      "statusCode": 200
+    },
+    {
+      "url": "http://localhost:8082/status",
+      "statusCode": 200
+    },
+    {
+      "url": "http://localhost:8083/status",
+      "statusCode": 200
+    }
+  ],
+  "servicesStoppedByAgent": false,
+  "agentCreatedRealOrders": false,
+  "limitations": [
+    "La aceptación del diseño en Expo Go no acredita creación real. Los once criterios funcionales siguen pendientes.",
+    "QA web usa transporte/sesión sintéticos; no acredita SecureStore físico, TalkBack o comportamiento nativo.",
+    "Recuperación web solo en memoria; nativo utiliza SecureStore privado por cuenta.",
+    "GET seguido de DELETE no es atómico ante cambios desde otro dispositivo.",
+    "Backend busca idempotency key global antes de identidad; se usan UUID privados impredecibles sin afirmar un cambio de autorización del servidor."
+  ],
+  "nextStep": "Prueba positiva en Expo Go con David 8082, cuenta/dirección/productos de prueba: resumen, selección, contacto, confirmación, recibo y bolsa. Esperar reporte del usuario.",
+  "functionalAcceptance": {
+    "accepted": 0,
+    "total": 11,
+    "trelloReadByAgent": false,
+    "trelloModifiedByAgent": false,
+    "deviceObservedByAgent": false
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "number": 13,
+  "url": "https://github.com/David567rs/INHALEX-Movil/pull/13",
+  "title": "Implementar Direcciones de envío con MVVM y Repository",
+  "author": "David567rs",
+  "state": "closed",
+  "head": "feature/direcciones-envio",
+  "headSha": "b022340c3d4e0f222966c1d6f9bc57100a693fea",
+  "base": "develop",
+  "merged": true,
+  "mergedAt": "2026-10-19T22:07:59Z",
+  "mergedBy": "ZenaidaGR",
+  "mergeCommit": "1808ba1cbcd8940c84759395c6818ee950aa140d",
+  "reviews": [
+    {
+      "reviewer": "ZenaidaGR",
+      "state": "APPROVED",
+      "commit": "b022340c3d4e0f222966c1d6f9bc57100a693fea",
+      "submittedAt": "2026-10-19T22:07:51Z"
+    }
+  ],
+  "checks": [
+    {
+      "name": "Backend CI",
+      "status": "completed",
+      "conclusion": "success",
+      "sha": "b022340c3d4e0f222966c1d6f9bc57100a693fea",
+      "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39254776289",
+      "runId": 39254776289
+    },
+    {
+      "name": "Mobile CI",
+      "status": "completed",
+      "conclusion": "success",
+      "sha": "b022340c3d4e0f222966c1d6f9bc57100a693fea",
+      "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39254776306",
+      "runId": 39254776306
+    }
+  ],
+  "acceptedCriteria": 10,
+  "totalCriteria": 10,
+  "completedBy": "Aprobación formal de ZenaidaGR completa Revisar el código (10), seguida de merge. No añade pruebas nativas nuevas",
+  "evidenceSource": "Metadatos GitHub verificados y captura aportada por el usuario; sincronización posterior verificada de ambas copias",
+  "trelloReadByAgent": false,
+  "trelloModifiedByAgent": false,
+  "trelloUpdateConfirmedByUser": false,
+  "synchronization": {
+    "checkedAt": "2026-10-19T22:24:57.5790857Z",
+    "bothCheckoutsWereCleanOnDevelop": true,
+    "commit": "1808ba1cbcd8940c84759395c6818ee950aa140d",
+    "serverEnvironmentsPreserved": true,
+    "identitiesPreserved": true,
+    "zenaidaStashPreserved": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "servicesRestarted": false,
+    "source": "Recibo local inhalex-sincronizacion-pr13.json; instantánea de sincronización previa a crear feature/creacion-pedido"
+  }
+}

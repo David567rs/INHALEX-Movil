@@ -18,6 +18,8 @@ export interface HttpRequestOptions<T = unknown> {
   body?: unknown;
   signal?: AbortSignal;
   authenticated?: boolean;
+  /** Only order confirmation POSTs need this bounded, transport-owned header. */
+  idempotencyKey?: string;
   /** A data adapter can validate its DTO and return the mapped result. */
   parse?: (payload: unknown) => T;
 }
@@ -95,6 +97,10 @@ export class HttpClient {
     const url = requestUrl(this.baseUrl, path);
     const hasBody = options.body !== undefined;
     const method = options.method ?? 'GET';
+    if (options.idempotencyKey !== undefined && (method !== 'POST'
+      || typeof options.idempotencyKey !== 'string' || !/^[A-Za-z0-9_-]{16,100}$/.test(options.idempotencyKey))) {
+      throw new ApiError('La clave de la solicitud no es válida.', 'invalid-request');
+    }
     let body: string | undefined;
     try {
       if (hasBody && method === 'GET') throw new Error();
@@ -132,6 +138,7 @@ export class HttpClient {
           Accept: 'application/json',
           ...(hasBody ? { 'Content-Type': 'application/json' } : {}),
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          ...(options.idempotencyKey ? { 'Idempotency-Key': options.idempotencyKey } : {}),
         },
         body,
         signal: controller.signal,
