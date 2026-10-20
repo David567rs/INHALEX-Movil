@@ -1,8 +1,10 @@
 # Diseño de Avisos
 
+> **Snapshot histórico de diseño aceptado en Expo Go**, guardado en `1f383f3`. El usuario reportó exactamente: «Amigo, ya revisé el diseño de Avisos en Expo Go y me gustó. Sigamos con la conexión a la API en feature/avisos, manteniendo MVVM, Repository y commits por etapa.». La [aceptación vigente](evidencias/avisos/expo-go-aceptacion.json) acepta solo **Crear sección de avisos** (1): **1/9**. El agente no observó el teléfono ni accedió a Trello; el marcado no está confirmado. La conexión está autorizada en la misma rama, todavía no implementada. Lo que sigue conserva el alcance y checklist del snapshot visual anterior a ese reporte.
+
 La actividad actual comprende únicamente el diseño autorizado por el usuario en `C:\Users\David\Documents\INHALEX-Movil-Zenaida`, rama `feature/avisos`, desde `develop` `0f0b764a4ad78e40f12112c4debcd7982ccdfd2c`. ZenaidaGR es responsable y David567rs revisará el futuro PR hacia `develop`. El cierre anterior de Seguimiento se copió y guardó por separado en `6610412`, sin modificar David ni su evidencia de 8/8.
 
-La verificación técnica propia está aprobada; la aceptación visual en Expo Go sigue pendiente. El checklist mantiene **0/9**; este documento no afirma que el usuario ya haya revisado el diseño. El commit local propio de diseño se prepara después de registrar su evidencia, sin anticipar un SHA.
+La verificación técnica propia del diseño quedó aprobada y guardada en `1f383f3`. En ese snapshot el checklist estaba **0/9**, antes de la aceptación visual posterior registrada arriba. Las muestras y resultados técnicos siguientes permanecen como historia de diseño, sin validar la futura API.
 
 ## Alcance visual
 
@@ -79,6 +81,6 @@ Capturas **web sintéticas**: [bandeja 397 px](evidencias/avisos/bandeja-web-397
 
 Los hashes de entornos y paquetes/locks, los seis documentos de cierre locales de David, la identidad de Zenaida y el stash `81196109270f00fa7edf03a8a8ec6f8bdc963131` permanecieron intactos. Se conservaron los procesos de backend **3200 / PID33524**, Metro David **8082 / PID28288** y Metro Zenaida **8083 / PID13476**. Esta verificación no modifica servidor, sesión, dependencias o configuración.
 
-La [aceptación inicial](evidencias/avisos/expo-go-aceptacion.json) mantiene `accepted: false`, **0/9** y ausencia de observación del teléfono por el agente. No hay capturas nativas o reporte de Expo Go aceptado todavía; TalkBack y texto ampliado en dispositivo siguen pendientes. Las verificaciones de Seguimiento o de otras actividades conservan su alcance histórico: los resultados anteriores de esta sección corresponden a la ejecución propia de Avisos.
+La [aceptación vigente](evidencias/avisos/expo-go-aceptacion.json) ya registra `accepted: true` por el reporte textual del usuario y **1/9**, sin observación directa del teléfono por el agente. No hay capturas nativas aportadas; TalkBack y texto ampliado en dispositivo siguen pendientes. Las verificaciones anteriores son propias del diseño de Avisos, no de la conexión recién autorizada.
 
 El orden posterior es diseño verificado y commit local → revisión visual real → autorización de API → implementación y pruebas → aceptación funcional → PR hacia `develop` → revisión real de David567rs → integración. Se preservan David, servidor, sesión, servicios, entornos, dependencias, identidades y stash.

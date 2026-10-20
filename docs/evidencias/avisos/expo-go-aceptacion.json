@@ -6,13 +6,14 @@
   "baseCommit": "0f0b764a4ad78e40f12112c4debcd7982ccdfd2c",
   "priorActivityClosureCommit": "6610412",
   "date": "2026-10-20",
-  "source": "Solicitud de solo diseño y checklist de la captura aportada por el usuario en esta conversación",
+  "source": "Checklist de la captura y aceptación visual textual del usuario con autorización de conexión en esta conversación",
   "responsible": "ZenaidaGR",
   "futureReviewer": "David567rs",
   "design": {
     "authorized": true,
-    "accepted": false,
-    "status": "design-verified-awaiting-user-review",
+    "accepted": true,
+    "status": "accepted-by-user-in-expo-go",
+    "commit": "1f383f3",
     "agentObservedDevice": false,
     "apiConnected": false,
     "guide": "../../DISENO-AVISOS.md",
@@ -78,15 +79,15 @@
         "acceso-cuenta-web-320.png"
       ]
     },
-    "acceptedCriterionIds": [],
-    "userAcceptanceQuote": null
+    "acceptedCriterionIds": [1],
+    "userAcceptanceQuote": "Amigo, ya revisé el diseño de Avisos en Expo Go y me gustó. Sigamos con la conexión a la API en feature/avisos, manteniendo MVVM, Repository y commits por etapa.",
+    "snapshotScope": "Diseño local histórico aceptado; la conexión posterior está autorizada y se registra por separado"
   },
   "functionalAcceptance": {
-    "acceptedCriteria": 0,
+    "acceptedCriteria": 1,
     "totalCriteria": 9,
-    "acceptedCriterionIds": [],
+    "acceptedCriterionIds": [1],
     "pendingCriterionIds": [
-      1,
       2,
       3,
       4,
@@ -96,13 +97,22 @@
       8,
       9
     ],
-    "status": "0/9; diseño verificado técnicamente, aceptación visual en Expo Go y criterios funcionales pendientes",
-    "confirmations": [],
+    "status": "1/9; solo Crear sección de avisos aceptado por el usuario. Criterios 2-9 pendientes y API autorizada todavía no implementada.",
+    "confirmations": [
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario",
+        "quote": "Amigo, ya revisé el diseño de Avisos en Expo Go y me gustó. Sigamos con la conexión a la API en feature/avisos, manteniendo MVVM, Repository y commits por etapa.",
+        "criterionIds": [1],
+        "scope": "Aceptación visual del diseño y autorización de conexión; no acredita contenido, estados o errores reales de la API",
+        "agentObservedDevice": false
+      }
+    ],
     "criteria": [
       {
         "id": 1,
         "text": "Crear sección de avisos",
-        "accepted": false
+        "accepted": true
       },
       {
         "id": 2,
@@ -151,7 +161,7 @@
     "agentReadBoard": false,
     "agentModifiedBoard": false,
     "userConfirmedCriteriaMarked": false,
-    "guidance": "Mantener los nueve criterios pendientes. Después de aceptar el diseño real en Expo Go podrá marcarse solo Crear sección de avisos (1); los ejemplos no completan los criterios restantes."
+    "guidance": "Puede marcarse solo Crear sección de avisos (1), aceptado por el reporte del usuario. Mantener 2-9 pendientes; el agente no verificó el marcado en Trello."
   },
   "architecture": {
     "pattern": "MVVM y Repository",
@@ -167,7 +177,7 @@
       "Reseñas",
       "Confirmación de recepción"
     ],
-    "authorizedNow": "Solo diseño de Avisos",
+    "authorizedNow": "Conexión a la API de Avisos en la misma rama, con MVVM, Repository y commits por etapa",
     "otherActivitiesChecklistOrAssignmentInferred": false
   },
   "phaseCommits": {
@@ -182,11 +192,14 @@
       "localCommitAuthorized": true,
       "createAfterOwnVerification": true,
       "status": "verified-local-design-stage",
+      "commit": "1f383f3",
       "commitSubject": "feat(notices): diseñar bandeja de avisos",
       "commitReference": "Consultar Git: feat(notices): diseñar bandeja de avisos"
     },
     "api": {
-      "implementationAuthorizedYet": false,
+      "implementationAuthorizedYet": true,
+      "implemented": false,
+      "status": "authorized-not-implemented",
       "separateCommitRequiredWhenAuthorized": true
     },
     "acceptance": {
@@ -203,13 +216,20 @@
     "futureReviewer": "David567rs",
     "futureBase": "develop"
   },
-  "nextStep": "Guardar el commit local propio del diseño ya verificado y revisarlo en Expo Go de Zenaida 8083. Esperar el reporte real antes de aceptar Crear sección de avisos (1) o autorizar API.",
+  "connection": {
+    "authorized": true,
+    "implemented": false,
+    "status": "authorized-not-implemented",
+    "sameBranchRequired": "feature/avisos",
+    "futureReviewer": "David567rs"
+  },
+  "nextStep": "Guardar esta aceptación visual y autorización en un commit documental propio antes de iniciar el código de conexión a la API en la misma rama. Conservar MVVM, Repository y commits por etapa; criterios 2-9 pendientes.",
   "limitations": [
-    "No hay aceptación visual del usuario ni observación directa del dispositivo por el agente.",
+    "La aceptación visual procede del reporte del usuario, sin observación directa del dispositivo por el agente.",
     "La verificación técnica propia pasó; sus capturas y QA usan datos web sintéticos y no sustituyen Expo Go, TalkBack o texto ampliado nativo.",
     "Bandeja, vacío y error son escenas sintéticas sin consultas, fallos o reintentos reales de API.",
     "Abrir el detalle no marca como leído y no hay sincronización, persistencia o push.",
-    "El agente no leyó ni modificó Trello; todos los criterios permanecen pendientes.",
+    "El agente no leyó ni modificó Trello; solo el criterio 1 está aceptado y el marcado no está confirmado.",
     "No se asignan checklist, responsable o rama para Reseñas o Confirmación de recepción."
   ]
 }
