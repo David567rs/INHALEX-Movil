@@ -102,7 +102,7 @@ También se comprobaron bandeja vacía **0 elementos/0 no leídos**, vacío **0/
 
 Capturas **web**: [bandeja397](evidencias/avisos/api-bandeja-web-397.png), [bandeja320](evidencias/avisos/api-bandeja-web-320.png), [detalle leído](evidencias/avisos/api-detalle-leido-web-397.png), [error de marcado](evidencias/avisos/api-error-marcado-web-397.png), [conciliación pendiente](evidencias/avisos/api-conciliacion-pendiente-web-397.png), [vacío](evidencias/avisos/api-vacio-web-397.png), [filtro vacío](evidencias/avisos/api-filtro-vacio-web-320.png), [sesión sintética](evidencias/avisos/api-sesion-web-320.png), [ruta real anónima](evidencias/avisos/api-ruta-real-anonima-web-320.png) y [acceso desde Cuenta](evidencias/avisos/api-acceso-cuenta-web-320.png). Las ocho primeras usan datos y sesión sintéticos; las dos últimas verifican la ruta real sin cuenta autenticada: pide ingresar, vuelve a Cuenta con cinco pestañas y **Ver avisos de mi cuenta**, y mantiene la protección al reentrar. Ninguna es una captura de Expo Go ni prueba TalkBack o texto ampliado.
 
-La ruta temporal se retiró antes de exportar; la búsqueda de Preview, EJEMPLO o `qa-avisos` no halló muestras o rutas de QA en la funcionalidad, ruta o bootstrap del producto final.
+En el cierre de API `1b9d572`, la ruta de QA web se retiró antes de exportar; la búsqueda entonces no halló muestras o rutas de esa QA en la funcionalidad, ruta o bootstrap. La nueva prueba DEV de vacío descrita al final pertenece a una fase temporal posterior, separada de este snapshot técnico.
 
 Las ocho pruebas HTTP usan transporte real contra servidores efímeros de loopback y datos ficticios; no son una API autenticada Nest/MongoDB real. El único GET técnico al endpoint real `/api/notifications/me` fue sin Bearer y respondió **401**. El agente no realizó lecturas autenticadas o escrituras de avisos reales.
 
@@ -111,10 +111,41 @@ Se preservaron entornos y paquetes/locks, los seis documentos de cierre de David
 Se preservan las fases: cierre previo `6610412`, diseño `1f383f3` y aceptación/autorización `46c86aa`. La conexión verificada se guarda en su commit propio **`feat(notices): conectar avisos con la API`**, con SHA consultable en Git; cada aceptación posterior se registrará tras el reporte real. No se anticipan SHA de API, CI remota, aprobación o PR.
 
 Esta fase no modifica backend, paquetes, entorno, identidades, stash o la copia de David. No incorpora marcado masivo, push, polling o almacenamiento de avisos. El agente no observó Expo Go ni leyó o modificó Trello; TalkBack, texto ampliado y otras condiciones físicas tendrán evidencia específica si se prueban.
-## Estado vigente: recorrido positivo de Avisos aceptado (5/9)
+## Snapshot histórico: recorrido positivo de Avisos aceptado (5/9)
 
 El usuario reportó exactamente: «Amigo, ya aparecen mis avisos en Expo Go, pude abrir el detalle, marcar uno como leído y actualizar. ¿Qué marco en Trello y qué sigue?». Por el recorrido guiado previo se aceptan **Obtener avisos disponibles; Mostrar título, mensaje y fecha; Diferenciar avisos leídos y no leídos; Permitir consultar el detalle** (2-5), además de Crear sección de avisos (1). La actualización queda aceptada como parte del recorrido positivo; no crea un criterio adicional. Fuente textual del usuario, sin observación directa del teléfono o acceso a Trello por el agente. No se atribuye una prueba independiente del filtro Todos/No leídos ni de vacío o errores.
 
 Puede marcar 2-5 y mantener En progreso, **5/9**; el marcado no está confirmado. API `1b9d572`, diseño `1f383f3`, aceptación visual `46c86aa` y cierre `6610412` conservan sus fases. Este reporte se guarda en su propio commit documental. Las 735 pruebas, Doctor y exportaciones son resultados de la conexión anterior, sin repetirse por documentación ni convertirlos en pruebas nativas nuevas.
 
 A la consulta de una cuenta sin avisos, el usuario respondió exactamente «No, preparemos una prueba controlada». Se autoriza preparar un montaje temporal y aislado de bandeja vacía para Expo Go de Zenaida8083, sin borrar o marcar avisos reales, cambiar credenciales o modificar el backend. Ese montaje todavía no está preparado y **Mostrar mensaje si no existen avisos** (6) continúa pendiente hasta su reporte. No confundir el filtro No leídos vacío con la bandeja vacía. Después siguen errores/reintento, reapertura/sesión y el futuro PR solicitado para revisión real de David567rs. Conservar código funcional, ambas copias, servicios, entorno, dependencias, identidades y stash; no publicar o abrir PR por esta aceptación.
+
+## Prueba controlada temporal de bandeja vacía
+
+El usuario autorizó exactamente **«No, preparemos una prueba controlada»** al no disponer de otra cuenta sin avisos. El positivo real está guardado en `fcc0c72`; el montaje temporal ya está preparado y verificado técnicamente para revisar la interfaz vacía en Expo Go **8083**, sin borrar o marcar sus avisos, crear otra cuenta backend o modificar credenciales/base de datos. Avisos mantiene **5/9** y **Mostrar mensaje si no existen avisos** (6) sigue pendiente del reporte nativo.
+
+### Alcance del helper DEV
+
+La entrada **Probar bandeja vacía** solo se ofrece en desarrollo desde `/avisos` y abre `/qa-avisos-vacio`. Los dos archivos temporales de ruta/pantalla anidan `AuthSessionProvider` de sesión local y `NoticesProvider` de controlador/acciones locales alrededor de **NoticesScreen real**, conservando el ViewModel y comportamiento de la pantalla. El Repository local tipado se compone con `createNoticesActions`. Su consulta `list` espera aproximadamente 350 ms y devuelve **`{ items: [], unread: 0 }`**. `markRead` rechaza sin escribir; la bandeja vacía no ofrece un aviso que marcar.
+
+El banner **Prueba controlada** identifica el montaje. **Salir de la prueba** reemplaza la ruta por `/avisos`, volviendo al contexto normal. No se usa `HttpClient`, token, almacén o cuenta reales dentro del helper y no hay fallback al backend. **RootLayout y el runtime de autenticación productivo no se modifican.** El resto de la aplicación puede mantener sus lecturas normales; esta garantía no significa cero HTTP de toda la app.
+
+La fixture representa bandeja vacía **0 elementos/0 no leídos**, no el filtro No leídos sin coincidencias ni el caso de cero elementos recientes con contador global positivo. La UI vacía no muestra un contador; al usuario se le pide comprobar el mensaje. Una confirmación posterior acreditará este estado de interfaz controlado, sin probar que la API real o una cuenta real estén vacías. El agente no observa el teléfono ni accede a Trello.
+
+### Guía nativa pendiente
+
+Recargar el proyecto en Expo Go de Zenaida **8083**, sin detener backend o Metros ni borrar avisos:
+
+1. Abrir **Cuenta → Avisos** y pulsar **Probar bandeja vacía**.
+2. Confirmar el banner **Prueba controlada**. Esperar la consulta local y comprobar **Aún no tienes avisos**.
+3. Pulsar **Actualizar avisos**. Debe aparecer **Actualizando…** y, tras la espera local, conservarse la bandeja vacía sin error; no se hace una consulta HTTP del helper.
+4. Pulsar **Explorar catálogo**, comprobar que abre Catálogo y regresar con **Atrás** al montaje. Esto prueba navegación; la carga del catálogo utiliza su contexto normal y no forma parte de la fixture vacía.
+5. Pulsar **Salir de la prueba**. Debe abrir `/avisos` en su contexto normal. Comprobar que los avisos reales siguen disponibles con sus estados de lectura anteriores, sin que el helper los haya borrado, marcado o modificado.
+6. Reportar el resultado antes de aceptar el criterio 6. La autorización y la QA web del agente no sustituyen ese reporte de Expo Go.
+
+### Verificación aprobada y retirada pendiente
+
+**TypeScript y lint completos aprobaron con exit 0**, después de tipar el Repository local y componerlo con `createNoticesActions`. En QA web CSS de **320×820** se comprobó la entrada desde `/avisos` anónima, que pide **Iniciar sesión**, y el acceso DEV al montaje. La fixture usó **0 elementos/0 no leídos**, sin contador visible en la UI vacía; **Actualizar avisos** mostró **Actualizando…** y volvió al mensaje vacío sin desbordamiento horizontal. **Explorar catálogo** abrió `/catalogo`, pero la carga web del Catálogo mostró un error de conexión: se verifica la ruta, sin afirmar carga de productos. Back volvió a la QA y **Salir de la prueba** reemplazó la ruta por `/avisos`, que volvió a pedir ingresar sin conservar la sesión local.
+
+Capturas web: [bandeja vacía controlada](evidencias/avisos/prueba-vacio-web-320.png) y [salida de la prueba](evidencias/avisos/prueba-vacio-salida-web-320.png). El [recibo controlado](evidencias/avisos/prueba-vacio.json) incluye resultados y guardas: entorno y cuatro paquetes/locks, los seis documentos de David, identidad/credencial ZenaidaGR, stash y tres procesos conservados; sin cambios Server o runtime global. No se repitieron las 735 pruebas, Doctor o exportaciones por esta fixture temporal; sus resultados anteriores siguen como snapshot de API. Estas comprobaciones web no sustituyen Expo Go ni aceptan el criterio 6; el agente no observó el teléfono.
+
+Después de la confirmación del usuario se registrará el alcance controlado y se retirarán los dos archivos temporales y la entrada DEV en **otro commit**, antes de exportaciones finales, publicación o PR. La retirada y sus comprobaciones se documentarán por separado. Hasta entonces 5/9, pendientes 6-9, sin aceptación anticipada de vacío, errores, prueba completa o revisión real de David567rs. No se modifican root layout, backend, sesión real, dependencias, entorno, identidad, stash o copia de David para este montaje.

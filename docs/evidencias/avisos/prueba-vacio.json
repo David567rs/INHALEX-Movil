@@ -1,0 +1,103 @@
+{
+  "activity": "Avisos",
+  "stage": "Preparación de prueba controlada de bandeja vacía",
+  "dateUtc": "2026-10-20T13:32:42Z",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+  "branch": "feature/avisos",
+  "priorPositiveAcceptanceCommit": "fcc0c72",
+  "authorizationQuote": "No, preparemos una prueba controlada",
+  "status": "prepared-dev-only-awaiting-user-report",
+  "acceptedCriteria": 5,
+  "totalCriteria": 9,
+  "criterion6Accepted": false,
+  "trelloChangedByAgent": false,
+  "fixture": {
+    "route": "/qa-avisos-vacio",
+    "entry": "Cuenta → Avisos → Probar bandeja vacía",
+    "banner": "Prueba controlada · Bandeja vacía",
+    "exit": "Salir de la prueba",
+    "exitTarget": "/avisos",
+    "items": [],
+    "unread": 0,
+    "listDelayMs": 350,
+    "sourceFiles": [
+      "Mobile/src/app/avisos.tsx",
+      "Mobile/src/app/qa-avisos-vacio.tsx",
+      "Mobile/src/features/notices/testing/NoticesEmptyQaScreen.tsx"
+    ],
+    "developmentGuards": true,
+    "composition": "Repository local → createNoticesActions → controlador real → ViewModel y pantalla reales; providers locales de sesión pública falsa y Avisos",
+    "helperUsesHttp": false,
+    "helperUsesRealCredentialsTokenOrStorage": false,
+    "helperWritesRealNotifications": false,
+    "markReadRejectsLocally": true,
+    "normalGlobalRuntimeUnchanged": true,
+    "globalAppMayContinueNormalReads": true
+  },
+  "checks": {
+    "typecheck": {
+      "command": "npm --prefix Mobile run typecheck",
+      "exitCode": 0
+    },
+    "lint": {
+      "command": "npm --prefix Mobile run lint",
+      "exitCode": 0
+    },
+    "browser": {
+      "source": "QA web en navegador local; no observación de Expo Go",
+      "cssViewport": {
+        "width": 320,
+        "height": 820
+      },
+      "horizontalOverflow": false,
+      "entryOpensControlledRoute": true,
+      "emptyMessage": "Aún no tienes avisos",
+      "refreshShowsActualizandoThenSameEmpty": true,
+      "exploreCatalogNavigatesTo": "/catalogo",
+      "catalogScope": "Se verificó la navegación. La pantalla de Catálogo mostró error de conexión en esta sesión web; no se acredita carga de productos ni se cambió Catálogo.",
+      "browserBackReturnsToQa": true,
+      "exitReturnsToRealNoticesRoute": true,
+      "anonymousRealRouteRequiresSignInBeforeAndAfterQa": true,
+      "viewportResetAfterQa": true,
+      "screenshots": [
+        "prueba-vacio-web-320.png",
+        "prueba-vacio-salida-web-320.png"
+      ]
+    },
+    "suiteDoctorExportsRepeated": false,
+    "historicalApiChecks": "Los resultados de API en verificacion-api.json corresponden a la etapa anterior; no se atribuyen al helper temporal."
+  },
+  "preservation": {
+    "serverEnvHashUnchanged": true,
+    "mobileAndServerPackageAndLockHashesUnchanged": true,
+    "davidSixClosureDocumentsUnchanged": true,
+    "zenaidaGitIdentityUnchanged": true,
+    "zenaidaGithubCredentialUsernameUnchanged": true,
+    "zenaidaStashUnchanged": true,
+    "listenerPidsUnchanged": {
+      "backend3200": 33524,
+      "metroDavid8082": 28288,
+      "metroZenaida8083": 13476
+    },
+    "noServiceRestartOrInstall": true,
+    "noServerSourceChanges": true,
+    "noRealAuthenticatedApiOperationByAgent": true,
+    "noPushOrPr": true
+  },
+  "pendingUserTest": [
+    "En Expo Go de Zenaida8083, abrir Cuenta → Avisos → Probar bandeja vacía.",
+    "Comprobar el banner de prueba y Aún no tienes avisos, antes y después de Actualizar avisos.",
+    "Comprobar que Explorar catálogo abre Catálogo; regresar con Atrás a la prueba y pulsar Salir de la prueba.",
+    "Confirmar que regresan los avisos reales y su estado de lectura sin cambios por la prueba."
+  ],
+  "acceptanceScope": "Si el usuario confirma, el criterio6 se acepta por interfaz controlada0/0; no acredita una cuenta ni API reales vacías. No equivale a filtro No leídos vacío.",
+  "userReport": null,
+  "agentObservedDevice": false,
+  "retirement": {
+    "requiredAfterUserReport": true,
+    "separateCommit": true,
+    "removeTemporaryRouteAndScreen": true,
+    "removeDevEntryFromRealRoute": true,
+    "beforeFinalExportsPublicationOrPr": true
+  }
+}
