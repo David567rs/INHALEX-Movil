@@ -2,9 +2,9 @@
 
 Actividad de ZenaidaGR en `C:\Users\David\Documents\INHALEX-Movil-Zenaida`, rama `feature/avisos`, basada en `develop` `0f0b764a4ad78e40f12112c4debcd7982ccdfd2c`. David567rs revisará el futuro PR hacia `develop`. El cierre anterior está separado en `6610412`, el diseño en `1f383f3` y su aceptación/autorización de API en `46c86aa`.
 
-El usuario aceptó el diseño en Expo Go y autorizó conectar la API en la misma rama, con MVVM, Repository y commits por etapa. La conexión está **terminada y verificada técnicamente** en `1b9d572`; el recorrido positivo (`fcc0c72`) y la bandeja vacía controlada (`7d97f85`) fueron aceptados por reportes del usuario. Quedan pendientes errores, prueba completa y revisión real. El montaje `21ece6e` ya se retiró y TypeScript/lint completos aprobaron después de la retirada; su commit se guarda por separado, sin anticipar el SHA ni publicar.
+El usuario aceptó el diseño y autorizó conectar la API en la misma rama, con MVVM, Repository y commits por etapa. La conexión está verificada en `1b9d572`; el recorrido positivo (`fcc0c72`), vacío controlado (`7d97f85`) y error/reintento de carga fueron aceptados por reportes de Expo Go. El montaje `21ece6e` se retiró en `bb32a17`, con TypeScript/lint aprobados en esa etapa. Quedan pendientes continuidad por cuenta, prueba completa y revisión real; esta aceptación solo actualiza documentación.
 
-Avisos está **6/9**: criterios 1-6 aceptados por reportes del usuario. El criterio 6 acredita la interfaz con fixture local 0/0, sin probar que una cuenta o API reales estén vacías. Los criterios 7-9 siguen pendientes. La [aceptación vigente](evidencias/avisos/expo-go-aceptacion.json) conserva las fuentes textuales; el [diseño](DISENO-AVISOS.md) y las verificaciones anteriores son historia. El agente no observó el teléfono ni leyó o modificó Trello, y el marcado no está confirmado.
+Avisos está **7/9**: criterios 1-7 aceptados por reportes del usuario. El criterio 6 acredita una interfaz controlada0/0 y el 7 una prueba GET de carga y recuperación; no prueban una API vacía ni fallo de marcado PATCH. Los criterios 8 y 9 siguen pendientes. La [aceptación vigente](evidencias/avisos/expo-go-aceptacion.json) conserva las fuentes textuales; el [diseño](DISENO-AVISOS.md) y las verificaciones anteriores son historia. El agente no observó el teléfono ni leyó o modificó Trello, y el marcado no está confirmado.
 
 ## Contrato existente del backend
 
@@ -47,7 +47,7 @@ Si ese GET posterior falla, **el aviso confirmado permanece leído**. Se informa
 
 Red, timeout o 5xx conservan el último snapshot confirmado de la misma autorización y ofrecen recuperación explícita. Los payloads, correos, metadata o diagnósticos del servidor no se exponen como mensajes de pantalla. El error de marcado 400 se presenta de forma segura y permite recuperar la bandeja, sin mostrar datos ajenos o forzar un estado leído.
 
-## Criterios de Trello: 6/9
+## Criterios de Trello: 7/9
 
 - [x] Crear sección de avisos
 - [x] Obtener avisos disponibles
@@ -55,11 +55,11 @@ Red, timeout o 5xx conservan el último snapshot confirmado de la misma autoriza
 - [x] Diferenciar avisos leídos y no leídos
 - [x] Permitir consultar el detalle
 - [x] Mostrar mensaje si no existen avisos
-- [ ] Manejar errores de carga
+- [x] Manejar errores de carga
 - [ ] Probar la funcionalidad
 - [ ] Revisar el código
 
-Los reportes del usuario aceptan 1-6; el 6 corresponde a la bandeja vacía controlada, no a una API o cuenta reales vacías. Las pruebas técnicas no completan 7-9 por anticipado. La revisión formal corresponde a David567rs desde su cuenta, en un futuro PR de ZenaidaGR. Puede marcarse el 6 y mantenerse Trello En progreso; el agente no verifica ni realiza ese marcado.
+Los reportes del usuario aceptan 1-7; el 6 corresponde a la bandeja vacía controlada y el 7 a error/reintento GET de carga. Las pruebas técnicas no completan 8 o 9 por anticipado. La revisión formal corresponde a David567rs desde su cuenta, en un futuro PR de ZenaidaGR. Puede marcarse el 7 y mantenerse Trello En progreso; el agente no verifica ni realiza ese marcado.
 
 ## Snapshot histórico: primera prueba funcional, aceptada por reporte del usuario
 
@@ -160,13 +160,15 @@ El usuario confirmó exactamente: «Amigo, apareció «Aún no tienes avisos», 
 
 Avisos queda **6/9**, criterios 1-6 aceptados. Puede marcar el 6 y mantener En progreso, sin confirmar marcado. El [recibo controlado](evidencias/avisos/prueba-vacio.json) añade la aceptación limitada y conserva los resultados técnicos previos. La aceptación se registra en commit documental propio; el siguiente commit retirará helper y entrada DEV y comprobará TypeScript/lint. **La retirada todavía está pendiente** y debe completarse antes de exports finales, publicación o PR. Los resultados API y del montaje conservan su fase y no se repiten por esta documentación.
 
-## Estado vigente: helper retirado, error y reintento pendientes (6/9)
+## Snapshot histórico: helper retirado, error y reintento pendientes (6/9)
 
 La aceptación del vacío quedó guardada en `7d97f85`. Ya se eliminaron los dos archivos temporales y la entrada DEV: `/avisos` coincide por hash con API `1b9d572`, los archivos temporales están ausentes y la búsqueda en `Mobile/src` devuelve cero referencias al helper. **TypeScript y lint completos aprobaron con exit 0 después de la retirada**. No se repitieron la suite móvil, Doctor o exportaciones; los resultados originales del montaje y de API permanecen como historia.
 
 El [recibo de retirada](evidencias/avisos/retirada-prueba-vacio.json) documenta estos checks; se conserva la separación de commits, sin inventar un SHA futuro. Avisos mantiene **6/9**, criterios 1-6 aceptados, con error/reintento (7), prueba completa (8) y revisión real David567rs (9) pendientes. No se infiere marcado Trello ni observación del teléfono por el agente. La siguiente guía usa la bandeja real y solo lecturas GET.
 
-## Siguiente prueba: error y reintento de lectura
+<a id="siguiente-prueba-error-y-reintento-de-lectura"></a>
+
+## Guía histórica: error y reintento de lectura
 
 El montaje temporal ya está retirado. No hace falta marcar como leído ni cambiar avisos para probar errores:
 
@@ -178,3 +180,20 @@ El montaje temporal ya está retirado. No hace falta marcar como leído ni cambi
 6. Pulsar **Reintentar**. Debe recuperar el mismo aviso, quitar el aviso de error y conservar el contexto de la cuenta. Solo se prueba carga GET, sin PATCH. Reportar el resultado antes de aceptar **Manejar errores de carga** (7).
 
 Error/reintento (7), prueba completa y continuidad por cuenta (8) y revisión real de David567rs (9) siguen pendientes. No hay publicación o PR autorizado por este reporte.
+## Estado vigente: error y reintento aceptados (7/9)
+
+El usuario confirmó exactamente: «Amigo, Actualizar y Reintentar fallaron sin perder los avisos ni el detalle. Reinicié el backend y Reintentar recuperó los datos y quitó el aviso. ¿Qué marco en Trello y qué sigue?». Se acepta **Manejar errores de carga** (7) por la prueba guiada de lectura GET: conserva avisos y detalle durante los fallos y recupera datos al restablecer el backend. No se atribuye una prueba nativa de error de PATCH, continuidad de sesión o inspección del servidor al agente.
+
+Puede marcar el criterio 7 y mantener En progreso, **7/9**. El agente no observó Expo Go ni leyó o modificó Trello; el marcado no está confirmado. Esta fase solo actualiza documentación y conserva el historial y los checks técnicos anteriores, sin cambios de código, backend, servicios, entorno o dependencias. El helper fue retirado en `bb32a17`. Probar la funcionalidad (8) y la revisión real de David567rs (9) siguen pendientes.
+
+## Siguiente prueba: reapertura y continuidad por cuenta
+
+Con backend y Metros funcionando, usar Expo Go de Zenaida **8083**:
+
+1. Antes de cerrar, consultar un aviso real y recordar su título y estado de lectura.
+2. Cerrar Expo Go por completo, reabrir el proyecto y esperar la restauración de sesión. Abrir **Cuenta → Avisos**, seleccionar el mismo aviso y comprobar sus datos y estado de lectura. **Actualizar avisos** debe funcionar. No es necesario restaurar automáticamente la pantalla o selección exactas.
+3. Desde **Cuenta**, cerrar sesión. Volver a **Avisos**: debe pedir **Iniciar sesión** sin mostrar avisos de la cuenta anterior.
+4. Ingresar con la misma cuenta, abrir **Avisos** y comprobar que vuelven los avisos propios y su estado de lectura. **Actualizar avisos** debe funcionar.
+5. Reportar el resultado antes de aceptar **Probar la funcionalidad** (8). No se exige una segunda cuenta ni se cambia el backend o el estado de lectura para esta prueba.
+
+Solo después del reporte se prepara el PR cuando el usuario lo solicite expresamente; **Revisar el código** (9) requiere revisión real de David567rs. Esta guía no anticipa resultados de sesión ni aprobación.

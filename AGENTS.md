@@ -1,6 +1,6 @@
 # INHALEX Movil
 
-**Estado actual:** Avisos mantiene **6/9**, criterios 1-6 aceptados; el vacío controlado se registró en `7d97f85`, sin acreditar una cuenta o API reales vacías. Helper y acceso DEV ya están retirados; TypeScript/lint completos aprobaron después de la retirada. `/avisos` coincide con API `1b9d572`, no quedan referencias al helper en `Mobile/src` y faltan sus dos archivos temporales. Sigue la prueba GET de error/reintento con backend local detenido manualmente por el usuario, manteniendo Expo Go/Metros/WiFi y sin marcar avisos. Pendientes 7-9, revisión real David567rs y marcado Trello no confirmado; sin observación del teléfono o acceso al tablero por el agente. Montaje `21ece6e`, positivo `fcc0c72` y resultados anteriores se conservan como historia.
+**Estado actual:** Avisos está **7/9**, criterios 1-7 aceptados por reportes del usuario. Actualizar y Reintentar fallaron conservando avisos y detalle; al reiniciar el backend, Reintentar recuperó los datos y quitó el aviso. Se acepta Manejar errores de carga (7), solo lectura GET; no acredita fallo de marcado PATCH. Helper retirado en `bb32a17`, vacío aceptado en `7d97f85`; resultados técnicos anteriores conservan su fase. Sigue reapertura y continuidad de sesión de la misma cuenta para Probar la funcionalidad (8); revisión real David567rs (9) pendiente. Trello no confirmado; el agente no observó el teléfono ni accedió al tablero. Esta etapa solo documenta el reporte, sin cambios de código o nuevos checks de ejecución.
 
 ## Proyecto y contexto
 
@@ -600,8 +600,14 @@ El usuario confirmó exactamente: «Amigo, apareció «Aún no tienes avisos», 
 
 La aceptación se registra en commit documental propio. Primero corresponde retirar los dos archivos temporales y la entrada DEV y comprobar TypeScript/lint, en el siguiente commit separado; esta fase documental no los elimina ni declara la retirada hecha. Se conservan `21ece6e`, `fcc0c72` y `1b9d572`, las verificaciones anteriores y ambas copias. Después se guía al usuario en lectura con el backend local detenido: **Actualizar avisos** y **Reintentar** deben mostrar aviso y conservar datos; al reiniciar el mismo backend, **Reintentar** debe recuperar la bandeja. No hace falta marcar como leído ni cambiar avisos para esa prueba. Errores (7), prueba completa (8) y revisión real de David567rs (9) siguen pendientes. El agente no detiene servicios, modifica avisos o amplía pruebas técnicas por este registro.
 
-## Estado vigente: vacío aceptado y helper retirado (6/9)
+## Snapshot histórico: vacío aceptado y helper retirado (6/9)
 
 La aceptación limitada del vacío quedó en `7d97f85`. Se eliminaron los dos archivos temporales y la entrada DEV; `/avisos` recuperó el hash de `1b9d572` y la búsqueda en `Mobile/src` no encontró referencias al helper. TypeScript y lint completos aprobaron con exit 0 tras la retirada; no se repitieron suite, Doctor o exports. El [recibo de retirada](docs/evidencias/avisos/retirada-prueba-vacio.json) conserva la comprobación, sin anticipar el SHA de su commit separado. El montaje `21ece6e` y sus resultados permanecen históricos.
 
 Continúa **6/9**, sin nuevos criterios aceptados o marcado Trello confirmado. La siguiente prueba humana es [error y reintento GET](docs/CONEXION-AVISOS.md#siguiente-prueba-error-y-reintento-de-lectura): abrir un aviso real, detener solo el backend manualmente, conservar Expo Go/Metros/WiFi, comprobar error y datos retenidos con Actualizar/Reintentar, reiniciar el mismo backend y recuperar el mismo aviso. No requiere PATCH ni cambios de lectura. Errores (7), prueba completa (8) y revisión David567rs (9) siguen pendientes; sin observación del teléfono o acción del agente en Trello/API real.
+
+## Estado vigente: Avisos, error y reintento de carga aceptados (7/9)
+
+El usuario confirmó fallos de Actualizar y Reintentar sin perder avisos o detalle, y recuperación tras reiniciar el backend. La cita exacta y el alcance GET están en `docs/evidencias/avisos/expo-go-aceptacion.json`; el criterio 7 se acepta por su reporte, sin observación del dispositivo por el agente ni prueba nativa de fallo del marcado. Puede marcar Manejar errores de carga y mantener En progreso, 7/9; marcado no confirmado.
+
+La retirada temporal quedó en `bb32a17`. Esta aceptación se guarda en un commit documental separado, conservando historial y resultados técnicos anteriores. Sigue la prueba de reapertura y continuidad por cuenta; 8 y revisión real de David567rs (9) siguen pendientes. No se publica ni abre PR por este reporte, ni se cambian código, backend, servicios, dependencias o la copia de David.

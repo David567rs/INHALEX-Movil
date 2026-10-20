@@ -86,7 +86,7 @@
     "snapshotScope": "Diseño local histórico aceptado; la conexión posterior está autorizada y se registra por separado"
   },
   "functionalAcceptance": {
-    "acceptedCriteria": 6,
+    "acceptedCriteria": 7,
     "totalCriteria": 9,
     "acceptedCriterionIds": [
       1,
@@ -94,14 +94,14 @@
       3,
       4,
       5,
-      6
+      6,
+      7
     ],
     "pendingCriterionIds": [
-      7,
       8,
       9
     ],
-    "status": "6/9; recorrido positivo y bandeja vacía controlada aceptados por reportes del usuario. Helper retirado y TypeScript/lint aprobados tras la retirada; errores, prueba completa y revisión real pendientes.",
+    "status": "7/9; recorrido positivo, vacío controlado y error/reintento de carga aceptados por reportes del usuario. Helper retirado; prueba completa de continuidad por cuenta y revisión real pendientes.",
     "confirmations": [
       {
         "date": "2026-10-20",
@@ -132,6 +132,14 @@
         "quote": "Amigo, apareció «Aún no tienes avisos», se mantuvo al actualizar, «Explorar catálogo» abrió Catálogo y al salir volvieron mis avisos reales sin cambios. ¿Qué marco en Trello y qué sigue?",
         "criterionIds": [6],
         "scope": "Interfaz de bandeja vacía con fixture local0/0, actualización, navegación y retorno a avisos reales sin cambios según el reporte. No acredita una cuenta o API reales vacías.",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario después de la prueba guiada GET en Expo Go",
+        "quote": "Amigo, Actualizar y Reintentar fallaron sin perder los avisos ni el detalle. Reinicié el backend y Reintentar recuperó los datos y quitó el aviso. ¿Qué marco en Trello y qué sigue?",
+        "criterionIds": [7],
+        "scope": "Error de lectura con backend local detenido, conservación de avisos y detalle y recuperación al reintentar tras reiniciar el backend. No acredita fallo de PATCH, reapertura o cambio de sesión.",
         "agentObservedDevice": false
       }
     ],
@@ -169,7 +177,7 @@
       {
         "id": 7,
         "text": "Manejar errores de carga",
-        "accepted": false
+        "accepted": true
       },
       {
         "id": 8,
@@ -188,7 +196,7 @@
     "agentReadBoard": false,
     "agentModifiedBoard": false,
     "userConfirmedCriteriaMarked": false,
-    "guidance": "Puede marcar Mostrar mensaje si no existen avisos (6), aceptado por interfaz controlada0/0. Criterios1-6 aceptados:6/9. Mantener En progreso; errores7, prueba completa8 y revisión9 pendientes. Marcado no confirmado."
+    "guidance": "Puede marcar Manejar errores de carga (7): criterios1-7 aceptados,7/9. Mantener En progreso; prueba completa8 y revisión real9 pendientes. Marcado no confirmado."
   },
   "architecture": {
     "pattern": "MVVM y Repository",
@@ -271,7 +279,7 @@
   "connection": {
     "authorized": true,
     "implemented": true,
-    "status": "positive-flow-and-controlled-empty-accepted-helper-retired-awaiting-error-test",
+    "status": "positive-flow-controlled-empty-and-load-retry-accepted-awaiting-session-continuity",
     "sameBranchRequired": "feature/avisos",
     "futureReviewer": "David567rs",
     "technicalVerification": "verificacion-api.json",
@@ -371,17 +379,34 @@
       "healthAndMetrosHttp200": true
     }
   },
-  "nextStep": "Con el helper ya retirado, probar carga GET: abrir un aviso real, detener solo el backend local manualmente conservando Metro/Expo Go/WiFi, Actualizar avisos y Reintentar fallan conservando lista/selección/estados; reiniciar el mismo backend y Reintentar recupera el mismo aviso. No marcar como leído ni ejecutar PATCH. Criterios 7-9 pendientes hasta sus evidencias; sin publicación o PR.",
+  "nextStep": "Con backend y Metros activos, cerrar Expo Go por completo, reabrir el proyecto Zenaida8083 y consultar Cuenta → Avisos. Comprobar avisos y estado de lectura al abrir el mismo aviso; Actualizar debe funcionar. Cerrar sesión en Cuenta, comprobar que Avisos pide ingresar sin datos anteriores; ingresar con la misma cuenta y verificar avisos y Actualizar. No exigir restaurar la pantalla o selección exactas. Criterio8 pendiente del reporte; revisión9 requiere a David567rs y PR solicitado expresamente.",
   "limitations": [
     "La aceptación visual procede del reporte del usuario, sin observación directa del dispositivo por el agente.",
     "La verificación de API pasó; QA usa sesión/fetch sintéticos y sus capturas son web, sin sustituir Expo Go, TalkBack o texto ampliado nativo.",
     "La QA web de API se retiró en 1b9d572; el helper temporal DEV posterior de vacío también fue retirado tras su aceptación 7d97f85, sin repetir suite, Doctor o exports.",
     "Abrir el detalle no marca leído; solo el botón explícito escribe. No hay marcado masivo, polling, persistencia o push.",
     "No se asignan checklist, responsable o rama para Reseñas o Confirmación de recepción.",
-    "Los criterios1-6 se aceptan por reportes del usuario, sin observación del dispositivo ni acceso a Trello; el marcado no está confirmado.",
+    "Los criterios1-7 se aceptan por reportes del usuario, sin observación del dispositivo ni acceso a Trello; el marcado no está confirmado.",
     "El criterio6 se acepta por el reporte de la interfaz controlada0/0 en Expo Go; no equivale a filtro No leídos vacío ni acredita una API o cuenta reales vacías. El helper y acceso DEV ya están retirados.",
     "El helper histórico no hacía HTTP ni usaba token/almacén/cuenta reales; RootLayout y runtime global no cambiaron, y la app podía continuar sus lecturas normales."
   ],
+  "loadErrorAcceptance": {
+    "date": "2026-10-20",
+    "criterionId": 7,
+    "accepted": true,
+    "source": "Reporte textual del usuario sobre Expo Go después de la guía de carga GET",
+    "quote": "Amigo, Actualizar y Reintentar fallaron sin perder los avisos ni el detalle. Reinicié el backend y Reintentar recuperó los datos y quitó el aviso. ¿Qué marco en Trello y qué sigue?",
+    "readFailureAndRecoveryAccepted": true,
+    "notificationsAndDetailPreservedReported": true,
+    "errorClearedAfterRecoveryReported": true,
+    "patchFailureTestAccepted": false,
+    "reopenAndSessionContinuityAccepted": false,
+    "agentObservedDevice": false,
+    "trelloMarkedConfirmed": false,
+    "changesInThisStage": "Solo documentación y commit de aceptación; sin cambios funcionales, servicios, credenciales, cuenta, backend o dependencias.",
+    "newAutomatedOrBrowserChecks": false,
+    "historicalTechnicalResultsPreserved": true
+  },
   "emptyTest": {
     "authorized": true,
     "choiceQuote": "No, preparemos una prueba controlada",
