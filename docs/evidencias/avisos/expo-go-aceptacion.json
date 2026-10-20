@@ -101,7 +101,7 @@
       8,
       9
     ],
-    "status": "6/9; recorrido positivo y bandeja vacía controlada aceptados por reportes del usuario. Retirada del helper pendiente; errores, prueba completa y revisión real pendientes.",
+    "status": "6/9; recorrido positivo y bandeja vacía controlada aceptados por reportes del usuario. Helper retirado y TypeScript/lint aprobados tras la retirada; errores, prueba completa y revisión real pendientes.",
     "confirmations": [
       {
         "date": "2026-10-20",
@@ -252,6 +252,7 @@
       "source": "Montaje temporal DEV y sus comprobaciones propias"
     },
     "controlledEmptyAcceptance": {
+      "commit": "7d97f85",
       "separateCommitRequired": true,
       "criterionId": 6,
       "source": "Reporte textual del usuario sobre interfaz controlada0/0",
@@ -270,7 +271,7 @@
   "connection": {
     "authorized": true,
     "implemented": true,
-    "status": "positive-flow-and-controlled-empty-accepted-awaiting-helper-retirement-and-error-test",
+    "status": "positive-flow-and-controlled-empty-accepted-helper-retired-awaiting-error-test",
     "sameBranchRequired": "feature/avisos",
     "futureReviewer": "David567rs",
     "technicalVerification": "verificacion-api.json",
@@ -370,22 +371,24 @@
       "healthAndMetrosHttp200": true
     }
   },
-  "nextStep": "Retirar helper y entrada DEV en el siguiente commit separado y comprobar TypeScript/lint. Después guiar la prueba de carga GET: abrir un aviso real, detener solo el backend local manualmente conservando Metro/Expo Go/WiFi, Actualizar avisos y Reintentar fallan conservando lista/selección/estados; reiniciar el mismo backend y Reintentar recupera el mismo aviso. No marcar como leído ni ejecutar PATCH. Criterios7-9 pendientes hasta sus evidencias; sin publicación o PR.",
+  "nextStep": "Con el helper ya retirado, probar carga GET: abrir un aviso real, detener solo el backend local manualmente conservando Metro/Expo Go/WiFi, Actualizar avisos y Reintentar fallan conservando lista/selección/estados; reiniciar el mismo backend y Reintentar recupera el mismo aviso. No marcar como leído ni ejecutar PATCH. Criterios 7-9 pendientes hasta sus evidencias; sin publicación o PR.",
   "limitations": [
     "La aceptación visual procede del reporte del usuario, sin observación directa del dispositivo por el agente.",
     "La verificación de API pasó; QA usa sesión/fetch sintéticos y sus capturas son web, sin sustituir Expo Go, TalkBack o texto ampliado nativo.",
-    "La QA web de API se retiró en 1b9d572; el helper temporal DEV posterior de vacío está preparado y se retirará antes de exports finales/publicación/PR.",
+    "La QA web de API se retiró en 1b9d572; el helper temporal DEV posterior de vacío también fue retirado tras su aceptación 7d97f85, sin repetir suite, Doctor o exports.",
     "Abrir el detalle no marca leído; solo el botón explícito escribe. No hay marcado masivo, polling, persistencia o push.",
     "No se asignan checklist, responsable o rama para Reseñas o Confirmación de recepción.",
     "Los criterios1-6 se aceptan por reportes del usuario, sin observación del dispositivo ni acceso a Trello; el marcado no está confirmado.",
-    "El criterio6 se acepta por el reporte de la interfaz controlada0/0 en Expo Go; no equivale a filtro No leídos vacío ni acredita una API o cuenta reales vacías. El helper permanece hasta su retirada en el siguiente commit separado.",
-    "El helper no hace HTTP ni usa token/almacén/cuenta reales; RootLayout y runtime global no cambian, y la app puede continuar sus lecturas normales."
+    "El criterio6 se acepta por el reporte de la interfaz controlada0/0 en Expo Go; no equivale a filtro No leídos vacío ni acredita una API o cuenta reales vacías. El helper y acceso DEV ya están retirados.",
+    "El helper histórico no hacía HTTP ni usaba token/almacén/cuenta reales; RootLayout y runtime global no cambiaron, y la app podía continuar sus lecturas normales."
   ],
   "emptyTest": {
     "authorized": true,
     "choiceQuote": "No, preparemos una prueba controlada",
-    "status": "accepted-controlled-ui-awaiting-separate-retirement",
+    "status": "accepted-and-retired",
+    "acceptanceCommit": "7d97f85",
     "synthetic": true,
+    "fixtureDescriptionIsHistorical": true,
     "criterionAccepted": true,
     "criterionId": 6,
     "agentObservedDevice": false,
@@ -442,8 +445,25 @@
     },
     "removalRequiredAfterUserReport": true,
     "removalAuthorized": true,
-    "removalStatus": "pending-next-separate-commit",
+    "removalStatus": "completed-and-verified",
     "removalInSeparateCommit": true,
-    "mustBeRemovedBeforeFinalExportsPublicationOrPr": true
+    "mustBeRemovedBeforeFinalExportsPublicationOrPr": true,
+    "retirement": {
+      "completed": true,
+      "acceptanceCommit": "7d97f85",
+      "separateStageCommit": true,
+      "commitReference": "Consultar Git para el commit separado de retirada; sin SHA anticipado",
+      "receipt": "retirada-prueba-vacio.json",
+      "temporaryRouteAndScreenAbsent": true,
+      "devEntryRemoved": true,
+      "realNoticesRouteHashMatchesApiCommit": "1b9d572",
+      "helperMatchesInMobileSrc": 0,
+      "checks": {
+        "typecheck": { "scope": "complete-after-retirement", "exitCode": 0 },
+        "lint": { "scope": "complete-after-retirement", "exitCode": 0 }
+      },
+      "suiteDoctorExportsRepeated": false,
+      "originalMountChecksPreservedAsHistory": true
+    }
   }
 }

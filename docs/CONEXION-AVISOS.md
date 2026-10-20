@@ -2,7 +2,7 @@
 
 Actividad de ZenaidaGR en `C:\Users\David\Documents\INHALEX-Movil-Zenaida`, rama `feature/avisos`, basada en `develop` `0f0b764a4ad78e40f12112c4debcd7982ccdfd2c`. David567rs revisará el futuro PR hacia `develop`. El cierre anterior está separado en `6610412`, el diseño en `1f383f3` y su aceptación/autorización de API en `46c86aa`.
 
-El usuario aceptó el diseño en Expo Go y autorizó conectar la API en la misma rama, con MVVM, Repository y commits por etapa. La conexión está **terminada y verificada técnicamente** en `1b9d572`; el recorrido positivo (`fcc0c72`) y la bandeja vacía controlada ya fueron aceptados por reportes del usuario. Quedan pendientes errores, prueba completa y revisión real. El montaje `21ece6e` debe retirarse en el siguiente commit separado; todavía no se declara retirado ni publicado.
+El usuario aceptó el diseño en Expo Go y autorizó conectar la API en la misma rama, con MVVM, Repository y commits por etapa. La conexión está **terminada y verificada técnicamente** en `1b9d572`; el recorrido positivo (`fcc0c72`) y la bandeja vacía controlada (`7d97f85`) fueron aceptados por reportes del usuario. Quedan pendientes errores, prueba completa y revisión real. El montaje `21ece6e` ya se retiró y TypeScript/lint completos aprobaron después de la retirada; su commit se guarda por separado, sin anticipar el SHA ni publicar.
 
 Avisos está **6/9**: criterios 1-6 aceptados por reportes del usuario. El criterio 6 acredita la interfaz con fixture local 0/0, sin probar que una cuenta o API reales estén vacías. Los criterios 7-9 siguen pendientes. La [aceptación vigente](evidencias/avisos/expo-go-aceptacion.json) conserva las fuentes textuales; el [diseño](DISENO-AVISOS.md) y las verificaciones anteriores son historia. El agente no observó el teléfono ni leyó o modificó Trello, y el marcado no está confirmado.
 
@@ -121,7 +121,7 @@ A la consulta de una cuenta sin avisos, el usuario respondió exactamente «No, 
 
 ## Prueba controlada temporal de bandeja vacía
 
-**Estado actual: aceptada por reporte del usuario, retirada pendiente.** Los pasos y resultados siguientes conservan la preparación `21ece6e`; la aceptación vigente y la próxima prueba aparecen al final. La interfaz controlada no acredita que una cuenta o API reales estén vacías.
+**Estado actual: aceptada por reporte del usuario y retirada.** Los pasos y resultados siguientes conservan la preparación `21ece6e`; la aceptación quedó en `7d97f85` y la comprobación de retirada aparece al final. La interfaz controlada no acredita que una cuenta o API reales estén vacías.
 
 ### Snapshot histórico de preparación (21ece6e, 5/9)
 
@@ -146,7 +146,7 @@ Recargar el proyecto en Expo Go de Zenaida **8083**, sin detener backend o Metro
 5. Pulsar **Salir de la prueba**. Debe abrir `/avisos` en su contexto normal. Comprobar que los avisos reales siguen disponibles con sus estados de lectura anteriores, sin que el helper los haya borrado, marcado o modificado.
 6. Reportar el resultado antes de aceptar el criterio 6. La autorización y la QA web del agente no sustituyen ese reporte de Expo Go.
 
-### Verificación aprobada y retirada pendiente
+### Snapshot técnico del montaje antes de la retirada
 
 **TypeScript y lint completos aprobaron con exit 0**, después de tipar el Repository local y componerlo con `createNoticesActions`. En QA web CSS de **320×820** se comprobó la entrada desde `/avisos` anónima, que pide **Iniciar sesión**, y el acceso DEV al montaje. La fixture usó **0 elementos/0 no leídos**, sin contador visible en la UI vacía; **Actualizar avisos** mostró **Actualizando…** y volvió al mensaje vacío sin desbordamiento horizontal. **Explorar catálogo** abrió `/catalogo`, pero la carga web del Catálogo mostró un error de conexión: se verifica la ruta, sin afirmar carga de productos. Back volvió a la QA y **Salir de la prueba** reemplazó la ruta por `/avisos`, que volvió a pedir ingresar sin conservar la sesión local.
 
@@ -154,15 +154,21 @@ Capturas web: [bandeja vacía controlada](evidencias/avisos/prueba-vacio-web-320
 
 El snapshot `21ece6e` mantenía **5/9** hasta el reporte del usuario y requería registrar la aceptación controlada antes de retirar los dos archivos temporales y la entrada DEV en **otro commit**, antes de exportaciones finales, publicación o PR. Sus comprobaciones y resultados se conservan arriba; la aceptación posterior aparece a continuación y la retirada sigue pendiente. No se modifican root layout, backend, sesión real, dependencias, entorno, identidad, stash o copia de David para este montaje.
 
-## Estado vigente: bandeja vacía controlada aceptada (6/9)
+## Snapshot histórico: bandeja vacía controlada aceptada (6/9)
 
 El usuario confirmó exactamente: «Amigo, apareció «Aún no tienes avisos», se mantuvo al actualizar, «Explorar catálogo» abrió Catálogo y al salir volvieron mis avisos reales sin cambios. ¿Qué marco en Trello y qué sigue?». Ese reporte de Expo Go acepta **Mostrar mensaje si no existen avisos** (6), con fixture local 0/0, actualización y navegación. También confirma el regreso a sus avisos reales sin cambios. No prueba una bandeja vacía de una cuenta o API reales ni un filtro No leídos sin coincidencias; el agente no observó el dispositivo ni accedió a Trello.
 
 Avisos queda **6/9**, criterios 1-6 aceptados. Puede marcar el 6 y mantener En progreso, sin confirmar marcado. El [recibo controlado](evidencias/avisos/prueba-vacio.json) añade la aceptación limitada y conserva los resultados técnicos previos. La aceptación se registra en commit documental propio; el siguiente commit retirará helper y entrada DEV y comprobará TypeScript/lint. **La retirada todavía está pendiente** y debe completarse antes de exports finales, publicación o PR. Los resultados API y del montaje conservan su fase y no se repiten por esta documentación.
 
+## Estado vigente: helper retirado, error y reintento pendientes (6/9)
+
+La aceptación del vacío quedó guardada en `7d97f85`. Ya se eliminaron los dos archivos temporales y la entrada DEV: `/avisos` coincide por hash con API `1b9d572`, los archivos temporales están ausentes y la búsqueda en `Mobile/src` devuelve cero referencias al helper. **TypeScript y lint completos aprobaron con exit 0 después de la retirada**. No se repitieron la suite móvil, Doctor o exportaciones; los resultados originales del montaje y de API permanecen como historia.
+
+El [recibo de retirada](evidencias/avisos/retirada-prueba-vacio.json) documenta estos checks; se conserva la separación de commits, sin inventar un SHA futuro. Avisos mantiene **6/9**, criterios 1-6 aceptados, con error/reintento (7), prueba completa (8) y revisión real David567rs (9) pendientes. No se infiere marcado Trello ni observación del teléfono por el agente. La siguiente guía usa la bandeja real y solo lecturas GET.
+
 ## Siguiente prueba: error y reintento de lectura
 
-Realizarla después de retirar el montaje temporal. No hace falta marcar como leído ni cambiar avisos para probar errores:
+El montaje temporal ya está retirado. No hace falta marcar como leído ni cambiar avisos para probar errores:
 
 1. Con backend y ambos Metros activos, abrir **Cuenta → Avisos** en Expo Go de Zenaida **8083**, esperar sus avisos reales y abrir un aviso cualquiera, **Leído** o **Nuevo**, sin marcarlo.
 2. En la terminal que ya ejecuta el backend local, pulsar **Ctrl+C solo allí**. Mantener Metro **8082/8083** y Expo Go abiertos; no cerrar la aplicación ni cambiar o apagar WiFi, para aislar el fallo del backend. El agente no detiene servicios ni modifica la API.

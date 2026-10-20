@@ -6,7 +6,7 @@
   "branch": "feature/avisos",
   "priorPositiveAcceptanceCommit": "fcc0c72",
   "authorizationQuote": "No, preparemos una prueba controlada",
-  "status": "accepted-controlled-ui-awaiting-separate-retirement",
+  "status": "accepted-and-retired",
   "acceptedCriteria": 6,
   "totalCriteria": 9,
   "criterion6Accepted": true,
@@ -107,11 +107,14 @@
   "retirement": {
     "authorized": true,
     "status": "pending-next-separate-commit",
-    "completed": false,
     "requiredAfterUserReport": true,
     "separateCommit": true,
     "removeTemporaryRouteAndScreen": true,
     "removeDevEntryFromRealRoute": true,
-    "beforeFinalExportsPublicationOrPr": true
+    "beforeFinalExportsPublicationOrPr": true,
+    "completed": true,
+    "completedDate": "2026-10-20",
+    "userAcceptanceCommit": "7d97f85",
+    "receipt": "retirada-prueba-vacio.json"
   }
 }
