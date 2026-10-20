@@ -1,0 +1,285 @@
+{
+  "activity": "Avisos",
+  "phase": "API",
+  "verifiedAt": "2026-10-20T07:17:10.0539945-06:00",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+  "branch": "feature/avisos",
+  "designCommit": "1f383f3",
+  "designAcceptanceCommit": "46c86aa",
+  "responsible": "ZenaidaGR",
+  "futureReviewer": "David567rs",
+  "apiStageCommit": "Consultar Git: feat(notices): conectar avisos con la API",
+  "architecture": "NoticesScreen -> useNoticesViewModel/createNoticesController -> NoticesActions -> NoticesRepository -> ApiNoticesRepository -> HttpClient; bootstrap con autorización privada",
+  "backendContract": {
+    "list": "GET /notifications/me",
+    "listMaximum": 12,
+    "pagination": false,
+    "unreadScope": "Toda la bandeja, consulta no atómica con items",
+    "detail": "Mensaje incluido en listado, sin GET adicional",
+    "markRead": "PATCH /notifications/me/:id/read, sin body, acción explícita",
+    "markAllImplemented": false,
+    "discardedResponseFields": [
+      "userId",
+      "userEmail",
+      "metadata"
+    ],
+    "dates": "ISO o null; Fecha no disponible sin inventar fechas",
+    "reconciliation": "Tras PATCH confirmado, GET concilia lista/contador; si falla, conserva leído y reintenta solo GET",
+    "accountBoundary": "Identidad de autorización privada; 401/403 purgan datos, cancelación y descarte de respuestas tardías"
+  },
+  "checks": {
+    "typecheck": {
+      "command": "npm run typecheck",
+      "passed": true
+    },
+    "lint": {
+      "command": "npm run lint",
+      "passed": true
+    },
+    "tests": {
+      "passed": 735,
+      "command": "npm run test",
+      "failed": 0,
+      "previous": 677,
+      "new": 58,
+      "repository": 14,
+      "reentrantRegressions": 3,
+      "controller": 29,
+      "domain": 7,
+      "httpLoopback": 8
+    },
+    "doctor": {
+      "version": "1.20.4",
+      "passed": 21,
+      "command": "npm run doctor",
+      "total": 21
+    },
+    "android": {
+      "passed": true,
+      "command": "npm run export:android",
+      "afterQARemoval": true,
+      "modules": 1532
+    },
+    "web": {
+      "passed": true,
+      "command": "npm run export:web",
+      "afterQARemoval": true,
+      "modules": 1081
+    },
+    "diffCheck": true
+  },
+  "uiQA": {
+    "platform": "Web, IAB",
+    "syntheticAuth": true,
+    "syntheticFetch": true,
+    "realLayers": [
+      "Vista",
+      "ViewModel",
+      "Controlador",
+      "Casos de uso",
+      "Repository",
+      "Mapper",
+      "HttpClient"
+    ],
+    "cssViewports": [
+      {
+        "width": 397,
+        "height": 1000
+      },
+      {
+        "width": 320,
+        "height": 820
+      }
+    ],
+    "verified": [
+      "3 avisos, 2 locales no leídos y contador global7 sin confundir sus ámbitos",
+      "Filtro local No leídos:2; detalle no envía PATCH",
+      "Marcar explícito confirma leído y GET concilia contador6",
+      "PATCH fallido conserva detalle y estado; Actualizar/Reintentar fallidos conservan datos",
+      "Recuperar red y Reintentar solo GET devuelve datos",
+      "PATCH confirmado+GET fallido conserva Leído y muestra aviso; Reintentar no repite PATCH",
+      "Snapshot de conciliación GET8/PATCH3 -> GET9/PATCH3, anterior a recarga del arnés",
+      "Vacío items0/unread0 muestra Aún no tienes avisos",
+      "Vacío items0/unread19 conserva contador con mensaje neutral",
+      "Filtro0 entre recientes con contador global9 conserva su alcance",
+      "Fechas ausentes muestran Fecha no disponible",
+      "401 y cierre de sesión sintéticos ocultan datos",
+      "Ruta real anónima protegida sin ejemplos y Cuenta con cinco pestañas tras retirar QA"
+    ],
+    "horizontalOverflow": false,
+    "minimumButtonCssHeightRounded": 44,
+    "consoleErrors": 0,
+    "sharedWarnings": [
+      "shadow* deprecado",
+      "useNativeDriver fallback JS en web"
+    ],
+    "routeRemoved": "src/app/qa-avisos.tsx",
+    "temporaryQARemoved": true,
+    "sampleCodeRemoved": true,
+    "browserViewportReset": true,
+    "artifacts": [
+      "api-acceso-cuenta-web-320.png",
+      "api-bandeja-web-320.png",
+      "api-bandeja-web-397.png",
+      "api-conciliacion-pendiente-web-397.png",
+      "api-detalle-leido-web-397.png",
+      "api-error-marcado-web-397.png",
+      "api-filtro-vacio-web-320.png",
+      "api-ruta-real-anonima-web-320.png",
+      "api-sesion-web-320.png",
+      "api-vacio-web-397.png"
+    ]
+  },
+  "networkEvidence": {
+    "realExpoGoApiAcceptance": false,
+    "realBackend": "Solo GET sin Bearer /api/notifications/me:401; health:200",
+    "agentPerformedRealMutation": false,
+    "loopback": "HTTP real con servidor, cuentas y notificaciones sintéticos; no es Nest/MongoDB real",
+    "agentPerformedRealAuthenticatedRead": false
+  },
+  "preservation": {
+    "protectedFiles": true,
+    "davidClosure": true,
+    "stash": true,
+    "identity": true,
+    "services": [
+      {
+        "LocalPort": 8083,
+        "OwningProcess": 13476
+      },
+      {
+        "LocalPort": 8082,
+        "OwningProcess": 28288
+      },
+      {
+        "LocalPort": 3200,
+        "OwningProcess": 33524
+      }
+    ],
+    "http": [
+      {
+        "status": 200,
+        "url": "http://localhost:3200/api/health"
+      },
+      {
+        "status": 401,
+        "url": "http://localhost:3200/api/notifications/me"
+      },
+      {
+        "status": 200,
+        "url": "http://localhost:8082/status"
+      },
+      {
+        "status": 200,
+        "url": "http://localhost:8083/status"
+      }
+    ],
+    "temporaryQARemoved": true,
+    "servicesRestartedByAgent": false
+  },
+  "sourceHashes": [
+    {
+      "path": "Mobile/src/features/notices/data/mappers/mapNotices.ts",
+      "sha256": "82A47026D13389449C040D0AAF10EDF68F37B1A4CAC68611240FD85AE5859EA0"
+    },
+    {
+      "path": "Mobile/src/features/notices/data/repositories/ApiNoticesRepository.ts",
+      "sha256": "FEEDC00B8E5D1A8C5642F036B4E2DA267EF1A3D728877BEAF3ABD3877B3F55CB"
+    },
+    {
+      "path": "Mobile/src/features/notices/domain/errors/NoticesError.ts",
+      "sha256": "0A43A511933718AAB2681488AF2D7BC4025546E5AF9C09D783A9D462F3387693"
+    },
+    {
+      "path": "Mobile/src/features/notices/domain/models/Notice.ts",
+      "sha256": "0796EDF2A2DCB243C72A557EACAC52C79AD668955E78CF79366E12AD17D417C7"
+    },
+    {
+      "path": "Mobile/src/features/notices/domain/repositories/NoticesRepository.ts",
+      "sha256": "8AE52772D55BC76515AF77D41A9BD810E38E98C986D5C98123623B12866B39AA"
+    },
+    {
+      "path": "Mobile/src/features/notices/domain/useCases/noticesActions.ts",
+      "sha256": "83FAEFE597A1E4F00B4875E8E0F7CFADBE81C0F6AEABB0D96179999A61BB6AC2"
+    },
+    {
+      "path": "Mobile/src/features/notices/presentation/components/NoticesEntry.tsx",
+      "sha256": "CA17433488D8D19E580451C9C0020A220B96891A21F1751EBE28C98649A783FC"
+    },
+    {
+      "path": "Mobile/src/features/notices/presentation/context/NoticesProvider.tsx",
+      "sha256": "D568C146A470F765F255EBE622AC49F53F26FFE4422CBA92A592DC51FEF3F474"
+    },
+    {
+      "path": "Mobile/src/features/notices/presentation/screens/NoticesScreen.tsx",
+      "sha256": "E3664F73FE855528EEB01C7E523C8355FA8793C9B3780817F87149AC3DBE96D2"
+    },
+    {
+      "path": "Mobile/src/features/notices/presentation/screens/noticesStyles.ts",
+      "sha256": "3D0D7831195B89271638BD62EB58A4C9CC2F80C2DB93349CAA19CB779D2AC341"
+    },
+    {
+      "path": "Mobile/src/features/notices/presentation/state/createNoticesController.ts",
+      "sha256": "9E036C72FE9B84646E379BF058C47881E07A72F8D8659F9399E49C6BD4660EFB"
+    },
+    {
+      "path": "Mobile/src/features/notices/presentation/viewModels/useNoticesViewModel.ts",
+      "sha256": "519ED4B4E54C82C25F8D10E30A13C65A0B2375776B6E5B52F6008AFFE6348790"
+    },
+    {
+      "path": "Mobile/src/app/avisos.tsx",
+      "sha256": "7A259AE71C239914F931E11C15FB100EF51195C87F6E49F81F1B7809F8380816"
+    },
+    {
+      "path": "Mobile/src/app/_layout.tsx",
+      "sha256": "142DF1E74969EB7D626EA2B630BA01841A8F02ADC18D67C21C8EAF06F4D6DFD5"
+    },
+    {
+      "path": "Mobile/src/bootstrap/createApplicationServices.ts",
+      "sha256": "307E96D9C81564912585560B965132841274CA5244B64ED09FF8EBCA4A2B7FF2"
+    },
+    {
+      "path": "Mobile/tests/register-typescript.cjs",
+      "sha256": "38437E4317E84158317F7A3A77BD46F6E9064349D7A29AB9B70DA71426FF918B"
+    },
+    {
+      "path": "Mobile/tests/run-tests.cjs",
+      "sha256": "5CAF68F5D364324A6532A6810CDD9E26DB5F24BC669A8D84A4F72086B5181403"
+    },
+    {
+      "path": "Mobile/tests/NoticesDomain.test.cjs",
+      "sha256": "C54F4FED1C5DD255205319743ED2B19DC057562989189FB18A1BEE651E47C2DE"
+    },
+    {
+      "path": "Mobile/tests/NoticesRepository.test.cjs",
+      "sha256": "347EAC49F91531F728096A5B388930F6A855B692ED1FA2E8DE162C265C18D834"
+    },
+    {
+      "path": "Mobile/tests/NoticesHttpIntegration.test.cjs",
+      "sha256": "2BF280E823A445A8810FB5E33D8246440AB3AEFA93BBDAEFCB40210BB0B365BF"
+    },
+    {
+      "path": "Mobile/tests/NoticesController.test.cjs",
+      "sha256": "B2E13DE4BEFB9DD0EE0DD92B4CFB8900A186773CEEBD10380C047362483A566E"
+    }
+  ],
+  "humanAcceptance": {
+    "agentObservedDevice": false,
+    "acceptedCriteria": [
+      1
+    ],
+    "apiFunctionalAcceptancePending": true,
+    "totalCriteria": 9,
+    "trelloMarkedConfirmed": false,
+    "designAcceptedByUser": true
+  },
+  "publication": {
+    "prCreated": false,
+    "merged": false,
+    "pushed": false
+  },
+  "documentationConsulted": [
+    "https://docs.expo.dev/versions/v57.0.0/",
+    "https://docs.expo.dev/versions/latest/sdk/router/"
+  ]
+}

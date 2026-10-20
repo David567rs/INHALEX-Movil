@@ -47,6 +47,11 @@ import { OrderTrackingError } from '../features/orderTracking/domain/errors/Orde
 import { createOrderTrackingActions } from '../features/orderTracking/domain/useCases/orderTrackingActions';
 import type { OrderTrackingActions } from '../features/orderTracking/domain/repositories/OrderTrackingRepository';
 import { createOrderTrackingController } from '../features/orderTracking/presentation/state/createOrderTrackingController';
+import { ApiNoticesRepository } from '../features/notices/data/repositories/ApiNoticesRepository';
+import { NoticesError } from '../features/notices/domain/errors/NoticesError';
+import type { NoticesActions } from '../features/notices/domain/repositories/NoticesRepository';
+import { createNoticesActions } from '../features/notices/domain/useCases/noticesActions';
+import { createNoticesController } from '../features/notices/presentation/state/createNoticesController';
 
 export interface ApplicationServicesOptions {
   environment?: Environment;
@@ -260,8 +265,28 @@ export function createApplicationRuntime(options: Omit<ApplicationServicesOption
   const orderTracking = createOrderTrackingController(auth.authorizationSession, {
     get: (id, requestOptions) => getTrackingActions().get(id, requestOptions),
   });
+  let noticesActions: NoticesActions | undefined;
+  function getNoticesActions(): NoticesActions {
+    if (!noticesActions) {
+      try {
+        const environment = options.environment ?? readEnvironment();
+        noticesActions = createNoticesActions(new ApiNoticesRepository(new HttpClient({
+          baseUrl: environment.apiUrl, isDevelopment: environment.isDevelopment,
+          requestTimeoutMs: environment.requestTimeoutMs, fetch: options.fetch,
+          getAccessToken: auth.getAccessToken,
+        })));
+      } catch {
+        throw new NoticesError('Los avisos no están disponibles en este momento. Inténtalo más tarde.', 'configuration');
+      }
+    }
+    return noticesActions;
+  }
+  const notices = createNoticesController(auth.authorizationSession, {
+    list: (requestOptions) => getNoticesActions().list(requestOptions),
+    markRead: (id, requestOptions) => getNoticesActions().markRead(id, requestOptions),
+  });
   // No transport, recovery key or credential is exposed to the React tree.
-  return Object.freeze({ session: auth.session, favorites, cart, profile, shippingAddresses, orderCreation, orderHistory, orderTracking });
+  return Object.freeze({ session: auth.session, favorites, cart, profile, shippingAddresses, orderCreation, orderHistory, orderTracking, notices });
 }
 
 /** Defer configuration until submission so navigation never depends on the API. */

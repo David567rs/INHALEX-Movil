@@ -1,8 +1,5 @@
-import { useState } from 'react';
-import { createNoticesPreviewAction } from '@/bootstrap/createNoticesPreviewAction';
-import { NoticesPreviewScreen } from '@/features/notices/presentation/screens/NoticesPreviewScreen';
+import { NoticesScreen } from '@/features/notices/presentation/screens/NoticesScreen';
 
 export default function NoticesRoute() {
-  const [action] = useState(() => createNoticesPreviewAction());
-  return <NoticesPreviewScreen action={action} />;
+  return <NoticesScreen />;
 }

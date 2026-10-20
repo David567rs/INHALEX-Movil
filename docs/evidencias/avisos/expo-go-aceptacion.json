@@ -97,7 +97,7 @@
       8,
       9
     ],
-    "status": "1/9; solo Crear sección de avisos aceptado por el usuario. Criterios 2-9 pendientes y API autorizada todavía no implementada.",
+    "status": "1/9; solo Crear sección de avisos aceptado. API implementada y verificada técnicamente, criterios 2-9 y aceptación funcional real pendientes.",
     "confirmations": [
       {
         "date": "2026-10-20",
@@ -165,11 +165,12 @@
   },
   "architecture": {
     "pattern": "MVVM y Repository",
-    "composition": "NoticesPreviewScreen → useNoticesPreviewViewModel → LoadNoticesPreview → NoticesPreviewRepository → LocalNoticesPreviewRepository, compuesto por createNoticesPreviewAction()",
-    "domainModel": "NoticePreview",
+    "composition": "NoticesScreen → useNoticesViewModel / createNoticesController → casos de uso → NoticesRepository → ApiNoticesRepository → HttpClient, compuesto en bootstrap con autorización privada y NoticesProvider",
+    "domainModel": "Notice",
+    "designSnapshotComposition": "NoticesPreviewScreen → useNoticesPreviewViewModel → LoadNoticesPreview → NoticesPreviewRepository → LocalNoticesPreviewRepository, histórico en 1f383f3",
     "accountEntry": "NoticesEntry",
     "domainIndependentOfReactNative": true,
-    "stateScope": "Escena, filtro y selección temporal de ejemplos en memoria"
+    "stateScope": "Bandeja personal, contador global, filtro local y detalle ligados al objeto de autorización; datos retirados al salir o cambiar autorización"
   },
   "remainingActivitiesReportedByUser": {
     "titles": [
@@ -198,13 +199,20 @@
     },
     "api": {
       "implementationAuthorizedYet": true,
-      "implemented": false,
-      "status": "authorized-not-implemented",
-      "separateCommitRequiredWhenAuthorized": true
+      "implemented": true,
+      "status": "implemented-and-technically-verified-stage",
+      "separateCommitRequiredWhenAuthorized": true,
+      "commitSubject": "feat(notices): conectar avisos con la API",
+      "commitReference": "Consultar Git: feat(notices): conectar avisos con la API"
     },
     "acceptance": {
       "requiresActualUserReport": true,
       "separateCommitRequired": true
+    },
+    "designAcceptance": {
+      "commit": "46c86aa",
+      "source": "Aceptación visual textual del usuario",
+      "agentObservedDevice": false
     },
     "conventionSource": "../../VERSIONAMIENTO.md"
   },
@@ -218,17 +226,80 @@
   },
   "connection": {
     "authorized": true,
-    "implemented": false,
-    "status": "authorized-not-implemented",
+    "implemented": true,
+    "status": "technically-verified-awaiting-user-functional-acceptance",
     "sameBranchRequired": "feature/avisos",
-    "futureReviewer": "David567rs"
+    "futureReviewer": "David567rs",
+    "technicalVerification": "verificacion-api.json",
+    "guide": "../../CONEXION-AVISOS.md",
+    "endpoints": ["GET /notifications/me", "PATCH /notifications/me/:id/read"],
+    "listLimit": 12,
+    "queryOrPagination": false,
+    "counterScope": "Global de la cuenta, no limitado a los elementos cargados",
+    "detailGet": false,
+    "openingDetailWrites": false,
+    "markReadRequiresExplicitButton": true,
+    "confirmedPatchReconciliation": "GET; si falla se conserva Leído y Reintentar no repite PATCH",
+    "discardedFields": ["userId", "userEmail", "metadata"],
+    "serverOwnerFilter": "userId igual a JWT.sub O userEmail igual al correo normalizado de JWT",
+    "bulkMarkRead": false,
+    "push": false,
+    "polling": false,
+    "newStorage": false,
+    "backendChanged": false,
+    "nativeFunctionalAcceptancePending": true,
+    "agentObservedDevice": false,
+    "agentAuthenticatedRealApiReads": false,
+    "agentRealApiWrites": false,
+    "anonymousRealApiGetStatus": 401,
+    "verifiedSourceFiles": 21,
+    "verificationSummary": {
+      "typecheck": "passed-after-qa-route-removal",
+      "lint": "passed-after-qa-route-removal",
+      "mobileTestsPassed": 735,
+      "newMobileTests": 58,
+      "newTestBreakdown": { "domain": 7, "repository": 14, "httpLoopback": 8, "controller": 29 },
+      "reentrantControllerTestsIncluded": 3,
+      "expoDoctorVersion": "1.20.4",
+      "expoDoctorChecksPassed": 21,
+      "expoDoctorChecksTotal": 21,
+      "androidModules": 1532,
+      "webModules": 1081,
+      "qaRouteRemovedBeforeExports": true,
+      "webQaViewportsCss": ["397x1000", "320x820"],
+      "webQaScope": "Sesión y fetch sintéticos con Repository, HttpClient, controlador y UI reales; ruta real anónima comprobada aparte",
+      "consoleErrors": 0,
+      "sharedExistingWarnings": ["shadow* deprecated", "useNativeDriver web fallback to JavaScript"],
+      "qaScenarios": [
+        "Contador global7 con3 elementos y filtro2",
+        "Abrir detalle sin PATCH, marcado explícito con GET conciliador",
+        "Fallos de PATCH y GET/reintento conservan lista y detalle",
+        "PATCH confirmado y GET fallido conserva Leído; reintento GET8/PATCH3 a GET9/PATCH3 antes de recargar",
+        "Vacío0/0, vacío0/19 con título neutral y filtro vacío con global9",
+        "401 y salida ocultan; ruta anónima pide ingresar, Cuenta mantiene5tabs y reentrada protegida"
+      ],
+      "screenshotCount": 10,
+      "screenshots": ["api-bandeja-web-397.png", "api-bandeja-web-320.png", "api-detalle-leido-web-397.png", "api-error-marcado-web-397.png", "api-conciliacion-pendiente-web-397.png", "api-vacio-web-397.png", "api-filtro-vacio-web-320.png", "api-sesion-web-320.png", "api-ruta-real-anonima-web-320.png", "api-acceso-cuenta-web-320.png"],
+      "syntheticQaScreenshotCount": 8,
+      "anonymousRealRouteScreenshotCount": 2,
+      "evidenceIsWebNotExpoGo": true
+    },
+    "preservation": {
+      "environmentHashesUnchanged": true,
+      "packageAndLockHashesUnchanged": true,
+      "davidSixClosureDocumentsUnchanged": true,
+      "zenaidaIdentityUnchanged": true,
+      "zenaidaStashUnchanged": true,
+      "listenerPidsUnchanged": { "backend3200": 33524, "metroDavid8082": 28288, "metroZenaida8083": 13476 },
+      "healthAndMetrosHttp200": true
+    }
   },
-  "nextStep": "Guardar esta aceptación visual y autorización en un commit documental propio antes de iniciar el código de conexión a la API en la misma rama. Conservar MVVM, Repository y commits por etapa; criterios 2-9 pendientes.",
+  "nextStep": "Guardar el commit propio de la conexión verificada y recargar Expo Go8083: Cuenta → Avisos, revisar contenido real, abrir detalle sin marcar, Marcar como leído explícitamente y Actualizar avisos. Si está vacío, informar sin fabricar avisos. Esperar el reporte antes de aceptar2-9 o abrir PR.",
   "limitations": [
     "La aceptación visual procede del reporte del usuario, sin observación directa del dispositivo por el agente.",
-    "La verificación técnica propia pasó; sus capturas y QA usan datos web sintéticos y no sustituyen Expo Go, TalkBack o texto ampliado nativo.",
-    "Bandeja, vacío y error son escenas sintéticas sin consultas, fallos o reintentos reales de API.",
-    "Abrir el detalle no marca como leído y no hay sincronización, persistencia o push.",
+    "La verificación de API pasó; QA usa sesión/fetch sintéticos y sus capturas son web, sin sustituir Expo Go, TalkBack o texto ampliado nativo.",
+    "Las escenas y resultados del diseño son históricos; no hay muestras o ruta QA en el producto conectado.",
+    "Abrir el detalle no marca leído; solo el botón explícito escribe. No hay marcado masivo, polling, persistencia o push.",
     "El agente no leyó ni modificó Trello; solo el criterio 1 está aceptado y el marcado no está confirmado.",
     "No se asignan checklist, responsable o rama para Reseñas o Confirmación de recepción."
   ]

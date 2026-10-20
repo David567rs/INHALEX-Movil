@@ -5,7 +5,7 @@ import { colors } from '@/core/theme/colors';
 
 export function NoticesEntry() {
   return <View style={styles.container}>
-    <Pressable accessibilityRole="button" accessibilityLabel="Ver diseño de Avisos"
+    <Pressable accessibilityRole="button" accessibilityLabel="Ver avisos de mi cuenta"
       onPress={() => router.push('/avisos')}
       style={({ pressed }) => [styles.button, pressed && styles.pressed]}>
       <View accessible={false} importantForAccessibility="no-hide-descendants" aria-hidden style={styles.icon}>
@@ -13,7 +13,7 @@ export function NoticesEntry() {
       </View>
       <View style={styles.copy}>
         <Text style={styles.title}>Avisos</Text>
-        <Text style={styles.hint}>Revisa el diseño de tu bandeja</Text>
+        <Text style={styles.hint}>Las novedades de tus pedidos y tu cuenta</Text>
       </View>
       <Ionicons accessible={false} aria-hidden name="chevron-forward" size={19} color={colors.primary} />
     </Pressable>
