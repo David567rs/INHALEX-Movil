@@ -79,32 +79,51 @@
         "acceso-cuenta-web-320.png"
       ]
     },
-    "acceptedCriterionIds": [1],
+    "acceptedCriterionIds": [
+      1
+    ],
     "userAcceptanceQuote": "Amigo, ya revisé el diseño de Avisos en Expo Go y me gustó. Sigamos con la conexión a la API en feature/avisos, manteniendo MVVM, Repository y commits por etapa.",
     "snapshotScope": "Diseño local histórico aceptado; la conexión posterior está autorizada y se registra por separado"
   },
   "functionalAcceptance": {
-    "acceptedCriteria": 1,
+    "acceptedCriteria": 5,
     "totalCriteria": 9,
-    "acceptedCriterionIds": [1],
-    "pendingCriterionIds": [
+    "acceptedCriterionIds": [
+      1,
       2,
       3,
       4,
-      5,
+      5
+    ],
+    "pendingCriterionIds": [
       6,
       7,
       8,
       9
     ],
-    "status": "1/9; solo Crear sección de avisos aceptado. API implementada y verificada técnicamente, criterios 2-9 y aceptación funcional real pendientes.",
+    "status": "5/9; recorrido positivo guiado aceptado por reporte del usuario. Vacío, errores, prueba completa y revisión real pendientes.",
     "confirmations": [
       {
         "date": "2026-10-20",
         "source": "Mensaje textual del usuario",
         "quote": "Amigo, ya revisé el diseño de Avisos en Expo Go y me gustó. Sigamos con la conexión a la API en feature/avisos, manteniendo MVVM, Repository y commits por etapa.",
-        "criterionIds": [1],
+        "criterionIds": [
+          1
+        ],
         "scope": "Aceptación visual del diseño y autorización de conexión; no acredita contenido, estados o errores reales de la API",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario después del recorrido guiado",
+        "quote": "Amigo, ya aparecen mis avisos en Expo Go, pude abrir el detalle, marcar uno como leído y actualizar. ¿Qué marco en Trello y qué sigue?",
+        "criterionIds": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "scope": "Consulta de avisos reales, contenido según la guía previa, detalle, marcado explícito y actualización. No se atribuye prueba independiente del filtro Todos/No leídos, vacío o errores.",
         "agentObservedDevice": false
       }
     ],
@@ -117,22 +136,22 @@
       {
         "id": 2,
         "text": "Obtener avisos disponibles",
-        "accepted": false
+        "accepted": true
       },
       {
         "id": 3,
         "text": "Mostrar título, mensaje y fecha",
-        "accepted": false
+        "accepted": true
       },
       {
         "id": 4,
         "text": "Diferenciar avisos leídos y no leídos",
-        "accepted": false
+        "accepted": true
       },
       {
         "id": 5,
         "text": "Permitir consultar el detalle",
-        "accepted": false
+        "accepted": true
       },
       {
         "id": 6,
@@ -161,7 +180,7 @@
     "agentReadBoard": false,
     "agentModifiedBoard": false,
     "userConfirmedCriteriaMarked": false,
-    "guidance": "Puede marcarse solo Crear sección de avisos (1), aceptado por el reporte del usuario. Mantener 2-9 pendientes; el agente no verificó el marcado en Trello."
+    "guidance": "Puede marcar Obtener avisos disponibles; Mostrar título, mensaje y fecha; Diferenciar avisos leídos y no leídos; Permitir consultar el detalle (2-5). Con Crear sección de avisos ya aceptado, 5/9. Mantener En progreso; marcado no confirmado."
   },
   "architecture": {
     "pattern": "MVVM y Repository",
@@ -203,7 +222,8 @@
       "status": "implemented-and-technically-verified-stage",
       "separateCommitRequiredWhenAuthorized": true,
       "commitSubject": "feat(notices): conectar avisos con la API",
-      "commitReference": "Consultar Git: feat(notices): conectar avisos con la API"
+      "commitReference": "Consultar Git: feat(notices): conectar avisos con la API",
+      "commit": "1b9d572"
     },
     "acceptance": {
       "requiresActualUserReport": true,
@@ -227,12 +247,15 @@
   "connection": {
     "authorized": true,
     "implemented": true,
-    "status": "technically-verified-awaiting-user-functional-acceptance",
+    "status": "positive-flow-accepted-empty-test-pending",
     "sameBranchRequired": "feature/avisos",
     "futureReviewer": "David567rs",
     "technicalVerification": "verificacion-api.json",
     "guide": "../../CONEXION-AVISOS.md",
-    "endpoints": ["GET /notifications/me", "PATCH /notifications/me/:id/read"],
+    "endpoints": [
+      "GET /notifications/me",
+      "PATCH /notifications/me/:id/read"
+    ],
     "listLimit": 12,
     "queryOrPagination": false,
     "counterScope": "Global de la cuenta, no limitado a los elementos cargados",
@@ -240,7 +263,11 @@
     "openingDetailWrites": false,
     "markReadRequiresExplicitButton": true,
     "confirmedPatchReconciliation": "GET; si falla se conserva Leído y Reintentar no repite PATCH",
-    "discardedFields": ["userId", "userEmail", "metadata"],
+    "discardedFields": [
+      "userId",
+      "userEmail",
+      "metadata"
+    ],
     "serverOwnerFilter": "userId igual a JWT.sub O userEmail igual al correo normalizado de JWT",
     "bulkMarkRead": false,
     "push": false,
@@ -258,7 +285,12 @@
       "lint": "passed-after-qa-route-removal",
       "mobileTestsPassed": 735,
       "newMobileTests": 58,
-      "newTestBreakdown": { "domain": 7, "repository": 14, "httpLoopback": 8, "controller": 29 },
+      "newTestBreakdown": {
+        "domain": 7,
+        "repository": 14,
+        "httpLoopback": 8,
+        "controller": 29
+      },
       "reentrantControllerTestsIncluded": 3,
       "expoDoctorVersion": "1.20.4",
       "expoDoctorChecksPassed": 21,
@@ -266,10 +298,16 @@
       "androidModules": 1532,
       "webModules": 1081,
       "qaRouteRemovedBeforeExports": true,
-      "webQaViewportsCss": ["397x1000", "320x820"],
+      "webQaViewportsCss": [
+        "397x1000",
+        "320x820"
+      ],
       "webQaScope": "Sesión y fetch sintéticos con Repository, HttpClient, controlador y UI reales; ruta real anónima comprobada aparte",
       "consoleErrors": 0,
-      "sharedExistingWarnings": ["shadow* deprecated", "useNativeDriver web fallback to JavaScript"],
+      "sharedExistingWarnings": [
+        "shadow* deprecated",
+        "useNativeDriver web fallback to JavaScript"
+      ],
       "qaScenarios": [
         "Contador global7 con3 elementos y filtro2",
         "Abrir detalle sin PATCH, marcado explícito con GET conciliador",
@@ -279,7 +317,18 @@
         "401 y salida ocultan; ruta anónima pide ingresar, Cuenta mantiene5tabs y reentrada protegida"
       ],
       "screenshotCount": 10,
-      "screenshots": ["api-bandeja-web-397.png", "api-bandeja-web-320.png", "api-detalle-leido-web-397.png", "api-error-marcado-web-397.png", "api-conciliacion-pendiente-web-397.png", "api-vacio-web-397.png", "api-filtro-vacio-web-320.png", "api-sesion-web-320.png", "api-ruta-real-anonima-web-320.png", "api-acceso-cuenta-web-320.png"],
+      "screenshots": [
+        "api-bandeja-web-397.png",
+        "api-bandeja-web-320.png",
+        "api-detalle-leido-web-397.png",
+        "api-error-marcado-web-397.png",
+        "api-conciliacion-pendiente-web-397.png",
+        "api-vacio-web-397.png",
+        "api-filtro-vacio-web-320.png",
+        "api-sesion-web-320.png",
+        "api-ruta-real-anonima-web-320.png",
+        "api-acceso-cuenta-web-320.png"
+      ],
       "syntheticQaScreenshotCount": 8,
       "anonymousRealRouteScreenshotCount": 2,
       "evidenceIsWebNotExpoGo": true
@@ -290,17 +339,30 @@
       "davidSixClosureDocumentsUnchanged": true,
       "zenaidaIdentityUnchanged": true,
       "zenaidaStashUnchanged": true,
-      "listenerPidsUnchanged": { "backend3200": 33524, "metroDavid8082": 28288, "metroZenaida8083": 13476 },
+      "listenerPidsUnchanged": {
+        "backend3200": 33524,
+        "metroDavid8082": 28288,
+        "metroZenaida8083": 13476
+      },
       "healthAndMetrosHttp200": true
     }
   },
-  "nextStep": "Guardar el commit propio de la conexión verificada y recargar Expo Go8083: Cuenta → Avisos, revisar contenido real, abrir detalle sin marcar, Marcar como leído explícitamente y Actualizar avisos. Si está vacío, informar sin fabricar avisos. Esperar el reporte antes de aceptar2-9 o abrir PR.",
+  "nextStep": "Preparar por autorización del usuario una prueba controlada y temporal de bandeja vacía en Expo Go8083, aislada de la cuenta real. Criterio6 pendiente hasta reporte; luego errores, continuidad por cuenta y revisión de David.",
   "limitations": [
     "La aceptación visual procede del reporte del usuario, sin observación directa del dispositivo por el agente.",
     "La verificación de API pasó; QA usa sesión/fetch sintéticos y sus capturas son web, sin sustituir Expo Go, TalkBack o texto ampliado nativo.",
     "Las escenas y resultados del diseño son históricos; no hay muestras o ruta QA en el producto conectado.",
     "Abrir el detalle no marca leído; solo el botón explícito escribe. No hay marcado masivo, polling, persistencia o push.",
-    "El agente no leyó ni modificó Trello; solo el criterio 1 está aceptado y el marcado no está confirmado.",
-    "No se asignan checklist, responsable o rama para Reseñas o Confirmación de recepción."
-  ]
+    "No se asignan checklist, responsable o rama para Reseñas o Confirmación de recepción.",
+    "Los criterios1-5 se aceptan por reportes del usuario, sin observación del dispositivo ni acceso a Trello; el marcado no está confirmado.",
+    "La bandeja vacía controlada está autorizada, aún sin preparar ni aceptar; no se confunde con el filtro No leídos vacío."
+  ],
+  "emptyTest": {
+    "authorized": true,
+    "choiceQuote": "No, preparemos una prueba controlada",
+    "status": "authorized-not-prepared",
+    "synthetic": true,
+    "criterionAccepted": false,
+    "realNotificationsMustBePreserved": true
+  }
 }

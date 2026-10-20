@@ -2,9 +2,9 @@
 
 Actividad de ZenaidaGR en `C:\Users\David\Documents\INHALEX-Movil-Zenaida`, rama `feature/avisos`, basada en `develop` `0f0b764a4ad78e40f12112c4debcd7982ccdfd2c`. David567rs revisará el futuro PR hacia `develop`. El cierre anterior está separado en `6610412`, el diseño en `1f383f3` y su aceptación/autorización de API en `46c86aa`.
 
-El usuario aceptó el diseño en Expo Go y autorizó conectar la API en la misma rama, con MVVM, Repository y commits por etapa. La conexión está **terminada y verificada técnicamente**; la aceptación funcional real de la API sigue pendiente. Se registra en su commit de fase **`feat(notices): conectar avisos con la API`**, sin anticipar un SHA circular ni publicación.
+El usuario aceptó el diseño en Expo Go y autorizó conectar la API en la misma rama, con MVVM, Repository y commits por etapa. La conexión está **terminada y verificada técnicamente**; el recorrido positivo ya fue aceptado por el usuario y quedan pendientes vacío, errores y continuidad. Se registra en su commit de fase **`feat(notices): conectar avisos con la API`**, sin anticipar un SHA circular ni publicación.
 
-Avisos permanece **1/9**: solo **Crear sección de avisos** (1) está aceptado. Los criterios 2-9 esperan sus reportes y revisión real. La [aceptación vigente](evidencias/avisos/expo-go-aceptacion.json) conserva la fuente textual del usuario; el [diseño](DISENO-AVISOS.md) y sus muestras/verificaciones son historia visual. El agente no observó el teléfono ni leyó o modificó Trello, y el marcado no está confirmado.
+Avisos está **5/9**: criterios1-5 aceptados por reportes del usuario. Los criterios6-9 siguen pendientes. La [aceptación vigente](evidencias/avisos/expo-go-aceptacion.json) conserva la fuente textual del usuario; el [diseño](DISENO-AVISOS.md) y sus muestras/verificaciones son historia visual. El agente no observó el teléfono ni leyó o modificó Trello, y el marcado no está confirmado.
 
 ## Contrato existente del backend
 
@@ -47,21 +47,21 @@ Si ese GET posterior falla, **el aviso confirmado permanece leído**. Se informa
 
 Red, timeout o 5xx conservan el último snapshot confirmado de la misma autorización y ofrecen recuperación explícita. Los payloads, correos, metadata o diagnósticos del servidor no se exponen como mensajes de pantalla. El error de marcado 400 se presenta de forma segura y permite recuperar la bandeja, sin mostrar datos ajenos o forzar un estado leído.
 
-## Criterios de Trello: 1/9
+## Criterios de Trello: 5/9
 
 - [x] Crear sección de avisos
-- [ ] Obtener avisos disponibles
-- [ ] Mostrar título, mensaje y fecha
-- [ ] Diferenciar avisos leídos y no leídos
-- [ ] Permitir consultar el detalle
+- [x] Obtener avisos disponibles
+- [x] Mostrar título, mensaje y fecha
+- [x] Diferenciar avisos leídos y no leídos
+- [x] Permitir consultar el detalle
 - [ ] Mostrar mensaje si no existen avisos
 - [ ] Manejar errores de carga
 - [ ] Probar la funcionalidad
 - [ ] Revisar el código
 
-Solo el diseño aceptado completa 1. El contenido sintético, la autorización para conectar y las pruebas técnicas aprobadas no aceptan 2-9 por anticipado. La revisión formal corresponde a David567rs desde su cuenta, en un futuro PR de ZenaidaGR. Puede marcarse1, manteniendo Trello En progreso; el agente no verifica ni realiza su marcado.
+Los reportes del usuario aceptan1-5; las pruebas técnicas o sintéticas no completan6-9 por anticipado. La revisión formal corresponde a David567rs desde su cuenta, en un futuro PR de ZenaidaGR. Pueden marcarse1-5, manteniendo Trello En progreso; el agente no verifica ni realiza su marcado.
 
-## Primera prueba funcional pendiente en Expo Go
+## Snapshot histórico: primera prueba funcional, aceptada por reporte del usuario
 
 Las comprobaciones propias de API ya pasaron y la conexión se registra en su commit separado. Recargar el proyecto de Zenaida **8083** y abrir **Cuenta → Avisos**, con backend local **3200** y Metro de David **8082** activos. El agente no inicia sesión, crea avisos o escribe en la API real para preparar esta guía.
 
@@ -111,3 +111,10 @@ Se preservaron entornos y paquetes/locks, los seis documentos de cierre de David
 Se preservan las fases: cierre previo `6610412`, diseño `1f383f3` y aceptación/autorización `46c86aa`. La conexión verificada se guarda en su commit propio **`feat(notices): conectar avisos con la API`**, con SHA consultable en Git; cada aceptación posterior se registrará tras el reporte real. No se anticipan SHA de API, CI remota, aprobación o PR.
 
 Esta fase no modifica backend, paquetes, entorno, identidades, stash o la copia de David. No incorpora marcado masivo, push, polling o almacenamiento de avisos. El agente no observó Expo Go ni leyó o modificó Trello; TalkBack, texto ampliado y otras condiciones físicas tendrán evidencia específica si se prueban.
+## Estado vigente: recorrido positivo de Avisos aceptado (5/9)
+
+El usuario reportó exactamente: «Amigo, ya aparecen mis avisos en Expo Go, pude abrir el detalle, marcar uno como leído y actualizar. ¿Qué marco en Trello y qué sigue?». Por el recorrido guiado previo se aceptan **Obtener avisos disponibles; Mostrar título, mensaje y fecha; Diferenciar avisos leídos y no leídos; Permitir consultar el detalle** (2-5), además de Crear sección de avisos (1). La actualización queda aceptada como parte del recorrido positivo; no crea un criterio adicional. Fuente textual del usuario, sin observación directa del teléfono o acceso a Trello por el agente. No se atribuye una prueba independiente del filtro Todos/No leídos ni de vacío o errores.
+
+Puede marcar 2-5 y mantener En progreso, **5/9**; el marcado no está confirmado. API `1b9d572`, diseño `1f383f3`, aceptación visual `46c86aa` y cierre `6610412` conservan sus fases. Este reporte se guarda en su propio commit documental. Las 735 pruebas, Doctor y exportaciones son resultados de la conexión anterior, sin repetirse por documentación ni convertirlos en pruebas nativas nuevas.
+
+A la consulta de una cuenta sin avisos, el usuario respondió exactamente «No, preparemos una prueba controlada». Se autoriza preparar un montaje temporal y aislado de bandeja vacía para Expo Go de Zenaida8083, sin borrar o marcar avisos reales, cambiar credenciales o modificar el backend. Ese montaje todavía no está preparado y **Mostrar mensaje si no existen avisos** (6) continúa pendiente hasta su reporte. No confundir el filtro No leídos vacío con la bandeja vacía. Después siguen errores/reintento, reapertura/sesión y el futuro PR solicitado para revisión real de David567rs. Conservar código funcional, ambas copias, servicios, entorno, dependencias, identidades y stash; no publicar o abrir PR por esta aceptación.
