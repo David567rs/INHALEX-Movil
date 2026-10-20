@@ -4,6 +4,8 @@ El resumen de Historial necesitaba una vista para consultar el recorrido de un p
 
 ## Actividad y alcance
 
+PR abierto: [#16](https://github.com/David567rs/INHALEX-Movil/pull/16). GitHub confirmó la solicitud de revisión a **ZenaidaGR**; sin aprobación o merge.
+
 - **Actividad:** Seguimiento del pedido.
 - **Responsable:** David567rs.
 - **Rama de origen y destino:** `feature/seguimiento-pedido` → `develop`.

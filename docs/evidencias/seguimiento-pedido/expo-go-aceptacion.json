@@ -209,7 +209,8 @@
       "positiveFlowCommit": "3a4fb9e",
       "notFoundCommit": "4d3007e",
       "connectionRetryCommit": "6791928",
-      "statesCommit": "5afa8b5"
+      "statesCommit": "5afa8b5",
+      "sessionCommit": "5a2561d"
     },
     "conventionSource": "../../VERSIONAMIENTO.md",
     "designAcceptance": {
@@ -220,17 +221,25 @@
     }
   },
   "publication": {
-    "branchPushed": false,
-    "pullRequestCreated": false,
+    "branchPushed": true,
+    "pullRequestCreated": true,
     "merged": false,
     "publicationAuthorizedByUser": true,
     "futureReviewer": "ZenaidaGR",
     "futureBase": "develop",
-    "status": "authorized-preparing-checks-and-publication",
+    "status": "open-review-requested",
     "authorizationQuote": "Amigo, los pedidos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta. Actualizar funciona. Abre el PR de Seguimiento hacia develop para que Zenaida lo revise.",
-    "mergeAuthorized": false
+    "mergeAuthorized": false,
+    "pr": 16,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/16",
+    "author": "David567rs",
+    "requestedReviewers": [
+      "ZenaidaGR"
+    ],
+    "reviewRequested": true,
+    "headAtOpening": "7f5e1929ec4b977cc83895714598f1495d165cae"
   },
-  "nextStep": "Verificar la preparación, publicar feature/seguimiento-pedido desde David567rs y abrir el PR hacia develop solicitando revisión a ZenaidaGR. Mantener 7/8 y Trello En progreso hasta su aprobación real. La solicitud no autoriza fusionar.",
+  "nextStep": "ZenaidaGR revisa y aprueba el PR #16 desde su propia cuenta cuando esté conforme. Mantener Revisar el código (8) pendiente, Trello En progreso y esperar CI del HEAD final antes de un merge autorizado. El agente no aprueba ni fusiona.",
   "limitations": [
     "El usuario reportó los criterios funcionales 1-7 y la prueba final de reapertura/sesión en Expo Go. Revisar el código (8) sigue pendiente. El agente no observó el teléfono, inspeccionó SecureStore ni capturó el tráfico HTTP del dispositivo.",
     "Los datos y modos del diseño son una instantánea histórica; la implementación actual consulta la API.",

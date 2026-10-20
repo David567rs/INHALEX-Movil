@@ -1,0 +1,48 @@
+{
+  "activity": "Seguimiento del pedido",
+  "date": "2026-10-20",
+  "pr": 16,
+  "url": "https://github.com/David567rs/INHALEX-Movil/pull/16",
+  "title": "Implementar Seguimiento del pedido con MVVM y Repository",
+  "author": "David567rs",
+  "state": "open",
+  "draft": false,
+  "base": "develop",
+  "baseCommit": "930d2023ecb801ce985acaad8dfad03657a998ae",
+  "head": "feature/seguimiento-pedido",
+  "headAtOpening": "7f5e1929ec4b977cc83895714598f1495d165cae",
+  "createdAt": "2026-10-20T12:15:34Z",
+  "requestedReviewers": [
+    "ZenaidaGR"
+  ],
+  "reviewRequested": true,
+  "formalReviewApproved": false,
+  "merged": false,
+  "sessionAcceptanceCommit": "5a2561d",
+  "preparationCommit": "7f5e192",
+  "criteriaAccepted": 7,
+  "criteriaTotal": 8,
+  "agentObservedDevice": false,
+  "trelloReadOrChangedByAgent": false,
+  "ciSnapshotAtOpening": [
+    {
+      "id": 39420908587,
+      "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39420908587",
+      "head": "7f5e1929ec4b977cc83895714598f1495d165cae",
+      "conclusion": "success",
+      "name": "Backend CI",
+      "status": "completed"
+    },
+    {
+      "id": 39420908777,
+      "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39420908777",
+      "head": "7f5e1929ec4b977cc83895714598f1495d165cae",
+      "conclusion": null,
+      "name": "Mobile CI",
+      "status": "in_progress"
+    }
+  ],
+  "ciScope": "Snapshot del HEAD de apertura. El commit de enlace documental cambia el HEAD y deben consultarse sus checks vigentes; no es aprobación final.",
+  "mergeAuthorized": false,
+  "nextStep": "Zenaida revisa Files changed desde su cuenta y aprueba si está conforme; esperar CI del HEAD final antes de integrar con autorización del usuario."
+}

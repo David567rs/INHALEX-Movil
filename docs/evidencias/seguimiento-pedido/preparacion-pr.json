@@ -70,5 +70,6 @@
     "branchPushed": false
   },
   "mergeAuthorized": false,
-  "sessionAcceptanceCommit": "5a2561d89c9ab2dca2068b269c799dce69923ae7"
+  "sessionAcceptanceCommit": "5a2561d89c9ab2dca2068b269c799dce69923ae7",
+  "snapshotScope": "Verificación previa a publicar 7f5e192. El resultado de apertura y revisión solicitada se registra por separado en apertura-pr16.json."
 }
