@@ -1,0 +1,142 @@
+{
+  "activity": "Creación de pedido",
+  "checkedAt": "2026-10-19T20:05:15.8044914-06:00",
+  "repository": "David567rs/INHALEX-Movil",
+  "workspace": "C:/Users/David/Documents/INHALEX-Movil",
+  "branch": "feature/creacion-pedido",
+  "base": "develop",
+  "pullRequest": {
+    "number": 14,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/14",
+    "title": "Implementar Creación de pedido con MVVM y Repository",
+    "author": "David567rs",
+    "state": "open",
+    "draft": false,
+    "merged": false,
+    "head": "feature/creacion-pedido",
+    "headSha": "93940dd5b597929ae5be978546907a10be943994",
+    "base": "develop",
+    "baseSha": "1808ba1cbcd8940c84759395c6818ee950aa140d",
+    "createdAt": "2026-10-20T02:04:12Z",
+    "requestedReviewers": [
+      "ZenaidaGR"
+    ],
+    "reviewRequestConfirmedByGitHub": true
+  },
+  "codeTrees": {
+    "tests": "b2b60b586a81dd3343ee3b20e5c85deec4832b18",
+    "source": "98a028505bcf10d46b84efd058ffd27a3c2fa2d3"
+  },
+  "localVerification": {
+    "typecheck": {
+      "rerunBeforePublication": true,
+      "exitCode": 0
+    },
+    "tests": {
+      "exitCode": 0,
+      "rerunBeforePublication": true,
+      "passed": 558,
+      "failed": 0
+    },
+    "doctorAndExports": "Doctor21/21 y exportaciones Android1498/web1047 después de retirar QA; mismo código, snapshot cierre-pruebas-y-retiro-qa.json",
+    "diffCheck": {
+      "exitCode": 0
+    },
+    "lint": {
+      "rerunBeforePublication": true,
+      "exitCode": 0
+    },
+    "independentBoundedReview": "Sin hallazgos materiales nuevos; no sustituye revisión formal de ZenaidaGR"
+  },
+  "acceptance": {
+    "total": 11,
+    "evidence": "expo-go-aceptacion.json",
+    "userReportedTrelloMarkedCriterionIds": [
+      10
+    ],
+    "trelloModifiedByAgent": false,
+    "trelloReadByAgent": false,
+    "phoneObservedByAgent": false,
+    "accepted": 10,
+    "pendingCriterionIds": [
+      11
+    ]
+  },
+  "ciAtCreation": {
+    "runs": [
+      {
+        "status": "in_progress",
+        "name": "Backend CI",
+        "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39356903357",
+        "conclusion": null,
+        "id": 39356903357
+      },
+      {
+        "status": "in_progress",
+        "name": "Mobile CI",
+        "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39356903516",
+        "conclusion": null,
+        "id": 39356903516
+      }
+    ],
+    "head": "93940dd5b597929ae5be978546907a10be943994",
+    "note": "Snapshot al solicitar revisión; consultar CI sobre HEAD vigente tras enlace documental, sin inferir éxito local."
+  },
+  "preservationBeforePublication": {
+    "checkedAt": "2026-10-19T19:59:11.8824235-06:00",
+    "copies": [
+      {
+        "path": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+        "branch": "feature/creacion-pedido",
+        "head": "1808ba1cbcd8940c84759395c6818ee950aa140d",
+        "envPreserved": true,
+        "dependenciesPreserved": true,
+        "namePreserved": true,
+        "emailPreserved": true,
+        "credentialUserPreserved": true,
+        "stash": [],
+        "stashPreserved": true,
+        "clean": false
+      },
+      {
+        "path": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+        "branch": "develop",
+        "head": "1808ba1cbcd8940c84759395c6818ee950aa140d",
+        "envPreserved": true,
+        "dependenciesPreserved": true,
+        "namePreserved": true,
+        "emailPreserved": true,
+        "credentialUserPreserved": true,
+        "stash": [
+          "81196109270f00fa7edf03a8a8ec6f8bdc963131"
+        ],
+        "stashPreserved": true,
+        "clean": true
+      }
+    ],
+    "protectedChanges": [],
+    "services": [
+      {
+        "LocalPort": 8083,
+        "OwningProcess": 13476
+      },
+      {
+        "LocalPort": 8082,
+        "OwningProcess": 28288
+      },
+      {
+        "LocalPort": 3200,
+        "OwningProcess": 30692
+      }
+    ]
+  },
+  "authorization": {
+    "merge": false,
+    "requestReviewer": "ZenaidaGR",
+    "commit": true,
+    "push": true,
+    "createPullRequest": true
+  },
+  "publicationMethod": "Git push con identidad de la copia de David; REST GitHub autenticado con credencial Git existente tras403del conector, comprobando loginDavid567rs. Sin credenciales en archivos o salidas.",
+  "nextStep": "ZenaidaGR revisa PR14 desde su cuenta; mantener Revisar el código pendiente hasta aprobación real y no fusionar sin el siguiente paso autorizado."
+}

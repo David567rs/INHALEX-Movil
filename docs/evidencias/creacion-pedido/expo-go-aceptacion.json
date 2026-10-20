@@ -224,8 +224,8 @@
     "status": "Aceptados1-10=10/11. El usuario confirmó marcar Probar la funcionalidad10. Revisar el código11 sigue pendiente de ZenaidaGR; mantener En progreso. El agente no accedió al tablero ni confirma otros marcados."
   },
   "nextStep": {
-    "status": "pull-request-preparation-authorized-awaiting-publication",
-    "flow": "El usuario autorizó commit, publicación y apertura del PR de David567rs desde feature/creacion-pedido hacia develop, con revisión solicitada a ZenaidaGR. Preparación autorizada; todavía no se declara PR abierto ni número o URL. Mantener10/11 y solo criterio11 pendiente; no aprobar ni fusionar por esta solicitud.",
+    "status": "pull-request-open-awaiting-peer-review",
+    "flow": "PR #14 abierto por David567rs desde feature/creacion-pedido hacia develop; GitHub confirmó a ZenaidaGR como revisora solicitada. Mantener10/11 y solo criterio11 pendiente de revisión real. Sin aprobación ni merge; consultar CI del HEAD vigente después del enlace documental.",
     "publicationAuthorizedByUser": true,
     "publicationAuthorization": {
       "registeredAt": "2026-10-20T02:01:32Z",
@@ -235,7 +235,25 @@
       "base": "develop",
       "scope": "Commit y publicación de la actividad, abrir PR hacia develop y solicitar revisión real a ZenaidaGR; sin aprobación ni merge anticipados"
     },
-    "reviewer": "ZenaidaGR"
+    "reviewer": "ZenaidaGR",
+    "pullRequestNumber": 14,
+    "pullRequest": "https://github.com/David567rs/INHALEX-Movil/pull/14",
+    "title": "Implementar Creación de pedido con MVVM y Repository",
+    "author": "David567rs",
+    "state": "open",
+    "draft": false,
+    "merged": false,
+    "reviewRequested": true,
+    "headAtOpening": "93940dd5b597929ae5be978546907a10be943994",
+    "baseAtOpening": "1808ba1cbcd8940c84759395c6818ee950aa140d",
+    "publicationEvidence": "preparacion-pr14.json",
+    "ciSnapshotAtOpening": {
+      "head": "93940dd5b597929ae5be978546907a10be943994",
+      "backendRunId": 39356903357,
+      "mobileRunId": 39356903516,
+      "status": "in-progress-at-opening",
+      "scope": "Snapshot del HEAD de implementación al abrir; consultar de nuevo el HEAD vigente después del enlace documental, sin declarar CI final aprobada"
+    }
   },
   "limitations": [
     "El usuario reportó pruebas en Expo Go; el agente no observó el dispositivo ni consultó pedidos o MongoDB para verificarlas.",
@@ -248,10 +266,10 @@
     "En el montaje temporal ya retirado, Reabrir prueba recreó controladores sobre el mismo backend simulado en memoria. No demostró supervivencia del backend ficticio al cierre completo de Expo Go o del proceso.",
     "El agente no creó pedidos contra la API real; la verificación técnica previa usa transporte/almacenamiento sintéticos.",
     "GET de Bolsa seguido de DELETE no es atómico frente a cambios desde otro dispositivo; la lease protege operaciones locales.",
-    "Commit, publicación y apertura de PR autorizados; preparación pendiente, sin declarar número, URL, aprobación o merge. Trello no fue leído ni modificado por el agente; solo se confirmó textualmente el marcado del criterio10."
+    "El PR14 está abierto y ZenaidaGR fue solicitada; aprobación real, merge y CI del HEAD final permanecen pendientes de verificación. Trello no fue leído ni modificado por el agente; solo se confirmó textualmente el marcado del criterio10."
   ],
   "apiImplementation": {
-    "status": "functional-acceptance-complete-qa-removed-pull-request-preparation-authorized",
+    "status": "functional-acceptance-complete-qa-removed-pr14-open-awaiting-peer-review",
     "guide": "../../CONEXION-CREACION-PEDIDO.md",
     "verification": "verificacion-api.json",
     "functionalCriteriaAccepted": 10,
