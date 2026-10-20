@@ -46,21 +46,21 @@
     "snapshotScope": "Instantánea histórica de la etapa de diseño aceptada; la conexión posterior se registra en connection"
   },
   "functionalAcceptance": {
-    "acceptedCriteria": 4,
+    "acceptedCriteria": 5,
     "totalCriteria": 8,
     "acceptedCriterionIds": [
       1,
       2,
       3,
-      4
+      4,
+      5
     ],
     "pendingCriterionIds": [
-      5,
       6,
       7,
       8
     ],
-    "status": "Recorrido positivo y actualización aceptados por el usuario en Expo Go: 4/8. No encontrado, conexión/reintento, distintos estados y revisión real pendientes.",
+    "status": "Recorrido positivo, actualización y pedido no encontrado aceptados por el usuario en Expo Go: 5/8. Conexión/reintento, distintos estados y revisión real pendientes.",
     "confirmations": [
       {
         "date": "2026-10-20",
@@ -73,6 +73,16 @@
           4
         ],
         "scope": "Pedido correcto, información, estado y actualización del recorrido guiado; no acredita todavía distintos estados, 404, errores o sesión",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario",
+        "quote": "Amigo, apareció «No encontramos este pedido», Reintentar mantuvo el aviso y pude volver al historial y abrir un pedido real. ¿Qué marco en Trello y qué sigue?",
+        "criterionIds": [
+          5
+        ],
+        "scope": "Aviso de pedido no encontrado, reintento que conserva el aviso y retorno al historial para abrir un pedido real. No hay observación directa del agente, inspección de MongoDB ni captura del estado HTTP en el teléfono.",
         "agentObservedDevice": false
       }
     ],
@@ -100,7 +110,7 @@
       {
         "id": 5,
         "text": "Manejar pedidos no encontrados",
-        "accepted": false
+        "accepted": true
       },
       {
         "id": 6,
@@ -125,12 +135,13 @@
     "agentModifiedBoard": false,
     "userConfirmedCriteriaMarked": false,
     "observedInUserScreenshot": "Ocho criterios sin marcar",
-    "guidance": "El usuario puede marcar los criterios 1, 2, 3 y 4 y mantener En progreso. Dejar 5, 6, 7 y 8 pendientes. El agente no verificó el marcado en Trello.",
+    "guidance": "El usuario puede marcar Manejar pedidos no encontrados (5), además de los criterios 1-4 ya aceptados. Mantener En progreso y dejar 6-8 pendientes. El agente no verificó el marcado en Trello.",
     "recommendedCriterionIds": [
       1,
       2,
       3,
-      4
+      4,
+      5
     ]
   },
   "architecture": {
@@ -164,7 +175,8 @@
     "acceptance": {
       "separateCommitPlanned": true,
       "requiresActualUserReport": true,
-      "currentCommitMessage": "docs(orders): aceptar consulta y actualización de seguimiento en Expo Go"
+      "currentCommitMessage": "docs(orders): aceptar pedido no encontrado en Expo Go",
+      "positiveFlowCommit": "3a4fb9e"
     },
     "conventionSource": "../../VERSIONAMIENTO.md",
     "designAcceptance": {
@@ -182,9 +194,9 @@
     "futureReviewer": "ZenaidaGR",
     "futureBase": "develop"
   },
-  "nextStep": "Probar pedido no encontrado mediante enlace Expo Go al ID de prueba 000000000000000000000000, sin modificar pedidos ni servidor. Esperar el reporte para aceptar el criterio 5; después error/reintento, distintos estados y reapertura/sesión.",
+  "nextStep": "Probar error de conexión y reintento con un pedido real ya cargado: el usuario detiene solo el backend local, pulsa Actualizar seguimiento y Reintentar, comprueba que conserva el pedido, reinicia el mismo backend y vuelve a pulsar Reintentar. Esperar su reporte para aceptar el criterio 6.",
   "limitations": [
-    "El usuario reportó el recorrido positivo y actualización en Expo Go; los criterios 5 a 8 siguen pendientes. El agente no observó el dispositivo.",
+    "El usuario reportó recorrido positivo, actualización y no encontrado en Expo Go; los criterios 6-8 siguen pendientes. El agente no observó el dispositivo ni inspeccionó el tráfico HTTP del teléfono.",
     "Los datos y modos del diseño son una instantánea histórica; la implementación actual consulta la API.",
     "La QA web usa datos sintéticos y las pruebas HTTP usan servidores loopback; no acreditan una consulta autenticada al servicio Nest/MongoDB real.",
     "No se agregaron escrituras de pedidos, almacenamiento, dependencias ni cambios al backend.",
@@ -193,7 +205,7 @@
   ],
   "connection": {
     "implemented": true,
-    "status": "partial-native-acceptance-4-of-8",
+    "status": "partial-native-acceptance-5-of-8",
     "technicalVerification": "verificacion-api.json",
     "guide": "../../CONEXION-SEGUIMIENTO-PEDIDO.md",
     "endpointsInOrder": [
@@ -210,7 +222,8 @@
       1,
       2,
       3,
-      4
+      4,
+      5
     ]
   }
 }
