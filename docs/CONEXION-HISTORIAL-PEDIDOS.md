@@ -2,7 +2,7 @@
 
 La actividad continúa en `C:\Users\David\Documents\INHALEX-Movil`, rama `feature/historial-pedidos`, desde `develop` en `77b9ab5aa8ca4171669ddda8b42adee028cefc59`. David567rs es responsable y ZenaidaGR revisará el futuro PR hacia `develop`.
 
-El usuario aceptó el diseño y los recorridos funcionales en Expo Go: **8/9**, pendiente únicamente **Revisar el código** por ZenaidaGR. Después solicitó: «Amigo, ya marqué esos dos puntos. Abre el PR de Historial desde `feature/historial-pedidos` hacia `develop` para que Zenaida lo revise.». Confirma el marcado de **Ordenar los pedidos de forma clara** y **Probar la funcionalidad** y autoriza preparar commits, publicar la rama y abrir el PR. La [aceptación textual](evidencias/historial-pedidos/expo-go-aceptacion.json) conserva los recorridos y esta autorización; la apertura se registrará cuando GitHub la confirme. El agente no observó el teléfono ni leyó o modificó Trello. El [diseño y sus datos sintéticos](DISENO-HISTORIAL-PEDIDOS.md) se conservan como historia.
+El [PR #15, Implementar Historial de pedidos con MVVM y Repository](https://github.com/David567rs/INHALEX-Movil/pull/15) está abierto por **David567rs**, desde **feature/historial-pedidos** hacia **develop**, con revisión solicitada a **ZenaidaGR**. Historial permanece **8/9**, pendiente únicamente **Revisar el código**. La solicitud fue: «Amigo, ya marqué esos dos puntos. Abre el PR de Historial desde `feature/historial-pedidos` hacia `develop` para que Zenaida lo revise.». Confirma el marcado de **Ordenar los pedidos de forma clara** y **Probar la funcionalidad**. La [aceptación textual](evidencias/historial-pedidos/expo-go-aceptacion.json) y el [recibo de apertura](evidencias/historial-pedidos/preparacion-pr.json) conservan la autorización y su resultado. El agente no observó el teléfono ni leyó o modificó Trello; no hay aprobación ni merge. El [diseño y sus datos sintéticos](DISENO-HISTORIAL-PEDIDOS.md) se conservan como historia.
 
 ## Contrato existente de la API
 
@@ -99,7 +99,9 @@ Los criterios 4 y 8 están aceptados por el reporte anterior. No se infieren pag
 
 ### Siguiente paso: revisión de código
 
-El usuario ya confirmó marcar los criterios 4 y 8 y solicitó abrir el PR desde **feature/historial-pedidos** hacia **develop**, con **ZenaidaGR** como revisora. La publicación está autorizada; **Revisar el código** (9) permanece pendiente. El [cuerpo preparado del PR](PR-HISTORIAL-PEDIDOS.md) conserva alcance, contratos y validación. La revisión técnica de agentes y las pruebas no sustituyen la aprobación formal de Zenaida; no se fusiona ni inicia otra actividad por esta solicitud.
+El [PR #15](https://github.com/David567rs/INHALEX-Movil/pull/15) ya está abierto y GitHub confirmó la solicitud a **ZenaidaGR**. **Revisar el código** (9) permanece pendiente. El [cuerpo del PR](PR-HISTORIAL-PEDIDOS.md) conserva alcance, contratos y validación. Zenaida revisará desde su cuenta **Files changed → Review changes → Approve → Submit review** cuando esté conforme. La aprobación debe corresponder al HEAD vigente y Backend CI/Mobile CI deben comprobarse sobre ese mismo commit antes del merge. Mantener Trello **En progreso** y 8/9 hasta su revisión; esta solicitud no fusiona ni inicia otra actividad.
+
+La apertura se hizo con el commit de implementación **726101a8606ee92ad1a184c28d9649d6129fdf7b**. En ese snapshot estaban en ejecución [Mobile CI 39398704705](https://github.com/David567rs/INHALEX-Movil/actions/runs/39398704705) y [Backend CI 39398704687](https://github.com/David567rs/INHALEX-Movil/actions/runs/39398704687). El commit documental posterior enlaza el PR y su revisión; los checks de apertura no prueban por sí solos la CI del HEAD posterior. Consultar el estado actual en GitHub. El conector devolvió 403 al intentar crear el PR; se completó mediante la credencial configurada de Git, verificando la cuenta David567rs sin exponer credenciales.
 
 ## Verificación y límites
 

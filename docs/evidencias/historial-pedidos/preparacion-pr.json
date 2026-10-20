@@ -1,7 +1,7 @@
 {
   "activity": "Historial de pedidos",
   "checkedAt": "2026-10-20T03:08:23.2896166-06:00",
-  "phase": "preparacion-autorizada",
+  "phase": "apertura-y-solicitud-de-revision-snapshot",
   "request": "Amigo, ya marqué esos dos puntos. Abre el PR de Historial desde `feature/historial-pedidos` hacia `develop` para que Zenaida lo revise.",
   "branch": "feature/historial-pedidos",
   "base": "develop",
@@ -11,7 +11,17 @@
   "acceptedCriteria": 8,
   "totalCriteria": 9,
   "reviewApproved": false,
-  "pullRequest": null,
+  "pullRequest": {
+    "number": 15,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/15",
+    "author": "David567rs",
+    "head": "feature/historial-pedidos",
+    "headSha": "726101a8606ee92ad1a184c28d9649d6129fdf7b",
+    "base": "develop",
+    "state": "open",
+    "draft": false,
+    "createdAt": "2026-10-20T09:10:07Z"
+  },
   "mergeAuthorized": false,
   "checks": {
     "doctor": {
@@ -94,13 +104,32 @@
     ]
   },
   "ci": {
-    "headSha": null,
-    "status": "pendiente-apertura",
-    "runs": []
+    "headSha": "726101a8606ee92ad1a184c28d9649d6129fdf7b",
+    "status": "in-progress-at-opening-head",
+    "runs": [
+      {
+        "id": 39398704705,
+        "status": "in_progress",
+        "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39398704705",
+        "name": "Mobile CI"
+      },
+      {
+        "id": 39398704687,
+        "status": "in_progress",
+        "url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39398704687",
+        "name": "Backend CI"
+      }
+    ]
   },
   "review": {
-    "status": "pendiente-solicitud",
-    "requested": false,
-    "approved": false
-  }
+    "status": "requested-not-approved",
+    "requested": true,
+    "approved": false,
+    "requestedReviewers": [
+      "ZenaidaGR"
+    ],
+    "checkedAt": "2026-10-20T03:10:47.354524-06:00"
+  },
+  "snapshotScope": "Apertura con implementación726101a y revisión solicitada; el enlace documental genera un HEAD posterior. Verificar CI y aprobación sobre el HEAD vigente antes de fusionar.",
+  "creationMethod": "REST con credencial Git existente y usuario verificado David567rs, tras403 Resource not accessible by integration del conector; sin exposición de credenciales"
 }

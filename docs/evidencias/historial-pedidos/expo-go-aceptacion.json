@@ -213,14 +213,22 @@
   },
   "publication": {
     "authorizedByUser": true,
-    "commitCreated": false,
-    "branchPushed": false,
-    "pullRequestCreated": false,
+    "commitCreated": true,
+    "branchPushed": true,
+    "pullRequestCreated": true,
     "merged": false,
     "futureReviewer": "ZenaidaGR",
     "futureBase": "develop",
     "requestQuote": "Amigo, ya marqué esos dos puntos. Abre el PR de Historial desde `feature/historial-pedidos` hacia `develop` para que Zenaida lo revise.",
-    "status": "authorized-preparing-pull-request"
+    "status": "pull-request-open-review-requested",
+    "number": 15,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/15",
+    "author": "David567rs",
+    "headAtOpening": "726101a8606ee92ad1a184c28d9649d6129fdf7b",
+    "reviewRequested": true,
+    "requestedReviewers": [
+      "ZenaidaGR"
+    ]
   },
   "technicalDesignVerification": {
     "source": "verificacion-diseno.json",
@@ -321,7 +329,7 @@
     "scope": "Consulta personal de historial y resumen; sin tracking, escritura, persistencia o repetición de compra",
     "publicationAuthorizedByUser": true
   },
-  "nextStep": "Publicar feature/historial-pedidos y abrir PR hacia develop con ZenaidaGR como revisora; después esperar CI y revisión real. Criterio9 pendiente; no fusionar por esta solicitud.",
+  "nextStep": "ZenaidaGR revisa y aprueba PR15 desde su cuenta sobre HEAD vigente; esperar Backend CI/Mobile CI de ese commit. Mantener8/9,Revisar código pendiente yTrelloEnprogreso hasta revisión. Sinmerge por esta solicitud.",
   "limitations": [
     "Validación funcional cerrada por reporte textual del usuario: 8/9. Queda pendiente la revisión formal de código por ZenaidaGR.",
     "Los datos del snapshot de diseño son ejemplos y no representan información de una cuenta.",

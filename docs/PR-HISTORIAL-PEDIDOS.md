@@ -1,5 +1,7 @@
 ## Actividad y alcance
 
+PR abierto: [#15](https://github.com/David567rs/INHALEX-Movil/pull/15). Revisión solicitada a **ZenaidaGR**; sin aprobación o merge.
+
 La cuenta permitía crear pedidos, pero no consultar después su historial real desde la app. Este cambio añade **Cuenta → Historial de pedidos**: consulta los pedidos de la sesión activa, muestra referencia, fecha, unidades, estado y **Subtotal de productos**, y permite abrir el resumen de productos y la dirección histórica disponible. El importe respeta el contrato existente y no presenta cargos de envío, pago o entrega no confirmados.
 
 - Actividad: Historial de pedidos.
@@ -48,7 +50,7 @@ Consulta la [guía de conexión](CONEXION-HISTORIAL-PEDIDOS.md), la [verificaci�
 | Ruta normal | Navegación web anónima | Acceso a login y Cuenta con cinco pestañas; capturas identificadas en la evidencia. |
 | Backend local real | GET `/api/orders/me` sin Bearer | 401 esperado. El agente no hizo lecturas reales autenticadas ni creó o modificó pedidos. |
 | Expo Go | Reportes del usuario en chat | Consulta, selección, actualización, vacío, error/recuperación, orden/filtros, reapertura y salida/reingreso aceptados; criterios 1–8. |
-| CI remota | Backend CI / Mobile CI del HEAD que se publique | Pendiente de apertura y ejecución del PR; todavía no hay enlaces de checks. |
+| CI remota | Backend CI / Mobile CI | Al abrir con `726101a`, estaban en ejecución [Backend CI](https://github.com/David567rs/INHALEX-Movil/actions/runs/39398704687) y [Mobile CI](https://github.com/David567rs/INHALEX-Movil/actions/runs/39398704705). Consultar el HEAD vigente tras el enlace documental. |
 | Revisión real | ZenaidaGR desde su propia cuenta | Pendiente; criterio 9. |
 
 Las [capturas y resultados técnicos](evidencias/historial-pedidos/verificacion-api.json) distinguen datos sintéticos de la ruta normal. La aceptación nativa procede del usuario; el agente no observó el teléfono. Paginación real de más de 20 pedidos, segundo reintento con la API todavía detenida, TalkBack y texto ampliado no tienen aceptación física específica. No se incluyen rutas o servidores temporales de QA en la implementación final.

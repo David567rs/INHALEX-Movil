@@ -1,6 +1,6 @@
 # INHALEX Movil
 
-**Estado actual:** Historial de pedidos está en **preparación autorizada de publicación y PR** desde `feature/historial-pedidos` hacia `develop`, para ZenaidaGR. Permanece **8/9**, con **Revisar el código** (9) pendiente. El usuario confirmó marcar los criterios 4 y 8; el agente no accedió a Trello. Todavía no se declara apertura, número o URL del PR. El último apartado de Historial prevalece sobre sus snapshots anteriores; conserva el cierre de Creación de pedido mediante el PR #14.
+**Estado actual:** el [PR #15 de Historial de pedidos](https://github.com/David567rs/INHALEX-Movil/pull/15) está abierto por David567rs desde `feature/historial-pedidos` hacia `develop`, con revisión solicitada y confirmada a ZenaidaGR. Historial permanece **8/9**, con **Revisar el código** (9) pendiente; no hay aprobación o merge. Consultar los checks del HEAD final publicado. El usuario confirmó marcar 4 y 8; el agente no accedió a Trello. El último apartado de Historial prevalece sobre sus snapshots anteriores; conserva el cierre del PR #14.
 
 ## Proyecto y contexto
 
@@ -415,10 +415,20 @@ La implementación y la aceptación funcional quedan cerradas. El siguiente paso
 
 Creación de pedido permanece integrada y completa **11/11** mediante el PR #14; su cierre y la sincronización de ambas copias se conservan arriba. Historial mantiene las cinco pestañas y el orden de trabajo. Conservar backend, ambos Metro, entornos, dependencias, identidades, stash y la copia de Zenaida; no hay commit, publicación, PR o autorización de integración por esta solicitud. Mantener Trello **En progreso** y reservar la revisión real para ZenaidaGR en el futuro PR hacia `develop`.
 
-## Estado vigente: preparación autorizada del PR de Historial (8/9)
+## Snapshot histórico: preparación autorizada del PR de Historial (8/9)
 
 El usuario autorizó exactamente: «Amigo, ya marqué esos dos puntos. Abre el PR de Historial desde `feature/historial-pedidos` hacia `develop` para que Zenaida lo revise.». Se registra su confirmación de marcado de **Ordenar los pedidos de forma clara** (4) y **Probar la funcionalidad** (8), sin atribuir acceso a Trello al agente ni extenderla a otros puntos. Historial continúa **8/9**, aceptados 1–8; **Revisar el código** (9) espera la revisión real de ZenaidaGR.
 
 Esta solicitud autoriza preparar el commit, publicar la rama de David567rs y abrir el PR hacia `develop`, solicitando revisión a ZenaidaGR. El estado de este registro es **en preparación**: no se afirma que ya exista un PR, revisión solicitada, CI remota o aprobación. Tampoco se autoriza merge. La propuesta de descripción sigue `.github/PULL_REQUEST_TEMPLATE.md` y está en `docs/PR-HISTORIAL-PEDIDOS.md`; el recibo final y los enlaces del PR se completarán tras confirmar su apertura.
 
 Se conserva la base `77b9ab5` del PR #14, la implementación de solo lectura con MVVM/Repository y los contratos GET de historial ya existentes en el servidor. La última verificación propia pasó TypeScript, lint y **618/618 pruebas**; se repetirán las comprobaciones de preparación antes de publicar, sin atribuirles todavía un resultado nuevo. Doctor **21/21** y exportaciones Android **1508** / web **1057** módulos pertenecen al snapshot vigente de la misma implementación. La evidencia técnica y los reportes nativos siguen separados en `docs/evidencias/historial-pedidos/verificacion-api.json` y `expo-go-aceptacion.json`. El agente no observó el dispositivo. Mantener Trello **En progreso**, servicios, configuración, dependencias, identidades, stash y copia de Zenaida; no iniciar Seguimiento o Avisos.
+
+## Estado vigente: PR #15 de Historial abierto (8/9)
+
+El [PR #15](https://github.com/David567rs/INHALEX-Movil/pull/15), de Historial de pedidos, está abierto por David567rs desde `feature/historial-pedidos` hacia `develop`, sin borrador ni merge. GitHub confirmó a ZenaidaGR en `requested_reviewers`. El commit de implementación y HEAD al abrir fue `726101a8606ee92ad1a184c28d9649d6129fdf7b`; la base de la actividad sigue siendo `77b9ab5` del PR #14. Los documentos locales de cierre de ese PR anterior se transportaron intencionalmente y no cambian el servidor o sus contratos.
+
+Antes de publicar pasaron otra vez TypeScript, lint y **618/618 pruebas**. `npm run doctor` resolvió Expo Doctor **1.20.4**, con **21/21**, y la exportación Android pasó con **1508 módulos** después de ampliar mínimamente la etiqueta accesible de cada pedido con fecha, estado, importe y unidades. La exportación web de **1057 módulos** y la QA visual son snapshots anteriores a ese ajuste sin cambio visual. La evidencia de la misma implementación y los reportes de Expo Go conservan sus fuentes separadas; el agente no observó el teléfono.
+
+Al abrir, Mobile CI `39398704705` y Backend CI `39398704687` estaban `in_progress` sobre el primer HEAD. Es un snapshot, sin declarar CI final aprobada: el enlace documental añadirá otro HEAD y deberán consultarse los checks vigentes. Historial continúa **8/9**; solo **Revisar el código** (9) espera la aprobación real de ZenaidaGR. Mantener Trello **En progreso** y los marcados 4 y 8 confirmados por el usuario, sin atribuir acceso al tablero al agente.
+
+Siguiente paso: Zenaida abre el PR desde **ZenaidaGR**, revisa **Files changed**, abre **Review changes**, elige **Approve** y envía **Submit review** cuando esté conforme. Esperar su reporte y comprobar los checks del HEAD final antes de plantear el merge commit hacia `develop`. Esta apertura no autoriza integrar. Conservar rama, configuración, dependencias, servicios, identidades, stash y copia de Zenaida; no iniciar Seguimiento o Avisos.
