@@ -46,7 +46,7 @@
     "snapshotScope": "Instantánea histórica de la etapa de diseño aceptada; la conexión posterior se registra en connection"
   },
   "functionalAcceptance": {
-    "acceptedCriteria": 7,
+    "acceptedCriteria": 8,
     "totalCriteria": 8,
     "acceptedCriterionIds": [
       1,
@@ -55,12 +55,11 @@
       4,
       5,
       6,
-      7
-    ],
-    "pendingCriterionIds": [
+      7,
       8
     ],
-    "status": "Criterios funcionales 1-7 y prueba final de reapertura/sesión aceptados por reportes del usuario en Expo Go. 7/8; Revisar el código espera revisión real de Zenaida en el PR autorizado.",
+    "pendingCriterionIds": [],
+    "status": "8/8: criterios funcionales y sesión aceptados por reportes del usuario; Revisar el código completado por aprobación real de ZenaidaGR sobre el HEAD final, integrado a develop mediante PR16.",
     "confirmations": [
       {
         "date": "2026-10-20",
@@ -112,6 +111,19 @@
         "criterionIds": [],
         "scope": "Reapertura recupera pedidos, cerrar sesión los oculta, reingresar con la misma cuenta los recupera y Actualizar funciona. Prueba final sin criterio independiente; no completa revisión formal (8).",
         "agentObservedDevice": false
+      },
+      {
+        "source": "Revisión real de ZenaidaGR en GitHub, verificada en lectura",
+        "criterionIds": [
+          8
+        ],
+        "reviewer": "ZenaidaGR",
+        "state": "APPROVED",
+        "commit": "90c1420bf0ed62a2109e76fc71d6d64f56940fd4",
+        "submittedAt": "2026-10-20T12:22:41Z",
+        "url": "https://github.com/David567rs/INHALEX-Movil/pull/16#pullrequestreview-5584905725",
+        "scope": "Revisión formal sobre el HEAD final con CI aprobada; no añade evidencia nativa.",
+        "agentObservedDevice": false
       }
     ],
     "criteria": [
@@ -153,7 +165,7 @@
       {
         "id": 8,
         "text": "Revisar el código",
-        "accepted": false
+        "accepted": true
       }
     ]
   },
@@ -161,9 +173,9 @@
     "source": "Captura adjunta del usuario",
     "agentReadBoard": false,
     "agentModifiedBoard": false,
-    "userConfirmedCriteriaMarked": false,
+    "userConfirmedCriteriaMarked": true,
     "observedInUserScreenshot": "Ocho criterios sin marcar",
-    "guidance": "El usuario puede marcar Probar distintos estados del pedido (7), además de 1-6 aceptados. Mantener En progreso y Revisar el código (8) pendiente para Zenaida. No hay punto independiente de reapertura/sesión. El agente no verificó los marcados en Trello.",
+    "guidance": "El usuario informó Trello actualizado tras la guía de cierre. Seguimiento8/8 integrado; ambas copias sincronizadas con develop0f0b764. El agente no leyó ni modificó el tablero.",
     "recommendedCriterionIds": [
       1,
       2,
@@ -171,8 +183,11 @@
       4,
       5,
       6,
-      7
-    ]
+      7,
+      8
+    ],
+    "finalUpdateConfirmedByUser": true,
+    "finalUpdateSource": "Amigo, ya actualicé Trello. Actualicemos INHALEX-Movil e INHALEX-Movil-Zenaida con develop antes de empezar la siguiente actividad."
   },
   "architecture": {
     "pattern": "MVVM y Repository",
@@ -223,25 +238,31 @@
   "publication": {
     "branchPushed": true,
     "pullRequestCreated": true,
-    "merged": false,
+    "merged": true,
     "publicationAuthorizedByUser": true,
     "futureReviewer": "ZenaidaGR",
     "futureBase": "develop",
-    "status": "open-review-requested",
+    "status": "merged",
     "authorizationQuote": "Amigo, los pedidos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta. Actualizar funciona. Abre el PR de Seguimiento hacia develop para que Zenaida lo revise.",
     "mergeAuthorized": false,
     "pr": 16,
     "url": "https://github.com/David567rs/INHALEX-Movil/pull/16",
     "author": "David567rs",
-    "requestedReviewers": [
+    "reviewRequested": true,
+    "headAtOpening": "7f5e1929ec4b977cc83895714598f1495d165cae",
+    "mergedAt": "2026-10-20T12:22:49Z",
+    "mergedBy": "ZenaidaGR",
+    "mergeCommit": "0f0b764a4ad78e40f12112c4debcd7982ccdfd2c",
+    "formalReviewApproved": true,
+    "approvedHead": "90c1420bf0ed62a2109e76fc71d6d64f56940fd4",
+    "requestedReviewersAtOpening": [
       "ZenaidaGR"
     ],
-    "reviewRequested": true,
-    "headAtOpening": "7f5e1929ec4b977cc83895714598f1495d165cae"
+    "mergePerformedByAgent": false
   },
-  "nextStep": "ZenaidaGR revisa y aprueba el PR #16 desde su propia cuenta cuando esté conforme. Mantener Revisar el código (8) pendiente, Trello En progreso y esperar CI del HEAD final antes de un merge autorizado. El agente no aprueba ni fusiona.",
+  "nextStep": "Esperar solicitud de inicio y tarjeta/checklist de Avisos, responsable Zenaida, en feature/avisos; empezar solo por diseño con MVVM y Repository. Ambas copias están en develop0f0b764 y el cierre documental local de David debe conservarse y guardarse por separado.",
   "limitations": [
-    "El usuario reportó los criterios funcionales 1-7 y la prueba final de reapertura/sesión en Expo Go. Revisar el código (8) sigue pendiente. El agente no observó el teléfono, inspeccionó SecureStore ni capturó el tráfico HTTP del dispositivo.",
+    "Criterios 1-7 y sesión proceden de reportes del usuario en Expo Go; criterio8 procede de revisión real de ZenaidaGR verificada en GitHub. El agente no observó el dispositivo ni añadió pruebas nativas por el merge.",
     "Los datos y modos del diseño son una instantánea histórica; la implementación actual consulta la API.",
     "La QA web usa datos sintéticos y las pruebas HTTP usan servidores loopback; no acreditan una consulta autenticada al servicio Nest/MongoDB real.",
     "No se agregaron escrituras de pedidos, almacenamiento, dependencias ni cambios al backend.",
@@ -250,7 +271,7 @@
   ],
   "connection": {
     "implemented": true,
-    "status": "native-functional-acceptance-complete-review-pending",
+    "status": "merged-develop-complete-8-of-8",
     "technicalVerification": "verificacion-api.json",
     "guide": "../../CONEXION-SEGUIMIENTO-PEDIDO.md",
     "endpointsInOrder": [

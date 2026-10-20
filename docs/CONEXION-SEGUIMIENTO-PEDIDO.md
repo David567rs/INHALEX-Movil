@@ -1,10 +1,10 @@
 # Conexión de Seguimiento del pedido
 
-La actividad continúa en `C:\Users\David\Documents\INHALEX-Movil`, rama `feature/seguimiento-pedido`, desde `develop` en `930d2023ecb801ce985acaad8dfad03657a998ae`. David567rs abrió el [PR #16](https://github.com/David567rs/INHALEX-Movil/pull/16) hacia `develop`, con revisión solicitada a ZenaidaGR.
+La actividad quedó integrada en develop mediante el [PR #16](https://github.com/David567rs/INHALEX-Movil/pull/16), aprobado y fusionado por ZenaidaGR en `0f0b764`. El HEAD final aprobado fue `90c1420`, con Backend CI y Mobile CI success. La implementación se desarrolló en feature/seguimiento-pedido desde la base `930d202`.
 
-El usuario aceptó el diseño y autorizó conectar la API en la misma rama. El diseño está guardado en `34b4f83` y su aceptación en `14b8453`, separados del cierre previo de Historial. API `c1ac906`, aceptación final de sesión `5a2561d` y preparación `7f5e192` conservan los commits por etapa. Después de su autorización se publicó la rama y abrió el PR #16; GitHub confirmó la solicitud a ZenaidaGR, sin aprobación o merge. Los checks del primer HEAD son un snapshot y deben consultarse los del HEAD vigente.
+Se conservan los commits por etapa: diseño `34b4f83`, aceptación visual `14b8453`, API `c1ac906`, reportes funcionales y sesión `5a2561d`, preparación `7f5e192` y enlace `90c1420`. El PR16 quedó aprobado e integrado; el cierre documental local no modifica esos commits o el servidor. [Recibo de integración](evidencias/seguimiento-pedido/integracion-pr16.json).
 
-Seguimiento tiene **7/8** criterios aceptados: el usuario confirmó en Expo Go consulta, actualización, pedido no encontrado, error/reintento y los recorridos de Confirmado, Completado y Cancelado. También aceptó reapertura, ocultación al salir y recuperación con la misma cuenta, sin añadir un criterio independiente. Solo **Revisar el código** (8) espera la revisión real de ZenaidaGR. La [aceptación vigente](evidencias/seguimiento-pedido/expo-go-aceptacion.json) conserva los reportes exactos. El agente no observó el teléfono ni leyó o modificó Trello; mantener En progreso, sin dar por confirmado su marcado. El [diseño](DISENO-SEGUIMIENTO-PEDIDO.md) y sus resultados se conservan como historia.
+Seguimiento tiene **8/8**: los criterios funcionales1-7 y sesión proceden de reportes del usuario en Expo Go; Revisar el código (8) procede de la aprobación real de ZenaidaGR sobre el HEAD final. El agente no observó el teléfono ni accedió a Trello. El usuario informó actualizar Trello tras la guía de cierre y autorizó sincronizar ambos clones; ambas copias están en develop0f0b764.
 
 ## Contrato existente del backend
 
@@ -51,7 +51,7 @@ El controlador no consulta sin ID válido y sesión autenticada. Seleccionar otr
 
 Salir o cambiar la identidad de autorización oculta inmediatamente los datos personales. Este módulo no añade SecureStore, persistencia web, datos de seguimiento guardados entre cuentas o escritura de sesión. No modifica los datos de pedidos, historial, bolsa, direcciones o backend, ni añade POST/PATCH/DELETE, confirmación de recepción, cancelación o repetición de compra.
 
-## Criterios de Trello: 7/8
+## Criterios de Trello: 8/8
 
 - [x] Obtener estado del pedido desde la API
 - [x] Mostrar información del pedido
@@ -60,7 +60,7 @@ Salir o cambiar la identidad de autorización oculta inmediatamente los datos pe
 - [x] Manejar pedidos no encontrados
 - [x] Manejar errores de conexión
 - [x] Probar distintos estados del pedido
-- [ ] Revisar el código
+- [x] Revisar el código
 
 Los reportes funcionales del usuario completan 1-7 y el recorrido final de sesión, sin añadir un criterio o aceptar la revisión por anticipado. La revisión final corresponde a ZenaidaGR en el PR autorizado, todavía en preparación; la revisión de agentes y las pruebas automatizadas no la sustituyen. Mantener Trello **En progreso**, sin atribuir al agente su lectura o marcado.
 
@@ -134,7 +134,7 @@ El mismo mensaje autoriza abrir el PR hacia `develop` para ZenaidaGR. La publica
 
 ## Orden de las pruebas posteriores y commits
 
-Lectura normal, actualización, pedido no encontrado, error/reintento, distintos estados y reapertura/sesión están aceptados. Sigue guardar este reporte en un commit documental separado y preparar la publicación, el PR y la revisión solicitada por el usuario. La actividad permanece 7/8; solo la revisión real de Zenaida completa el criterio 8. No se modificará un pedido real para fabricar casos ni se presentará una prueba sintética como observación de un pedido real.
+Todos los recorridos funcionales y la revisión formal están aceptados: 8/8. Sigue el cierre de Trello por el usuario y después la sincronización de ambas copias cuando la solicite; no se inicia la siguiente actividad por la aprobación del PR.
 
 Se conservan los commits por fase: diseño `34b4f83`, aceptación visual `14b8453`, API `c1ac906`, consulta/actualización `3a4fb9e`, no encontrado `4d3007e`, error/reintento `6791928`, estados `5afa8b5` y sesión `5a2561d`. La preparación está en `7f5e192` y el PR #16 está abierto hacia develop con revisión solicitada a ZenaidaGR. No hay aprobación o merge; el criterio8 sigue pendiente y se comprobarán los checks del HEAD final antes de integrar con autorización.
 
@@ -148,10 +148,22 @@ Las pruebas de integración HTTP utilizan Node HTTP y puertos efímeros de loopb
 
 En la [preparación actual del PR](evidencias/seguimiento-pedido/preparacion-pr.json) volvieron a pasar **TypeScript**, **lint**, **677/677 pruebas móviles** sin fallos, **Doctor 1.20.4 21/21** y exportación Android de **1521 módulos**. No se repiten las 50 pruebas backend, la exportación web o la QA sintética: siguen siendo el snapshot de API anterior, sin cambio funcional. La CI remota se comprobará sobre el HEAD que se publique; no hay resultados remotos afirmados para un PR todavía en preparación.
 
-La aceptación funcional de criterios sigue 7/8, con el recorrido de sesión también aceptado; procede de reportes del usuario, sin observación directa del teléfono por el agente. El JSON de verificación técnica conserva el snapshot de API y la aceptación vigente se registra por separado. Esta preparación documental no realiza consultas autenticadas a pedidos reales ni escrituras, y conserva servicios, configuración, dependencias, identidades, stash y copia de Zenaida. TalkBack y texto ampliado tendrán evidencia específica si se prueban.
+La aceptación completa es 8/8: reportes del usuario para comportamiento nativo y aprobación de Zenaida para revisión formal. El merge no añade observación del teléfono por el agente ni nuevas pruebas físicas. La evidencia técnica anterior conserva su fecha y alcance; este cierre solo cambia documentación local, sin commit/push adicional, sincronización o cambios de servicios.
 
-## PR #16 abierto y revisión solicitada
+## Snapshot: PR #16 abierto y revisión solicitada
 
 El [PR #16](https://github.com/David567rs/INHALEX-Movil/pull/16) está abierto por David567rs hacia develop, desde feature/seguimiento-pedido y sin borrador. GitHub confirmó la solicitud a ZenaidaGR; no hay aprobación o merge. El reporte de sesión se guardó en `5a2561d` y la preparación en `7f5e192`, HEAD inicial del PR. Se conserva 7/8; criterio8 espera revisión formal y Trello sigue En progreso. [Recibo de apertura](evidencias/seguimiento-pedido/apertura-pr16.json).
 
 Al consultar el HEAD de apertura, [Backend CI](https://github.com/David567rs/INHALEX-Movil/actions/runs/39420908587) completó success y [Mobile CI](https://github.com/David567rs/INHALEX-Movil/actions/runs/39420908777) seguía in_progress. El commit que enlaza este PR modifica el HEAD: comprobar sus checks vigentes, sin convertir aquel snapshot en aprobación final. Zenaida revisa Files changed y envía Approve desde su propia cuenta si está conforme; el agente no realiza esa aprobación ni fusiona por la solicitud de apertura.
+
+## PR #16 aprobado e integrado: 8/8
+
+ZenaidaGR [aprobó el HEAD final](https://github.com/David567rs/INHALEX-Movil/pull/16#pullrequestreview-5584905725) `90c1420` a las 2026-10-20T12:22:41Z y realizó el merge a las 12:22:49Z, commit `0f0b764`. [Backend CI](https://github.com/David567rs/INHALEX-Movil/actions/runs/39421551212) y [Mobile CI](https://github.com/David567rs/INHALEX-Movil/actions/runs/39421551173) pasaron sobre ese mismo HEAD. [Recibo](evidencias/seguimiento-pedido/integracion-pr16.json). La revisión completa el criterio8 y Seguimiento queda 8/8.
+
+En Trello: marcar Revisar el código, adjuntar PR16, comentar la aprobación e integración y mover a Terminado. El usuario aún no confirmó el marcado; el agente no lee ni modifica el tablero. Después el usuario solicita actualizar ambas copias con develop. Se conserva el cierre documental local sin commit o push posterior al merge y no se cambian ramas, servicios o actividad por esta consulta.
+
+## Trello confirmado y sincronización posterior al PR #16
+
+El usuario informó Trello actualizado; el agente no leyó ni modificó el tablero. Ambas copias quedaron en develop `0f0b764`, iguales a origin/develop, por fast-forward. Los seis documentos de cierre de David se respaldaron y conservaron al cambiar de rama; luego se actualizaron solo para registrar este hito y siguen locales sin commit/push adicional. Zenaida está limpia con su stash intacto. Entornos, paquetes e identidades se conservaron.
+
+TypeScript/lint pasaron en los dos clones y backend/Metro8082/8083 respondieron HTTP200. Los Metro mantuvieron sus procesos; el backend se recargó bajo node --watch y se recuperó sin stop/start del agente. [Evidencia de sincronización](evidencias/seguimiento-pedido/integracion-pr16.json). Sigue Avisos de Zenaida en feature/avisos, esperando su tarjeta y una solicitud para empezar solo por diseño; no se inicia por esta sincronización.

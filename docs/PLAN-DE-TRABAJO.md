@@ -1,6 +1,6 @@
 # Plan de trabajo de INHALEX Movil
 
-**Actividad vigente:** [PR #16 de Seguimiento](https://github.com/David567rs/INHALEX-Movil/pull/16) abierto, David567rs, `feature/seguimiento-pedido` → `develop`, MVVM y Repository. Revisión solicitada a ZenaidaGR, sin aprobación o merge. **7/8** y sesión aceptada por el usuario; criterio8 pendiente. Sesión `5a2561d`, preparación `7f5e192`; checks locales aprobados. CI de apertura Backend success/Mobile en ejecución, consultar HEAD final tras enlace documental. Mantener Trello En progreso; agente sin acceso al tablero. El último apartado prevalece; Historial sigue 9/9.
+**Estado actual:** Avisos está **8/9**, criterios 1-8 aceptados, Zenaida, `feature/avisos`. El [PR #17](https://github.com/David567rs/INHALEX-Movil/pull/17) está abierto hacia `develop`, sin draft, y David567rs figura como revisor solicitado, verificado por REST. Solo **Revisar el código** (9) sigue pendiente; no se confirman aprobación o merge. La preparación local aprobada no anticipa la CI del HEAD que incluirá el enlace: consultar los checks actuales del PR. Mantener En progreso, marcado Trello no confirmado y commits por fase; sin observación del teléfono o prueba de otra cuenta por el agente.
 
 Acuerdos del 14 de octubre de 2026 para reiniciar la aplicación móvil con un repositorio independiente, aprovechar el backend y el código anterior, y documentar el flujo de trabajo del profesor desde el inicio.
 
@@ -74,7 +74,25 @@ Antes de dividir la implementación se acordarán los contratos de sesión, prod
 
 ## Avisos
 
-Zenaida implementará una bandeja dentro de la app para consultar avisos del usuario, mostrar el estado leído y actualizarlo. El backend anterior cuenta con operaciones de listado, marcado individual y marcado de todos como leídos. Los criterios específicos se completarán con el checklist de la tarjeta antes de implementar esta actividad.
+Zenaida implementará una bandeja dentro de la app para consultar avisos del usuario, mostrar el estado leído y actualizarlo. El backend anterior cuenta con operaciones de listado, marcado individual y marcado de todos como leídos; esas operaciones no se conectan en la fase actual, autorizada únicamente para diseño en `INHALEX-Movil-Zenaida`, rama `feature/avisos`.
+
+La ruta `/avisos` se abre desde Cuenta, con MVVM, Repository local de solo lectura y bootstrap. Escenas **Bandeja/Sin avisos/Error de carga**, filtros **Todos/No leídos**, tres ejemplos y dos no leídos. Consultar el detalle solo cambia la selección local; no marca el aviso como leído. Se conservan las cinco pestañas y no se añade HTTP, persistencia, push o modificación de datos reales.
+
+Checklist exacto de la tarjeta, **0/9** hasta el reporte real correspondiente:
+
+- [ ] Crear sección de avisos
+- [ ] Obtener avisos disponibles
+- [ ] Mostrar título, mensaje y fecha
+- [ ] Diferenciar avisos leídos y no leídos
+- [ ] Permitir consultar el detalle
+- [ ] Mostrar mensaje si no existen avisos
+- [ ] Manejar errores de carga
+- [ ] Probar la funcionalidad
+- [ ] Revisar el código
+
+Después de aceptar el diseño en Expo Go podrá marcarse solo el criterio 1. Los ejemplos de contenido, estados, detalle, vacío o error no equivalen a aceptación funcional. La verificación técnica propia está aprobada y se distingue del reporte nativo aún pendiente; el agente no observó el dispositivo ni leyó o modificó Trello. David567rs revisará el futuro PR de ZenaidaGR. Ver [diseño](DISENO-AVISOS.md) y [aceptación inicial](evidencias/avisos/expo-go-aceptacion.json).
+
+El usuario mostró como tres actividades restantes **Avisos**, **Reseñas** y **Confirmación de recepción**. Se registra esa relación sin sustituir el historial del plan original ni asignar responsable, rama, criterios u orden adicional para Reseñas o Confirmación de recepción; sus alcances se acordarán cuando correspondan. La autorización actual se limita al diseño de Avisos.
 
 ## Procedimiento de cada PR
 
@@ -820,10 +838,95 @@ Se autoriza guardar esta aceptación en su propio commit documental, publicar la
 
 Se mantienen las fases separadas: diseño `34b4f83`, aceptación visual `14b8453`, API `c1ac906`, consulta/actualización `3a4fb9e`, no encontrado `4d3007e`, error/reintento `6791928` y estados `5afa8b5`. El cierre documental previo de Historial se transporta intencionalmente sin alterar su integración o 9/9. En la preparación actual pasaron TypeScript, lint, 677/677 pruebas móviles, Doctor 1.20.4 21/21 y exportación Android de 1521 módulos. Las 50 pruebas backend, web y QA siguen históricas de la API, sin repetirse ahora, y la CI remota espera el HEAD publicado. No cambiar implementación, servidor, servicios, entornos, dependencias, identidades, stash o copia de Zenaida; no empezar otra actividad. Ver [conexión](CONEXION-SEGUIMIENTO-PEDIDO.md) y [aceptación](evidencias/seguimiento-pedido/expo-go-aceptacion.json).
 
-## Estado vigente: PR #16 de Seguimiento abierto para Zenaida (7/8)
+## Snapshot histórico: PR #16 de Seguimiento abierto para Zenaida (7/8)
 
 El [PR #16](https://github.com/David567rs/INHALEX-Movil/pull/16) está abierto por David567rs desde `feature/seguimiento-pedido` hacia `develop`, sin borrador. GitHub confirmó la solicitud de revisión a ZenaidaGR sobre el HEAD de apertura `7f5e192`; base `930d202` del PR #15. El reporte final de sesión se guardó por separado en `5a2561d`, conservando los commits anteriores. Evidencia: `evidencias/seguimiento-pedido/apertura-pr16.json`. Criterios funcionales1-7 y reapertura/sesión aceptados; revisión8 pendiente, sin aprobación ni merge.
 
 La preparación repitió TypeScript/lint, 677 pruebas móviles, Doctor21/21 y Android1521. Los 50 tests backend, web1070 y QA sintética siguen históricos. Al consultar el primer HEAD, Backend CI 39420908587 fue success y Mobile CI 39420908777 seguía in_progress. El enlace documental cambia HEAD; consultar los checks finales sin atribuirles aprobación por este snapshot.
 
 Zenaida revisa Files changed y envía Approve desde su propia cuenta cuando esté conforme. El agente no aprueba por ella ni completa Trello8. Mantener En progreso y esperar revisión y checks vigentes antes de un merge commit autorizado. No iniciar Avisos, alterar servicios, entorno, dependencias, identidades, stash o la copia de Zenaida por esta apertura; el agente no observa el teléfono ni accede a Trello.
+
+## Snapshot histórico: Seguimiento integrado mediante PR #16 (8/8)
+
+ZenaidaGR aprobó el HEAD final `90c1420` del [PR #16](https://github.com/David567rs/INHALEX-Movil/pull/16) y lo fusionó en develop mediante `0f0b764a4ad78e40f12112c4debcd7982ccdfd2c`. Backend CI 39421551212 y Mobile CI 39421551173 fueron success sobre ese HEAD. Aprobación 2026-10-20T12:22:41Z; merge 12:22:49Z. La revisión real completa el criterio8 y Seguimiento **8/8**. Ver `evidencias/seguimiento-pedido/integracion-pr16.json`.
+
+El usuario marca Revisar el código, adjunta el enlace del PR16, añade comentario de aprobación/integración y mueve Trello a Terminado. Es una guía; el marcado aún no está confirmado y el agente no accede al tablero. Después solicita sincronizar INHALEX-Movil e INHALEX-Movil-Zenaida con develop antes de iniciar la siguiente actividad.
+
+David sigue en feature/seguimiento-pedido `90c1420` y Zenaida en develop `930d202`; no se sincroniza por esta consulta. El cierre documental queda local sin commit o push posterior al merge, para conservarlo al actualizar y guardarlo por separado conforme al acuerdo de etapas. No hay nuevas pruebas nativas, cambios funcionales, servicios, configuración, dependencias, identidad o stash. TypeScript/lint se verifican; los resultados anteriores de suites, Doctor y exportaciones conservan su alcance histórico.
+
+## Snapshot histórico: Trello confirmado y clones actualizados a develop tras PR #16
+
+El usuario informó Trello actualizado y autorizó sincronizar ambas copias. Seguimiento permanece 8/8, PR16 aprobado e integrado. El agente no leyó ni modificó el tablero. Ambas copias están en develop `0f0b764a4ad78e40f12112c4debcd7982ccdfd2c`, iguales a origin/develop; las referencias avanzaron por fast-forward y no se reescribió historial.
+
+Se preservaron los seis documentos locales de cierre de David, con respaldo y hashes idénticos al cambiar de rama; después se actualizaron intencionalmente para registrar este hito y siguen sin commit/push. Zenaida quedó limpia con stash intacto; entornos, dependencias e identidades también. Ambos Metro conservaron sus procesos. El backend se recargó bajo node --watch y recuperó HTTP200 sin stop/start del agente; los tres servicios respondieron200. TypeScript/lint de ambos clones pasaron; no se repiten suites o exports. Recibo TEMP/inhalex-sincronizacion-pr16.json y evidencia en evidencias/seguimiento-pedido/integracion-pr16.json.
+
+La siguiente actividad es **Avisos**, responsable Zenaida y rama feature/avisos. Falta recibir la tarjeta/checklist exacto y la solicitud de empezar solo por diseño; mantener MVVM/Repository/bootstrap y la bandeja dentro de la app. No se crea la rama ni se implementa por actualizar develop. Conservar el cierre previo para guardarlo por separado y mantener servicios, entornos, identidades y stash.
+
+## Snapshot histórico: Avisos, solo diseño autorizado en Zenaida (0/9)
+
+El usuario autorizó solo el diseño de **Avisos**, en `C:\Users\David\Documents\INHALEX-Movil-Zenaida`, rama `feature/avisos`, desde `develop` `0f0b764`. ZenaidaGR es responsable y David567rs revisará su futuro PR. El cierre anterior de Seguimiento se guardó primero, separado, en `6610412`; David se conserva intacto. El diseño tendrá su propio commit tras las comprobaciones pertinentes; la API y las aceptaciones se registrarán por fases cuando estén autorizadas y reportadas.
+
+La bandeja visual `/avisos`, desde Cuenta y Metro **8083**, usa `NoticesPreviewScreen`, `useNoticesPreviewViewModel`, `LoadNoticesPreview`, `NoticesPreviewRepository` y `LocalNoticesPreviewRepository`, compuestos por `createNoticesPreviewAction()`. Presenta **Bandeja**, **Sin avisos** y **Error de carga**, con filtros **Todos/No leídos** y tres ejemplos, dos no leídos. El detalle es solo local y no marca leído. No hay HTTP, almacenamiento, push, cambios de estado reales, sesión o backend. Se conservan cinco pestañas, servicios, entornos, dependencias, identidades, stash y copia de David.
+
+Los nueve criterios exactos están en la sección [Avisos](#avisos), el [diseño](DISENO-AVISOS.md) y la [aceptación inicial](evidencias/avisos/expo-go-aceptacion.json): **0/9**, todos pendientes. Solo una aceptación visual posterior permitirá marcar **Crear sección de avisos**; no aceptar los demás por ejemplos o QA sintética. El agente no observó el teléfono ni accedió a Trello. El usuario mostró además **Reseñas** y **Confirmación de recepción** como restantes, sin acordar aquí sus criterios, reparto o ramas. No empezar esas actividades, API o PR por esta fase.
+
+La verificación propia pasó TypeScript/lint globales, repetidos tras `aria-pressed`, **677/677 pruebas existentes** sin nuevas, Doctor **1.20.4 21/21**, Android **1529** y web **1078** módulos finales. QA web sintética a **397×1000 / 320×820** comprobó bandeja 3/2/1, filtro, detalles y vuelta sin marcar leído, vacío/error/reintento de muestra, Cuenta/cinco pestañas, login alcanzable por scroll y reentrada con muestras iniciales. No hubo desbordamiento horizontal o errores de consola; controles nuevos >=44 px. Persisten tres avisos compartidos de sombras, fallback useNativeDriver y pointerEvents, sin atribuirlos a pruebas nativas. El recibo propio es `evidencias/avisos/verificacion-diseno.json`. Entornos, paquetes/locks, cierre de David, identidad, stash y procesos **33524/28288/13476** se conservaron. El commit propio de diseño se prepara ahora con SHA consultable en Git; la aceptación visual en Expo Go sigue pendiente.
+
+## Snapshot histórico: Avisos, diseño aceptado y conexión autorizada (1/9)
+
+El usuario confirmó exactamente: «Amigo, ya revisé el diseño de Avisos en Expo Go y me gustó. Sigamos con la conexión a la API en feature/avisos, manteniendo MVVM, Repository y commits por etapa.». Se acepta solo **Crear sección de avisos** (1), quedando **1/9**. Los criterios 2-9 esperan la validación correspondiente y revisión real de David567rs. La fuente es su mensaje, sin observación del teléfono ni lectura o cambios de Trello por el agente; el marcado no está confirmado.
+
+El diseño quedó en `1f383f3`, después del cierre de Seguimiento `6610412`. Se registra esta aceptación en un commit documental propio antes de iniciar el código de conexión. La API está autorizada pero todavía no implementada, en la misma rama `feature/avisos` y copia de Zenaida, manteniendo MVVM/Repository/bootstrap. Las comprobaciones de diseño conservan su alcance histórico y no validan la futura API. No cambiar David, servicios, entorno, paquetes, identidad o stash por el reporte; no publicar, abrir PR, fusionar o iniciar las otras actividades. Ver [diseño histórico aceptado](DISENO-AVISOS.md) y [aceptación](evidencias/avisos/expo-go-aceptacion.json).
+
+## Snapshot histórico: Avisos con API verificada, pruebas funcionales pendientes (1/9)
+
+La conexión está terminada con MVVM, Repository y bootstrap en la misma rama. GET `/notifications/me` carga hasta 12 avisos y el contador global; detalle local sin escritura, PATCH individual solo mediante botón explícito y GET de conciliación posterior. El marcado confirmado se conserva si falla esa lectura y Reintentar solo hace GET. No se incorporan marcado masivo, push, polling, persistencia, cambios del backend o dependencias. El contador puede superar los elementos cargados; los vacíos de bandeja o filtro no declaran que todos los avisos globales estén leídos.
+
+Tras retirar la ruta QA pasaron TypeScript/lint, **735/735 pruebas**, con **58 nuevas** (7 dominio, 14 Repository, 8 HTTP y 29 controlador, incluidas tres de reentrancia), Doctor **1.20.4 21/21**, Android **1532** y web **1081** módulos. QA web a **397×1000 / 320×820** con sesión/fetch sintéticos y capas reales comprobó contador global, detalle sin PATCH, marcado/conciliación, errores/reintento conservando datos, leído confirmado sin repetir PATCH, vacíos0/0 y0/19, filtro vacío global9 y 401/salida. No hubo errores de consola; dos avisos compartidos de sombras y fallback de animación. No es prueba física de Expo Go. El GET real sin Bearer respondió401, sin lecturas autenticadas o escrituras reales del agente.
+
+La [guía de conexión](CONEXION-AVISOS.md) y el recibo `evidencias/avisos/verificacion-api.json` separan esta verificación del [diseño histórico](DISENO-AVISOS.md). Se conserva cierre `6610412`, diseño `1f383f3` y aceptación `46c86aa`; la API se guarda en su commit de fase **`feat(notices): conectar avisos con la API`**, con SHA consultable en Git. Entornos, paquetes/locks, David, identidad, stash y procesos **33524/28288/13476** se mantuvieron; backend y ambos Metro respondieron200.
+
+La aceptación sigue **1/9**. Próxima prueba: recargar Expo Go **8083**, Cuenta → Avisos, comprobar datos reales, abrir detalle, marcar solo con el botón explícito y actualizar. Si está vacío, reportarlo sin fabricar avisos. Esperar el reporte antes de aceptar 2-9 y conservar **Revisar el código** para David567rs en el futuro PR autorizado. El agente no observa el teléfono ni accede a Trello; puede marcarse1, sin confirmación de marcado. No abrir PR ni iniciar otras actividades por esta fase.
+## Snapshot histórico: recorrido positivo de Avisos aceptado (5/9)
+
+El usuario reportó exactamente: «Amigo, ya aparecen mis avisos en Expo Go, pude abrir el detalle, marcar uno como leído y actualizar. ¿Qué marco en Trello y qué sigue?». Por el recorrido guiado previo se aceptan **Obtener avisos disponibles; Mostrar título, mensaje y fecha; Diferenciar avisos leídos y no leídos; Permitir consultar el detalle** (2-5), además de Crear sección de avisos (1). La actualización queda aceptada como parte del recorrido positivo; no crea un criterio adicional. Fuente textual del usuario, sin observación directa del teléfono o acceso a Trello por el agente. No se atribuye una prueba independiente del filtro Todos/No leídos ni de vacío o errores.
+
+Puede marcar 2-5 y mantener En progreso, **5/9**; el marcado no está confirmado. API `1b9d572`, diseño `1f383f3`, aceptación visual `46c86aa` y cierre `6610412` conservan sus fases. Este reporte se guarda en su propio commit documental. Las 735 pruebas, Doctor y exportaciones son resultados de la conexión anterior, sin repetirse por documentación ni convertirlos en pruebas nativas nuevas.
+
+A la consulta de una cuenta sin avisos, el usuario respondió exactamente «No, preparemos una prueba controlada». Se autoriza preparar un montaje temporal y aislado de bandeja vacía para Expo Go de Zenaida8083, sin borrar o marcar avisos reales, cambiar credenciales o modificar el backend. Ese montaje todavía no está preparado y **Mostrar mensaje si no existen avisos** (6) continúa pendiente hasta su reporte. No confundir el filtro No leídos vacío con la bandeja vacía. Después siguen errores/reintento, reapertura/sesión y el futuro PR solicitado para revisión real de David567rs. Conservar código funcional, ambas copias, servicios, entorno, dependencias, identidades y stash; no publicar o abrir PR por esta aceptación.
+
+## Snapshot histórico: Avisos, vacío controlado DEV preparado (5/9)
+
+Tras el positivo `fcc0c72`, el usuario autorizó **«No, preparemos una prueba controlada»**. El montaje temporal para Expo Go **8083** está preparado con la pantalla real y una sesión/lista locales, sin borrar avisos reales, registrar otra cuenta, cambiar credenciales o modificar el backend. El criterio 6 permanece pendiente: la posterior prueba acreditará la interfaz con fixture 0/0, sin acreditar una cuenta o API reales vacías. El filtro No leídos sin coincidencias es un caso distinto.
+
+La entrada **Probar bandeja vacía** solo existe en desarrollo desde `/avisos`; `/qa-avisos-vacio` anida providers locales alrededor de `NoticesScreen`. El Repository local tipado usa `createNoticesActions`; la consulta local espera 350 ms y devuelve `items: []`, `unread: 0`; el marcado rechaza sin escribir. Banner **Prueba controlada** y **Salir de la prueba** con reemplazo a `/avisos`, sin HTTP, token o almacén del helper. RootLayout y runtime productivo no cambian; el resto de la app puede continuar lecturas normales. No confundir el aislamiento del helper con ausencia total de tráfico de la app.
+
+TypeScript y lint completos terminaron con exit 0. La QA web CSS de 320×820 pasó entrada anónima, mensaje vacío, **Actualizando…**, retorno al vacío, salida a `/avisos` que pide sesión y ausencia de desbordamiento. La fixture es 0/0, sin contador visible en la UI vacía. **Explorar catálogo** abrió `/catalogo` y Back volvió al montaje: solo se acredita navegación, pues la carga web del Catálogo tuvo un error de conexión. Capturas `prueba-vacio-web-320.png` y `prueba-vacio-salida-web-320.png`; [recibo controlado](evidencias/avisos/prueba-vacio.json) con guardas de preservación. No se repitieron las 735 pruebas, Doctor o exportaciones por esta fixture. El reporte nativo sigue pendiente: registrarlo antes de aceptar el criterio 6 y retirar helper/entrada DEV en otro commit antes de exports finales o publicación. La guía está en [Conexión de Avisos](CONEXION-AVISOS.md). Mantener 5/9, pendientes 6-9, Trello En progreso y revisión David567rs sin anticiparla; sin observación del teléfono o acceso a Trello por el agente.
+
+## Snapshot histórico: Avisos, vacío controlado aceptado y retirada pendiente (6/9)
+
+El usuario confirmó exactamente: «Amigo, apareció «Aún no tienes avisos», se mantuvo al actualizar, «Explorar catálogo» abrió Catálogo y al salir volvieron mis avisos reales sin cambios. ¿Qué marco en Trello y qué sigue?». Se acepta el criterio 6 **Mostrar mensaje si no existen avisos**, con alcance de interfaz controlada 0/0 y retorno a sus avisos reales según su reporte; no acredita una cuenta o API reales vacías. Fuente textual, sin observación del teléfono por el agente. Los criterios 1-6 están aceptados, **6/9**. Puede marcar el 6 y mantener En progreso; el agente no leyó o modificó Trello y el usuario no confirmó ese marcado.
+
+Esta aceptación se registra en commit propio; el siguiente commit retirará helper y entrada DEV y comprobará TypeScript/lint. La retirada todavía está pendiente y no se realiza en esta fase documental. Se preservan montaje `21ece6e`, positivo `fcc0c72`, API `1b9d572` y resultados técnicos históricos. Después sigue error/reintento de lectura: backend local detenido manualmente por el usuario, **Actualizar avisos** y **Reintentar** conservando datos, reiniciar el mismo backend y recuperar con **Reintentar**. No requiere marcar como leído ni modificar avisos reales. Permanecen pendientes errores (7), prueba completa (8) y revisión real de David567rs (9); sin servicios detenidos por el agente, publicación o PR. Consulta [la guía](CONEXION-AVISOS.md#siguiente-prueba-error-y-reintento-de-lectura).
+
+## Snapshot histórico: Avisos, montaje retirado y error GET pendiente (6/9)
+
+Tras la aceptación `7d97f85`, se retiraron los dos archivos temporales y la entrada DEV. `/avisos` volvió al hash de API `1b9d572`; no quedan referencias al helper en `Mobile/src`. TypeScript/lint completos aprobaron con exit 0 tras la retirada, sin repetir suite, Doctor o exports. El [recibo de retirada](evidencias/avisos/retirada-prueba-vacio.json) documenta esa fase, cuyo SHA se consulta en Git después de guardarla por separado. Los resultados del montaje `21ece6e` permanecen históricos.
+
+Mantener **6/9** y En progreso, sin inferir marcado Trello. Ahora sigue la [prueba humana GET de error/reintento](CONEXION-AVISOS.md#siguiente-prueba-error-y-reintento-de-lectura), sin marcar avisos ni cambiar datos: backend detenido solo por el usuario, aplicación/Metros/WiFi conservados, error con datos retenidos y recuperación al reiniciar. Criterios 7-9 y revisión real David567rs pendientes; sin publicación o PR.
+
+## Snapshot histórico: Avisos, error y reintento de carga aceptados (7/9)
+
+El usuario confirmó fallos de Actualizar y Reintentar sin perder avisos o detalle, y recuperación tras reiniciar el backend. La cita exacta y el alcance GET están en `docs/evidencias/avisos/expo-go-aceptacion.json`; el criterio 7 se acepta por su reporte, sin observación del dispositivo por el agente ni prueba nativa de fallo del marcado. Puede marcar Manejar errores de carga y mantener En progreso, 7/9; marcado no confirmado.
+
+La retirada temporal quedó en `bb32a17`. Esta aceptación se guarda en un commit documental separado, conservando historial y resultados técnicos anteriores. Sigue la prueba de reapertura y continuidad por cuenta; 8 y revisión real de David567rs (9) siguen pendientes. No se publica ni abre PR por este reporte, ni se cambian código, backend, servicios, dependencias o la copia de David.
+
+## Snapshot histórico: Avisos, aceptación funcional completa y PR autorizado (8/9)
+
+El usuario reportó regreso de los avisos al reabrir, ocultación al salir, recuperación con la misma cuenta, lectura conservada y Actualizar funcionando. Se acepta **Probar la funcionalidad** (8), con cita exacta en [la aceptación](evidencias/avisos/expo-go-aceptacion.json), sin observación del teléfono por el agente ni prueba de otra cuenta. Los criterios 1-8 están aceptados: **8/9**; puede marcar el 8 y mantener En progreso, pero ese marcado no está confirmado.
+
+El usuario también autorizó abrir `feature/avisos` → `develop`, con revisión real de **David567rs**. La publicación está en preparación: no se anticipan número, URL, solicitud de revisión o CI remota. Primero se registra esta aceptación en su commit separado y se completan las comprobaciones finales. Se preservan `58c1f7b`, `bb32a17` y el resto de fases y resultados anteriores. **Revisar el código** (9) queda pendiente hasta la revisión real; sin cambios funcionales, servicios, backend, evidencias históricas o copia de David en esta fase documental.
+
+## Estado vigente: PR #17 de Avisos abierto (8/9)
+
+El [PR #17](https://github.com/David567rs/INHALEX-Movil/pull/17) de ZenaidaGR está abierto y no draft, `feature/avisos` → `develop`, con revisión solicitada a David567rs. Se conservan aceptación `d4b1238`, ajuste `e473e45` y preparación `65d396f`; el [recibo local de preparación](evidencias/avisos/verificacion-pr.json) permanece como snapshot aprobado. No se anticipa la CI del HEAD que incluirá los enlaces; consultar los checks actuales del PR. Sin aprobación o fusión confirmadas. Mantener **8/9**, criterio 9 pendiente y Trello En progreso, sin inferir marcado. La revisión corresponde a David desde su cuenta.

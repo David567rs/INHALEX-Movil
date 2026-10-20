@@ -1,0 +1,562 @@
+{
+  "activity": "Avisos",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+  "branch": "feature/avisos",
+  "baseBranch": "develop",
+  "baseCommit": "0f0b764a4ad78e40f12112c4debcd7982ccdfd2c",
+  "priorActivityClosureCommit": "6610412",
+  "date": "2026-10-20",
+  "source": "Checklist de la captura y aceptación visual textual del usuario con autorización de conexión en esta conversación",
+  "responsible": "ZenaidaGR",
+  "futureReviewer": "David567rs",
+  "design": {
+    "authorized": true,
+    "accepted": true,
+    "status": "accepted-by-user-in-expo-go",
+    "commit": "1f383f3",
+    "agentObservedDevice": false,
+    "apiConnected": false,
+    "guide": "../../DISENO-AVISOS.md",
+    "technicalVerification": "verificacion-diseno.json",
+    "technicalVerificationStatus": "passed-own-design-checks-and-synthetic-web-qa",
+    "route": "/avisos",
+    "entry": "Cuenta → Avisos",
+    "metroPort": 8083,
+    "dataSource": "Ejemplos locales en memoria mediante Repository de solo lectura",
+    "presentationModes": [
+      "Bandeja",
+      "Sin avisos",
+      "Error de carga"
+    ],
+    "filters": [
+      "Todos",
+      "No leídos"
+    ],
+    "sampleCount": 3,
+    "unreadSampleCount": 2,
+    "emptyMessage": "Aún no tienes avisos",
+    "errorMessage": "No pudimos cargar los avisos",
+    "detailScope": "Selección y detalle solo locales; abrir un ejemplo no cambia su estado leído",
+    "openingDetailMarksAsRead": false,
+    "httpRequests": false,
+    "authenticatedAccountDataUsed": false,
+    "storageUsed": false,
+    "pushNotifications": false,
+    "backendChanged": false,
+    "sessionChanged": false,
+    "fiveTabsPreservationRequired": true,
+    "fiveTabsPreservedInWebQa": true,
+    "verificationSummary": {
+      "typecheck": "passed-global-after-aria-pressed",
+      "lint": "passed-after-aria-pressed",
+      "existingMobileTestsPassed": 677,
+      "newMobileTests": 0,
+      "expoDoctorVersion": "1.20.4",
+      "expoDoctorChecksPassed": 21,
+      "expoDoctorChecksTotal": 21,
+      "androidModules": 1529,
+      "webModules": 1078,
+      "exportsAfterFinalAriaPressedAdjustment": true,
+      "webQaViewportsCss": [
+        "397x1000",
+        "320x820"
+      ],
+      "horizontalOverflow": false,
+      "newControlsMinimumCssPixels": 44,
+      "consoleErrors": 0,
+      "sharedExistingWarnings": [
+        "shadow* deprecated",
+        "useNativeDriver web fallback to JavaScript",
+        "pointerEvents deprecated"
+      ],
+      "evidenceScope": "Datos locales y capturas web sintéticas, no Expo Go, TalkBack o texto ampliado nativo",
+      "screenshots": [
+        "bandeja-web-397.png",
+        "bandeja-web-320.png",
+        "detalle-web-397.png",
+        "vacio-web-320.png",
+        "error-web-320.png",
+        "acceso-cuenta-web-320.png"
+      ]
+    },
+    "acceptedCriterionIds": [
+      1
+    ],
+    "userAcceptanceQuote": "Amigo, ya revisé el diseño de Avisos en Expo Go y me gustó. Sigamos con la conexión a la API en feature/avisos, manteniendo MVVM, Repository y commits por etapa.",
+    "snapshotScope": "Diseño local histórico aceptado; la conexión posterior está autorizada y se registra por separado"
+  },
+  "functionalAcceptance": {
+    "acceptedCriteria": 8,
+    "totalCriteria": 9,
+    "acceptedCriterionIds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "pendingCriterionIds": [
+      9
+    ],
+    "status": "8/9; criterios funcionales1-8 aceptados por reportes del usuario. PR17 abierto y revisión solicitada a David567rs; solo revisión real9 pendiente, sin aprobación o merge confirmados.",
+    "confirmations": [
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario",
+        "quote": "Amigo, ya revisé el diseño de Avisos en Expo Go y me gustó. Sigamos con la conexión a la API en feature/avisos, manteniendo MVVM, Repository y commits por etapa.",
+        "criterionIds": [
+          1
+        ],
+        "scope": "Aceptación visual del diseño y autorización de conexión; no acredita contenido, estados o errores reales de la API",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario después del recorrido guiado",
+        "quote": "Amigo, ya aparecen mis avisos en Expo Go, pude abrir el detalle, marcar uno como leído y actualizar. ¿Qué marco en Trello y qué sigue?",
+        "criterionIds": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "scope": "Consulta de avisos reales, contenido según la guía previa, detalle, marcado explícito y actualización. No se atribuye prueba independiente del filtro Todos/No leídos, vacío o errores.",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario después de la prueba controlada en Expo Go",
+        "quote": "Amigo, apareció «Aún no tienes avisos», se mantuvo al actualizar, «Explorar catálogo» abrió Catálogo y al salir volvieron mis avisos reales sin cambios. ¿Qué marco en Trello y qué sigue?",
+        "criterionIds": [6],
+        "scope": "Interfaz de bandeja vacía con fixture local0/0, actualización, navegación y retorno a avisos reales sin cambios según el reporte. No acredita una cuenta o API reales vacías.",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario después de la prueba guiada GET en Expo Go",
+        "quote": "Amigo, Actualizar y Reintentar fallaron sin perder los avisos ni el detalle. Reinicié el backend y Reintentar recuperó los datos y quitó el aviso. ¿Qué marco en Trello y qué sigue?",
+        "criterionIds": [7],
+        "scope": "Error de lectura con backend local detenido, conservación de avisos y detalle y recuperación al reintentar tras reiniciar el backend. No acredita fallo de PATCH, reapertura o cambio de sesión.",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario después del recorrido de continuidad en Expo Go",
+        "quote": "Amigo, los avisos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta. Se conservó la lectura y Actualizar funciona. Abre el PR de Avisos hacia develop para que David567rs lo revise.",
+        "criterionIds": [8],
+        "scope": "Reapertura, ocultación al cerrar sesión, regreso con la misma cuenta, lectura conservada y actualización. No acredita una segunda cuenta ni restauración de la pantalla exacta. Incluye autorización expresa para abrir PR, todavía no creado.",
+        "agentObservedDevice": false
+      }
+    ],
+    "criteria": [
+      {
+        "id": 1,
+        "text": "Crear sección de avisos",
+        "accepted": true
+      },
+      {
+        "id": 2,
+        "text": "Obtener avisos disponibles",
+        "accepted": true
+      },
+      {
+        "id": 3,
+        "text": "Mostrar título, mensaje y fecha",
+        "accepted": true
+      },
+      {
+        "id": 4,
+        "text": "Diferenciar avisos leídos y no leídos",
+        "accepted": true
+      },
+      {
+        "id": 5,
+        "text": "Permitir consultar el detalle",
+        "accepted": true
+      },
+      {
+        "id": 6,
+        "text": "Mostrar mensaje si no existen avisos",
+        "accepted": true
+      },
+      {
+        "id": 7,
+        "text": "Manejar errores de carga",
+        "accepted": true
+      },
+      {
+        "id": 8,
+        "text": "Probar la funcionalidad",
+        "accepted": true
+      },
+      {
+        "id": 9,
+        "text": "Revisar el código",
+        "accepted": false
+      }
+    ]
+  },
+  "trello": {
+    "source": "Checklist de la captura proporcionada por el usuario",
+    "agentReadBoard": false,
+    "agentModifiedBoard": false,
+    "userConfirmedCriteriaMarked": false,
+    "guidance": "Puede marcar Probar la funcionalidad (8): criterios1-8 aceptados,8/9. Mantener En progreso y Revisar el código (9) pendiente hasta revisión real de David567rs. Marcado no confirmado."
+  },
+  "architecture": {
+    "pattern": "MVVM y Repository",
+    "composition": "NoticesScreen → useNoticesViewModel / createNoticesController → casos de uso → NoticesRepository → ApiNoticesRepository → HttpClient, compuesto en bootstrap con autorización privada y NoticesProvider",
+    "domainModel": "Notice",
+    "designSnapshotComposition": "NoticesPreviewScreen → useNoticesPreviewViewModel → LoadNoticesPreview → NoticesPreviewRepository → LocalNoticesPreviewRepository, histórico en 1f383f3",
+    "accountEntry": "NoticesEntry",
+    "domainIndependentOfReactNative": true,
+    "stateScope": "Bandeja personal, contador global, filtro local y detalle ligados al objeto de autorización; datos retirados al salir o cambiar autorización"
+  },
+  "remainingActivitiesReportedByUser": {
+    "titles": [
+      "Avisos",
+      "Reseñas",
+      "Confirmación de recepción"
+    ],
+    "authorizedNow": "Abrir PR de Avisos desde feature/avisos hacia develop para David567rs, después de registrar la aceptación y completar comprobaciones finales",
+    "otherActivitiesChecklistOrAssignmentInferred": false
+  },
+  "phaseCommits": {
+    "userRequestedSeparateCommits": true,
+    "previousActivityClosure": {
+      "activity": "Seguimiento del pedido",
+      "commit": "6610412",
+      "alreadySaved": true,
+      "copiedFromDavidWithoutModifyingSource": true
+    },
+    "design": {
+      "localCommitAuthorized": true,
+      "createAfterOwnVerification": true,
+      "status": "verified-local-design-stage",
+      "commit": "1f383f3",
+      "commitSubject": "feat(notices): diseñar bandeja de avisos",
+      "commitReference": "Consultar Git: feat(notices): diseñar bandeja de avisos"
+    },
+    "api": {
+      "implementationAuthorizedYet": true,
+      "implemented": true,
+      "status": "implemented-and-technically-verified-stage",
+      "separateCommitRequiredWhenAuthorized": true,
+      "commitSubject": "feat(notices): conectar avisos con la API",
+      "commitReference": "Consultar Git: feat(notices): conectar avisos con la API",
+      "commit": "1b9d572"
+    },
+    "acceptance": {
+      "requiresActualUserReport": true,
+      "separateCommitRequired": true
+    },
+    "designAcceptance": {
+      "commit": "46c86aa",
+      "source": "Aceptación visual textual del usuario",
+      "agentObservedDevice": false
+    },
+    "positiveAcceptance": {
+      "commit": "fcc0c72",
+      "acceptedCriterionIds": [2, 3, 4, 5],
+      "agentObservedDevice": false
+    },
+    "controlledEmptyPreparation": {
+      "commit": "21ece6e",
+      "source": "Montaje temporal DEV y sus comprobaciones propias"
+    },
+    "controlledEmptyAcceptance": {
+      "commit": "7d97f85",
+      "separateCommitRequired": true,
+      "criterionId": 6,
+      "source": "Reporte textual del usuario sobre interfaz controlada0/0",
+      "agentObservedDevice": false
+    },
+    "loadErrorAcceptance": {
+      "commit": "58c1f7b",
+      "criterionId": 7,
+      "source": "Reporte textual del usuario sobre errores de carga GET y recuperación",
+      "agentObservedDevice": false
+    },
+    "sessionContinuityAcceptance": {
+      "commit": "d4b1238",
+      "separateCommitRequired": true,
+      "criterionId": 8,
+      "source": "Reporte textual de continuidad de la misma cuenta y autorización de PR",
+      "agentObservedDevice": false
+    },
+    "prPreparation": {
+      "commit": "65d396f66d3c9e542080dbcb2d9473952710a059",
+      "precedingFixCommit": "e473e45",
+      "technicalVerification": "verificacion-pr.json"
+    },
+    "conventionSource": "../../VERSIONAMIENTO.md"
+  },
+  "publication": {
+    "branchPushed": true,
+    "pullRequestCreated": true,
+    "number": 17,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/17",
+    "receipt": "pr17.json",
+    "author": "ZenaidaGR",
+    "head": "feature/avisos",
+    "base": "develop",
+    "headAtOpening": "65d396f66d3c9e542080dbcb2d9473952710a059",
+    "draft": false,
+    "open": true,
+    "approved": false,
+    "merged": false,
+    "publicationAuthorizedByUser": true,
+    "status": "open-review-requested-consult-current-head-ci",
+    "authorizationQuote": "Amigo, los avisos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta. Se conservó la lectura y Actualizar funciona. Abre el PR de Avisos hacia develop para que David567rs lo revise.",
+    "reviewRequestConfirmed": true,
+    "reviewRequested": true,
+    "requestedReviewer": "David567rs",
+    "reviewRequestVerifiedVia": "GitHub REST requested_reviewers",
+    "remoteCiConfirmed": false,
+    "remoteCiStatus": "not-asserted-for-link-commit-consult-current-pr-checks",
+    "futureReviewer": "David567rs",
+    "futureBase": "develop"
+  },
+  "connection": {
+    "authorized": true,
+    "implemented": true,
+    "status": "functional-acceptance-complete-pr17-open-awaiting-real-review",
+    "sameBranchRequired": "feature/avisos",
+    "futureReviewer": "David567rs",
+    "technicalVerification": "verificacion-api.json",
+    "guide": "../../CONEXION-AVISOS.md",
+    "endpoints": [
+      "GET /notifications/me",
+      "PATCH /notifications/me/:id/read"
+    ],
+    "listLimit": 12,
+    "queryOrPagination": false,
+    "counterScope": "Global de la cuenta, no limitado a los elementos cargados",
+    "detailGet": false,
+    "openingDetailWrites": false,
+    "markReadRequiresExplicitButton": true,
+    "confirmedPatchReconciliation": "GET; si falla se conserva Leído y Reintentar no repite PATCH",
+    "discardedFields": [
+      "userId",
+      "userEmail",
+      "metadata"
+    ],
+    "serverOwnerFilter": "userId igual a JWT.sub O userEmail igual al correo normalizado de JWT",
+    "bulkMarkRead": false,
+    "push": false,
+    "polling": false,
+    "newStorage": false,
+    "backendChanged": false,
+    "nativeFunctionalAcceptancePending": false,
+    "agentObservedDevice": false,
+    "agentAuthenticatedRealApiReads": false,
+    "agentRealApiWrites": false,
+    "anonymousRealApiGetStatus": 401,
+    "verifiedSourceFiles": 21,
+    "verificationSummary": {
+      "typecheck": "passed-after-qa-route-removal",
+      "lint": "passed-after-qa-route-removal",
+      "mobileTestsPassed": 735,
+      "newMobileTests": 58,
+      "newTestBreakdown": {
+        "domain": 7,
+        "repository": 14,
+        "httpLoopback": 8,
+        "controller": 29
+      },
+      "reentrantControllerTestsIncluded": 3,
+      "expoDoctorVersion": "1.20.4",
+      "expoDoctorChecksPassed": 21,
+      "expoDoctorChecksTotal": 21,
+      "androidModules": 1532,
+      "webModules": 1081,
+      "qaRouteRemovedBeforeExports": true,
+      "webQaViewportsCss": [
+        "397x1000",
+        "320x820"
+      ],
+      "webQaScope": "Sesión y fetch sintéticos con Repository, HttpClient, controlador y UI reales; ruta real anónima comprobada aparte",
+      "consoleErrors": 0,
+      "sharedExistingWarnings": [
+        "shadow* deprecated",
+        "useNativeDriver web fallback to JavaScript"
+      ],
+      "qaScenarios": [
+        "Contador global7 con3 elementos y filtro2",
+        "Abrir detalle sin PATCH, marcado explícito con GET conciliador",
+        "Fallos de PATCH y GET/reintento conservan lista y detalle",
+        "PATCH confirmado y GET fallido conserva Leído; reintento GET8/PATCH3 a GET9/PATCH3 antes de recargar",
+        "Vacío0/0, vacío0/19 con título neutral y filtro vacío con global9",
+        "401 y salida ocultan; ruta anónima pide ingresar, Cuenta mantiene5tabs y reentrada protegida"
+      ],
+      "screenshotCount": 10,
+      "screenshots": [
+        "api-bandeja-web-397.png",
+        "api-bandeja-web-320.png",
+        "api-detalle-leido-web-397.png",
+        "api-error-marcado-web-397.png",
+        "api-conciliacion-pendiente-web-397.png",
+        "api-vacio-web-397.png",
+        "api-filtro-vacio-web-320.png",
+        "api-sesion-web-320.png",
+        "api-ruta-real-anonima-web-320.png",
+        "api-acceso-cuenta-web-320.png"
+      ],
+      "syntheticQaScreenshotCount": 8,
+      "anonymousRealRouteScreenshotCount": 2,
+      "evidenceIsWebNotExpoGo": true
+    },
+    "preservation": {
+      "environmentHashesUnchanged": true,
+      "packageAndLockHashesUnchanged": true,
+      "davidSixClosureDocumentsUnchanged": true,
+      "zenaidaIdentityUnchanged": true,
+      "zenaidaStashUnchanged": true,
+      "listenerPidsUnchanged": {
+        "backend3200": 33524,
+        "metroDavid8082": 28288,
+        "metroZenaida8083": 13476
+      },
+      "healthAndMetrosHttp200": true
+    }
+  },
+  "prPreparationReceipt": "verificacion-pr.json",
+  "sessionAcceptanceCommit": "d4b1238",
+  "finalMinorFixCommit": "e473e45",
+  "nextStep": "David567rs revisa el PR17 abierto desde su cuenta: Files changed y Review changes; Approve si está conforme. Mantener criterio9 pendiente hasta revisión real y Trello En progreso sin inferir marcado. Comprobar CI remota del HEAD vigente antes de fusionar; aprobación y merge aún no confirmados.",
+  "limitations": [
+    "La aceptación visual procede del reporte del usuario, sin observación directa del dispositivo por el agente.",
+    "La verificación de API pasó; QA usa sesión/fetch sintéticos y sus capturas son web, sin sustituir Expo Go, TalkBack o texto ampliado nativo.",
+    "La QA web de API se retiró en 1b9d572; el helper temporal DEV posterior de vacío también fue retirado tras su aceptación 7d97f85, sin repetir suite, Doctor o exports.",
+    "Abrir el detalle no marca leído; solo el botón explícito escribe. No hay marcado masivo, polling, persistencia o push.",
+    "No se asignan checklist, responsable o rama para Reseñas o Confirmación de recepción.",
+    "Los criterios1-8 se aceptan por reportes del usuario, sin observación del dispositivo ni acceso a Trello; el marcado no está confirmado.",
+    "El criterio6 se acepta por el reporte de la interfaz controlada0/0 en Expo Go; no equivale a filtro No leídos vacío ni acredita una API o cuenta reales vacías. El helper y acceso DEV ya están retirados.",
+    "El helper histórico no hacía HTTP ni usaba token/almacén/cuenta reales; RootLayout y runtime global no cambiaron, y la app podía continuar sus lecturas normales.",
+    "La continuidad reportada corresponde a la misma cuenta; no acredita una segunda cuenta o restauración de la pantalla exacta. La revisión real9 sigue pendiente aunque el PR esté autorizado."
+  ],
+  "loadErrorAcceptance": {
+    "date": "2026-10-20",
+    "criterionId": 7,
+    "accepted": true,
+    "source": "Reporte textual del usuario sobre Expo Go después de la guía de carga GET",
+    "quote": "Amigo, Actualizar y Reintentar fallaron sin perder los avisos ni el detalle. Reinicié el backend y Reintentar recuperó los datos y quitó el aviso. ¿Qué marco en Trello y qué sigue?",
+    "readFailureAndRecoveryAccepted": true,
+    "notificationsAndDetailPreservedReported": true,
+    "errorClearedAfterRecoveryReported": true,
+    "patchFailureTestAccepted": false,
+    "reopenAndSessionContinuityAccepted": false,
+    "agentObservedDevice": false,
+    "trelloMarkedConfirmed": false,
+    "changesInThisStage": "Solo documentación y commit de aceptación; sin cambios funcionales, servicios, credenciales, cuenta, backend o dependencias.",
+    "newAutomatedOrBrowserChecks": false,
+    "historicalTechnicalResultsPreserved": true
+  },
+  "sessionContinuityAcceptance": {
+    "date": "2026-10-20",
+    "criterionId": 8,
+    "accepted": true,
+    "source": "Reporte textual del usuario sobre Expo Go",
+    "quote": "Amigo, los avisos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta. Se conservó la lectura y Actualizar funciona. Abre el PR de Avisos hacia develop para que David567rs lo revise.",
+    "reopenedNotificationsReturnedReported": true,
+    "signedOutNotificationsHiddenReported": true,
+    "sameAccountNotificationsReturnedReported": true,
+    "readStatePreservedReported": true,
+    "refreshWorksReported": true,
+    "anotherAccountTestAccepted": false,
+    "exactScreenRestorationRequired": false,
+    "agentObservedDevice": false,
+    "trelloMarkedConfirmed": false,
+    "prAuthorized": true,
+    "prCreatedAtReport": false,
+    "reviewCriterion9Accepted": false,
+    "historicalTechnicalResultsPreserved": true
+  },
+  "emptyTest": {
+    "authorized": true,
+    "choiceQuote": "No, preparemos una prueba controlada",
+    "status": "accepted-and-retired",
+    "acceptanceCommit": "7d97f85",
+    "synthetic": true,
+    "fixtureDescriptionIsHistorical": true,
+    "criterionAccepted": true,
+    "criterionId": 6,
+    "agentObservedDevice": false,
+    "realNotificationsMustBePreserved": true,
+    "developmentOnly": true,
+    "route": "/qa-avisos-vacio",
+    "entry": "Avisos → Probar bandeja vacía",
+    "banner": "Prueba controlada",
+    "exit": "Salir de la prueba reemplaza la ruta por /avisos",
+    "fixture": { "items": [], "unread": 0, "localListDelayMs": 350 },
+    "realScreenAndControllerWithLocalProviders": true,
+    "helperUsesHttp": false,
+    "helperMarksRealNotifications": false,
+    "helperUsesRealAccountTokenOrStorage": false,
+    "markReadBehavior": "Rechaza localmente sin escritura",
+    "rootLayoutChanged": false,
+    "productionAuthRuntimeChanged": false,
+    "globalAppMayContinueNormalReads": true,
+    "acceptedScopeAfterUserReport": "Interfaz de bandeja vacía con fixture 0/0; no demuestra API o cuenta reales vacías",
+    "notEquivalentToEmptyUnreadFilter": true,
+    "technicalVerificationStatus": "passed",
+    "checks": {
+      "typecheck": { "scope": "complete", "exitCode": 0 },
+      "lint": { "scope": "complete", "exitCode": 0 },
+      "qaWeb": {
+        "synthetic": true,
+        "viewportCss": { "width": 320, "height": 820 },
+        "anonymousRealRouteRequestsSignIn": true,
+        "devEntryOpensControlledRoute": true,
+        "emptyInboxZeroItemsZeroUnread": true,
+        "emptyInboxHasVisibleUnreadCounter": false,
+        "refreshShowsUpdatingThenEmpty": true,
+        "horizontalOverflow": false,
+        "exploreCatalogRouteVerified": "/catalogo",
+        "catalogProductLoadAccepted": false,
+        "catalogConnectionErrorObserved": true,
+        "backReturnsToControlledRoute": true,
+        "exitReplacesWithRealRouteAndRequestsSignIn": true,
+        "localSessionDoesNotLeakAfterExit": true
+      }
+    },
+    "screenshots": ["prueba-vacio-web-320.png", "prueba-vacio-salida-web-320.png"],
+    "repeatedMobileSuiteDoctorOrExports": false,
+    "receipt": "prueba-vacio.json",
+    "userReport": {
+      "date": "2026-10-20",
+      "source": "Mensaje textual del usuario sobre Expo Go",
+      "quote": "Amigo, apareció «Aún no tienes avisos», se mantuvo al actualizar, «Explorar catálogo» abrió Catálogo y al salir volvieron mis avisos reales sin cambios. ¿Qué marco en Trello y qué sigue?",
+      "criterionId": 6,
+      "acceptedScope": "Interfaz de bandeja vacía con fixture local0/0; no acredita cuenta o API reales vacías",
+      "realNotificationsReturnedUnchangedReportedByUser": true,
+      "agentObservedDevice": false,
+      "trelloMarkedConfirmed": false
+    },
+    "removalRequiredAfterUserReport": true,
+    "removalAuthorized": true,
+    "removalStatus": "completed-and-verified",
+    "removalInSeparateCommit": true,
+    "mustBeRemovedBeforeFinalExportsPublicationOrPr": true,
+    "retirement": {
+      "completed": true,
+      "acceptanceCommit": "7d97f85",
+      "separateStageCommit": true,
+      "commitReference": "Consultar Git para el commit separado de retirada; sin SHA anticipado",
+      "receipt": "retirada-prueba-vacio.json",
+      "temporaryRouteAndScreenAbsent": true,
+      "devEntryRemoved": true,
+      "realNoticesRouteHashMatchesApiCommit": "1b9d572",
+      "helperMatchesInMobileSrc": 0,
+      "checks": {
+        "typecheck": { "scope": "complete-after-retirement", "exitCode": 0 },
+        "lint": { "scope": "complete-after-retirement", "exitCode": 0 }
+      },
+      "suiteDoctorExportsRepeated": false,
+      "originalMountChecksPreservedAsHistory": true
+    }
+  }
+}

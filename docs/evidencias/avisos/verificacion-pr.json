@@ -1,0 +1,49 @@
+{
+  "activity": "Avisos",
+  "phase": "Preparación de PR hacia develop",
+  "date": "2026-10-20",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+  "branch": "feature/avisos",
+  "baseCommit": "0f0b764a4ad78e40f12112c4debcd7982ccdfd2c",
+  "finalFunctionalCodeCommit": "e473e45",
+  "sessionAcceptanceCommit": "d4b1238",
+  "acceptedCriteria": 8,
+  "totalCriteria": 9,
+  "formalReviewCriterionAccepted": false,
+  "formalReviewer": "David567rs",
+  "author": "ZenaidaGR",
+  "checks": {
+    "typecheck": { "command": "npm --prefix Mobile run typecheck", "exitCode": 0, "afterFinalUiAdjustment": true },
+    "lint": { "command": "npm --prefix Mobile run lint", "exitCode": 0, "afterFinalUiAdjustment": true },
+    "mobileTests": { "command": "npm --prefix Mobile test", "passed": 735, "failed": 0, "newNoticesTests": 58, "afterFinalUiAdjustment": true },
+    "expoDoctor": { "version": "1.20.4", "passed": 21, "total": 21, "exitCode": 0, "scope": "Configuración y dependencias sin cambios después del Doctor; el ajuste posterior solo pasa disabled a Action." },
+    "androidExport": { "exitCode": 0, "modules": 1532, "afterFinalUiAdjustment": true },
+    "webExport": { "exitCode": 0, "modules": 1081, "afterFinalUiAdjustment": true },
+    "temporaryEmptyHelperAbsent": true,
+    "backendDependencyConfigurationDiffFromDevelop": false,
+    "localReview": "Dos revisiones técnicas de lectura sin bloqueantes; ajuste menor del filtro aplicado en e473e45. No sustituyen la revisión formal de David."
+  },
+  "finalUiAdjustment": "Ver todos los recientes comunica disabled mientras busy, coherente con los filtros y la guarda existente del ViewModel.",
+  "nativeEvidence": {
+    "source": "Reportes textuales del usuario en Expo Go",
+    "confirmed": ["Consulta, contenido, detalle, marcado explícito y actualización", "Vacío con fixture local0/0 y retorno a avisos reales", "Error y reintento GET conservan datos y detalle", "Reapertura, salida y reingreso de la misma cuenta, lectura conservada y actualización"],
+    "agentObservedDevice": false,
+    "emptyApiAccountProven": false,
+    "independentPatchFailureOnDeviceProven": false,
+    "talkBackOrNativeLargeTextProven": false
+  },
+  "contractLimits": ["Hasta12 avisos recientes sin paginación", "Contador global y filtro local independientes; items y count no atómicos", "Bandeja dentro de la app, sin push, polling o marcado masivo", "Respeta propiedad del backend por userId o correo JWT; no cambia ese contrato"],
+  "preservation": {
+    "serverEnvAndFourPackagesOrLocksHashesUnchanged": true,
+    "davidSixClosureDocumentsHashesUnchanged": true,
+    "gitNameEmailAndGithubCredentialMatchZenaida": true,
+    "githubRestIdentityVerified": "ZenaidaGR",
+    "stashUnchanged": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "listenersObserved": { "backend3200": 33524, "metroDavid8082": 28288, "metroZenaida8083": 13476 },
+    "agentStoppedOrRestartedServices": false,
+    "agentReadOrWroteAuthenticatedRealNotices": false,
+    "historyRewritten": false
+  },
+  "publicationSnapshot": "Este recibo precede a la creación. El enlace y la solicitud de revisión se registrarán por separado cuando existan; no acredita CI remoto ni aprobación.",
+  "trelloMarkedConfirmed": false
+}

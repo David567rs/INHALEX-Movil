@@ -1,0 +1,48 @@
+{
+  "activity": "Avisos",
+  "stage": "Retirada de prueba temporal de bandeja vacía",
+  "date": "2026-10-20",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+  "branch": "feature/avisos",
+  "preparationCommit": "21ece6e",
+  "userAcceptanceCommit": "7d97f85",
+  "status": "temporary-helper-removed-and-source-checks-passed",
+  "acceptedCriteria": 6,
+  "totalCriteria": 9,
+  "pendingCriterionIds": [7, 8, 9],
+  "sourceChanges": {
+    "removedFiles": [
+      "Mobile/src/app/qa-avisos-vacio.tsx",
+      "Mobile/src/features/notices/testing/NoticesEmptyQaScreen.tsx"
+    ],
+    "restoredFile": "Mobile/src/app/avisos.tsx",
+    "restoredRouteMatchesVerifiedApiCommit": "1b9d572",
+    "temporaryReferencesUnderMobileSrc": 0,
+    "evidenceAndPublishedHistoryPreserved": true,
+    "realAuthRuntimeAndNoticesLayersUnchanged": true
+  },
+  "checks": {
+    "typecheck": { "command": "npm --prefix Mobile run typecheck", "exitCode": 0 },
+    "lint": { "command": "npm --prefix Mobile run lint", "exitCode": 0 },
+    "sourceInventory": "Los dos archivos temporales no existen y rg no encuentra ruta, helper o acceso temporal en Mobile/src.",
+    "routeEquality": "git hash-object de avisos.tsx coincide con git rev-parse de 1b9d572:Mobile/src/app/avisos.tsx",
+    "newTests": 0,
+    "mobileSuiteDoctorExportsRepeated": false,
+    "historicalApiResults": "Las 735 pruebas, Doctor y exports anteriores pertenecen a verificacion-api.json y no se atribuyen a esta retirada.",
+    "newBrowserOrDeviceVerification": false
+  },
+  "preservation": {
+    "serverEnvAndFourPackagesOrLocksUnchanged": true,
+    "davidSixClosureDocumentsUnchanged": true,
+    "zenaidaIdentityCredentialAndStashUnchanged": true,
+    "listenerPidsUnchanged": { "backend3200": 33524, "metroDavid8082": 28288, "metroZenaida8083": 13476 },
+    "noAgentServiceStopOrRestart": true,
+    "noServerDependencyOrEnvironmentChanges": true,
+    "noRealAuthenticatedApiOperationsByAgent": true,
+    "noPushOrPr": true
+  },
+  "userAcceptanceScope": "Mensaje vacío, actualización y navegación con fixture local0/0, y retorno a avisos reales sin cambios según el usuario; no demuestra una API o cuenta reales vacías.",
+  "trelloMarkedConfirmed": false,
+  "agentObservedDevice": false,
+  "nextStep": "Prueba humana GET de carga con backend local detenido manualmente: Actualizar avisos y Reintentar deben conservar datos, selección y lectura; reiniciar el mismo backend y Reintentar debe recuperar el aviso sin repetir marcado. Mantener Metro y Expo Go abiertos. Criterio7 pendiente del reporte."
+}

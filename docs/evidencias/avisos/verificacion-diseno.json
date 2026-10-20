@@ -1,0 +1,192 @@
+{
+  "activity": "Avisos",
+  "phase": "design",
+  "date": "2026-10-20",
+  "verifiedAt": "2026-10-20T06:54:59.0872068-06:00",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+  "branch": "feature/avisos",
+  "baseCommit": "0f0b764a4ad78e40f12112c4debcd7982ccdfd2c",
+  "previousClosureCommit": "661041203409f7d6ad1b9e3015f7996fe2b25150",
+  "author": "ZenaidaGR",
+  "futureReviewer": "David567rs",
+  "scope": "Vista previa local de solo lectura, sin API de avisos, persistencia o marcado real",
+  "checks": {
+    "typecheck": {
+      "passed": true,
+      "command": "npm run typecheck"
+    },
+    "lint": {
+      "passed": true,
+      "command": "npm run lint"
+    },
+    "tests": {
+      "note": "Suite existente ejecutada en esta etapa; no se agregaron pruebas de fixtures estáticos",
+      "command": "npm run test",
+      "failed": 0,
+      "newTests": 0,
+      "passed": 677
+    },
+    "doctor": {
+      "command": "npm run doctor",
+      "total": 21,
+      "passed": 21,
+      "version": "1.20.4"
+    },
+    "android": {
+      "command": "npm run export:android",
+      "modules": 1529,
+      "passed": true
+    },
+    "web": {
+      "command": "npm run export:web",
+      "modules": 1078,
+      "passed": true
+    }
+  },
+  "visual": {
+    "platform": "Web, IAB, datos locales sintéticos",
+    "cssViewports": [
+      {
+        "height": 820,
+        "width": 320
+      },
+      {
+        "height": 1000,
+        "width": 397
+      }
+    ],
+    "browserViewportReset": true,
+    "inboxCount": 3,
+    "unreadCount": 2,
+    "verified": [
+      "Bandeja con nuevo/leído y título, mensaje y fecha",
+      "Filtro No leídos muestra 2; Todos muestra 3",
+      "Detalle de aviso nuevo y leído; conserva estado al volver",
+      "Vacío y regreso a muestra",
+      "Error visual y Reintentar muestra regresa a bandeja",
+      "Cuenta conserva cinco pestañas y entrada Avisos",
+      "Iniciar sesión alcanzable por desplazamiento sin enviar credenciales",
+      "Reentrada reinicia la composición local",
+      "Sin desbordamiento horizontal a 320/397 CSS px",
+      "Controles de al menos 44 CSS px a 320"
+    ],
+    "consoleErrors": 0,
+    "sharedWebWarnings": [
+      "shadow* deprecado",
+      "useNativeDriver fallback a JavaScript",
+      "pointerEvents deprecado"
+    ],
+    "artifacts": [
+      "bandeja-web-397.png",
+      "bandeja-web-320.png",
+      "detalle-web-397.png",
+      "vacio-web-320.png",
+      "error-web-320.png",
+      "acceso-cuenta-web-320.png"
+    ],
+    "physicalExpoGoTest": false,
+    "talkBack": false,
+    "largeNativeText": false
+  },
+  "preservation": {
+    "protectedFiles": true,
+    "davidClosureDocuments": true,
+    "stash": true,
+    "identity": true,
+    "services": [
+      {
+        "LocalPort": 8083,
+        "OwningProcess": 13476
+      },
+      {
+        "LocalPort": 8082,
+        "OwningProcess": 28288
+      },
+      {
+        "LocalPort": 3200,
+        "OwningProcess": 33524
+      }
+    ],
+    "httpStatuses": [
+      {
+        "url": "http://localhost:3200/api/health",
+        "status": 200
+      },
+      {
+        "url": "http://localhost:8082/status",
+        "status": 200
+      },
+      {
+        "url": "http://localhost:8083/status",
+        "status": 200
+      }
+    ],
+    "servicesRestartedByAgent": false
+  },
+  "sourceHashes": [
+    {
+      "path": "Mobile/src/features/notices/data/repositories/LocalNoticesPreviewRepository.ts",
+      "sha256": "89C618DD4CA84DF639700DAB9D588293181A32F211B4B71FDDFBFC0CF8013110"
+    },
+    {
+      "path": "Mobile/src/features/notices/domain/models/NoticePreview.ts",
+      "sha256": "A106839182CA881293A64233D45363DA0B9EC89111F522660C539275C300F46C"
+    },
+    {
+      "path": "Mobile/src/features/notices/domain/repositories/NoticesPreviewRepository.ts",
+      "sha256": "BB8DCD954529268093FADBDC9847F54929CFC6F532BDEA0F3DE4954C3231313F"
+    },
+    {
+      "path": "Mobile/src/features/notices/domain/useCases/loadNoticesPreview.ts",
+      "sha256": "E8379CA8782FCB7D4726354E2D7B41458598C68E902A5947CA2225BCAF4C6E17"
+    },
+    {
+      "path": "Mobile/src/features/notices/presentation/components/NoticesEntry.tsx",
+      "sha256": "3C6B4BBF7C4A929618A006137E55C72987245DACD6B30C0A299551302AC65CB1"
+    },
+    {
+      "path": "Mobile/src/features/notices/presentation/screens/NoticesPreviewScreen.tsx",
+      "sha256": "C0BE1593E99596ADA83AE302A9DFE8D4439BE6D930F69FF2C75A0C7E467C85FE"
+    },
+    {
+      "path": "Mobile/src/features/notices/presentation/screens/noticesStyles.ts",
+      "sha256": "42637F1DE285353790E95CD1F366454A9368DE5B73B1915FF061D9DCE0A8BCCE"
+    },
+    {
+      "path": "Mobile/src/features/notices/presentation/viewModels/useNoticesPreviewViewModel.ts",
+      "sha256": "0FA9390C6E3E01ACAAD2C9B2BDB395AB83B0E0BD72AA921BEA3D08B32F4EB0B7"
+    },
+    {
+      "path": "Mobile/src/app/avisos.tsx",
+      "sha256": "B346BBF4D38D04A60C3DAE0566266956B4244F57B39317DA713FD78BCF38D518"
+    },
+    {
+      "path": "Mobile/src/app/(tabs)/cuenta.tsx",
+      "sha256": "CADD400036D59BB37DB93D47B4460D440F60E7CC74CCDE7834C9CDC6F178609F"
+    },
+    {
+      "path": "Mobile/src/app/_layout.tsx",
+      "sha256": "D6F7948C5362B34CCEFC36BFEEC5674CBC83B0A4741A65268B225A36B19D76D6"
+    },
+    {
+      "path": "Mobile/src/bootstrap/createNoticesPreviewAction.ts",
+      "sha256": "65A502447C7B7EB0F41967BF63D80E83D469192BC1DE324718122D25394CEF46"
+    }
+  ],
+  "acceptance": {
+    "criteriaTotal": 9,
+    "criteriaAccepted": 0,
+    "nativeReportPending": true,
+    "agentAccessedTrello": false,
+    "accepted": false
+  },
+  "publication": {
+    "merged": false,
+    "prCreated": false,
+    "pushed": false
+  },
+  "documentationConsulted": [
+    "https://docs.expo.dev/versions/v57.0.0/",
+    "https://docs.expo.dev/router/introduction/"
+  ]
+}

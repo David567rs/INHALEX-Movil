@@ -5,6 +5,7 @@ import { ProfileEntry } from '@/features/profile/presentation/components/Profile
 import { AddressesEntry } from '@/features/shippingAddresses/presentation/components/AddressesEntry';
 import { OrderHistoryEntry } from '@/features/orderHistory/presentation/components/OrderHistoryEntry';
 import { OrderTrackingEntry } from '@/features/orderTracking/presentation/components/OrderTrackingEntry';
+import { NoticesEntry } from '@/features/notices/presentation/components/NoticesEntry';
 
 export default function AccountRoute() {
   const session = useAuthSession();
@@ -14,5 +15,6 @@ export default function AccountRoute() {
     <AddressesEntry />
     <OrderHistoryEntry />
     <OrderTrackingEntry />
+    <NoticesEntry />
   </View>;
 }
