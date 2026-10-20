@@ -1,8 +1,8 @@
 # Conexión de Avisos
 
-Actividad de ZenaidaGR en `C:\Users\David\Documents\INHALEX-Movil-Zenaida`, rama `feature/avisos`, basada en `develop` `0f0b764a4ad78e40f12112c4debcd7982ccdfd2c`. David567rs revisará el futuro PR hacia `develop`. El cierre anterior está separado en `6610412`, el diseño en `1f383f3` y su aceptación/autorización de API en `46c86aa`.
+Actividad de ZenaidaGR en `C:\Users\David\Documents\INHALEX-Movil-Zenaida`, rama `feature/avisos`, basada en `develop` `0f0b764a4ad78e40f12112c4debcd7982ccdfd2c`. El [PR #17](https://github.com/David567rs/INHALEX-Movil/pull/17) está abierto hacia `develop`, sin draft y con revisión solicitada a David567rs. El cierre anterior está separado en `6610412`, el diseño en `1f383f3` y su aceptación/autorización de API en `46c86aa`.
 
-El usuario aceptó diseño, recorrido positivo, vacío controlado, error/reintento y continuidad de la misma cuenta por reportes de Expo Go. La conexión está en `1b9d572`, el helper se retiró en `bb32a17` y las fases previas conservan sus resultados. La aceptación funcional está completa; solo queda revisión real. El usuario autorizó abrir el PR `feature/avisos` → `develop` para David567rs, todavía en preparación y sin PR creado o CI remota declarada.
+El usuario aceptó diseño, recorrido positivo, vacío controlado, error/reintento y continuidad de la misma cuenta por reportes de Expo Go. La conexión está en `1b9d572`, el helper se retiró en `bb32a17` y la aceptación quedó en `d4b1238`. La aceptación funcional está completa; solo queda revisión real. El PR ya está abierto, con solicitud de revisión verificada por REST, sin aprobación o fusión confirmadas. Al registrar los enlaces no se anticipa la CI del HEAD que los incluirá; consultar los checks actuales del PR.
 
 Avisos está **8/9**: criterios 1-8 aceptados por reportes del usuario. El criterio 6 acredita interfaz controlada 0/0, el 7 una prueba GET de carga/recuperación y el 8 continuidad de la misma cuenta; no acreditan una API vacía, fallo de marcado PATCH o prueba de otra cuenta. Solo el criterio 9 sigue pendiente. La [aceptación vigente](evidencias/avisos/expo-go-aceptacion.json) conserva las fuentes textuales; el [diseño](DISENO-AVISOS.md) y las verificaciones anteriores son historia. El agente no observó el teléfono ni leyó o modificó Trello, y el marcado no está confirmado.
 
@@ -59,7 +59,7 @@ Red, timeout o 5xx conservan el último snapshot confirmado de la misma autoriza
 - [x] Probar la funcionalidad
 - [ ] Revisar el código
 
-Los reportes del usuario aceptan 1-8; el 6 corresponde a la bandeja vacía controlada, el 7 a error/reintento GET y el 8 a continuidad de la misma cuenta. El criterio 9 requiere revisión real de David567rs desde su cuenta en el PR autorizado, todavía en preparación. Puede marcarse el 8 y mantenerse Trello En progreso; el agente no verifica ni realiza ese marcado.
+Los reportes del usuario aceptan 1-8; el 6 corresponde a la bandeja vacía controlada, el 7 a error/reintento GET y el 8 a continuidad de la misma cuenta. El criterio 9 requiere revisión real de David567rs desde su cuenta en el [PR #17 abierto](https://github.com/David567rs/INHALEX-Movil/pull/17). Puede marcarse el 8 y mantenerse Trello En progreso; el agente no verifica ni realiza ese marcado.
 
 ## Snapshot histórico: primera prueba funcional, aceptada por reporte del usuario
 
@@ -202,10 +202,18 @@ Solo después del reporte se prepara el PR cuando el usuario lo solicite expresa
 
 <a id="estado-actual-avisos-pr-en-preparacion"></a>
 
-## Estado vigente: continuidad aceptada y PR autorizado en preparación (8/9)
+## Snapshot histórico: continuidad aceptada y PR autorizado en preparación (8/9)
 
 El usuario confirmó exactamente: «Amigo, los avisos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta. Se conservó la lectura y Actualizar funciona. Abre el PR de Avisos hacia develop para que David567rs lo revise.». Se acepta **Probar la funcionalidad** (8) por continuidad de la misma cuenta, lectura conservada y actualización. El reporte no exige restaurar la pantalla exacta ni acredita otra cuenta; el agente no observó el teléfono ni ejecutó estas acciones.
 
 Avisos queda **8/9**, criterios 1-8 aceptados. Puede marcar el 8 y mantener En progreso; el marcado no está confirmado. **Revisar el código** (9) requiere revisión real de David567rs y sigue pendiente. El mensaje autoriza publicar la rama y abrir el PR de ZenaidaGR desde `feature/avisos` hacia `develop`: **está en preparación, todavía no creado**, sin número, URL, solicitud de revisión o CI remota confirmados.
 
 Esta aceptación se registra en su commit documental separado antes de las comprobaciones finales y la publicación. Se preservan las fases `58c1f7b`, `bb32a17` y anteriores y todos sus resultados técnicos; no se escriben un SHA nuevo ni comprobaciones aún no comunicadas. Esta edición no cambia código, backend, servicios, dependencias, credenciales, evidencias históricas o la copia de David.
+
+<a id="estado-actual-avisos-pr17"></a>
+
+## Estado vigente: PR #17 abierto y revisión solicitada (8/9)
+
+El [PR #17](https://github.com/David567rs/INHALEX-Movil/pull/17) está abierto y no draft, autor ZenaidaGR, `feature/avisos` → `develop`. La solicitud a **David567rs** está confirmada por REST; el [recibo de apertura](evidencias/avisos/pr17.json) conserva ese snapshot. HEAD de apertura `65d396f66d3c9e542080dbcb2d9473952710a059`; aceptación `d4b1238`, ajuste `e473e45` y preparación `65d396f` conservados por fase. El [snapshot local de preparación](evidencias/avisos/verificacion-pr.json) aprobó 735/735 pruebas, TypeScript/lint, Doctor 21/21 y exports Android 1532/web 1081, sin QA temporal. **No se anticipa CI del HEAD que incluirá los enlaces**: consultar los checks actuales del PR. Sin aprobación o merge confirmados.
+
+Avisos mantiene **8/9**. David debe revisar **Files changed** desde su cuenta y enviar **Review changes → Approve** si está conforme; el criterio 9 solo se completa por revisión real. Después se comprueban los checks del HEAD vigente antes de fusionar. Mantener Trello En progreso y marcado no confirmado; este registro no atribuye al agente la revisión, observación del teléfono o nuevos cambios de runtime.

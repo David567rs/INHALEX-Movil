@@ -1,6 +1,6 @@
 # INHALEX Movil
 
-**Estado actual:** Avisos está **8/9**, criterios 1-8 aceptados por reportes del usuario. Los avisos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta; lectura conservada y Actualizar funciona. El usuario autorizó abrir `feature/avisos` → `develop` para David567rs: PR en preparación, todavía no creado ni con CI remota declarada. Solo **Revisar el código** (9) sigue pendiente; marcado Trello no confirmado. Sin observación del teléfono, prueba de otra cuenta o acceso al tablero por el agente. Se mantienen commits por fase y resultados técnicos históricos; este registro no cambia código, servicios o backend.
+**Estado actual:** Avisos está **8/9**, criterios 1-8 aceptados. El [PR #17](https://github.com/David567rs/INHALEX-Movil/pull/17) está abierto, sin draft, de ZenaidaGR: `feature/avisos` → `develop`, con revisión solicitada a **David567rs** y verificada por REST. Solo **Revisar el código** (9) sigue pendiente; sin aprobación o fusión confirmadas. Al registrar el enlace no se anticipa la CI del HEAD que lo incluirá: consultar los checks actuales del PR. Aceptación `d4b1238` y preparación `65d396f` separadas. Trello no confirmado; sin observación del teléfono o prueba de otra cuenta por el agente. Este enlace documental no cambia runtime ni resultados históricos.
 
 ## Proyecto y contexto
 
@@ -612,8 +612,12 @@ El usuario confirmó fallos de Actualizar y Reintentar sin perder avisos o detal
 
 La retirada temporal quedó en `bb32a17`. Esta aceptación se guarda en un commit documental separado, conservando historial y resultados técnicos anteriores. Sigue la prueba de reapertura y continuidad por cuenta; 8 y revisión real de David567rs (9) siguen pendientes. No se publica ni abre PR por este reporte, ni se cambian código, backend, servicios, dependencias o la copia de David.
 
-## Estado vigente: Avisos, continuidad aceptada y PR autorizado en preparación (8/9)
+## Snapshot histórico: Avisos, continuidad aceptada y PR autorizado en preparación (8/9)
 
 El reporte textual del usuario acepta **Probar la funcionalidad** (8): reapertura, ocultación al cerrar sesión, regreso con la misma cuenta, lectura conservada y Actualizar funcionando. La cita exacta se conserva en `docs/evidencias/avisos/expo-go-aceptacion.json`; no se atribuye observación del teléfono al agente, restauración de la pantalla exacta ni prueba de otra cuenta. Avisos queda **8/9**; puede marcar el 8 y mantener En progreso, sin dar por confirmado el marcado Trello.
 
 El mismo mensaje autoriza abrir el PR desde `feature/avisos` hacia `develop` para **David567rs**. La apertura está en preparación: todavía no existe un PR o solicitud de revisión confirmados, número o CI remota que citar. La aceptación se registra en commit separado antes de las comprobaciones finales y publicación. Se conservan error/reintento `58c1f7b`, retirada `bb32a17` y fases anteriores; solo la revisión real (9) sigue pendiente. Sin cambios de código, recibos históricos, backend, servicios o copia de David por esta edición documental.
+
+## Estado vigente: PR #17 de Avisos abierto, revisión solicitada (8/9)
+
+El [PR #17](https://github.com/David567rs/INHALEX-Movil/pull/17) está abierto hacia `develop`, autor ZenaidaGR, rama `feature/avisos`, sin draft y con David567rs solicitado para revisión. HEAD de apertura `65d396f66d3c9e542080dbcb2d9473952710a059`; aceptación `d4b1238` y ajuste previo `e473e45` preservados por fase. La [verificación local de preparación](docs/evidencias/avisos/verificacion-pr.json) aprobó; no anticipa la CI del HEAD que incluirá los enlaces: consultar los checks actuales del PR. Mantener **8/9** y En progreso: David debe revisar desde su cuenta y solo una revisión real permitirá aceptar el criterio 9. Sin aprobación, merge o marcado Trello atribuidos al agente.

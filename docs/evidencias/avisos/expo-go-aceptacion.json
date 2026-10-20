@@ -101,7 +101,7 @@
     "pendingCriterionIds": [
       9
     ],
-    "status": "8/9; criterios funcionales1-8 aceptados por reportes del usuario, incluida continuidad de la misma cuenta y lectura conservada. PR autorizado en preparación; solo revisión real9 pendiente.",
+    "status": "8/9; criterios funcionales1-8 aceptados por reportes del usuario. PR17 abierto y revisión solicitada a David567rs; solo revisión real9 pendiente, sin aprobación o merge confirmados.",
     "confirmations": [
       {
         "date": "2026-10-20",
@@ -281,29 +281,49 @@
       "agentObservedDevice": false
     },
     "sessionContinuityAcceptance": {
+      "commit": "d4b1238",
       "separateCommitRequired": true,
       "criterionId": 8,
       "source": "Reporte textual de continuidad de la misma cuenta y autorización de PR",
       "agentObservedDevice": false
     },
+    "prPreparation": {
+      "commit": "65d396f66d3c9e542080dbcb2d9473952710a059",
+      "precedingFixCommit": "e473e45",
+      "technicalVerification": "verificacion-pr.json"
+    },
     "conventionSource": "../../VERSIONAMIENTO.md"
   },
   "publication": {
-    "branchPushed": false,
-    "pullRequestCreated": false,
+    "branchPushed": true,
+    "pullRequestCreated": true,
+    "number": 17,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/17",
+    "receipt": "pr17.json",
+    "author": "ZenaidaGR",
+    "head": "feature/avisos",
+    "base": "develop",
+    "headAtOpening": "65d396f66d3c9e542080dbcb2d9473952710a059",
+    "draft": false,
+    "open": true,
+    "approved": false,
     "merged": false,
     "publicationAuthorizedByUser": true,
-    "status": "authorized-in-preparation-not-created",
+    "status": "open-review-requested-consult-current-head-ci",
     "authorizationQuote": "Amigo, los avisos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta. Se conservó la lectura y Actualizar funciona. Abre el PR de Avisos hacia develop para que David567rs lo revise.",
-    "reviewRequestConfirmed": false,
+    "reviewRequestConfirmed": true,
+    "reviewRequested": true,
+    "requestedReviewer": "David567rs",
+    "reviewRequestVerifiedVia": "GitHub REST requested_reviewers",
     "remoteCiConfirmed": false,
+    "remoteCiStatus": "not-asserted-for-link-commit-consult-current-pr-checks",
     "futureReviewer": "David567rs",
     "futureBase": "develop"
   },
   "connection": {
     "authorized": true,
     "implemented": true,
-    "status": "functional-acceptance-complete-authorized-pr-in-preparation",
+    "status": "functional-acceptance-complete-pr17-open-awaiting-real-review",
     "sameBranchRequired": "feature/avisos",
     "futureReviewer": "David567rs",
     "technicalVerification": "verificacion-api.json",
@@ -406,7 +426,7 @@
   "prPreparationReceipt": "verificacion-pr.json",
   "sessionAcceptanceCommit": "d4b1238",
   "finalMinorFixCommit": "e473e45",
-  "nextStep": "Registrar esta aceptación de continuidad en su commit separado; completar comprobaciones finales y publicar el PR autorizado desde feature/avisos hacia develop para David567rs. Todavía no existe PR o solicitud de revisión confirmados ni CI remota que citar. Mantener criterio9 pendiente hasta revisión real y Trello En progreso, sin inferir marcado.",
+  "nextStep": "David567rs revisa el PR17 abierto desde su cuenta: Files changed y Review changes; Approve si está conforme. Mantener criterio9 pendiente hasta revisión real y Trello En progreso sin inferir marcado. Comprobar CI remota del HEAD vigente antes de fusionar; aprobación y merge aún no confirmados.",
   "limitations": [
     "La aceptación visual procede del reporte del usuario, sin observación directa del dispositivo por el agente.",
     "La verificación de API pasó; QA usa sesión/fetch sintéticos y sus capturas son web, sin sustituir Expo Go, TalkBack o texto ampliado nativo.",
@@ -451,7 +471,7 @@
     "agentObservedDevice": false,
     "trelloMarkedConfirmed": false,
     "prAuthorized": true,
-    "prCreated": false,
+    "prCreatedAtReport": false,
     "reviewCriterion9Accepted": false,
     "historicalTechnicalResultsPreserved": true
   },

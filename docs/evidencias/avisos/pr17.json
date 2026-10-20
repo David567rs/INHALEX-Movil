@@ -1,0 +1,66 @@
+{
+  "activity": "Avisos",
+  "date": "2026-10-20",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil-Zenaida",
+  "branch": "feature/avisos",
+  "pullRequest": {
+    "number": 17,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/17",
+    "title": "Implementar Avisos con MVVM y Repository",
+    "author": "ZenaidaGR",
+    "base": "develop",
+    "head": "feature/avisos",
+    "headAtCreation": "65d396f66d3c9e542080dbcb2d9473952710a059",
+    "stateAtRecording": "open",
+    "draft": false,
+    "requestedReviewersVerified": ["David567rs"],
+    "peerApprovalRecorded": false,
+    "merged": false,
+    "attachedToCodexTask": true
+  },
+  "authorizationQuote": "Amigo, los avisos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta. Se conservó la lectura y Actualizar funciona. Abre el PR de Avisos hacia develop para que David567rs lo revise.",
+  "acceptance": {
+    "criteriaAccepted": 8,
+    "total": 9,
+    "pending": "Revisar el código, revisión real de David567rs",
+    "source": "Reportes del usuario en Expo Go; vacío con fixture local0/0",
+    "agentObservedDevice": false,
+    "trelloMarkedConfirmed": false,
+    "sourceFile": "expo-go-aceptacion.json"
+  },
+  "phaseCommits": {
+    "design": "1f383f3",
+    "designAcceptance": "46c86aa",
+    "api": "1b9d572",
+    "positiveAcceptance": "fcc0c72",
+    "emptyPreparation": "21ece6e",
+    "emptyAcceptance": "7d97f85",
+    "emptyHelperRetirement": "bb32a17",
+    "loadErrorAcceptance": "58c1f7b",
+    "sessionAcceptance": "d4b1238",
+    "busyFilterAdjustment": "e473e45",
+    "reviewPreparation": "65d396f"
+  },
+  "localChecks": {
+    "receipt": "verificacion-pr.json",
+    "typecheck": "passed",
+    "lint": "passed",
+    "tests": "735/735, zero failures",
+    "expoDoctor": "1.20.4,21/21",
+    "androidExport": "passed,1532 modules",
+    "webExport": "passed,1081 modules",
+    "emptyQaHelperRemoved": true
+  },
+  "remoteCi": {
+    "status": "Consultar los checks del HEAD vigente en GitHub; este recibo no anticipa su conclusión",
+    "localChecksDoNotReplaceRemoteCi": true,
+    "linkCommitWillChangeCreationHead": true
+  },
+  "publication": {
+    "branchPushedByZenaidaCredential": true,
+    "authorAndReviewerVerifiedWithGitHubRest": true,
+    "mainOrDevelopUpdatedByAgent": false,
+    "historyRewritten": false,
+    "mergeRequiresPeerReviewAndChecks": true
+  }
+}
