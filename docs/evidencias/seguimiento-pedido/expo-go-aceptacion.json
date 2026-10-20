@@ -60,7 +60,7 @@
     "pendingCriterionIds": [
       8
     ],
-    "status": "Criterios 1-7 aceptados por reportes del usuario en Expo Go, incluidos Confirmado, Completado y Cancelado con actualización y referencias correctas: 7/8. Última prueba de reapertura/sesión y revisión real del código pendientes.",
+    "status": "Criterios funcionales 1-7 y prueba final de reapertura/sesión aceptados por reportes del usuario en Expo Go. 7/8; Revisar el código espera revisión real de Zenaida en el PR autorizado.",
     "confirmations": [
       {
         "date": "2026-10-20",
@@ -103,6 +103,14 @@
           7
         ],
         "scope": "Confirmado, Completado y Cancelado muestran estado y recorrido correctos; actualización en los tres y referencias coincidentes con Historial. No acredita todavía reapertura/salida/reingreso ni revisión formal.",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario",
+        "quote": "Amigo, los pedidos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta. Actualizar funciona. Abre el PR de Seguimiento hacia develop para que Zenaida lo revise.",
+        "criterionIds": [],
+        "scope": "Reapertura recupera pedidos, cerrar sesión los oculta, reingresar con la misma cuenta los recupera y Actualizar funciona. Prueba final sin criterio independiente; no completa revisión formal (8).",
         "agentObservedDevice": false
       }
     ],
@@ -197,10 +205,11 @@
     "acceptance": {
       "separateCommitPlanned": true,
       "requiresActualUserReport": true,
-      "currentCommitMessage": "docs(orders): aceptar estados de seguimiento en Expo Go",
+      "currentCommitMessage": "docs(orders): aceptar reapertura y sesión de seguimiento en Expo Go",
       "positiveFlowCommit": "3a4fb9e",
       "notFoundCommit": "4d3007e",
-      "connectionRetryCommit": "6791928"
+      "connectionRetryCommit": "6791928",
+      "statesCommit": "5afa8b5"
     },
     "conventionSource": "../../VERSIONAMIENTO.md",
     "designAcceptance": {
@@ -214,13 +223,16 @@
     "branchPushed": false,
     "pullRequestCreated": false,
     "merged": false,
-    "publicationAuthorizedByUser": false,
+    "publicationAuthorizedByUser": true,
     "futureReviewer": "ZenaidaGR",
-    "futureBase": "develop"
+    "futureBase": "develop",
+    "status": "authorized-preparing-checks-and-publication",
+    "authorizationQuote": "Amigo, los pedidos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta. Actualizar funciona. Abre el PR de Seguimiento hacia develop para que Zenaida lo revise.",
+    "mergeAuthorized": false
   },
-  "nextStep": "Con backend y Metro activos, cerrar Expo Go por completo y reabrir el proyecto David; abrir Historial y Seguimiento de un pedido conocido. Cerrar sesión y verificar acceso de login sin pedidos previos. Reingresar con la misma cuenta, recuperar ese pedido y actualizar. Esperar reporte antes del futuro PR autorizado para revisión de Zenaida (8).",
+  "nextStep": "Verificar la preparación, publicar feature/seguimiento-pedido desde David567rs y abrir el PR hacia develop solicitando revisión a ZenaidaGR. Mantener 7/8 y Trello En progreso hasta su aprobación real. La solicitud no autoriza fusionar.",
   "limitations": [
-    "El usuario reportó los criterios 1-7 en Expo Go, incluidos tres estados y sus actualizaciones. Reapertura/sesión y revisión formal (8) siguen pendientes. El agente no observó el dispositivo ni inspeccionó su tráfico HTTP.",
+    "El usuario reportó los criterios funcionales 1-7 y la prueba final de reapertura/sesión en Expo Go. Revisar el código (8) sigue pendiente. El agente no observó el teléfono, inspeccionó SecureStore ni capturó el tráfico HTTP del dispositivo.",
     "Los datos y modos del diseño son una instantánea histórica; la implementación actual consulta la API.",
     "La QA web usa datos sintéticos y las pruebas HTTP usan servidores loopback; no acreditan una consulta autenticada al servicio Nest/MongoDB real.",
     "No se agregaron escrituras de pedidos, almacenamiento, dependencias ni cambios al backend.",
@@ -229,7 +241,7 @@
   ],
   "connection": {
     "implemented": true,
-    "status": "partial-native-acceptance-7-of-8-session-check-pending",
+    "status": "native-functional-acceptance-complete-review-pending",
     "technicalVerification": "verificacion-api.json",
     "guide": "../../CONEXION-SEGUIMIENTO-PEDIDO.md",
     "endpointsInOrder": [
@@ -237,7 +249,7 @@
       "GET /orders/me/:id/tracking"
     ],
     "entry": "Cuenta → Historial de pedidos → seleccionar pedido → Ver seguimiento del pedido",
-    "realDeviceApiAcceptancePending": true,
+    "realDeviceApiAcceptancePending": false,
     "agentObservedDevice": false,
     "backendChanged": false,
     "newStorage": false,
@@ -267,12 +279,15 @@
     "scope": "La disponibilidad inicial se complementa con el nuevo reporte funcional de Confirmado, Completado y Cancelado, registrado en confirmations para el criterio 7."
   },
   "sessionAcceptance": {
-    "status": "pending-user-report",
-    "reopenAccepted": false,
-    "signOutHidesOrderAccepted": false,
-    "sameAccountSignInAccepted": false,
+    "status": "accepted-by-user-in-expo-go",
+    "reopenAccepted": true,
+    "signOutHidesOrderAccepted": true,
+    "sameAccountSignInAccepted": true,
     "independentTrelloCriterion": false,
     "agentObservedDevice": false,
-    "scope": "Comprobar restauración de sesión y lectura del pedido al reabrir, ausencia de datos tras salir y nueva lectura al ingresar con la misma cuenta; no exigir restauración exacta de la pantalla o selección."
+    "scope": "Pedidos recuperados tras reapertura, ocultos al salir y recuperados con la misma cuenta; Actualizar funciona. No exige restauración exacta de pantalla ni selección; no inspecciona SecureStore físicamente.",
+    "refreshAfterSignInAccepted": true,
+    "quote": "Amigo, los pedidos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta. Actualizar funciona. Abre el PR de Seguimiento hacia develop para que Zenaida lo revise.",
+    "source": "Reporte textual del usuario; sin observación directa del teléfono por el agente"
   }
 }
