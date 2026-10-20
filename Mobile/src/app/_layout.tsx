@@ -46,6 +46,7 @@ export default function RootLayout() {
           <Stack.Screen name="direcciones-envio" />
           <Stack.Screen name="creacion-pedido" />
           <Stack.Screen name="historial-pedidos" />
+          <Stack.Screen name="seguimiento-pedido" />
         </Stack>
         </OrderHistoryProvider>
         </OrderCreationProvider>

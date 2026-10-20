@@ -18,6 +18,8 @@ La base tiene `version: 0.1.0` y `versionCode: 1`. El paquete npm de `Mobile/` c
 
 Cada actividad parte del `develop` actualizado y se integra mediante PR, CI y revisión del compañero. Los commits siguen la convención `tipo(alcance): descripción`, con tipos como `feat`, `fix`, `test`, `docs` y `chore`; el alcance puede omitirse cuando el cambio sea general.
 
+Desde el acuerdo del 20 de octubre de 2026 se conservan los hitos de cada actividad en commits separados: diseño verificado, conexión a la API autorizada y validaciones o aceptaciones posteriores. El cierre documental de la actividad anterior también se guarda por separado. No se exige una cantidad fija de commits; cada uno debe reflejar un cambio concreto y comprobado, sin reunir todas las etapas al abrir el PR. La aceptación en Expo Go se registra después del reporte real del usuario. Se conserva el historial ya publicado.
+
 La release parte de `develop`, pasa QA y se integra en `main` mediante PR. David conserva la administración y la integración exclusiva de `main`; las correcciones vuelven a `develop`. Un tag como `v1.0.0` identifica el commit aprobado de la entrega y activará el build firmado cuando se configure esa etapa. Las fechas de publicación se ajustan al cronograma acordado.
 
 ## Referencias

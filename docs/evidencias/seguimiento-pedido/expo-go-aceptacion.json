@@ -1,0 +1,160 @@
+{
+  "activity": "Seguimiento del pedido",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+  "branch": "feature/seguimiento-pedido",
+  "baseBranch": "develop",
+  "baseCommit": "930d2023ecb801ce985acaad8dfad03657a998ae",
+  "priorActivityClosureCommit": "49df3b3",
+  "date": "2026-10-20",
+  "source": "Solicitud del usuario de iniciar únicamente el diseño de Seguimiento, acuerdo de commits por fase y captura de ocho criterios sin marcar",
+  "design": {
+    "accepted": false,
+    "status": "awaiting-user-visual-review-in-expo-go",
+    "agentObservedDevice": false,
+    "apiConnected": false,
+    "guide": "../../DISENO-SEGUIMIENTO-PEDIDO.md",
+    "technicalVerification": "verificacion-diseno.json",
+    "technicalVerificationStatus": "passed-own-design-checks-and-web-qa",
+    "route": "/seguimiento-pedido",
+    "entry": "Cuenta → Seguimiento del pedido",
+    "label": "Vista previa",
+    "dataSource": "Ejemplos locales en memoria mediante Repository de solo lectura, sin pedidos de la cuenta ni transporte HTTP",
+    "exampleReferencePrefix": "EJEMPLO-",
+    "presentationModes": [
+      "En revisión",
+      "Confirmado",
+      "Completado",
+      "Cancelado",
+      "Pedido no encontrado",
+      "Error de conexión"
+    ],
+    "factualOrderStatuses": [
+      "pending_review",
+      "confirmed",
+      "completed",
+      "cancelled"
+    ],
+    "shippingPromises": false,
+    "inventedEventDates": false,
+    "httpRequests": false,
+    "authenticatedAccountDataUsed": false,
+    "storageUsed": false,
+    "backendChanged": false,
+    "fiveTabsPreserved": true,
+    "acceptedCriterionIds": [],
+    "quote": null
+  },
+  "functionalAcceptance": {
+    "acceptedCriteria": 0,
+    "totalCriteria": 8,
+    "acceptedCriterionIds": [],
+    "pendingCriterionIds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "status": "Diseño terminado y verificado técnicamente; aceptación visual en Expo Go y funcionalidad real pendientes. 0/8",
+    "confirmations": [],
+    "criteria": [
+      {
+        "id": 1,
+        "text": "Obtener estado del pedido desde la API",
+        "accepted": false
+      },
+      {
+        "id": 2,
+        "text": "Mostrar información del pedido",
+        "accepted": false
+      },
+      {
+        "id": 3,
+        "text": "Mostrar estado actual",
+        "accepted": false
+      },
+      {
+        "id": 4,
+        "text": "Actualizar la información correctamente",
+        "accepted": false
+      },
+      {
+        "id": 5,
+        "text": "Manejar pedidos no encontrados",
+        "accepted": false
+      },
+      {
+        "id": 6,
+        "text": "Manejar errores de conexión",
+        "accepted": false
+      },
+      {
+        "id": 7,
+        "text": "Probar distintos estados del pedido",
+        "accepted": false
+      },
+      {
+        "id": 8,
+        "text": "Revisar el código",
+        "accepted": false
+      }
+    ]
+  },
+  "trello": {
+    "source": "Captura adjunta del usuario",
+    "agentReadBoard": false,
+    "agentModifiedBoard": false,
+    "userConfirmedCriteriaMarked": false,
+    "observedInUserScreenshot": "Ocho criterios sin marcar",
+    "guidance": "Mantener 0/8: no hay criterio independiente de diseño. Los estados, datos y errores de ejemplo no completan los criterios funcionales."
+  },
+  "architecture": {
+    "pattern": "MVVM y Repository",
+    "composition": "Bootstrap compone caso de uso con Repository local de lectura y la ruta inyecta la dependencia en la pantalla",
+    "domainIndependentOfReactNative": true,
+    "selectionState": "Solo composición visual temporal en memoria"
+  },
+  "phaseCommits": {
+    "userRequestedSeparateCommits": true,
+    "previousActivityClosure": {
+      "activity": "Historial de pedidos",
+      "commit": "49df3b3",
+      "alreadySaved": true
+    },
+    "design": {
+      "localCommitAuthorized": true,
+      "createAfterOwnVerification": true,
+      "commitCreated": true,
+      "commitMessage": "feat(orders): diseñar seguimiento del pedido"
+    },
+    "api": {
+      "separateCommitPlanned": true,
+      "implementationAuthorizedYet": false
+    },
+    "acceptance": {
+      "separateCommitPlanned": true,
+      "requiresActualUserReport": true
+    },
+    "conventionSource": "../../VERSIONAMIENTO.md"
+  },
+  "publication": {
+    "branchPushed": false,
+    "pullRequestCreated": false,
+    "merged": false,
+    "publicationAuthorizedByUser": false,
+    "futureReviewer": "ZenaidaGR",
+    "futureBase": "develop"
+  },
+  "nextStep": "Revisar las seis composiciones en Expo Go de David (8082), desde Cuenta. Esperar el reporte del usuario antes de la API; 0/8 mientras solo haya muestras.",
+  "limitations": [
+    "La revisión visual de Seguimiento en Expo Go todavía no está aceptada por el usuario.",
+    "Las seis composiciones son sintéticas y no acreditan estado, actualización o errores de un pedido real.",
+    "El diseño muestra hechos del pedido de ejemplo, sin promesas logísticas o fechas de etapas inventadas.",
+    "No hay HTTP, autenticación nueva, almacenamiento, modificación del backend o escritura de pedidos.",
+    "El agente no observó el dispositivo ni leyó o modificó Trello.",
+    "Pasaron verificaciones propias y QA web sintética; no sustituyen Expo Go, TalkBack o texto ampliado en dispositivo."
+  ]
+}
