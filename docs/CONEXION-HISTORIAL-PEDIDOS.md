@@ -1,8 +1,8 @@
 # Conexión de Historial de pedidos
 
-La actividad continúa en `C:\Users\David\Documents\INHALEX-Movil`, rama `feature/historial-pedidos`, desde `develop` en `77b9ab5aa8ca4171669ddda8b42adee028cefc59`. David567rs es responsable y ZenaidaGR revisará el futuro PR hacia `develop`.
+Historial de pedidos quedó integrado en `develop` mediante el PR #15, aprobado y fusionado por ZenaidaGR. El usuario confirmó actualizar Trello y solicitó sincronizar ambas copias. **INHALEX-Movil** e **INHALEX-Movil-Zenaida** están ahora en **develop930d2023ecb801ce985acaad8dfad03657a998ae**, iguales a `origin/develop`, conservando los seis documentos locales de cierre en David y Zenaida limpia.
 
-El [PR #15, Implementar Historial de pedidos con MVVM y Repository](https://github.com/David567rs/INHALEX-Movil/pull/15) está abierto por **David567rs**, desde **feature/historial-pedidos** hacia **develop**, con revisión solicitada a **ZenaidaGR**. Historial permanece **8/9**, pendiente únicamente **Revisar el código**. La solicitud fue: «Amigo, ya marqué esos dos puntos. Abre el PR de Historial desde `feature/historial-pedidos` hacia `develop` para que Zenaida lo revise.». Confirma el marcado de **Ordenar los pedidos de forma clara** y **Probar la funcionalidad**. La [aceptación textual](evidencias/historial-pedidos/expo-go-aceptacion.json) y el [recibo de apertura](evidencias/historial-pedidos/preparacion-pr.json) conservan la autorización y su resultado. El agente no observó el teléfono ni leyó o modificó Trello; no hay aprobación ni merge. El [diseño y sus datos sintéticos](DISENO-HISTORIAL-PEDIDOS.md) se conservan como historia.
+El [PR #15, Implementar Historial de pedidos con MVVM y Repository](https://github.com/David567rs/INHALEX-Movil/pull/15) está **cerrado y fusionado** hacia `develop` por **ZenaidaGR**. Su [aprobación real](https://github.com/David567rs/INHALEX-Movil/pull/15#pullrequestreview-5583096544) corresponde al HEAD **6a460b5e3b4df2aa0a8cce2ade1809ef8701d540**, a las **2026-10-20T09:16:08Z**; el merge ocurrió a las **09:16:16Z**, en **930d2023ecb801ce985acaad8dfad03657a998ae**. [Backend CI](https://github.com/David567rs/INHALEX-Movil/actions/runs/39399080059) y [Mobile CI](https://github.com/David567rs/INHALEX-Movil/actions/runs/39399080064) pasaron sobre el mismo HEAD aprobado. Historial completa **9/9**, incluido **Revisar el código**. La [evidencia de integración](evidencias/historial-pedidos/integracion-pr15.json) y la [aceptación](evidencias/historial-pedidos/expo-go-aceptacion.json) registran el cierre y la sincronización; el [recibo de apertura](evidencias/historial-pedidos/preparacion-pr.json) queda histórico. El usuario informó «Amigo, ya actualicé Trello» en respuesta a la guía final de marcar9 y mover a Terminado. El agente no observó el teléfono ni leyó o modificó el tablero.
 
 ## Contrato existente de la API
 
@@ -28,7 +28,7 @@ Cuenta abre **Historial de pedidos** en `/historial-pedidos` para consultar los 
 
 Cambiar o cerrar la sesión invalida las solicitudes anteriores y oculta los datos personales inmediatamente, incluso si un nuevo inicio corresponde al mismo ID de usuario. El ciclo `start`/`stop` cancela trabajo y descarta respuestas tardías. Un 401 en cualquier lectura oculta los datos del módulo y presenta el estado de sesión vencida sin alterar la sesión global. Estas protecciones tienen cobertura técnica; el usuario confirmó además reapertura, ocultación al cerrar sesión y recuperación al ingresar con la misma cuenta. Su reporte no se amplía a escenarios adicionales de respuestas tardías o cambio de identidad que no describió.
 
-## Criterios: 8/9
+## Criterios: 9/9
 
 - [x] Crear pantalla de historial
 - [x] Obtener pedidos desde la API
@@ -38,9 +38,9 @@ Cambiar o cerrar la sesión invalida las solicitudes anteriores y oculta los dat
 - [x] Mostrar mensaje si no existen pedidos
 - [x] Manejar errores de conexión
 - [x] Probar la funcionalidad
-- [ ] Revisar el código
+- [x] Revisar el código
 
-El usuario confirmó marcar **Ordenar los pedidos de forma clara** y **Probar la funcionalidad**. El resto del marcado no se amplía por inferencia. «Total» corresponde al **Subtotal de productos** que devuelve el contrato, sin envío o pagos inferidos. Mantener **En progreso** y dejar **Revisar el código** pendiente para ZenaidaGR en el PR, sin sustituir esa aprobación por revisión de agentes.
+La revisión real completa el criterio9 e Historial **9/9**. El usuario reportó actualizar Trello tras la guía de marcar **Revisar el código**, adjuntar el PR, añadir comentario y mover a **Terminado**; la fuente es su mensaje y el agente no ejecutó o verificó acciones en el tablero. «Total» corresponde al **Subtotal de productos** del contrato, sin envío o pagos inferidos. La aprobación formal de ZenaidaGR no añade otra prueba física.
 
 ## Primera prueba real en Expo Go: recorrido positivo aceptado
 
@@ -97,11 +97,15 @@ El reporte final fue exactamente: «Amigo, el orden y los filtros funcionan. Los
 
 Los criterios 4 y 8 están aceptados por el reporte anterior. No se infieren paginación física de más de 20 pedidos, lectura con texto ampliado, TalkBack o casos de sesión distintos de los reportados.
 
-### Siguiente paso: revisión de código
+### Revisión e integración: completadas
 
-El [PR #15](https://github.com/David567rs/INHALEX-Movil/pull/15) ya está abierto y GitHub confirmó la solicitud a **ZenaidaGR**. **Revisar el código** (9) permanece pendiente. El [cuerpo del PR](PR-HISTORIAL-PEDIDOS.md) conserva alcance, contratos y validación. Zenaida revisará desde su cuenta **Files changed → Review changes → Approve → Submit review** cuando esté conforme. La aprobación debe corresponder al HEAD vigente y Backend CI/Mobile CI deben comprobarse sobre ese mismo commit antes del merge. Mantener Trello **En progreso** y 8/9 hasta su revisión; esta solicitud no fusiona ni inicia otra actividad.
+GitHub confirma el [PR #15](https://github.com/David567rs/INHALEX-Movil/pull/15) cerrado y fusionado por ZenaidaGR. La aprobación y las dos CI correctas corresponden al HEAD final **6a460b5**; el merge **930d202** tiene como padres **77b9ab5** y **6a460b5**. Se completa **Revisar el código** (9): **9/9**. El [cuerpo preparado del PR](PR-HISTORIAL-PEDIDOS.md) conserva el snapshot de publicación; no representa el estado posterior del cierre.
 
-La apertura se hizo con el commit de implementación **726101a8606ee92ad1a184c28d9649d6129fdf7b**. En ese snapshot estaban en ejecución [Mobile CI 39398704705](https://github.com/David567rs/INHALEX-Movil/actions/runs/39398704705) y [Backend CI 39398704687](https://github.com/David567rs/INHALEX-Movil/actions/runs/39398704687). El commit documental posterior enlaza el PR y su revisión; los checks de apertura no prueban por sí solos la CI del HEAD posterior. Consultar el estado actual en GitHub. El conector devolvió 403 al intentar crear el PR; se completó mediante la credencial configurada de Git, verificando la cuenta David567rs sin exponer credenciales.
+La apertura se hizo con el commit de implementación **726101a8606ee92ad1a184c28d9649d6129fdf7b**. En ese snapshot estaban en ejecución [Mobile CI 39398704705](https://github.com/David567rs/INHALEX-Movil/actions/runs/39398704705) y [Backend CI 39398704687](https://github.com/David567rs/INHALEX-Movil/actions/runs/39398704687). Esos checks se conservan como historia; los finales aprobados son **39399080064 / 39399080059**, sobre **6a460b5**. El conector devolvió 403 al intentar crear el PR; se completó mediante la credencial configurada de Git, verificando la cuenta David567rs sin exponer credenciales.
+
+El usuario confirmó el cierre de Trello y solicitó actualizar **INHALEX-Movil** e **INHALEX-Movil-Zenaida** con `develop`. Ambas copias quedaron en **930d202**, iguales a `origin/develop`. En David se comprobó ascendencia y árbol idéntico entre6a460b5y930d202, se avanzó `develop` con su valor anterior esperado y se cambió a esa rama, conservando hashes SHA256 de los seis documentos locales. Se guardó respaldo en TEMP. Zenaida avanzó con `merge --ff-only` y quedó limpia. No se usó stash, reset, commit o push nuevo.
+
+Entornos, dependencias, identidades y stash conservaron sus valores; el respaldo de Zenaida `81196109270f00fa7edf03a8a8ec6f8bdc963131` sigue intacto. Backend3200 y Metro8082/8083 conservaron procesos **37472/28288/13476** y respondieron HTTP200, sin reinicio. El recibo de sincronización está en `TEMP/inhalex-sincronizacion-pr15.json` y resumido en la evidencia de integración. La siguiente actividad del plan es **Seguimiento del pedido**, de David, en **feature/seguimiento-pedido**, pero su rama y diseño esperan la solicitud del usuario.
 
 ## Verificación y límites
 
@@ -113,4 +117,4 @@ En la verificación técnica anterior, la API local real respondió **401** a GE
 
 La preparación del PR repitió **618/618 pruebas**, TypeScript, lint, `npm run doctor` (**1.20.4, 21/21**) y exportación Android (**1508 módulos**) después de ampliar la etiqueta accesible de cada pedido para incluir fecha, estado, subtotal y unidades. El ajuste conserva el diseño visual; TalkBack físico no se atribuye a estas comprobaciones. La semántica sigue la [documentación oficial de React Native 0.86](https://reactnative.dev/docs/0.86/accessibility#accessibilitylabel). La exportación y las capturas web anteriores conservan su alcance histórico.
 
-Esta etapa no añade seguimiento, confirmación de recepción, cancelación, repetición de compra ni cambios a pedidos, bolsa, direcciones, sesión o dependencias. Se conservan identidad INHALEX, cinco pestañas, configuración, servicios, identidades de Git y respaldo de Zenaida. La solicitud actual autoriza publicación y PR para revisión; no autoriza aprobación ni integración a `develop`.
+Esta etapa no añade seguimiento, confirmación de recepción, cancelación, repetición de compra ni cambios a pedidos, bolsa, direcciones, sesión o dependencias. Se conservan identidad INHALEX, cinco pestañas, configuración, servicios, identidades de Git y respaldo de Zenaida. La integración y la sincronización de ambas copias quedan registradas; no se inicia la siguiente actividad por esta solicitud.

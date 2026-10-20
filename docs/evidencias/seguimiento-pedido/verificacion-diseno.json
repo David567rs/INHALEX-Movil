@@ -1,0 +1,160 @@
+{
+  "activity": "Seguimiento del pedido",
+  "phase": "design-only",
+  "date": "2026-10-20",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+  "branch": "feature/seguimiento-pedido",
+  "baseCommit": "930d2023ecb801ce985acaad8dfad03657a998ae",
+  "previousActivityClosureCommit": "49df3b3",
+  "status": "design-verified-awaiting-user-expo-go",
+  "checks": {
+    "existingRegressionTests": {
+      "command": "npm test",
+      "exitCode": 0,
+      "passed": 618,
+      "failed": 0,
+      "newStaticPreviewTestsAdded": false
+    },
+    "doctor": {
+      "command": "npm run doctor",
+      "version": "1.20.4",
+      "exitCode": 0,
+      "passed": 21,
+      "total": 21
+    },
+    "typecheck": {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "result": "passed"
+    },
+    "lint": {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "result": "passed"
+    },
+    "androidExport": {
+      "command": "npm run export:android",
+      "exitCode": 0,
+      "modules": 1515,
+      "result": "passed"
+    },
+    "webExport": {
+      "command": "npm run export:web",
+      "exitCode": 0,
+      "modules": 1064,
+      "result": "passed"
+    },
+    "webVisualReview": {
+      "result": "passed",
+      "url": "http://localhost:8082/seguimiento-pedido",
+      "platform": "web, synthetic local examples",
+      "viewports": [
+        {
+          "width": 397,
+          "height": 1000
+        },
+        {
+          "width": 320,
+          "height": 820
+        }
+      ],
+      "scenariosChecked": [
+        "pending_review",
+        "confirmed",
+        "completed",
+        "cancelled",
+        "not-found",
+        "connection-error"
+      ],
+      "selectionAccessible": true,
+      "refreshLocalExample": true,
+      "retryRestoresInitialExample": true,
+      "cancelledTimelineTerminal": true,
+      "subtotalMXN": 377,
+      "units": 3,
+      "horizontalOverflow": 0,
+      "minimumNewControlHeightCSS": 44,
+      "fiveTabsPreserved": true,
+      "accountEntryAndReturn": true,
+      "signInAndRegistrationReachableAfterScrolling": true,
+      "reentryResetsToInitialExample": true,
+      "consoleErrors": 0,
+      "existingWarnings": [
+        "Shared shadow style props deprecated on web",
+        "Shared Animated useNativeDriver falls back to JS on web"
+      ],
+      "temporaryViewportOverrideReset": true,
+      "captures": [
+        "diseno-web-397.png",
+        "diseno-web-320.png",
+        "cancelado-web-397.png",
+        "resumen-web-320.png",
+        "no-encontrado-web-320.png",
+        "error-web-320.png",
+        "acceso-cuenta-web-320.png"
+      ]
+    }
+  },
+  "scope": {
+    "pattern": "MVVM, Repository local de solo lectura e inyeccion desde bootstrap",
+    "scenarios": [
+      "pending_review",
+      "confirmed",
+      "completed",
+      "cancelled",
+      "not-found",
+      "connection-error"
+    ],
+    "realOrdersRead": false,
+    "realOrderMutations": false,
+    "trackingHttpConnected": false,
+    "newPersistence": false,
+    "dependenciesChanged": false,
+    "backendChanged": false
+  },
+  "userAcceptance": {
+    "expoGoAccepted": false,
+    "agentObservedPhysicalDevice": false,
+    "trelloAccepted": 0,
+    "trelloTotal": 8
+  },
+  "documentation": [
+    "../../DISENO-SEGUIMIENTO-PEDIDO.md",
+    "expo-go-aceptacion.json"
+  ],
+  "documentationReferencesRead": [
+    "https://docs.expo.dev/versions/v57.0.0/",
+    "https://docs.expo.dev/versions/v57.0.0/sdk/router/",
+    "https://reactnative.dev/docs/accessibility"
+  ],
+  "publication": {
+    "pushed": false,
+    "pullRequestCreated": false,
+    "merged": false
+  },
+  "preservation": {
+    "davidIdentityUnchanged": true,
+    "davidEnvUnchanged": true,
+    "packageUnchanged": true,
+    "lockUnchanged": true,
+    "zenaidaHeadUnchanged": true,
+    "zenaidaClean": true,
+    "zenaidaStashUnchanged": true,
+    "developUnchanged": true,
+    "servicesUnchanged": true,
+    "services": [
+      {
+        "LocalPort": 8083,
+        "OwningProcess": 13476
+      },
+      {
+        "LocalPort": 8082,
+        "OwningProcess": 28288
+      },
+      {
+        "LocalPort": 3200,
+        "OwningProcess": 37472
+      }
+    ]
+  }
+}

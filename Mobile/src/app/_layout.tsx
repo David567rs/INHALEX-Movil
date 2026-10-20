@@ -10,6 +10,7 @@ import { ProfileProvider } from '@/features/profile/presentation/context/Profile
 import { ShippingAddressesProvider } from '@/features/shippingAddresses/presentation/context/ShippingAddressesProvider';
 import { OrderCreationProvider } from '@/features/orderCreation/presentation/context/OrderCreationProvider';
 import { OrderHistoryProvider } from '@/features/orderHistory/presentation/context/OrderHistoryProvider';
+import { OrderTrackingProvider } from '@/features/orderTracking/presentation/context/OrderTrackingProvider';
 import { colors } from '@/core/theme/colors';
 import { useReducedMotion } from '@/shared/hooks/useReducedMotion';
 
@@ -26,6 +27,7 @@ export default function RootLayout() {
         <ShippingAddressesProvider controller={runtime.shippingAddresses}>
         <OrderCreationProvider controller={runtime.orderCreation}>
         <OrderHistoryProvider controller={runtime.orderHistory}>
+        <OrderTrackingProvider controller={runtime.orderTracking}>
         <StatusBar style="dark" />
         <Stack
           initialRouteName="(tabs)"
@@ -46,7 +48,9 @@ export default function RootLayout() {
           <Stack.Screen name="direcciones-envio" />
           <Stack.Screen name="creacion-pedido" />
           <Stack.Screen name="historial-pedidos" />
+          <Stack.Screen name="seguimiento-pedido" />
         </Stack>
+        </OrderTrackingProvider>
         </OrderHistoryProvider>
         </OrderCreationProvider>
         </ShippingAddressesProvider>

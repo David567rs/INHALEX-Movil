@@ -1,0 +1,302 @@
+{
+  "activity": "Seguimiento del pedido",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+  "branch": "feature/seguimiento-pedido",
+  "baseBranch": "develop",
+  "baseCommit": "930d2023ecb801ce985acaad8dfad03657a998ae",
+  "priorActivityClosureCommit": "49df3b3",
+  "date": "2026-10-20",
+  "source": "Aceptación visual y reportes funcionales textuales del usuario en esta conversación",
+  "design": {
+    "accepted": true,
+    "status": "accepted-by-user-in-expo-go",
+    "agentObservedDevice": false,
+    "apiConnected": false,
+    "guide": "../../DISENO-SEGUIMIENTO-PEDIDO.md",
+    "technicalVerification": "verificacion-diseno.json",
+    "technicalVerificationStatus": "passed-own-design-checks-and-web-qa",
+    "route": "/seguimiento-pedido",
+    "entry": "Cuenta → Seguimiento del pedido",
+    "label": "Vista previa",
+    "dataSource": "Ejemplos locales en memoria mediante Repository de solo lectura, sin pedidos de la cuenta ni transporte HTTP",
+    "exampleReferencePrefix": "EJEMPLO-",
+    "presentationModes": [
+      "En revisión",
+      "Confirmado",
+      "Completado",
+      "Cancelado",
+      "Pedido no encontrado",
+      "Error de conexión"
+    ],
+    "factualOrderStatuses": [
+      "pending_review",
+      "confirmed",
+      "completed",
+      "cancelled"
+    ],
+    "shippingPromises": false,
+    "inventedEventDates": false,
+    "httpRequests": false,
+    "authenticatedAccountDataUsed": false,
+    "storageUsed": false,
+    "backendChanged": false,
+    "fiveTabsPreserved": true,
+    "acceptedCriterionIds": [],
+    "quote": "Amigo, ya revisé el diseño de Seguimiento en Expo Go y me gustó. Sigamos con la API en feature/seguimiento-pedido, manteniendo MVVM, Repository y commits por etapa.",
+    "snapshotScope": "Instantánea histórica de la etapa de diseño aceptada; la conexión posterior se registra en connection"
+  },
+  "functionalAcceptance": {
+    "acceptedCriteria": 7,
+    "totalCriteria": 8,
+    "acceptedCriterionIds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "pendingCriterionIds": [
+      8
+    ],
+    "status": "Criterios funcionales 1-7 y prueba final de reapertura/sesión aceptados por reportes del usuario en Expo Go. 7/8; Revisar el código espera revisión real de Zenaida en el PR autorizado.",
+    "confirmations": [
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario",
+        "quote": "Amigo, Seguimiento muestra el pedido correcto y Actualizar seguimiento funciona. ¿Qué marco en Trello y qué sigue?",
+        "criterionIds": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "scope": "Pedido correcto, información, estado y actualización del recorrido guiado; no acredita todavía distintos estados, 404, errores o sesión",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario",
+        "quote": "Amigo, apareció «No encontramos este pedido», Reintentar mantuvo el aviso y pude volver al historial y abrir un pedido real. ¿Qué marco en Trello y qué sigue?",
+        "criterionIds": [
+          5
+        ],
+        "scope": "Aviso de pedido no encontrado, reintento que conserva el aviso y retorno al historial para abrir un pedido real. No hay observación directa del agente, inspección de MongoDB ni captura del estado HTTP en el teléfono.",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario",
+        "quote": "Amigo, Actualizar y Reintentar fallaron sin perder los datos. Reinicié el backend y Reintentar recuperó el mismo pedido y quitó el aviso. ¿Qué marco en Trello y qué sigue?",
+        "criterionIds": [
+          6
+        ],
+        "scope": "Actualizar y Reintentar fallaron conservando los datos; tras reiniciar el backend, Reintentar recuperó el mismo pedido y retiró el aviso. No acredita todavía distintos estados o reapertura/sesión.",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario",
+        "quote": "Amigo, Confirmado, Completado y Cancelado muestran su estado y recorrido correctos. Actualizar funciona en los tres y las referencias coinciden con Historial. ¿Qué marco en Trello y qué sigue?",
+        "criterionIds": [
+          7
+        ],
+        "scope": "Confirmado, Completado y Cancelado muestran estado y recorrido correctos; actualización en los tres y referencias coincidentes con Historial. No acredita todavía reapertura/salida/reingreso ni revisión formal.",
+        "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-20",
+        "source": "Mensaje textual del usuario",
+        "quote": "Amigo, los pedidos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta. Actualizar funciona. Abre el PR de Seguimiento hacia develop para que Zenaida lo revise.",
+        "criterionIds": [],
+        "scope": "Reapertura recupera pedidos, cerrar sesión los oculta, reingresar con la misma cuenta los recupera y Actualizar funciona. Prueba final sin criterio independiente; no completa revisión formal (8).",
+        "agentObservedDevice": false
+      }
+    ],
+    "criteria": [
+      {
+        "id": 1,
+        "text": "Obtener estado del pedido desde la API",
+        "accepted": true
+      },
+      {
+        "id": 2,
+        "text": "Mostrar información del pedido",
+        "accepted": true
+      },
+      {
+        "id": 3,
+        "text": "Mostrar estado actual",
+        "accepted": true
+      },
+      {
+        "id": 4,
+        "text": "Actualizar la información correctamente",
+        "accepted": true
+      },
+      {
+        "id": 5,
+        "text": "Manejar pedidos no encontrados",
+        "accepted": true
+      },
+      {
+        "id": 6,
+        "text": "Manejar errores de conexión",
+        "accepted": true
+      },
+      {
+        "id": 7,
+        "text": "Probar distintos estados del pedido",
+        "accepted": true
+      },
+      {
+        "id": 8,
+        "text": "Revisar el código",
+        "accepted": false
+      }
+    ]
+  },
+  "trello": {
+    "source": "Captura adjunta del usuario",
+    "agentReadBoard": false,
+    "agentModifiedBoard": false,
+    "userConfirmedCriteriaMarked": false,
+    "observedInUserScreenshot": "Ocho criterios sin marcar",
+    "guidance": "El usuario puede marcar Probar distintos estados del pedido (7), además de 1-6 aceptados. Mantener En progreso y Revisar el código (8) pendiente para Zenaida. No hay punto independiente de reapertura/sesión. El agente no verificó los marcados en Trello.",
+    "recommendedCriterionIds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "architecture": {
+    "pattern": "MVVM y Repository",
+    "composition": "Bootstrap compone HttpClient autenticado, ApiOrderTrackingRepository y casos de uso; Provider y controller gestionan sesión y selección; ViewModel presenta el estado a la pantalla",
+    "domainIndependentOfReactNative": true,
+    "selectionState": "ID del pedido seleccionado desde Historial; cambios de selección o sesión descartan datos y respuestas de la selección anterior"
+  },
+  "phaseCommits": {
+    "userRequestedSeparateCommits": true,
+    "previousActivityClosure": {
+      "activity": "Historial de pedidos",
+      "commit": "49df3b3",
+      "alreadySaved": true
+    },
+    "design": {
+      "localCommitAuthorized": true,
+      "createAfterOwnVerification": true,
+      "commitCreated": true,
+      "commitMessage": "feat(orders): diseñar seguimiento del pedido",
+      "commit": "34b4f83"
+    },
+    "api": {
+      "separateCommitPlanned": true,
+      "implementationAuthorizedYet": true,
+      "commitMessage": "feat(orders): conectar seguimiento del pedido con la API",
+      "createAfterOwnVerification": true,
+      "commit": "c1ac906",
+      "commitCreated": true
+    },
+    "acceptance": {
+      "separateCommitPlanned": true,
+      "requiresActualUserReport": true,
+      "currentCommitMessage": "docs(orders): aceptar reapertura y sesión de seguimiento en Expo Go",
+      "positiveFlowCommit": "3a4fb9e",
+      "notFoundCommit": "4d3007e",
+      "connectionRetryCommit": "6791928",
+      "statesCommit": "5afa8b5",
+      "sessionCommit": "5a2561d"
+    },
+    "conventionSource": "../../VERSIONAMIENTO.md",
+    "designAcceptance": {
+      "commit": "14b8453",
+      "commitMessage": "docs(orders): aceptar diseño de seguimiento en Expo Go",
+      "source": "Informe del usuario",
+      "agentObservedDevice": false
+    }
+  },
+  "publication": {
+    "branchPushed": true,
+    "pullRequestCreated": true,
+    "merged": false,
+    "publicationAuthorizedByUser": true,
+    "futureReviewer": "ZenaidaGR",
+    "futureBase": "develop",
+    "status": "open-review-requested",
+    "authorizationQuote": "Amigo, los pedidos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta. Actualizar funciona. Abre el PR de Seguimiento hacia develop para que Zenaida lo revise.",
+    "mergeAuthorized": false,
+    "pr": 16,
+    "url": "https://github.com/David567rs/INHALEX-Movil/pull/16",
+    "author": "David567rs",
+    "requestedReviewers": [
+      "ZenaidaGR"
+    ],
+    "reviewRequested": true,
+    "headAtOpening": "7f5e1929ec4b977cc83895714598f1495d165cae"
+  },
+  "nextStep": "ZenaidaGR revisa y aprueba el PR #16 desde su propia cuenta cuando esté conforme. Mantener Revisar el código (8) pendiente, Trello En progreso y esperar CI del HEAD final antes de un merge autorizado. El agente no aprueba ni fusiona.",
+  "limitations": [
+    "El usuario reportó los criterios funcionales 1-7 y la prueba final de reapertura/sesión en Expo Go. Revisar el código (8) sigue pendiente. El agente no observó el teléfono, inspeccionó SecureStore ni capturó el tráfico HTTP del dispositivo.",
+    "Los datos y modos del diseño son una instantánea histórica; la implementación actual consulta la API.",
+    "La QA web usa datos sintéticos y las pruebas HTTP usan servidores loopback; no acreditan una consulta autenticada al servicio Nest/MongoDB real.",
+    "No se agregaron escrituras de pedidos, almacenamiento, dependencias ni cambios al backend.",
+    "El agente no leyó ni modificó Trello; la revisión real de Zenaida está pendiente.",
+    "Las comprobaciones automatizadas y web no sustituyen la aceptación en Expo Go, TalkBack o texto ampliado en dispositivo."
+  ],
+  "connection": {
+    "implemented": true,
+    "status": "native-functional-acceptance-complete-review-pending",
+    "technicalVerification": "verificacion-api.json",
+    "guide": "../../CONEXION-SEGUIMIENTO-PEDIDO.md",
+    "endpointsInOrder": [
+      "GET /orders/me/:id",
+      "GET /orders/me/:id/tracking"
+    ],
+    "entry": "Cuenta → Historial de pedidos → seleccionar pedido → Ver seguimiento del pedido",
+    "realDeviceApiAcceptancePending": false,
+    "agentObservedDevice": false,
+    "backendChanged": false,
+    "newStorage": false,
+    "orderWrites": false,
+    "acceptedCriterionIds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "stateTestPlanning": {
+    "question": "Para probar los estados sin modificar tus pedidos: ¿en tu Historial solo aparece «En revisión» o también tienes «Confirmado», «Completado» o «Cancelado»? Dime cuáles están disponibles.",
+    "answer": "los 3",
+    "source": "Respuesta textual del usuario a consulta de disponibilidad",
+    "interpretedAvailableStatuses": [
+      "confirmed",
+      "completed",
+      "cancelled"
+    ],
+    "interpretationCommunicatedToUser": true,
+    "functionalStateTestAccepted": true,
+    "criterionId": 7,
+    "scope": "La disponibilidad inicial se complementa con el nuevo reporte funcional de Confirmado, Completado y Cancelado, registrado en confirmations para el criterio 7."
+  },
+  "sessionAcceptance": {
+    "status": "accepted-by-user-in-expo-go",
+    "reopenAccepted": true,
+    "signOutHidesOrderAccepted": true,
+    "sameAccountSignInAccepted": true,
+    "independentTrelloCriterion": false,
+    "agentObservedDevice": false,
+    "scope": "Pedidos recuperados tras reapertura, ocultos al salir y recuperados con la misma cuenta; Actualizar funciona. No exige restauración exacta de pantalla ni selección; no inspecciona SecureStore físicamente.",
+    "refreshAfterSignInAccepted": true,
+    "quote": "Amigo, los pedidos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta. Actualizar funciona. Abre el PR de Seguimiento hacia develop para que Zenaida lo revise.",
+    "source": "Reporte textual del usuario; sin observación directa del teléfono por el agente"
+  }
+}

@@ -73,7 +73,7 @@
     "quote": "Amigo, ya revisé el diseño de Historial en Expo Go y me gustó. Sigamos con la conexión a la API en la misma rama feature/historial-pedidos, manteniendo MVVM y Repository."
   },
   "functionalAcceptance": {
-    "acceptedCriteria": 8,
+    "acceptedCriteria": 9,
     "totalCriteria": 9,
     "acceptedCriterionIds": [
       1,
@@ -83,12 +83,11 @@
       5,
       6,
       7,
-      8
-    ],
-    "pendingCriterionIds": [
+      8,
       9
     ],
-    "status": "Validación funcional cerrada por reportes de Expo Go: 8/9 (criterios1–8). Pendiente revisión formal del código por ZenaidaGR",
+    "pendingCriterionIds": [],
+    "status": "9/9 completos: validación funcional del usuario y revisión formal de ZenaidaGR sobre6a460b5, seguida del mergePR15 a develop930d202",
     "confirmations": [
       {
         "source": "Mensaje directo del usuario",
@@ -137,6 +136,19 @@
         ],
         "agentObservedDevice": false,
         "scope": "Acepta orden y filtros, recuperación tras reabrir Expo Go, ocultación del historial al cerrar sesión y recuperación al ingresar con la misma cuenta. Completa el recorrido funcional junto a las pruebas positivas, vacío y error/reintento anteriores. No acredita paginación física de más de20 pedidos, accesibilidad nativa ampliada, aprobación de código, marcado en Trello o autorización de publicación."
+      },
+      {
+        "source": "GitHub: revisión formal e integración del PR15",
+        "reviewer": "ZenaidaGR",
+        "commit": "6a460b5e3b4df2aa0a8cce2ade1809ef8701d540",
+        "reviewUrl": "https://github.com/David567rs/INHALEX-Movil/pull/15#pullrequestreview-5583096544",
+        "approvedAt": "2026-10-20T09:16:08Z",
+        "mergedAt": "2026-10-20T09:16:16Z",
+        "acceptedCriterionIds": [
+          9
+        ],
+        "agentObservedDevice": false,
+        "scope": "La aprobación real de Zenaida sobre el HEAD final con ambasCI correctas completa Revisar el código9. Integración comprobada en GitHub y git; no añade pruebas nativas ni marcado de Trello."
       }
     ],
     "criteria": [
@@ -183,7 +195,7 @@
       {
         "id": 9,
         "text": "Revisar el código",
-        "accepted": false
+        "accepted": true
       }
     ]
   },
@@ -193,12 +205,14 @@
     "agentModifiedBoard": false,
     "userConfirmedCriteriaMarked": true,
     "observedInUserScreenshot": "Snapshot inicial: En progreso; nueve criterios sin marcar",
-    "guidance": "El usuario confirmó marcar criterios4y8. Mantener En progreso con8/9 aceptados y Revisar el código pendiente de ZenaidaGR; no se atribuye acceso al tablero al agente ni marcado de otros criterios en esta respuesta.",
+    "guidance": "El usuario informó que actualizó Trello tras la guía de marcar9/adjuntarPR15/comentario/Terminado. Historial9/9e integrado; no hubo acceso del agente al tablero.",
     "userConfirmedMarkedCriterionIds": [
       4,
       8
     ],
-    "userConfirmationQuote": "Amigo, ya marqué esos dos puntos. Abre el PR de Historial desde `feature/historial-pedidos` hacia `develop` para que Zenaida lo revise."
+    "userConfirmationQuote": "Amigo, ya marqué esos dos puntos. Abre el PR de Historial desde `feature/historial-pedidos` hacia `develop` para que Zenaida lo revise.",
+    "finalUpdateConfirmedByUser": true,
+    "finalUpdateQuote": "Amigo, ya actualicé Trello. Actualicemos INHALEX-Movil e INHALEX-Movil-Zenaida con develop antes de empezar la siguiente actividad."
   },
   "architecture": {
     "pattern": "MVVM y Repository",
@@ -216,11 +230,11 @@
     "commitCreated": true,
     "branchPushed": true,
     "pullRequestCreated": true,
-    "merged": false,
+    "merged": true,
     "futureReviewer": "ZenaidaGR",
     "futureBase": "develop",
     "requestQuote": "Amigo, ya marqué esos dos puntos. Abre el PR de Historial desde `feature/historial-pedidos` hacia `develop` para que Zenaida lo revise.",
-    "status": "pull-request-open-review-requested",
+    "status": "merged-and-peer-reviewed",
     "number": 15,
     "url": "https://github.com/David567rs/INHALEX-Movil/pull/15",
     "author": "David567rs",
@@ -228,7 +242,15 @@
     "reviewRequested": true,
     "requestedReviewers": [
       "ZenaidaGR"
-    ]
+    ],
+    "reviewApproved": true,
+    "approvedHead": "6a460b5e3b4df2aa0a8cce2ade1809ef8701d540",
+    "approvedAt": "2026-10-20T09:16:08Z",
+    "reviewUrl": "https://github.com/David567rs/INHALEX-Movil/pull/15#pullrequestreview-5583096544",
+    "mergedAt": "2026-10-20T09:16:16Z",
+    "mergedBy": "ZenaidaGR",
+    "mergeCommit": "930d2023ecb801ce985acaad8dfad03657a998ae",
+    "integrationEvidence": "integracion-pr15.json"
   },
   "technicalDesignVerification": {
     "source": "verificacion-diseno.json",
@@ -312,12 +334,12 @@
     "agentObservedDevice": false
   },
   "apiImplementation": {
-    "status": "implemented-technically-verified-functionally-accepted-awaiting-peer-review",
+    "status": "integrated-functionally-accepted-and-peer-reviewed",
     "guide": "../../CONEXION-HISTORIAL-PEDIDOS.md",
     "technicalVerification": "verificacion-api.json",
     "technicalVerificationStatus": "passed-current-implementation-results",
     "apiConnected": true,
-    "currentAcceptedCriteria": 8,
+    "currentAcceptedCriteria": 9,
     "totalCriteria": 9,
     "functionalAcceptancePending": false,
     "operations": [
@@ -329,9 +351,9 @@
     "scope": "Consulta personal de historial y resumen; sin tracking, escritura, persistencia o repetición de compra",
     "publicationAuthorizedByUser": true
   },
-  "nextStep": "ZenaidaGR revisa y aprueba PR15 desde su cuenta sobre HEAD vigente; esperar Backend CI/Mobile CI de ese commit. Mantener8/9,Revisar código pendiente yTrelloEnprogreso hasta revisión. Sinmerge por esta solicitud.",
+  "nextStep": "Ambas copias actualizadas endevelop930d202, con documentación local de cierre conservada en David. Esperar solicitud de siguienteactividad; el plan sitúa Seguimiento del pedido en feature/seguimiento-pedido deDavid, inicialmente solo diseño cuando lo indique.",
   "limitations": [
-    "Validación funcional cerrada por reporte textual del usuario: 8/9. Queda pendiente la revisión formal de código por ZenaidaGR.",
+    "Historial completo9/9e integrado mediantePR15; cierreTrelloconfirmado por reporte del usuario y ambas copias actualizadas condevelop930d202. La siguiente actividad no está iniciada.",
     "Los datos del snapshot de diseño son ejemplos y no representan información de una cuenta.",
     "Las 558 pruebas, exportaciones y QA web de technicalDesignVerification pertenecen al diseño histórico; no son resultados técnicos de la conexión actual.",
     "La conexión de solo lectura está implementada y verificada técnicamente; no añade seguimiento, persistencia, repetición de compra o creación de pedidos.",

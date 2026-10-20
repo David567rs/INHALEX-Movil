@@ -42,6 +42,11 @@ import { OrderHistoryError } from '../features/orderHistory/domain/errors/OrderH
 import type { OrderHistoryActions } from '../features/orderHistory/domain/repositories/OrderHistoryRepository';
 import { createOrderHistoryActions } from '../features/orderHistory/domain/useCases/orderHistoryActions';
 import { createOrderHistoryController } from '../features/orderHistory/presentation/state/createOrderHistoryController';
+import { ApiOrderTrackingRepository } from '../features/orderTracking/data/repositories/ApiOrderTrackingRepository';
+import { OrderTrackingError } from '../features/orderTracking/domain/errors/OrderTrackingError';
+import { createOrderTrackingActions } from '../features/orderTracking/domain/useCases/orderTrackingActions';
+import type { OrderTrackingActions } from '../features/orderTracking/domain/repositories/OrderTrackingRepository';
+import { createOrderTrackingController } from '../features/orderTracking/presentation/state/createOrderTrackingController';
 
 export interface ApplicationServicesOptions {
   environment?: Environment;
@@ -236,8 +241,27 @@ export function createApplicationRuntime(options: Omit<ApplicationServicesOption
     list: (cursor, requestOptions) => getHistoryActions().list(cursor, requestOptions),
     get: (id, requestOptions) => getHistoryActions().get(id, requestOptions),
   });
+  let trackingActions: OrderTrackingActions | undefined;
+  function getTrackingActions(): OrderTrackingActions {
+    if (!trackingActions) {
+      try {
+        const environment = options.environment ?? readEnvironment();
+        trackingActions = createOrderTrackingActions(new ApiOrderTrackingRepository(new HttpClient({
+          baseUrl: environment.apiUrl, isDevelopment: environment.isDevelopment,
+          requestTimeoutMs: environment.requestTimeoutMs, fetch: options.fetch,
+          getAccessToken: auth.getAccessToken,
+        })));
+      } catch {
+        throw new OrderTrackingError('El seguimiento no está disponible en este momento. Inténtalo más tarde.', 'configuration');
+      }
+    }
+    return trackingActions;
+  }
+  const orderTracking = createOrderTrackingController(auth.authorizationSession, {
+    get: (id, requestOptions) => getTrackingActions().get(id, requestOptions),
+  });
   // No transport, recovery key or credential is exposed to the React tree.
-  return Object.freeze({ session: auth.session, favorites, cart, profile, shippingAddresses, orderCreation, orderHistory });
+  return Object.freeze({ session: auth.session, favorites, cart, profile, shippingAddresses, orderCreation, orderHistory, orderTracking });
 }
 
 /** Defer configuration until submission so navigation never depends on the API. */
