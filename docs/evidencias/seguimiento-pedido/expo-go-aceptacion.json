@@ -6,7 +6,7 @@
   "baseCommit": "930d2023ecb801ce985acaad8dfad03657a998ae",
   "priorActivityClosureCommit": "49df3b3",
   "date": "2026-10-20",
-  "source": "Solicitud del usuario de iniciar únicamente el diseño de Seguimiento, acuerdo de commits por fase y captura de ocho criterios sin marcar",
+  "source": "Aceptación del diseño reportada por el usuario y autorización para conectar la API en la misma rama con commits por etapa",
   "design": {
     "accepted": true,
     "status": "accepted-by-user-in-expo-go",
@@ -42,7 +42,8 @@
     "backendChanged": false,
     "fiveTabsPreserved": true,
     "acceptedCriterionIds": [],
-    "quote": "Amigo, ya revisé el diseño de Seguimiento en Expo Go y me gustó. Sigamos con la API en feature/seguimiento-pedido, manteniendo MVVM, Repository y commits por etapa."
+    "quote": "Amigo, ya revisé el diseño de Seguimiento en Expo Go y me gustó. Sigamos con la API en feature/seguimiento-pedido, manteniendo MVVM, Repository y commits por etapa.",
+    "snapshotScope": "Instantánea histórica de la etapa de diseño aceptada; la conexión posterior se registra en connection"
   },
   "functionalAcceptance": {
     "acceptedCriteria": 0,
@@ -58,7 +59,7 @@
       7,
       8
     ],
-    "status": "Diseño aceptado por el usuario. Conexión API autorizada en la misma rama; 0/8 criterios funcionales pendientes de pruebas y revisión.",
+    "status": "API implementada y verificada técnicamente; 0 de 8 criterios aceptados. Pruebas funcionales en Expo Go y revisión de Zenaida pendientes.",
     "confirmations": [],
     "criteria": [
       {
@@ -109,13 +110,13 @@
     "agentModifiedBoard": false,
     "userConfirmedCriteriaMarked": false,
     "observedInUserScreenshot": "Ocho criterios sin marcar",
-    "guidance": "Mantener 0/8: no hay criterio independiente de diseño. Los estados, datos y errores de ejemplo no completan los criterios funcionales."
+    "guidance": "Conservar los ocho criterios pendientes hasta la confirmación funcional del usuario y la revisión real. Las comprobaciones técnicas y los ejemplos sintéticos no completan criterios."
   },
   "architecture": {
     "pattern": "MVVM y Repository",
-    "composition": "Bootstrap compone caso de uso con Repository local de lectura y la ruta inyecta la dependencia en la pantalla",
+    "composition": "Bootstrap compone HttpClient autenticado, ApiOrderTrackingRepository y casos de uso; Provider y controller gestionan sesión y selección; ViewModel presenta el estado a la pantalla",
     "domainIndependentOfReactNative": true,
-    "selectionState": "Solo composición visual temporal en memoria"
+    "selectionState": "ID del pedido seleccionado desde Historial; cambios de selección o sesión descartan datos y respuestas de la selección anterior"
   },
   "phaseCommits": {
     "userRequestedSeparateCommits": true,
@@ -128,17 +129,26 @@
       "localCommitAuthorized": true,
       "createAfterOwnVerification": true,
       "commitCreated": true,
-      "commitMessage": "feat(orders): diseñar seguimiento del pedido"
+      "commitMessage": "feat(orders): diseñar seguimiento del pedido",
+      "commit": "34b4f83"
     },
     "api": {
       "separateCommitPlanned": true,
-      "implementationAuthorizedYet": true
+      "implementationAuthorizedYet": true,
+      "commitMessage": "feat(orders): conectar seguimiento del pedido con la API",
+      "createAfterOwnVerification": true
     },
     "acceptance": {
       "separateCommitPlanned": true,
       "requiresActualUserReport": true
     },
-    "conventionSource": "../../VERSIONAMIENTO.md"
+    "conventionSource": "../../VERSIONAMIENTO.md",
+    "designAcceptance": {
+      "commit": "14b8453",
+      "commitMessage": "docs(orders): aceptar diseño de seguimiento en Expo Go",
+      "source": "Informe del usuario",
+      "agentObservedDevice": false
+    }
   },
   "publication": {
     "branchPushed": false,
@@ -148,12 +158,29 @@
     "futureReviewer": "ZenaidaGR",
     "futureBase": "develop"
   },
-  "nextStep": "Implementar la conexión de Seguimiento en la misma rama, verificarla y guardar el commit de API separado; después guiar pruebas funcionales en Expo Go.",
+  "nextStep": "Abrir un pedido existente desde Historial en Expo Go, comprobar los datos reales y pulsar Actualizar seguimiento; registrar la confirmación funcional después en su propio commit.",
   "limitations": [
-    "Las seis composiciones son sintéticas y no acreditan estado, actualización o errores de un pedido real.",
-    "El diseño muestra hechos del pedido de ejemplo, sin promesas logísticas o fechas de etapas inventadas.",
-    "No hay HTTP, autenticación nueva, almacenamiento, modificación del backend o escritura de pedidos.",
-    "El agente no observó el dispositivo ni leyó o modificó Trello.",
-    "Pasaron verificaciones propias y QA web sintética; no sustituyen Expo Go, TalkBack o texto ampliado en dispositivo."
-  ]
+    "La aceptación funcional de la API en Expo Go está pendiente; el agente no observó el dispositivo.",
+    "Los datos y modos del diseño son una instantánea histórica; la implementación actual consulta la API.",
+    "La QA web usa datos sintéticos y las pruebas HTTP usan servidores loopback; no acreditan una consulta autenticada al servicio Nest/MongoDB real.",
+    "No se agregaron escrituras de pedidos, almacenamiento, dependencias ni cambios al backend.",
+    "El agente no leyó ni modificó Trello; la revisión real de Zenaida está pendiente.",
+    "Las comprobaciones automatizadas y web no sustituyen la aceptación en Expo Go, TalkBack o texto ampliado en dispositivo."
+  ],
+  "connection": {
+    "implemented": true,
+    "status": "technically-verified-awaiting-user-functional-acceptance",
+    "technicalVerification": "verificacion-api.json",
+    "guide": "../../CONEXION-SEGUIMIENTO-PEDIDO.md",
+    "endpointsInOrder": [
+      "GET /orders/me/:id",
+      "GET /orders/me/:id/tracking"
+    ],
+    "entry": "Cuenta → Historial de pedidos → seleccionar pedido → Ver seguimiento del pedido",
+    "realDeviceApiAcceptancePending": true,
+    "agentObservedDevice": false,
+    "backendChanged": false,
+    "newStorage": false,
+    "orderWrites": false
+  }
 }

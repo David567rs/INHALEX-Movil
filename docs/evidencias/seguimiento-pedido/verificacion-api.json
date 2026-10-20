@@ -1,0 +1,179 @@
+{
+  "activity": "Seguimiento del pedido",
+  "phase": "api-connection",
+  "date": "2026-10-20",
+  "workspace": "C:\\Users\\David\\Documents\\INHALEX-Movil",
+  "branch": "feature/seguimiento-pedido",
+  "baseCommit": "930d2023ecb801ce985acaad8dfad03657a998ae",
+  "designCommit": "34b4f83",
+  "designAcceptanceCommit": "14b8453",
+  "apiCommitMessage": "feat(orders): conectar seguimiento del pedido con la API",
+  "status": "technically-verified-awaiting-user-functional-acceptance",
+  "architecture": {
+    "flow": "OrderTrackingScreen -> useOrderTrackingViewModel/createOrderTrackingController -> OrderTrackingActions -> OrderTrackingRepository -> ApiOrderTrackingRepository -> HttpClient",
+    "composition": "createApplicationRuntime, private authorization session and lazy authenticated transport",
+    "endpointsInOrder": [
+      "GET /orders/me/:id",
+      "GET /orders/me/:id/tracking"
+    ],
+    "newWrites": false,
+    "newStorage": false,
+    "polling": false,
+    "domainImportsTransportOrReactNative": false,
+    "newDependencies": false,
+    "serverChanged": false
+  },
+  "checks": {
+    "typecheck": {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    "lint": {
+      "command": "npm run lint",
+      "exitCode": 0
+    },
+    "mobileTests": {
+      "command": "npm test",
+      "passed": 677,
+      "failed": 0,
+      "exitCode": 0,
+      "newTracking": {
+        "domain": 6,
+        "repository": 16,
+        "controllerRouteAndTimeline": 29,
+        "realLoopbackHttp": 8,
+        "total": 59
+      }
+    },
+    "existingBackendContractTests": {
+      "command": "npm test -- --runInBand customer-order-history.service.spec.ts order-history.controller.spec.ts",
+      "passed": 50,
+      "suites": 2,
+      "failed": 0,
+      "exitCode": 0,
+      "boundary": "Existing Nest contract tests with isolated dependencies; not MongoDB production or a physical device"
+    },
+    "doctor": {
+      "command": "npm run doctor",
+      "version": "1.20.4",
+      "passed": 21,
+      "total": 21,
+      "exitCode": 0
+    },
+    "androidExport": {
+      "command": "npm run export:android",
+      "modules": 1521,
+      "exitCode": 0,
+      "temporaryQaRouteAlreadyRemoved": true
+    },
+    "webExport": {
+      "command": "npm run export:web",
+      "modules": 1070,
+      "exitCode": 0,
+      "temporaryQaRouteAlreadyRemoved": true
+    },
+    "realLocalBackendProbe": {
+      "request": "GET http://localhost:3200/api/orders/me/000000000000000000000001/tracking",
+      "authentication": "absent",
+      "status": 401,
+      "authenticatedRealOrdersRead": false,
+      "databaseWrites": false
+    }
+  },
+  "loopbackHttp": {
+    "transport": "node:http ephemeral loopback servers, real HttpClient/Repository/actions/controller, synthetic accounts and data",
+    "verified": [
+      "Two authenticated GETs without body, cookies or user query",
+      "Tracking is authoritative for current status",
+      "Nullable timestamps remain absent",
+      "Network and 503 retain confirmed pair until explicit retry",
+      "404 clears former order",
+      "401 hides order without changing global Auth",
+      "Malformed JSON, IDs and dates fail safely",
+      "Changing account aborts and ignores late replies",
+      "Node fetch rejects redirects to another origin"
+    ],
+    "limits": [
+      "Synthetic API is not the running Nest/MongoDB service",
+      "Redirect result applies to Node fetch, not every native fetch implementation"
+    ]
+  },
+  "webQa": {
+    "result": "passed",
+    "routeDuringQa": "/tracking-qa",
+    "data": "Synthetic public session and domain actions injected into real controller, providers, ViewModel and Screen; no real API or account used",
+    "viewports": [
+      {
+        "width": 397,
+        "height": 1000
+      },
+      {
+        "width": 320,
+        "height": 820
+      }
+    ],
+    "verified": [
+      "Initial loading is distinct from an empty selection",
+      "Four order states",
+      "Completed without timestamps does not invent confirmation or dates",
+      "Cancelled timeline ends without completed",
+      "Refresh and network retry preserve then restore the confirmed order",
+      "Changing order removes former content before the new response",
+      "No selection asks for a history choice",
+      "403 and 404 remove former data",
+      "401 and logout show only authentication access",
+      "No horizontal overflow at 397 or 320 px",
+      "Normal route without a session shows login after temporary QA removal"
+    ],
+    "consoleErrors": 0,
+    "captures": [
+      "api-qa-web-397.png",
+      "api-qa-web-320.png",
+      "api-error-qa-web-397.png",
+      "api-no-encontrado-qa-web-320.png"
+    ],
+    "temporaryRouteRemoved": true,
+    "temporaryViewportOverrideReset": true,
+    "agentObservedPhysicalDevice": false
+  },
+  "acceptance": {
+    "designAcceptedByUser": true,
+    "functionalCriteriaAccepted": 0,
+    "functionalCriteriaTotal": 8,
+    "trelloReadOrChangedByAgent": false,
+    "reviewByZenaidaPending": true
+  },
+  "publication": {
+    "branchPushed": false,
+    "pullRequestCreated": false,
+    "merged": false
+  },
+  "nextStep": "User opens Cuenta -> Historial de pedidos -> selected receipt -> Ver seguimiento del pedido in Expo Go, checks real data and Actualizar seguimiento, then reports results. Record native acceptance in its own later commit.",
+  "preservation": {
+    "envUnchanged": true,
+    "packageUnchanged": true,
+    "lockUnchanged": true,
+    "identityUnchanged": true,
+    "developUnchanged": true,
+    "zenaidaHeadUnchanged": true,
+    "zenaidaClean": true,
+    "zenaidaStashUnchanged": true,
+    "servicesUnchanged": true,
+    "services": [
+      {
+        "LocalPort": 8083,
+        "OwningProcess": 13476
+      },
+      {
+        "LocalPort": 8082,
+        "OwningProcess": 28288
+      },
+      {
+        "LocalPort": 3200,
+        "OwningProcess": 16376
+      }
+    ],
+    "temporaryRouteRemoved": true,
+    "qaStringsAbsentFromWebExport": true
+  }
+}

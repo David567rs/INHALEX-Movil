@@ -1,6 +1,6 @@
 # Diseño de Seguimiento del pedido
 
-> **Snapshot de diseño aceptado por el usuario en Expo Go.** La aceptación exacta está en [expo-go-aceptacion.json](evidencias/seguimiento-pedido/expo-go-aceptacion.json). El diseño se guardó en `34b4f83`; el usuario autorizó después la conexión a la API en la misma rama. Los datos y verificaciones descritos abajo pertenecen a la etapa visual. No completan criterios funcionales: **0/8**.
+> **Snapshot de diseño aceptado por el usuario en Expo Go.** La aceptación exacta está en [expo-go-aceptacion.json](evidencias/seguimiento-pedido/expo-go-aceptacion.json). El diseño se guardó en `34b4f83` y su aceptación en `14b8453`. La etapa vigente está en [Conexión de Seguimiento](CONEXION-SEGUIMIENTO-PEDIDO.md), técnicamente verificada y pendiente de aceptación funcional. Las muestras y comprobaciones de abajo son históricas; **0/8** criterios funcionales.
 
 La etapa actual comprende únicamente el diseño en `C:\Users\David\Documents\INHALEX-Movil`, rama `feature/seguimiento-pedido`, desde `develop` en `930d2023ecb801ce985acaad8dfad03657a998ae`. David567rs es responsable y ZenaidaGR revisará el futuro PR hacia `develop`. El cierre documental de Historial quedó guardado antes en el commit separado `49df3b3`; Historial continúa **9/9**, integrado mediante el PR #15.
 

@@ -3,9 +3,9 @@ import { router } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '@/core/theme/colors';
 
-export function OrderTrackingPreviewEntry() {
+export function OrderTrackingEntry() {
   return <View style={styles.container}>
-    <Pressable accessibilityRole="button" accessibilityLabel="Mostrar diseño de seguimiento del pedido"
+    <Pressable accessibilityRole="button" accessibilityLabel="Ver seguimiento del pedido"
       onPress={() => router.push('/seguimiento-pedido')}
       style={({ pressed }) => [styles.button, pressed && styles.pressed]}>
       <View accessible={false} importantForAccessibility="no-hide-descendants" aria-hidden style={styles.icon}>
@@ -13,7 +13,7 @@ export function OrderTrackingPreviewEntry() {
       </View>
       <View style={styles.copy}>
         <Text style={styles.title}>Seguimiento del pedido</Text>
-        <Text style={styles.hint}>Vista previa de sus estados</Text>
+        <Text style={styles.hint}>Consulta el estado de tus pedidos</Text>
       </View>
       <Ionicons accessible={false} aria-hidden name="chevron-forward" size={19} color={colors.primary} />
     </Pressable>

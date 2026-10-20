@@ -158,6 +158,8 @@ function HistoryCard({ order, selected, disabled, onSelect, detail, loading, err
           <Text style={styles.itemDescription}>{detail.shippingAddress.street} {detail.shippingAddress.exteriorNumber}{detail.shippingAddress.interiorNumber ? `, Int. ${detail.shippingAddress.interiorNumber}` : ''}, {detail.shippingAddress.neighborhood}</Text>
           <Text style={styles.itemDescription}>{detail.shippingAddress.municipality}, {detail.shippingAddress.state} · C.P. {detail.shippingAddress.postalCode}</Text>
         </View> : null}
+        <Action label="Ver seguimiento del pedido" disabled={loading || disabled}
+          onPress={() => router.push({ pathname: '/seguimiento-pedido', params: { id: order.id } })} />
       </> : null}
     </View> : null}
   </View>;

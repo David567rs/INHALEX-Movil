@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { ProfileEntry } from '@/features/profile/presentation/components/ProfileEntry';
 import { AddressesEntry } from '@/features/shippingAddresses/presentation/components/AddressesEntry';
 import { OrderHistoryEntry } from '@/features/orderHistory/presentation/components/OrderHistoryEntry';
-import { OrderTrackingPreviewEntry } from '@/features/orderTrackingPreview/presentation/components/OrderTrackingPreviewEntry';
+import { OrderTrackingEntry } from '@/features/orderTracking/presentation/components/OrderTrackingEntry';
 
 export default function AccountRoute() {
   const session = useAuthSession();
@@ -13,6 +13,6 @@ export default function AccountRoute() {
     <ProfileEntry />
     <AddressesEntry />
     <OrderHistoryEntry />
-    <OrderTrackingPreviewEntry />
+    <OrderTrackingEntry />
   </View>;
 }
