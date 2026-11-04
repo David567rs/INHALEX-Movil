@@ -1,6 +1,6 @@
 # INHALEX Movil
 
-**Estado actual:** Zenaida diseña Reseñas en `feature/resenas`, desde `develop` `6b38ba8`. Cierre de Avisos registrado aparte en `0d8dca5`. Cuenta → Reseñas abre un formulario de ejemplo; su revisión en Expo Go está pendiente. David es responsable de Confirmación de recepción. [Alcance y checklist](docs/DISENO-RESENAS.md).
+**Estado actual:** Reseñas sigue a cargo de Zenaida en `feature/resenas`; David revisará su futuro PR. Se incorpora localmente la actualización de Expo SDK 58 desde `chore/expo-sdk-58` (`4bf34a2`), conservando el diseño `30de297` y el cierre `0d8dca5`. El PR #18 continúa abierto, sin aprobación ni merge a `develop`. Instalación y validación de esta combinación pendientes. Cuenta → Reseñas mantiene una vista previa local. [Diseño y checklist](docs/DISENO-RESENAS.md).
 
 ## Proyecto y contexto
 

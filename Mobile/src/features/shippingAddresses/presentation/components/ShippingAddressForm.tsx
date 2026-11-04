@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRef } from 'react';
-import { ActivityIndicator, Keyboard, Pressable, StyleSheet, Text, TextInput, View, type TextInputProps } from 'react-native';
+import { ActivityIndicator, Keyboard, Pressable, StyleSheet, Text, View, type TextInputInstance, type TextInputProps } from 'react-native';
 import { colors } from '@/core/theme/colors';
 import { FormField } from '@/features/auth/presentation/components/FormField';
 import type { ShippingAddressDraft, ShippingAddressField, ShippingAddressFieldErrors } from '../../domain/models/ShippingAddress';
@@ -59,7 +59,7 @@ const sections: readonly { title: string; description: string; fields: readonly 
 const fieldOrder = sections.flatMap((section) => section.fields.map(({ field }) => field));
 
 export function ShippingAddressForm({ draft, mode, onChange, onCancel, onSave, onToggleDefault, locked, canSave, saving, errors, defaultLocked }: Props) {
-  const inputs = useRef<Partial<Record<ShippingAddressField, TextInput | null>>>({});
+  const inputs = useRef<Partial<Record<ShippingAddressField, TextInputInstance | null>>>({});
   function cancelForm() {
     Keyboard.dismiss();
     onCancel();

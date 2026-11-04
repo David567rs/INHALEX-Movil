@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { Animated, StyleSheet, type ColorValue } from 'react-native';
+import { Animated, StyleSheet } from 'react-native';
 import { colors } from '@/core/theme/colors';
 
 export type TabIconName = keyof typeof Ionicons.glyphMap;
 
 interface TabIconProps {
-  color: ColorValue;
+  color: string;
   focused: boolean;
   size: number;
   focusedName: TabIconName;

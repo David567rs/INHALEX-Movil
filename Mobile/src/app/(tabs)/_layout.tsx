@@ -57,7 +57,9 @@ export default function TabsLayout() {
             title: tab.title,
             tabBarAccessibilityLabel: tab.title,
             tabBarIcon: (props) => (
-              <TabIcon {...props} focusedName={tab.focusedIcon} outlineName={tab.outlineIcon} reduceMotion={reduceMotion} />
+              <TabIcon focused={props.focused} size={props.size}
+                color={props.focused ? colors.primary : colors.textMuted}
+                focusedName={tab.focusedIcon} outlineName={tab.outlineIcon} reduceMotion={reduceMotion} />
             ),
           }}
         />

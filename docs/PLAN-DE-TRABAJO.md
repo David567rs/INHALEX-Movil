@@ -1,6 +1,6 @@
 # Plan de trabajo de INHALEX Movil
 
-**Estado actual:** Zenaida diseña Reseñas en `feature/resenas`, desde `develop` `6b38ba8`. Cierre de Avisos registrado aparte en `0d8dca5`. Cuenta → Reseñas abre un formulario de ejemplo; su revisión en Expo Go está pendiente. David es responsable de Confirmación de recepción. [Alcance y checklist](DISENO-RESENAS.md).
+**Estado actual:** Zenaida continúa Reseñas en `feature/resenas` y David será su revisor. El diseño `30de297` y el cierre `0d8dca5` se conservan. Se incorpora localmente Expo SDK 58 desde `chore/expo-sdk-58` (`4bf34a2`), con instalación y validación de esta combinación pendientes. El PR #18 permanece abierto hacia `develop`, con revisión de Zenaida pendiente. Confirmación de recepción sigue a cargo de David. [Diseño y checklist](DISENO-RESENAS.md).
 
 Acuerdos del 14 de octubre de 2026 para reiniciar la aplicación móvil con un repositorio independiente, aprovechar el backend y el código anterior, y documentar el flujo de trabajo del profesor desde el inicio.
 

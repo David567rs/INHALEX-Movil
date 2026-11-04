@@ -1,7 +1,9 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
+import { Platform } from 'react-native';
+import '../safe-area.css';
 import { createApplicationRuntime } from '@/bootstrap/createApplicationServices';
 import { AuthSessionProvider } from '@/features/auth/presentation/context/AuthSessionProvider';
 import { FavoritesProvider } from '@/features/favorites/presentation/context/FavoritesProvider';
@@ -15,12 +17,16 @@ import { NoticesProvider } from '@/features/notices/presentation/context/Notices
 import { colors } from '@/core/theme/colors';
 import { useReducedMotion } from '@/shared/hooks/useReducedMotion';
 
+export const unstable_settings = { anchor: '(tabs)' };
+
+const ScreenSafeAreaProvider = Platform.OS === 'web' ? Fragment : SafeAreaProvider;
+
 export default function RootLayout() {
   const reducedMotion = useReducedMotion();
   const [runtime] = useState(() => createApplicationRuntime());
 
   return (
-    <SafeAreaProvider>
+    <ScreenSafeAreaProvider>
       <AuthSessionProvider session={runtime.session}>
         <FavoritesProvider controller={runtime.favorites}>
         <CartProvider controller={runtime.cart}>
@@ -32,7 +38,6 @@ export default function RootLayout() {
         <NoticesProvider controller={runtime.notices}>
         <StatusBar style="dark" />
         <Stack
-          initialRouteName="(tabs)"
           screenOptions={{
             animation: reducedMotion === false ? 'fade_from_bottom' : 'none',
             contentStyle: { backgroundColor: colors.background },
@@ -63,6 +68,6 @@ export default function RootLayout() {
         </CartProvider>
         </FavoritesProvider>
       </AuthSessionProvider>
-    </SafeAreaProvider>
+    </ScreenSafeAreaProvider>
   );
 }
