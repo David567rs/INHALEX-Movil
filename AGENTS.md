@@ -1,5 +1,9 @@
 # INHALEX Movil
 
+**Migración en curso a Expo SDK 58.** David trabaja en `chore/expo-sdk-58` desde `develop` `6b38ba8`. El diseño de Reseñas de Zenaida permanece en `feature/resenas` `30de297`. Consulta [el alcance y la verificación](docs/MIGRACION-EXPO-58.md) antes de retomar las pruebas nativas.
+
+## Snapshot histórico previo a la migración
+
 **Estado actual:** Avisos está **8/9**, criterios 1-8 aceptados. El [PR #17](https://github.com/David567rs/INHALEX-Movil/pull/17) está abierto, sin draft, de ZenaidaGR: `feature/avisos` → `develop`, con revisión solicitada a **David567rs** y verificada por REST. Solo **Revisar el código** (9) sigue pendiente; sin aprobación o fusión confirmadas. Al registrar el enlace no se anticipa la CI del HEAD que lo incluirá: consultar los checks actuales del PR. Aceptación `d4b1238` y preparación `65d396f` separadas. Trello no confirmado; sin observación del teléfono o prueba de otra cuenta por el agente. Este enlace documental no cambia runtime ni resultados históricos.
 
 ## Proyecto y contexto

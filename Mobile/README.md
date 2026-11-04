@@ -1,5 +1,9 @@
 # INHALEX: base móvil
 
+**Migración en curso a Expo SDK 58.** David trabaja en `chore/expo-sdk-58` desde `develop` `6b38ba8`. El diseño de Reseñas de Zenaida permanece en `feature/resenas` `30de297`. Consulta [el alcance y la verificación](../docs/MIGRACION-EXPO-58.md) antes de retomar las pruebas nativas.
+
+## Snapshot histórico previo a la migración
+
 **Avisos: PR #17 abierto, 8/9**, en `INHALEX-Movil-Zenaida`, rama `feature/avisos`. El [PR #17](https://github.com/David567rs/INHALEX-Movil/pull/17) de ZenaidaGR está abierto hacia `develop`, sin draft y con revisión solicitada a **David567rs**. Solo **Revisar el código** (9) sigue pendiente. Mantener En progreso; marcado Trello no confirmado. Sin aprobación o fusión confirmadas. Al registrar el enlace no se anticipa CI del HEAD que lo incluirá; consultar los checks actuales del PR.
 
 La aceptación quedó separada en `d4b1238`, el ajuste previo en `e473e45` y la preparación en `65d396f`. La [verificación local de preparación](../docs/evidencias/avisos/verificacion-pr.json) aprobó **735/735 pruebas, TypeScript/lint, Doctor21/21 y Android1532/web1081**, sin ruta QA. Estos resultados locales no sustituyen la CI remota. [Aceptación vigente](../docs/evidencias/avisos/expo-go-aceptacion.json) y [estado del PR](../docs/CONEXION-AVISOS.md#estado-actual-avisos-pr17).
