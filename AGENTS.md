@@ -1,6 +1,6 @@
 # INHALEX Movil
 
-**Estado actual:** Reseñas sigue a cargo de Zenaida en `feature/resenas`; David revisará su futuro PR. Se incorpora localmente la actualización de Expo SDK 58 desde `chore/expo-sdk-58` (`4bf34a2`), conservando el diseño `30de297` y el cierre `0d8dca5`. El PR #18 continúa abierto, sin aprobación ni merge a `develop`. Instalación y validación de esta combinación pendientes. Cuenta → Reseñas mantiene una vista previa local. [Diseño y checklist](docs/DISENO-RESENAS.md).
+**Estado actual:** Reseñas sigue a cargo de Zenaida en `feature/resenas`; David revisará su futuro PR. Expo SDK 58 está incorporado localmente mediante el merge `a4f09b0`, que conserva el diseño `30de297`, el cierre `0d8dca5` y los commits de `chore/expo-sdk-58` hasta `4bf34a2`. El ajuste de la referencia del comentario quedó en `a7dcd2d`. Instalación, TypeScript, lint, 735 pruebas, Doctor 20/20, exportaciones Android/web y recorrido web de Reseñas aprobaron. Metro de Zenaida usa 8083 y anuncia SDK 58; la prueba física en Expo Go sigue pendiente del usuario. El PR #18 permanece abierto, sin aprobación ni merge a `develop`. Cuenta → Reseñas sigue siendo diseño local, con publicación deshabilitada. [Diseño y checklist](docs/DISENO-RESENAS.md).
 
 ## Proyecto y contexto
 

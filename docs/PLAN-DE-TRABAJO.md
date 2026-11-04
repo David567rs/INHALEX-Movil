@@ -1,6 +1,6 @@
 # Plan de trabajo de INHALEX Movil
 
-**Estado actual:** Zenaida continúa Reseñas en `feature/resenas` y David será su revisor. El diseño `30de297` y el cierre `0d8dca5` se conservan. Se incorpora localmente Expo SDK 58 desde `chore/expo-sdk-58` (`4bf34a2`), con instalación y validación de esta combinación pendientes. El PR #18 permanece abierto hacia `develop`, con revisión de Zenaida pendiente. Confirmación de recepción sigue a cargo de David. [Diseño y checklist](DISENO-RESENAS.md).
+**Estado actual:** Zenaida continúa Reseñas en `feature/resenas` y David será su revisor. El diseño `30de297` y el cierre `0d8dca5` se conservan. Expo SDK 58 se incorporó localmente desde `chore/expo-sdk-58` (`4bf34a2`) mediante `a4f09b0`, con compatibilidad del comentario en `a7dcd2d`. La combinación aprobó instalación y verificaciones técnicas; la revisión del diseño en Expo Go 58 sigue pendiente. Metro de Zenaida usa 8083. El PR #18 permanece abierto hacia `develop`, con revisión de Zenaida pendiente; integrar esa actualización antes del futuro PR de Reseñas. Confirmación de recepción sigue a cargo de David. [Diseño y checklist](DISENO-RESENAS.md).
 
 Acuerdos del 14 de octubre de 2026 para reiniciar la aplicación móvil con un repositorio independiente, aprovechar el backend y el código anterior, y documentar el flujo de trabajo del profesor desde el inicio.
 

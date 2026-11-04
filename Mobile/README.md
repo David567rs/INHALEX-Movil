@@ -1,6 +1,6 @@
 # INHALEX: base móvil
 
-**Reseñas · diseño local en SDK 58.** Zenaida continúa en `feature/resenas`; David revisará Reseñas. Se incorpora la actualización de `chore/expo-sdk-58` (`4bf34a2`) a esta rama para preparar Expo Go 58. La instalación y validación de la combinación están pendientes. El PR #18 todavía no está integrado en `develop`. [Guía de diseño](../docs/DISENO-RESENAS.md).
+**Reseñas · diseño local en SDK 58.** Zenaida continúa en `feature/resenas`; David revisará Reseñas. Expo 58.0.23 ya está instalado y verificado en esta copia, con Metro en 8083. Abre Cuenta → Reseñas para revisar estrellas y comentario en Expo Go 58. Publicar sigue deshabilitado durante el diseño. El PR #18 todavía no está integrado en `develop`. [Guía y verificaciones](../docs/DISENO-RESENAS.md).
 
 ## Snapshot histórico del cierre de Avisos
 

@@ -4,6 +4,8 @@ Zenaida prepara la pantalla móvil en `feature/resenas` a partir de `develop` (`
 
 ## Recorrido en Expo Go
 
+Esta copia ya usa Expo SDK 58 y conserva la rama `feature/resenas`. El servidor preparado usa el puerto **8083**. Para reiniciarlo desde `INHALEX-Movil-Zenaida/Mobile`, ejecuta `npm run start -- --go --lan --port 8083`. Si el servidor ya está activo, usa su QR existente para evitar instancias duplicadas. La revisión nativa permanece pendiente del usuario.
+
 1. En la app de Zenaida, abre **Cuenta**, recorre los accesos y toca **Reseñas**.
 2. Comprueba que el formulario identifica el producto como ejemplo. Selecciona dos estrellas y luego cinco, escribe y borra un comentario.
 3. Confirma que se distingue la calificación elegida, que el contador refleja el texto y que el teclado permite terminar la edición. Publicar permanece deshabilitado durante esta etapa.
@@ -33,3 +35,13 @@ Todos quedan pendientes de aceptación en su etapa. La primera revisión en Expo
 ## Verificación del diseño
 
 TypeScript, lint y exportación Android de Expo finalizaron correctamente (1 540 módulos exportados). En Expo web se abrió la ruta desde Cuenta, se cambió de dos a cinco estrellas y el contador reflejó 20 caracteres al escribir. Publicar siguió deshabilitado. Después de volver y entrar de nuevo, aparecieron cero estrellas y el comentario vacío. La [captura del formulario](evidencias/resenas/formulario-web.png) corresponde a la versión web con tamaño de teléfono; la revisión en Expo Go la realizará el equipo.
+
+## Compatibilidad con Expo 58, 4 de noviembre de 2026
+
+El usuario autorizó resolver la incompatibilidad directamente en la copia de Zenaida. El merge local `a4f09b0` incorpora la rama técnica `chore/expo-sdk-58` hasta `4bf34a2`, preservando ambos historiales y sus autores. El commit separado `a7dcd2d` adapta la referencia del comentario a `TextInputInstance`. No cambian el Repository local, el caso de uso ni el ViewModel. Reseñas sigue a cargo de Zenaida y David revisará su PR.
+
+Se instalaron las versiones del lockfile mediante `npm ci`: Expo 58.0.23, React 19.3.0 y React Native 0.88.1. TypeScript y lint aprobaron; pasaron 735/735 pruebas y Doctor 20/20. Las exportaciones aprobaron con 1 450 módulos Android y 1 100 web. El servidor de Zenaida en 8083 anuncia `sdkVersion: 58.0.0` y entregó el bundle Android por HTTP 200. Solo quedó ese Metro activo; el backend en 3200 se conservó.
+
+En web se verificaron dos y cinco estrellas, el comentario de muestra de 29 caracteres, el contador, desenfoque con Cerrar teclado, Publicar deshabilitado y regreso desde Cuenta → Reseñas a Cuenta. Reabrir deja cero estrellas y texto vacío. Se conservan las cinco pestañas y no aparecieron errores de consola en ese recorrido. La [captura de SDK 58](evidencias/resenas/formulario-expo58-web.png) es evidencia web, no una observación del teléfono.
+
+El [PR #18](https://github.com/David567rs/INHALEX-Movil/pull/18) continúa abierto, pendiente de revisión real de Zenaida e integración a `develop`. Esta incorporación local permite probar Reseñas sin esperar ese merge; no aprueba el PR ni integra cambios en `develop`. Antes de abrir el futuro PR de Reseñas, integrar la actualización técnica revisada y sincronizar con `develop`. Los criterios de Trello siguen pendientes de la aceptación correspondiente. La API y publicación de Reseñas pertenecen a la etapa siguiente.
