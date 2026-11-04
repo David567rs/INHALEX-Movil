@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useRef } from 'react';
 import { Image, Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
+import type { TextInputInstance } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { Reveal } from '@/shared/components/Motion';
@@ -14,7 +15,7 @@ const ratingDescriptions = ['Elige tu calificación', 'Muy mala', 'Mala', 'Buena
 /** Local design preview only: no review is submitted or stored. */
 export function ReviewPreviewScreen({ action }: { action: ReadReviewPreview }) {
   const { productName, rating, comment, setRating, setComment } = useReviewPreviewViewModel(action);
-  const commentInput = useRef<TextInput>(null);
+  const commentInput = useRef<TextInputInstance>(null);
 
   function dismissKeyboard() {
     commentInput.current?.blur();
