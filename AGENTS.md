@@ -1,6 +1,6 @@
 # INHALEX Movil
 
-**Estado actual:** Avisos está **9/9**, PR #17 integrado y Trello actualizado según el usuario; el agente no leyó ni modificó el tablero. **INHALEX-Movil e INHALEX-Movil-Zenaida están en `develop` `6b38ba85af7575606ff181c2e5670deb3ce97e6e`, iguales a `origin/develop`, por fast-forward.** David quedó limpio y Zenaida conservó sus seis documentos locales de cierre con hashes idénticos al cambiar de rama. TypeScript y lint posteriores a la sincronización aprobaron en ambas copias, exit 0. Conservar esos documentos para su commit separado antes del siguiente diseño; no hacer commit/push ni comenzar otra actividad ahora. Quedan Reseñas y Confirmación de recepción; puede proponerse Reseñas en Zenaida según la captura, pendiente de solicitud y checklist, sin fijar orden, reparto o rama nuevos.
+**Estado actual:** Zenaida diseña Reseñas en `feature/resenas`, desde `develop` `6b38ba8`. Cierre de Avisos registrado aparte en `0d8dca5`. Cuenta → Reseñas abre un formulario de ejemplo; su revisión en Expo Go está pendiente. David es responsable de Confirmación de recepción. [Alcance y checklist](docs/DISENO-RESENAS.md).
 
 ## Proyecto y contexto
 

@@ -1,10 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
+import type { ReactNode } from 'react';
 import { router } from 'expo-router';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '@/core/theme/colors';
 import { AppScreen, ModuleCard } from '@/shared/components/AppScreen';
 
 interface SessionStatusScreenProps {
+  children?: ReactNode;
   checking: boolean;
   message: string | null;
   onRetry?: () => Promise<void>;
@@ -12,7 +14,7 @@ interface SessionStatusScreenProps {
 }
 
 /** Presents restoration state without ever receiving a stored credential. */
-export function SessionStatusScreen({ checking, message, onRetry, onSignOut }: SessionStatusScreenProps) {
+export function SessionStatusScreen({ checking, message, onRetry, onSignOut, children }: SessionStatusScreenProps) {
   return (
     <AppScreen title="Cuenta" eyebrow="Un momento para ti">
       <View accessibilityLiveRegion="polite" accessibilityState={{ busy: checking }}>
@@ -28,6 +30,7 @@ export function SessionStatusScreen({ checking, message, onRetry, onSignOut }: S
         {onSignOut ? <Pressable accessibilityRole="button" onPress={onSignOut} style={({ pressed }) => [styles.secondary, pressed && styles.pressed]}><Text style={styles.secondaryText}>Cerrar sesión</Text></Pressable> : null}
         <Pressable accessibilityRole="button" onPress={() => router.navigate('/(tabs)')} style={({ pressed }) => [styles.link, pressed && styles.pressed]}><Text style={styles.secondaryText}>Volver al inicio</Text></Pressable>
       </View>
+      {children}
     </AppScreen>
   );
 }

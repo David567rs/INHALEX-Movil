@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import type { ReactNode } from 'react';
 import { router } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 import { colors } from '@/core/theme/colors';
@@ -36,7 +37,8 @@ const sections = {
   },
 } as const;
 
-export function PreparationScreen({ section, notice, retry, isRetrying = false }: {
+export function PreparationScreen({ section, notice, retry, isRetrying = false, children }: {
+  children?: ReactNode;
   section: keyof typeof sections;
   notice?: string | null;
   retry?: () => void;
@@ -97,6 +99,7 @@ export function PreparationScreen({ section, notice, retry, isRetrying = false }
           <Ionicons name="arrow-forward" size={18} color={colors.primaryDark} />
         </SoftPressable>
       </View>
+      {children}
     </AppScreen>
   );
 }

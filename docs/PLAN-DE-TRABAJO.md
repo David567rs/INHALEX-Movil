@@ -1,6 +1,6 @@
 # Plan de trabajo de INHALEX Movil
 
-**Estado actual:** Avisos **9/9**, PR #17 integrado y Trello actualizado según el usuario, sin acceso del agente al tablero. Ambas copias están en `develop` `6b38ba85af7575606ff181c2e5670deb3ce97e6e`, igual a `origin/develop`, tras fast-forward. David quedó limpio y Zenaida conservó seis documentos locales de cierre; TypeScript/lint post-sync aprobaron con exit 0 en ambas copias. Sin commit/push o nueva actividad por esta actualización. Quedan **Reseñas** y **Confirmación de recepción**; puede proponerse Reseñas en Zenaida según la captura, pendiente de solicitud/checklist y sin nuevo orden, reparto o rama. El cierre se guarda por separado antes del próximo diseño; historia y evidencias preservadas.
+**Estado actual:** Zenaida diseña Reseñas en `feature/resenas`, desde `develop` `6b38ba8`. Cierre de Avisos registrado aparte en `0d8dca5`. Cuenta → Reseñas abre un formulario de ejemplo; su revisión en Expo Go está pendiente. David es responsable de Confirmación de recepción. [Alcance y checklist](DISENO-RESENAS.md).
 
 Acuerdos del 14 de octubre de 2026 para reiniciar la aplicación móvil con un repositorio independiente, aprovechar el backend y el código anterior, y documentar el flujo de trabajo del profesor desde el inicio.
 

@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import type { ReactNode } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '@/core/theme/colors';
 import { AppScreen, ModuleCard } from '@/shared/components/AppScreen';
@@ -9,7 +10,8 @@ import { useAccountViewModel } from '../viewModels/useAccountViewModel';
 import { SessionStatusScreen } from './SessionStatusScreen';
 
 /** Current-session confirmation; editing the profile is a separate activity. */
-export function AccountScreen({ user, signOut, status, message, restore }: {
+export function AccountScreen({ user, signOut, status, message, restore, children }: {
+  children?: ReactNode;
   user: LoginUser | null;
   signOut: AuthSession['signOut'];
   status: AuthSessionState['status'];
@@ -17,8 +19,8 @@ export function AccountScreen({ user, signOut, status, message, restore }: {
   restore: AuthSession['restore'];
 }) {
   const viewModel = useAccountViewModel(signOut);
-  if (status === 'checking' || status === 'recovery-error') return <SessionStatusScreen checking={status === 'checking'} message={message} onRetry={restore} onSignOut={viewModel.logout} />;
-  if (!user) return <PreparationScreen section="cuenta" notice={viewModel.message ?? message} retry={viewModel.message ? viewModel.logout : undefined} isRetrying={viewModel.isSigningOut} />;
+  if (status === 'checking' || status === 'recovery-error') return <SessionStatusScreen checking={status === 'checking'} message={message} onRetry={restore} onSignOut={viewModel.logout}>{children}</SessionStatusScreen>;
+  if (!user) return <PreparationScreen section="cuenta" notice={viewModel.message ?? message} retry={viewModel.message ? viewModel.logout : undefined} isRetrying={viewModel.isSigningOut}>{children}</PreparationScreen>;
 
   return (
     <AppScreen title="Cuenta" eyebrow="Un momento para ti">
@@ -36,6 +38,7 @@ export function AccountScreen({ user, signOut, status, message, restore }: {
         {viewModel.isSigningOut ? <ActivityIndicator color={colors.primaryDark} /> : <Ionicons accessible={false} name="log-out-outline" size={20} color={colors.primaryDark} />}
         <Text style={styles.buttonText}>Cerrar sesión</Text>
       </Pressable>
+      {children}
     </AppScreen>
   );
 }

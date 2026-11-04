@@ -1,5 +1,9 @@
 # INHALEX: base móvil
 
+**Reseñas · diseño local.** En Expo Go de Zenaida, abre Cuenta → Reseñas para probar las estrellas y el comentario de un producto de ejemplo. [Guía de diseño](../docs/DISENO-RESENAS.md).
+
+## Snapshot histórico del cierre de Avisos
+
 **Avisos completo, Trello actualizado y ambas copias sincronizadas: 9/9.** Según el usuario, Trello ya está actualizado; el agente no accedió al tablero. INHALEX-Movil e INHALEX-Movil-Zenaida están en `develop` `6b38ba85af7575606ff181c2e5670deb3ce97e6e`, iguales a `origin/develop`, tras fast-forward del [PR #17 integrado](https://github.com/David567rs/INHALEX-Movil/pull/17). David quedó limpio; Zenaida conservó sus seis documentos locales de cierre. [Evidencia de integración y sincronización](../docs/evidencias/avisos/integracion-pr17.json).
 
 TypeScript y lint posteriores a la sincronización aprobaron con exit 0 en ambas copias. Entornos, paquetes, identidades, stash y procesos se conservaron, con backend y Metros HTTP 200. Las fases y [verificaciones anteriores](../docs/evidencias/avisos/verificacion-pr.json) permanecen históricas, con helpers retirados. [Aceptación vigente](../docs/evidencias/avisos/expo-go-aceptacion.json) y [estado de sincronización](../docs/CONEXION-AVISOS.md#sincronizacion-pr17).
