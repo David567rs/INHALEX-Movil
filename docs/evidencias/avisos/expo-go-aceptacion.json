@@ -86,7 +86,7 @@
     "snapshotScope": "Diseño local histórico aceptado; la conexión posterior está autorizada y se registra por separado"
   },
   "functionalAcceptance": {
-    "acceptedCriteria": 8,
+    "acceptedCriteria": 9,
     "totalCriteria": 9,
     "acceptedCriterionIds": [
       1,
@@ -96,12 +96,11 @@
       5,
       6,
       7,
-      8
-    ],
-    "pendingCriterionIds": [
+      8,
       9
     ],
-    "status": "8/9; criterios funcionales1-8 aceptados por reportes del usuario. PR17 abierto y revisión solicitada a David567rs; solo revisión real9 pendiente, sin aprobación o merge confirmados.",
+    "pendingCriterionIds": [],
+    "status": "9/9; criterios 1-8 aceptados por reportes del usuario y 9 por revisión real de David567rs. PR17 integrado, Trello actualizado según el usuario y ambas copias sincronizadas con develop; sin nueva actividad.",
     "confirmations": [
       {
         "date": "2026-10-20",
@@ -149,6 +148,19 @@
         "criterionIds": [8],
         "scope": "Reapertura, ocultación al cerrar sesión, regreso con la misma cuenta, lectura conservada y actualización. No acredita una segunda cuenta ni restauración de la pantalla exacta. Incluye autorización expresa para abrir PR, todavía no creado.",
         "agentObservedDevice": false
+      },
+      {
+        "date": "2026-10-20",
+        "source": "Revisión real APPROVED de David567rs verificada en GitHub",
+        "sourceUrl": "https://github.com/David567rs/INHALEX-Movil/pull/17#pullrequestreview-5590282213",
+        "criterionIds": [9],
+        "reviewer": "David567rs",
+        "reviewState": "APPROVED",
+        "reviewId": 5590282213,
+        "submittedAt": "2026-10-20T19:11:32Z",
+        "approvedHead": "1d31c3cdf8c9efa01f3180699a9894bb5335901d",
+        "scope": "Acepta Revisar el código por revisión real del otro integrante; no es aprobación realizada por el agente ni nueva prueba de dispositivo.",
+        "agentObservedDevice": false
       }
     ],
     "criteria": [
@@ -195,7 +207,7 @@
       {
         "id": 9,
         "text": "Revisar el código",
-        "accepted": false
+        "accepted": true
       }
     ]
   },
@@ -203,8 +215,13 @@
     "source": "Checklist de la captura proporcionada por el usuario",
     "agentReadBoard": false,
     "agentModifiedBoard": false,
-    "userConfirmedCriteriaMarked": false,
-    "guidance": "Puede marcar Probar la funcionalidad (8): criterios1-8 aceptados,8/9. Mantener En progreso y Revisar el código (9) pendiente hasta revisión real de David567rs. Marcado no confirmado."
+    "userConfirmedCriteriaMarked": true,
+    "closureConfirmedByUser": true,
+    "confirmation": {
+      "source": "Mensaje textual del usuario; el agente no leyó ni modificó el tablero",
+      "quote": "Amigo, ya actualicé Trello. Actualicemos INHALEX-Movil e INHALEX-Movil-Zenaida con develop antes de empezar la siguiente actividad."
+    },
+    "guidance": "Trello actualizado según el usuario, Avisos 9/9. Ambas copias ya están en develop; conservar el cierre local para su commit separado antes del próximo diseño, sin iniciar otra actividad o asignar rama aquí."
   },
   "architecture": {
     "pattern": "MVVM y Repository",
@@ -221,7 +238,8 @@
       "Reseñas",
       "Confirmación de recepción"
     ],
-    "authorizedNow": "Abrir PR de Avisos desde feature/avisos hacia develop para David567rs, después de registrar la aceptación y completar comprobaciones finales",
+    "authorizedNow": "Sincronización de ambas copias con develop tras confirmar Trello, ya completada; sin iniciar nueva actividad",
+    "possibleNextActivityProposal": { "title": "Reseñas", "suggestedWorkspace": "INHALEX-Movil-Zenaida", "source": "Captura del usuario; pendiente de solicitud y checklist", "scope": "Solo diseño si el usuario lo indica", "newOrderOrAssignmentFixed": false, "branchAssigned": false },
     "otherActivitiesChecklistOrAssignmentInferred": false
   },
   "phaseCommits": {
@@ -305,25 +323,47 @@
     "base": "develop",
     "headAtOpening": "65d396f66d3c9e542080dbcb2d9473952710a059",
     "draft": false,
-    "open": true,
-    "approved": false,
-    "merged": false,
+    "open": false,
+    "state": "closed",
+    "approved": true,
+    "merged": true,
+    "mergedBy": "David567rs",
+    "mergedAt": "2026-10-20T19:11:43Z",
+    "mergeCommit": "6b38ba85af7575606ff181c2e5670deb3ce97e6e",
+    "mergeParents": ["0f0b764a4ad78e40f12112c4debcd7982ccdfd2c", "1d31c3cdf8c9efa01f3180699a9894bb5335901d"],
+    "commitCount": 13,
+    "originDevelopVerifiedAtMerge": "6b38ba85af7575606ff181c2e5670deb3ce97e6e",
+    "integrationReceipt": "integracion-pr17.json",
     "publicationAuthorizedByUser": true,
-    "status": "open-review-requested-consult-current-head-ci",
+    "status": "closed-approved-and-merged",
     "authorizationQuote": "Amigo, los avisos volvieron al reabrir, se ocultaron al cerrar sesión y regresaron con la misma cuenta. Se conservó la lectura y Actualizar funciona. Abre el PR de Avisos hacia develop para que David567rs lo revise.",
     "reviewRequestConfirmed": true,
     "reviewRequested": true,
     "requestedReviewer": "David567rs",
     "reviewRequestVerifiedVia": "GitHub REST requested_reviewers",
-    "remoteCiConfirmed": false,
-    "remoteCiStatus": "not-asserted-for-link-commit-consult-current-pr-checks",
+    "review": {
+      "state": "APPROVED",
+      "reviewer": "David567rs",
+      "id": 5590282213,
+      "url": "https://github.com/David567rs/INHALEX-Movil/pull/17#pullrequestreview-5590282213",
+      "submittedAt": "2026-10-20T19:11:32Z",
+      "approvedHead": "1d31c3cdf8c9efa01f3180699a9894bb5335901d"
+    },
+    "remoteCiConfirmed": true,
+    "remoteCiStatus": "success-on-approved-final-pr-head-not-merge-push-ci",
+    "remoteCiHead": "1d31c3cdf8c9efa01f3180699a9894bb5335901d",
+    "remoteCiRuns": [
+      { "workflow": "Backend", "id": 39479523908, "status": "completed", "conclusion": "success" },
+      { "workflow": "Mobile", "id": 39479523910, "status": "completed", "conclusion": "success" }
+    ],
+    "mergePushCiClaimed": false,
     "futureReviewer": "David567rs",
     "futureBase": "develop"
   },
   "connection": {
     "authorized": true,
     "implemented": true,
-    "status": "functional-acceptance-complete-pr17-open-awaiting-real-review",
+    "status": "complete-pr17-merged-trello-reported-and-clones-synced",
     "sameBranchRequired": "feature/avisos",
     "futureReviewer": "David567rs",
     "technicalVerification": "verificacion-api.json",
@@ -426,18 +466,51 @@
   "prPreparationReceipt": "verificacion-pr.json",
   "sessionAcceptanceCommit": "d4b1238",
   "finalMinorFixCommit": "e473e45",
-  "nextStep": "David567rs revisa el PR17 abierto desde su cuenta: Files changed y Review changes; Approve si está conforme. Mantener criterio9 pendiente hasta revisión real y Trello En progreso sin inferir marcado. Comprobar CI remota del HEAD vigente antes de fusionar; aprobación y merge aún no confirmados.",
+  "nextStep": "Con ambas copias en develop y Trello confirmado por el usuario, conservar los seis documentos locales del cierre en Zenaida y guardarlos por separado antes del próximo diseño. No crear commit/push o actividad nueva por esta actualización. Quedan Reseñas y Confirmación de recepción; puede proponerse Reseñas en Zenaida según la captura, pendiente de solicitud y checklist, sin fijar orden, reparto o rama nuevos.",
   "limitations": [
     "La aceptación visual procede del reporte del usuario, sin observación directa del dispositivo por el agente.",
     "La verificación de API pasó; QA usa sesión/fetch sintéticos y sus capturas son web, sin sustituir Expo Go, TalkBack o texto ampliado nativo.",
     "La QA web de API se retiró en 1b9d572; el helper temporal DEV posterior de vacío también fue retirado tras su aceptación 7d97f85, sin repetir suite, Doctor o exports.",
     "Abrir el detalle no marca leído; solo el botón explícito escribe. No hay marcado masivo, polling, persistencia o push.",
-    "No se asignan checklist, responsable o rama para Reseñas o Confirmación de recepción.",
-    "Los criterios1-8 se aceptan por reportes del usuario, sin observación del dispositivo ni acceso a Trello; el marcado no está confirmado.",
+    "Quedan Reseñas y Confirmación de recepción. Reseñas en Zenaida es una posible propuesta según la captura, pendiente de solicitud y checklist, sin fijar orden, reparto o rama nuevos.",
+    "Los criterios 1-8 se aceptan por reportes del usuario y 9 por revisión real de David567rs verificada en GitHub; Trello actualizado procede del nuevo reporte del usuario, sin lectura o modificación del tablero por el agente.",
     "El criterio6 se acepta por el reporte de la interfaz controlada0/0 en Expo Go; no equivale a filtro No leídos vacío ni acredita una API o cuenta reales vacías. El helper y acceso DEV ya están retirados.",
     "El helper histórico no hacía HTTP ni usaba token/almacén/cuenta reales; RootLayout y runtime global no cambiaron, y la app podía continuar sus lecturas normales.",
-    "La continuidad reportada corresponde a la misma cuenta; no acredita una segunda cuenta o restauración de la pantalla exacta. La revisión real9 sigue pendiente aunque el PR esté autorizado."
+    "La continuidad reportada corresponde a la misma cuenta; no acredita una segunda cuenta o restauración de la pantalla exacta. La revisión real9 y el merge ya están verificados.",
+    "Los checks remotos success corresponden al HEAD final aprobado del PR, no a la CI del push del merge. La sincronización ya se completó por autorización del usuario; los seis documentos de cierre quedan locales sin commit/push en esta actualización."
   ],
+  "synchronization": {
+    "authorizedByUser": true,
+    "authorizationQuote": "Amigo, ya actualicé Trello. Actualicemos INHALEX-Movil e INHALEX-Movil-Zenaida con develop antes de empezar la siguiente actividad.",
+    "performed": true,
+    "method": "Fast-forward a develop; ambas copias iguales a origin/develop",
+    "branch": "develop",
+    "commit": "6b38ba85af7575606ff181c2e5670deb3ce97e6e",
+    "davidWorkingTreeCleanAfterSync": true,
+    "davidPriorClosureAlreadyInHistory": "6610412",
+    "davidPriorClosureNotReappliedOverAvisos": true,
+    "zenaidaSixClosureDocumentsPreservedByHash": true,
+    "backupDocuments": 12,
+    "backupVerified": true,
+    "backupPath": "C:\\Users\\David\\AppData\\Local\\Temp\\inhalex-sincronizacion-pr17-20261020-131953",
+    "receipt": "integracion-pr17.json",
+    "preservation": {
+      "bothEnvironmentAndPackageLockHashesUnchanged": true,
+      "bothIdentitiesAndStashesPreserved": true,
+      "listenerPidsUnchanged": { "backend3200": 33524, "metroDavid8082": 28288, "metroZenaida8083": 13476 },
+      "healthAndMetrosHttp200": true
+    },
+    "postSyncChecks": {
+      "typecheckDavid": { "exitCode": 0 },
+      "typecheckZenaida": { "exitCode": 0 },
+      "lintDavid": { "exitCode": 0 },
+      "lintZenaida": { "exitCode": 0 }
+    },
+    "newActivityStarted": false,
+    "newBranchAssigned": false,
+    "commitOrPushCreatedForThisSyncDocumentation": false,
+    "closureCommitRequiredBeforeNextDesign": true
+  },
   "loadErrorAcceptance": {
     "date": "2026-10-20",
     "criterionId": 7,
@@ -472,7 +545,7 @@
     "trelloMarkedConfirmed": false,
     "prAuthorized": true,
     "prCreatedAtReport": false,
-    "reviewCriterion9Accepted": false,
+    "reviewCriterion9AcceptedAtReport": false,
     "historicalTechnicalResultsPreserved": true
   },
   "emptyTest": {

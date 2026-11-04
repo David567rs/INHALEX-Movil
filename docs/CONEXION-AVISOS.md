@@ -1,10 +1,10 @@
 # Conexión de Avisos
 
-Actividad de ZenaidaGR en `C:\Users\David\Documents\INHALEX-Movil-Zenaida`, rama `feature/avisos`, basada en `develop` `0f0b764a4ad78e40f12112c4debcd7982ccdfd2c`. El [PR #17](https://github.com/David567rs/INHALEX-Movil/pull/17) está abierto hacia `develop`, sin draft y con revisión solicitada a David567rs. El cierre anterior está separado en `6610412`, el diseño en `1f383f3` y su aceptación/autorización de API en `46c86aa`.
+Actividad implementada por ZenaidaGR en `C:\Users\David\Documents\INHALEX-Movil-Zenaida`, desde `feature/avisos` basada en `develop` `0f0b764a4ad78e40f12112c4debcd7982ccdfd2c`. El [PR #17](https://github.com/David567rs/INHALEX-Movil/pull/17) está cerrado y fusionado, tras aprobación real de David567rs; ambas copias ya están en `develop` `6b38ba8`. El cierre anterior, diseño y aceptación de API conservan sus commits por fase.
 
-El usuario aceptó diseño, recorrido positivo, vacío controlado, error/reintento y continuidad de la misma cuenta por reportes de Expo Go. La conexión está en `1b9d572`, el helper se retiró en `bb32a17` y la aceptación quedó en `d4b1238`. La aceptación funcional está completa; solo queda revisión real. El PR ya está abierto, con solicitud de revisión verificada por REST, sin aprobación o fusión confirmadas. Al registrar los enlaces no se anticipa la CI del HEAD que los incluirá; consultar los checks actuales del PR.
+El usuario aceptó los criterios funcionales por reportes de Expo Go y David567rs completó la revisión real del criterio 9. La conexión `1b9d572`, retirada `bb32a17`, aceptación `d4b1238` y resultados anteriores se conservan. El merge es `6b38ba85af7575606ff181c2e5670deb3ce97e6e`. Backend/Mobile CI aprobaron el HEAD final revisado `1d31c3c`, sin afirmar resultado del push del merge.
 
-Avisos está **8/9**: criterios 1-8 aceptados por reportes del usuario. El criterio 6 acredita interfaz controlada 0/0, el 7 una prueba GET de carga/recuperación y el 8 continuidad de la misma cuenta; no acreditan una API vacía, fallo de marcado PATCH o prueba de otra cuenta. Solo el criterio 9 sigue pendiente. La [aceptación vigente](evidencias/avisos/expo-go-aceptacion.json) conserva las fuentes textuales; el [diseño](DISENO-AVISOS.md) y las verificaciones anteriores son historia. El agente no observó el teléfono ni leyó o modificó Trello, y el marcado no está confirmado.
+Avisos está **9/9**: criterios 1-8 aceptados por reportes del usuario y el 9 por revisión real verificada en GitHub. El vacío mantiene su alcance controlado y no se amplían las evidencias nativas. El usuario confirmó Trello actualizado y ambas copias ya están en `develop` `6b38ba8`, igual a `origin/develop`, tras fast-forward. [Aceptación vigente](evidencias/avisos/expo-go-aceptacion.json) y [recibo de integración/sincronización](evidencias/avisos/integracion-pr17.json). El agente no observó el teléfono ni leyó o modificó Trello; TypeScript/lint post-sync aprobaron con exit 0 en ambas copias.
 
 ## Contrato existente del backend
 
@@ -47,7 +47,7 @@ Si ese GET posterior falla, **el aviso confirmado permanece leído**. Se informa
 
 Red, timeout o 5xx conservan el último snapshot confirmado de la misma autorización y ofrecen recuperación explícita. Los payloads, correos, metadata o diagnósticos del servidor no se exponen como mensajes de pantalla. El error de marcado 400 se presenta de forma segura y permite recuperar la bandeja, sin mostrar datos ajenos o forzar un estado leído.
 
-## Criterios de Trello: 8/9
+## Criterios de Trello: 9/9
 
 - [x] Crear sección de avisos
 - [x] Obtener avisos disponibles
@@ -57,9 +57,9 @@ Red, timeout o 5xx conservan el último snapshot confirmado de la misma autoriza
 - [x] Mostrar mensaje si no existen avisos
 - [x] Manejar errores de carga
 - [x] Probar la funcionalidad
-- [ ] Revisar el código
+- [x] Revisar el código
 
-Los reportes del usuario aceptan 1-8; el 6 corresponde a la bandeja vacía controlada, el 7 a error/reintento GET y el 8 a continuidad de la misma cuenta. El criterio 9 requiere revisión real de David567rs desde su cuenta en el [PR #17 abierto](https://github.com/David567rs/INHALEX-Movil/pull/17). Puede marcarse el 8 y mantenerse Trello En progreso; el agente no verifica ni realiza ese marcado.
+Los criterios 1-8 conservan sus reportes y el 9 se acepta por la [aprobación real de David567rs](https://github.com/David567rs/INHALEX-Movil/pull/17#pullrequestreview-5590282213). El usuario confirmó Trello actualizado; el agente no accedió al tablero ni realizó ese marcado.
 
 ## Snapshot histórico: primera prueba funcional, aceptada por reporte del usuario
 
@@ -212,8 +212,36 @@ Esta aceptación se registra en su commit documental separado antes de las compr
 
 <a id="estado-actual-avisos-pr17"></a>
 
-## Estado vigente: PR #17 abierto y revisión solicitada (8/9)
+## Snapshot histórico: PR #17 abierto y revisión solicitada (8/9)
 
 El [PR #17](https://github.com/David567rs/INHALEX-Movil/pull/17) está abierto y no draft, autor ZenaidaGR, `feature/avisos` → `develop`. La solicitud a **David567rs** está confirmada por REST; el [recibo de apertura](evidencias/avisos/pr17.json) conserva ese snapshot. HEAD de apertura `65d396f66d3c9e542080dbcb2d9473952710a059`; aceptación `d4b1238`, ajuste `e473e45` y preparación `65d396f` conservados por fase. El [snapshot local de preparación](evidencias/avisos/verificacion-pr.json) aprobó 735/735 pruebas, TypeScript/lint, Doctor 21/21 y exports Android 1532/web 1081, sin QA temporal. **No se anticipa CI del HEAD que incluirá los enlaces**: consultar los checks actuales del PR. Sin aprobación o merge confirmados.
 
 Avisos mantiene **8/9**. David debe revisar **Files changed** desde su cuenta y enviar **Review changes → Approve** si está conforme; el criterio 9 solo se completa por revisión real. Después se comprueban los checks del HEAD vigente antes de fusionar. Mantener Trello En progreso y marcado no confirmado; este registro no atribuye al agente la revisión, observación del teléfono o nuevos cambios de runtime.
+
+## Snapshot histórico: PR #17 aprobado e integrado (9/9)
+
+David567rs [aprobó el HEAD final](https://github.com/David567rs/INHALEX-Movil/pull/17#pullrequestreview-5590282213) `1d31c3cdf8c9efa01f3180699a9894bb5335901d` el **20 de octubre de 2026 a las 13:11:32 (Ciudad de México)** y fusionó el PR a las **13:11:43 (Ciudad de México)**. Merge `6b38ba85af7575606ff181c2e5670deb3ce97e6e`, padres `0f0b764a4ad78e40f12112c4debcd7982ccdfd2c` y `1d31c3cdf8c9efa01f3180699a9894bb5335901d`; `origin/develop` coincide con el merge. **Revisar el código** (9) queda aceptado por revisión real: **9/9**.
+
+Los runs [Backend](https://github.com/David567rs/INHALEX-Movil/actions/runs/39479523908) y [Mobile](https://github.com/David567rs/INHALEX-Movil/actions/runs/39479523910) terminaron en success sobre ese mismo HEAD aprobado. Es evidencia de CI del PR previa al merge; no se afirma que sea CI del push del merge. El [recibo de integración](evidencias/avisos/integracion-pr17.json) conserva los datos verificados, sin alterar evidencias de preparación, API o helpers retirados.
+
+<a id="cierre-pr17-trello"></a>
+
+## Guía histórica: cierre de Trello y siguiente paso
+
+El cierre de Trello todavía no está confirmado. El usuario puede:
+
+1. Marcar **Revisar el código** y adjuntar el [PR #17](https://github.com/David567rs/INHALEX-Movil/pull/17).
+2. Añadir: «Avisos completado y validado en Expo Go. PR #17 revisado y aprobado por David567rs, integrado en develop. 9/9 criterios completados.»
+3. Mover la tarjeta **Avisos** a **Terminado**.
+
+Los seis documentos de cierre quedan locales, sin commit o push en la feature cerrada. No sincronizar copias, cambiar ramas ni iniciar otra actividad en este paso. Cuando el usuario confirme Trello, seguirá actualizar ambas copias con `develop`; el cierre se guarda en un commit separado al comenzar la siguiente actividad según el patrón del proyecto. El agente no actuó en Trello ni repitió pruebas nativas o técnicas por esta documentación.
+
+<a id="sincronizacion-pr17"></a>
+
+## Estado vigente: Trello confirmado y ambas copias en develop
+
+El usuario confirmó: «Amigo, ya actualicé Trello. Actualicemos INHALEX-Movil e INHALEX-Movil-Zenaida con develop antes de empezar la siguiente actividad.». Se registra Trello actualizado por su reporte, sin lectura o modificación del tablero por el agente. Avisos mantiene **9/9**. Ambas copias avanzaron por fast-forward a `develop` `6b38ba85af7575606ff181c2e5670deb3ce97e6e`, iguales a `origin/develop`.
+
+David quedó limpio: sus seis documentos de cierre PR #16 ya estaban en `6610412`, ancestro del merge, y se respaldaron sin reintroducir texto antiguo sobre Avisos. Los seis documentos de cierre PR #17 de Zenaida se conservaron con hashes idénticos antes/después del cambio. Backup verificado de los doce archivos: `C:\Users\David\AppData\Local\Temp\inhalex-sincronizacion-pr17-20261020-131953`. El [recibo de integración y sincronización](evidencias/avisos/integracion-pr17.json) confirma TypeScript/lint con exit 0 en ambas copias, entornos/paquetes/identidades/stash preservados y procesos sin cambios: backend3200 PID33524, Metro8082 PID28288 y Metro8083 PID13476, con HTTP 200.
+
+No se crea commit/push o actividad nueva en esta actualización. Conservar los seis documentos locales de cierre para su commit separado antes del próximo diseño. Quedan **Reseñas** y **Confirmación de recepción**; puede proponerse Reseñas en Zenaida según la captura, pendiente de solicitud y checklist, sin fijar criterios, orden, reparto o rama nuevos. Las evidencias de API, helpers, aprobación y CI conservan su alcance e historia.
