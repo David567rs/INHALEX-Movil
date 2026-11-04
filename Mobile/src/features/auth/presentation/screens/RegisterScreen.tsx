@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Keyboard, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Keyboard, Pressable, StyleSheet, Text, View, type TextInputInstance } from 'react-native';
 import { colors } from '@/core/theme/colors';
 import { AuthScaffold } from '../components/AuthScaffold';
 import { FormField } from '../components/FormField';
@@ -13,12 +13,12 @@ import type { RegisterUser } from '../../domain/useCases/registerUser';
 /** Renders state and delegates registration to the ViewModel. */
 export function RegisterScreen({ registerUser }: { registerUser: RegisterUser }) {
   const viewModel = useRegisterViewModel(registerUser);
-  const firstNameInput = useRef<TextInput>(null);
-  const lastNameInput = useRef<TextInput>(null);
-  const emailInput = useRef<TextInput>(null);
-  const phoneInput = useRef<TextInput>(null);
-  const passwordInput = useRef<TextInput>(null);
-  const confirmationInput = useRef<TextInput>(null);
+  const firstNameInput = useRef<TextInputInstance>(null);
+  const lastNameInput = useRef<TextInputInstance>(null);
+  const emailInput = useRef<TextInputInstance>(null);
+  const phoneInput = useRef<TextInputInstance>(null);
+  const passwordInput = useRef<TextInputInstance>(null);
+  const confirmationInput = useRef<TextInputInstance>(null);
   const [focusRequest, setFocusRequest] = useState<{ field: RegistrationField } | null>(null);
 
   useEffect(() => {

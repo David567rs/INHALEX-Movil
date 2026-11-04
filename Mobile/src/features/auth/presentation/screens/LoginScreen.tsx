@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Keyboard, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Keyboard, Platform, Pressable, StyleSheet, Text, View, type TextInputInstance } from 'react-native';
 import { colors } from '@/core/theme/colors';
 import { AuthScaffold } from '../components/AuthScaffold';
 import { FormField } from '../components/FormField';
@@ -16,8 +16,8 @@ export function LoginScreen({ signIn, sessionMessage, retrySession }: {
   retrySession?: AuthSession['restore'];
 }) {
   const viewModel = useLoginViewModel(signIn);
-  const emailInput = useRef<TextInput>(null);
-  const passwordInput = useRef<TextInput>(null);
+  const emailInput = useRef<TextInputInstance>(null);
+  const passwordInput = useRef<TextInputInstance>(null);
   const [focusRequest, setFocusRequest] = useState<{ field: LoginField } | null>(null);
 
   useEffect(() => {

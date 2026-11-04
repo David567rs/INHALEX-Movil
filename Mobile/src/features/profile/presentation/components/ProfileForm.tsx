@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRef } from 'react';
-import { ActivityIndicator, Keyboard, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Keyboard, Pressable, StyleSheet, Text, View, type TextInputInstance } from 'react-native';
 import { colors } from '@/core/theme/colors';
 import { FormField } from '@/features/auth/presentation/components/FormField';
 import type { ProfileDraft, ProfileField, ProfileFieldErrors } from '../../domain/models/Profile';
@@ -18,8 +18,8 @@ type Props = {
 };
 
 export function ProfileForm({ draft, email, onChange, onCancel, onSave, saving, canSave, refreshing, errors }: Props) {
-  const lastNameInput = useRef<TextInput>(null);
-  const phoneInput = useRef<TextInput>(null);
+  const lastNameInput = useRef<TextInputInstance>(null);
+  const phoneInput = useRef<TextInputInstance>(null);
   function cancelEdit() {
     Keyboard.dismiss();
     onCancel();

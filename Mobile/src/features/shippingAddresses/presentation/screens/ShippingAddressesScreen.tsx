@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Image, Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Image, Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, View, type ScrollViewInstance } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { Reveal, SoftPressable } from '@/shared/components/Motion';
@@ -59,7 +59,7 @@ function AddressCard({ address, disabled, pending, confirming, onEdit, onSelect,
 export function ShippingAddressesScreen() {
   const viewModel = useShippingAddressesViewModel();
   const [removeTarget, setRemoveTarget] = useState<ShippingAddress | null>(null);
-  const scroll = useRef<ScrollView>(null);
+  const scroll = useRef<ScrollViewInstance>(null);
   const isList = viewModel.mode === 'list';
   const locked = viewModel.loading || viewModel.refreshing || viewModel.saving;
   const canMutate = viewModel.status === 'ready' && viewModel.addresses !== null && !locked && !viewModel.requiresRefresh;

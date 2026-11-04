@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useEffect, useRef } from 'react';
-import { ActivityIndicator, Image, Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, Image, Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions, type ScrollViewInstance } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { Reveal, SoftPressable } from '@/shared/components/Motion';
@@ -12,7 +12,7 @@ export function ProfileScreen() {
   const vm = useProfileViewModel();
   const { width, fontScale } = useWindowDimensions();
   const compact = width < 360 || fontScale > 1.25;
-  const scroll = useRef<ScrollView>(null);
+  const scroll = useRef<ScrollViewInstance>(null);
   useEffect(() => { scroll.current?.scrollTo({ y: 0, animated: false }); }, [vm.mode]);
   useEffect(() => {
     if (vm.error || vm.saveError) scroll.current?.scrollTo({ y: 0, animated: false });
