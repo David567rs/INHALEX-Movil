@@ -2,6 +2,14 @@
 
 La versión de Expo Go instalada en el teléfono usa SDK 58 y rechazaba INHALEX SDK 57 antes de abrir la aplicación. El usuario autorizó migrar el proyecto en una rama separada y conservar Reseñas. David prepara `chore/expo-sdk-58` desde `develop` `6b38ba8`. La copia de Zenaida conserva el diseño en `feature/resenas` `30de297` y el cierre anterior de Avisos en `0d8dca5`.
 
+El [PR #18](https://github.com/David567rs/INHALEX-Movil/pull/18), creado por David567rs hacia develop, solicita revisión de ZenaidaGR. Su integración y la aceptación física están pendientes. Consultar los checks sobre el HEAD actual del PR.
+
+Commits por etapa publicados
+
+- `cdd8748` alinea las dependencias.
+- `2e4fa20` adapta tipos y navegación.
+- `c883eab` registra verificaciones locales y la evidencia web.
+
 ## Cambios de compatibilidad
 
 Se alinean Expo 58.0.23, Router 58.0.30 y los módulos nativos con la matriz publicada para SDK 58, React 19.3.0 y React Native 0.88.1. Doctor queda fijado en 1.21.6. Los tipos de referencias usan las instancias públicas de React Native. RootLayout declara el destino de regreso mediante `unstable_settings.anchor`. Las pestañas pasan sus colores de la paleta al componente de icono con un tipo compatible.
