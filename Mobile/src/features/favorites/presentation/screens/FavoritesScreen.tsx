@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { Reveal } from '@/shared/components/Motion';
@@ -24,17 +24,19 @@ export function FavoritesScreen() {
 
   return (
     <SafeAreaView edges={['top', 'left', 'right']} style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}
+        refreshControl={showCollection ? <RefreshControl refreshing={vm.refreshing} enabled={vm.canRefresh}
+          onRefresh={() => { if (vm.canRefresh) refresh(); }} colors={[colors.primary]} tintColor={colors.primary} /> : undefined}>
         <Reveal>
           <View style={styles.header}>
-            <Image accessibilityLabel="INHALEX, el respiro que alivia" resizeMode="contain"
-              source={require('../../../../../assets/home/brand.png')} style={styles.brand} />
+            <View style={styles.sectionCopy}>
+              <Text style={styles.eyebrow}>TUS IMPRESCINDIBLES</Text>
+              <Text accessibilityRole="header" style={styles.title}>Tus favoritos<Text style={styles.dot}>.</Text></Text>
+            </View>
             <View accessible={false} aria-hidden accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={styles.headerHeart}>
-              <Ionicons name="heart-outline" size={22} color={colors.primaryDark} />
+              <Ionicons name="heart" size={30} color={colors.primaryDark} />
             </View>
           </View>
-          <Text style={styles.eyebrow}>TUS IMPRESCINDIBLES</Text>
-          <Text accessibilityRole="header" style={styles.title}>Tus favoritos<Text style={styles.dot}>.</Text></Text>
           <Text style={styles.intro}>Los aromas que van contigo, en un solo lugar.</Text>
         </Reveal>
 
@@ -71,18 +73,6 @@ export function FavoritesScreen() {
 
           {vm.products.length > 0 ? <>
             <Reveal delay={45}>
-              <View style={styles.selectionCard}>
-                <View style={styles.selectionCopy}>
-                  <Text style={styles.selectionEyebrow}>CERCA DE TI</Text>
-                  <Text accessibilityRole="header" style={styles.selectionTitle}>Una selección muy tuya.</Text>
-                  <Text style={styles.selectionBody}>Pequeñas pausas para volver a elegir.</Text>
-                </View>
-                <View accessible={false} aria-hidden accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={styles.selectionSymbol}>
-                  <Ionicons name="heart" size={36} color="#CFE8B9" />
-                </View>
-              </View>
-            </Reveal>
-            <Reveal delay={75}>
               <View style={styles.sectionHeading}>
                 <View style={styles.sectionCopy}>
                   <Text accessibilityRole="header" style={styles.sectionTitle}>Tu colección personal</Text>
@@ -101,11 +91,20 @@ export function FavoritesScreen() {
                 <Text style={styles.secondaryButtonText}>Seguir explorando</Text>
                 <Ionicons accessible={false} name="arrow-forward" size={18} color={colors.primaryDark} />
               </Pressable>
+              <View style={styles.selectionCard}>
+                <View style={styles.selectionCopy}>
+                  <Text style={styles.selectionEyebrow}>CERCA DE TI</Text>
+                  <Text style={styles.selectionTitle}>Una selección muy tuya.</Text>
+                  <Text style={styles.selectionBody}>Pequeñas pausas para volver a elegir.</Text>
+                </View>
+                <View accessible={false} aria-hidden accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={styles.selectionSymbol}>
+                  <Ionicons name="heart" size={30} color="#CFE8B9" />
+                </View>
+              </View>
             </Reveal>
           </> : <Reveal delay={45}>
             <View style={styles.emptyPanel}>
               <View accessible={false} aria-hidden accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={styles.emptyIllustration}>
-                <View style={styles.emptyHalo} />
                 <View style={styles.emptyHeart}><Ionicons name="heart-outline" size={48} color={colors.primary} /></View>
                 <View style={styles.emptyLeaf}><Ionicons name="leaf" size={19} color={colors.primaryDark} /></View>
               </View>
@@ -148,23 +147,22 @@ function StatusPanel({ title, message, busy = false, actionBusy = false, actionL
 
 const styles = StyleSheet.create({
   safeArea: { backgroundColor: colors.background, flex: 1 },
-  content: { alignSelf: 'center', maxWidth: 620, padding: 22, paddingBottom: 30, width: '100%' },
-  header: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 27 },
-  brand: { height: 43, width: 148 },
-  headerHeart: { alignItems: 'center', backgroundColor: colors.surfaceSoft, borderColor: colors.border, borderRadius: 23, borderWidth: 1, height: 46, justifyContent: 'center', width: 46 },
+  content: { alignSelf: 'center', maxWidth: 600, padding: 22, paddingBottom: 30, width: '100%' },
+  header: { alignItems: 'center', flexDirection: 'row', gap: 12, justifyContent: 'space-between' },
+  headerHeart: { alignItems: 'center', height: 46, justifyContent: 'center', width: 40 },
   eyebrow: { color: colors.primary, fontSize: 10, fontWeight: '800', letterSpacing: 1.8 },
-  title: { color: colors.text, fontSize: 34, fontWeight: '800', letterSpacing: -1.2, marginTop: 6 },
+  title: { color: colors.text, fontSize: 32, fontWeight: '800', letterSpacing: -1.1, marginTop: 6 },
   dot: { color: colors.accent },
   intro: { color: colors.textMuted, fontSize: 14, lineHeight: 22, marginTop: 8 },
   pressed: { opacity: 0.75 },
   disabled: { opacity: 0.6 },
-  selectionCard: { alignItems: 'center', backgroundColor: colors.primaryDark, borderRadius: 24, flexDirection: 'row', gap: 14, marginTop: 16, overflow: 'hidden', padding: 22 },
+  selectionCard: { alignItems: 'center', backgroundColor: colors.primaryDark, borderRadius: 20, flexDirection: 'row', gap: 12, marginTop: 20, padding: 18 },
   selectionCopy: { flex: 1, minWidth: 0 },
   selectionEyebrow: { color: '#D0E4C9', fontSize: 8, fontWeight: '700', letterSpacing: 1.7 },
-  selectionTitle: { color: colors.white, fontSize: 25, fontWeight: '800', letterSpacing: -0.6, lineHeight: 30, marginTop: 8 },
-  selectionBody: { color: '#E1EDDD', fontSize: 11, lineHeight: 18, marginTop: 8 },
-  selectionSymbol: { alignItems: 'center', backgroundColor: '#286D42', borderColor: '#43885A', borderRadius: 37, borderWidth: 1, height: 74, justifyContent: 'center', width: 74 },
-  sectionHeading: { alignItems: 'center', flexDirection: 'row', gap: 12, marginBottom: 16, marginTop: 28 },
+  selectionTitle: { color: colors.white, fontSize: 19, fontWeight: '800', letterSpacing: -0.4, lineHeight: 25, marginTop: 6 },
+  selectionBody: { color: '#E1EDDD', fontSize: 11, lineHeight: 18, marginTop: 5 },
+  selectionSymbol: { alignItems: 'center', height: 42, justifyContent: 'center', width: 42 },
+  sectionHeading: { alignItems: 'center', flexDirection: 'row', gap: 12, marginBottom: 14, marginTop: 16 },
   sectionCopy: { flex: 1, minWidth: 0 },
   sectionTitle: { color: colors.text, fontSize: 19, fontWeight: '800', letterSpacing: -0.4 },
   sectionDescription: { color: colors.textMuted, fontSize: 12, lineHeight: 19, marginTop: 4 },
@@ -174,10 +172,9 @@ const styles = StyleSheet.create({
   secondaryButton: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 14, borderWidth: 1, flexDirection: 'row', gap: 10, justifyContent: 'center', marginTop: 20, minHeight: 50, padding: 15 },
   secondaryButtonText: { color: colors.primaryDark, flexShrink: 1, fontSize: 13, fontWeight: '800' },
   emptyPanel: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 25, borderWidth: 1, marginTop: 22, paddingHorizontal: 23, paddingVertical: 30 },
-  emptyIllustration: { alignItems: 'center', height: 122, justifyContent: 'center', marginBottom: 18, width: 136 },
-  emptyHalo: { backgroundColor: '#F1F7EC', borderColor: '#E6EFDE', borderRadius: 61, borderWidth: 1, height: 122, position: 'absolute', width: 122 },
-  emptyHeart: { alignItems: 'center', backgroundColor: '#E8F2DE', borderRadius: 46, height: 92, justifyContent: 'center', width: 92 },
-  emptyLeaf: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 18, borderWidth: 1, bottom: 4, height: 36, justifyContent: 'center', position: 'absolute', right: 9, width: 36 },
+  emptyIllustration: { alignItems: 'center', height: 100, justifyContent: 'center', marginBottom: 18, width: 120 },
+  emptyHeart: { alignItems: 'center', height: 84, justifyContent: 'center', width: 84 },
+  emptyLeaf: { alignItems: 'center', bottom: 4, height: 28, justifyContent: 'center', position: 'absolute', right: 9, width: 28 },
   emptyEyebrow: { color: colors.primary, fontSize: 8, fontWeight: '800', letterSpacing: 1.3, lineHeight: 15, textAlign: 'center' },
   emptyTitle: { color: colors.text, fontSize: 25, fontWeight: '800', letterSpacing: -0.7, lineHeight: 32, marginTop: 9, textAlign: 'center' },
   emptyCopy: { color: colors.textMuted, fontSize: 13, lineHeight: 22, marginBottom: 24, marginTop: 12, textAlign: 'center' },
