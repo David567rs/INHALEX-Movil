@@ -7,6 +7,14 @@ import { useCartViewModel } from '../viewModels/useCartViewModel';
 
 export function AddToCartButton({ product }: { product: CatalogProduct }) {
   const vm = useCartViewModel();
+  return <AddToCartAction product={product} vm={vm} />;
+}
+
+/** The caller owns the view model so adaptive layouts can move this action safely. */
+export function AddToCartAction({ product, vm }: {
+  product: CatalogProduct;
+  vm: ReturnType<typeof useCartViewModel>;
+}) {
   const quantity = vm.cart?.items.find((item) => item.productId === product.id)?.quantity ?? 0;
   const pending = vm.pendingProductId !== null;
   const busy = vm.busy || vm.refreshing || pending || vm.openingSignIn;

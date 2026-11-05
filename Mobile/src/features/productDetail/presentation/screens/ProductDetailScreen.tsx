@@ -4,7 +4,8 @@ import { useCallback, useState } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { colors } from '@/core/theme/colors';
 import { FavoriteProductButton, FavoriteProductFeedback } from '@/features/favorites/presentation/components/FavoriteProductButton';
-import { AddToCartButton } from '@/features/cart/presentation/components/AddToCartButton';
+import { AddToCartAction } from '@/features/cart/presentation/components/AddToCartButton';
+import { useCartViewModel } from '@/features/cart/presentation/viewModels/useCartViewModel';
 import { BottomSheet, useBottomSheetDismiss } from '@/shared/components/BottomSheet';
 import type { GetProductDetail } from '../../domain/useCases/getProductDetail';
 import { ProductDetailImage } from '../components/ProductDetailImage';
@@ -13,6 +14,7 @@ import { useProductDetailViewModel } from '../viewModels/useProductDetailViewMod
 /** Original product sheet, backed by the current detail use case and coordinators. */
 export function ProductDetailScreen({ productId, getProduct }: { productId: string; getProduct: GetProductDetail }) {
   const vm = useProductDetailViewModel(productId, getProduct);
+  const cartViewModel = useCartViewModel();
   const { product } = vm;
   const focused = useIsFocused();
   const { height } = useWindowDimensions();
@@ -28,7 +30,8 @@ export function ProductDetailScreen({ productId, getProduct }: { productId: stri
 
   return <BottomSheet visible={focused} title="Tu próximo aroma" onClose={returnToCatalog}
     onContentHeightChange={setContentHeight}
-    footer={product ? <><AddToCartButton product={product} /><ProductDetailAccesses /></> : undefined}>
+    adaptiveFooter
+    footer={product ? <AddToCartAction product={product} vm={cartViewModel} /> : undefined}>
     {vm.status === 'loading' ? <View accessibilityLiveRegion="polite" style={styles.missing}>
       <ActivityIndicator accessibilityLabel="Cargando producto" color={colors.primary} size="large" />
       <Text accessibilityRole="header" style={styles.missingTitle}>Preparando tu aroma</Text>
@@ -92,6 +95,7 @@ export function ProductDetailScreen({ productId, getProduct }: { productId: stri
           : <Ionicons accessible={false} name="refresh-outline" size={17} color={colors.primary} />}
         <Text style={styles.linkLabel}>{vm.refreshing ? 'Actualizando…' : vm.error ? 'Reintentar' : 'Actualizar producto'}</Text>
       </Pressable>
+      <ProductDetailAccesses />
     </> : <View accessibilityLiveRegion="polite" style={styles.missing}>
       <Ionicons accessible={false} name="leaf-outline" size={38} color={colors.primary} />
       <Text accessibilityRole="header" style={styles.missingTitle}>{vm.status === 'not-found' ? 'Producto no disponible' : 'No pudimos cargar este aroma'}</Text>
@@ -154,7 +158,7 @@ const styles = StyleSheet.create({
   noticeText: { color: colors.textMuted, flex: 1, fontSize: 12, lineHeight: 19 },
   refreshButton: { alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', gap: 8, marginTop: 16, minHeight: 44, paddingVertical: 10 },
   linkLabel: { color: colors.primaryDark, flexShrink: 1, fontSize: 12, fontWeight: '600', lineHeight: 20, textAlign: 'center' },
-  accesses: { alignItems: 'center', flexDirection: 'row', marginTop: 4 },
+  accesses: { alignItems: 'center', borderTopColor: colors.border, borderTopWidth: StyleSheet.hairlineWidth, flexDirection: 'row', marginTop: 16, paddingTop: 10 },
   access: { alignItems: 'center', flex: 1, flexDirection: 'row', gap: 7, justifyContent: 'center', minHeight: 44, paddingHorizontal: 8, paddingVertical: 9 },
   accessDivider: { backgroundColor: colors.border, height: 16, width: 1 },
   missing: { alignItems: 'center', paddingHorizontal: 8, paddingVertical: 36 },
