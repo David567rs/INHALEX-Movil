@@ -1,12 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { ActivityIndicator, FlatList, Image, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, FlatList, Image, Keyboard, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { Reveal } from '@/shared/components/Motion';
 import type { ListCatalog } from '../../domain/useCases/listCatalog';
 import type { CatalogProduct } from '../../domain/models/Catalog';
 import { CatalogProductCard } from '../components/CatalogProductCard';
+import { CatalogSearchField } from '../components/CatalogSearchField';
 import { useCatalogViewModel, type CatalogProductViewModel } from '../viewModels/useCatalogViewModel';
 
 export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
@@ -19,6 +20,8 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
   const availableWidth = Math.min(width - insets.left - insets.right, 600);
   const columns = vm.layout === 'grid' && availableWidth >= 360 && !largeText ? 2 : 1;
   const horizontal = vm.layout === 'list' && !largeText;
+  const searching = vm.appliedQuery.length > 0;
+  const cardWidth = Math.max(1, (availableWidth - 44 - (columns - 1) * 12) / columns);
 
   return (
     <SafeAreaView edges={['top', 'left', 'right']} style={styles.safeArea}>
@@ -28,6 +31,8 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
         keyExtractor={(product) => product.id}
         numColumns={columns}
         initialNumToRender={6}
+        keyboardDismissMode="on-drag"
+        keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
         refreshing={vm.refreshing}
         onRefresh={() => { void vm.refresh(); }}
@@ -58,14 +63,11 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
                 <Text accessibilityRole="header" style={styles.title}>Un aroma para ti<Text style={styles.titleDot}>.</Text></Text>
                 <Text style={styles.description}>Pequeñas esencias para acompañar tu día.</Text>
               </View>
-              <Pressable accessibilityRole="button" accessibilityLabel="Abrir búsqueda de productos"
-                accessibilityHint="Busca productos por nombre o palabra clave"
-                onPress={() => router.push('/busqueda-productos')}
-                style={({ pressed }) => [styles.searchEntry, pressed && styles.pressed]}>
-                <Ionicons accessible={false} name="search-outline" size={21} color={colors.primary} />
-                <Text style={styles.searchEntryText}>Buscar productos</Text>
-                <Ionicons accessible={false} name="arrow-forward" size={18} color={colors.primary} />
-              </Pressable>
+              <View style={styles.searchEntry}>
+                <CatalogSearchField value={vm.searchQuery} onChange={vm.setSearchQuery}
+                  onSubmit={() => { Keyboard.dismiss(); void vm.submitSearch(); }}
+                  onClear={() => { void vm.clearSearch(); }} />
+              </View>
               <Pressable
                 accessibilityRole="button"
                 accessibilityLabel="Actualizar catálogo"
@@ -91,7 +93,7 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
               {categoryName !== undefined && <View style={styles.filterPanel}>
                 <Text accessibilityRole="header" style={styles.filterTitle}>{categoryName}</Text>
                 <Pressable accessibilityRole="button" accessibilityLabel="Ver todos los productos"
-                  onPress={() => router.replace('/(tabs)/catalogo')}
+                  onPress={() => router.replace({ pathname: '/(tabs)/catalogo', params: { category: '', lineName: '' } })}
                   style={({ pressed }) => [styles.clearFilter, pressed && styles.pressed]}>
                   <Text style={styles.clearFilterText}>Ver todos los productos</Text>
                   <Ionicons accessible={false} name="close-circle-outline" size={18} color={colors.primaryDark} />
@@ -104,9 +106,11 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
             <Reveal delay={60} style={styles.inset}>
               <View style={[styles.collectionRow, largeText && styles.collectionRowStacked]}>
                 <View style={styles.collectionCopy}>
-                  <Text accessibilityRole="header" style={styles.collectionTitle}>{categoryName === undefined ? 'Nuestra colección' : 'Productos de esta línea'}</Text>
-                  <Text style={styles.collectionCount}>{vm.status === 'loading' ? 'Buscando tus próximos aromas…'
+                  <Text accessibilityRole="header" style={styles.collectionTitle}>{searching ? 'Resultados de búsqueda' : categoryName === undefined ? 'Nuestra colección' : 'Productos de esta línea'}</Text>
+                  {searching && <Text style={styles.queryLabel} numberOfLines={2}>para “{vm.appliedQuery}”</Text>}
+                  <Text accessibilityLiveRegion="polite" style={styles.collectionCount}>{vm.status === 'loading' ? 'Buscando tus próximos aromas…'
                     : vm.status === 'error' ? 'La colección estará aquí al reconectar'
+                    : searching ? `${vm.total} ${vm.total === 1 ? 'coincidencia' : 'coincidencias'}${categoryName === undefined ? '' : ' en esta línea'}`
                     : `${vm.total} ${vm.total === 1 ? 'producto' : 'productos'} para descubrir`}</Text>
                 </View>
                 <View accessibilityRole="radiogroup" accessibilityLabel="Presentación del catálogo" style={styles.layoutSwitch}>
@@ -132,7 +136,7 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
           </>
         }
         renderItem={({ item, index }) => (
-          <Reveal delay={Math.min(index, 5) * 35} style={[styles.cardShell, columns === 1 && styles.singleCard]}>
+          <Reveal delay={Math.min(index, 5) * 35} style={[styles.cardShell, { width: cardWidth }, columns === 1 && styles.singleCard]}>
             <CatalogProductCard product={item} horizontal={horizontal} onPress={() => vm.openProduct(item.id)} />
           </Reveal>
         )}
@@ -140,16 +144,16 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
           <View accessibilityLiveRegion="polite" style={styles.emptyState}>
             {vm.status === 'loading'
               ? <ActivityIndicator accessibilityLabel="Cargando productos" color={colors.primary} size="large" />
-              : <Ionicons accessible={false} name={vm.status === 'error' ? 'cloud-offline-outline' : 'leaf-outline'} color={colors.primary} size={34} />}
+              : <Ionicons accessible={false} name={vm.status === 'error' ? 'cloud-offline-outline' : searching ? 'search-outline' : 'leaf-outline'} color={colors.primary} size={34} />}
             <Text accessibilityRole="header" style={styles.stateTitle}>{vm.status === 'loading' ? 'Un momento para descubrir'
-              : vm.status === 'error' ? 'No pudimos cargar la colección' : categoryName === undefined ? 'Nuevos aromas están por llegar' : 'Esta línea aún no tiene productos'}</Text>
+              : vm.status === 'error' ? 'No pudimos cargar la colección' : searching ? 'No encontramos coincidencias' : categoryName === undefined ? 'Nuevos aromas están por llegar' : 'Esta línea aún no tiene productos'}</Text>
             <Text style={styles.stateCopy}>{vm.status === 'loading' ? 'Estamos preparando el catálogo para ti.'
-              : vm.status === 'error' ? vm.error : categoryName === undefined
+              : vm.status === 'error' ? vm.error : searching ? 'Prueba otro nombre o aroma, o limpia la búsqueda para ver la colección.' : categoryName === undefined
                 ? 'Por ahora no hay productos disponibles. Puedes volver a consultar en un momento.'
                 : 'Puedes consultar otra línea o volver a ver todos los productos.'}</Text>
-            {vm.status !== 'loading' && <Pressable accessibilityRole="button" onPress={() => { void vm.refresh(); }}
+            {vm.status !== 'loading' && <Pressable accessibilityRole="button" onPress={() => { void (searching && vm.status !== 'error' ? vm.clearSearch() : vm.refresh()); }}
               style={({ pressed }) => [styles.actionButton, pressed && styles.pressed]}>
-              <Text style={styles.actionText}>{vm.status === 'error' ? 'Reintentar' : 'Volver a consultar'}</Text>
+              <Text style={styles.actionText}>{vm.status === 'error' ? 'Reintentar' : searching ? 'Limpiar búsqueda' : 'Volver a consultar'}</Text>
             </Pressable>}
           </View>
         }
@@ -193,8 +197,7 @@ const styles = StyleSheet.create({
   title: { color: colors.text, fontSize: 31, fontWeight: '700', letterSpacing: -1, lineHeight: 38, marginTop: 7 },
   titleDot: { color: colors.primary },
   description: { color: colors.textMuted, fontSize: 13, lineHeight: 21, marginTop: 6 },
-  searchEntry: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 16, borderWidth: 1, flexDirection: 'row', gap: 12, marginTop: 19, minHeight: 56, paddingHorizontal: 16, paddingVertical: 12 },
-  searchEntryText: { color: colors.textMuted, flex: 1, fontSize: 14, minWidth: 0 },
+  searchEntry: { marginTop: 19 },
   refreshButton: { alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', gap: 8, marginTop: 10, minHeight: 44, paddingRight: 12 },
   refreshText: { color: colors.primary, fontSize: 12, fontWeight: '600' },
   linesEntry: { alignItems: 'center', backgroundColor: '#EAF1E5', borderColor: '#DDE8D5', borderRadius: 17, borderWidth: 1, flexDirection: 'row', gap: 12, marginTop: 12, minHeight: 76, padding: 14 },
@@ -213,12 +216,13 @@ const styles = StyleSheet.create({
   collectionCopy: { flex: 1 },
   collectionTitle: { color: colors.text, fontSize: 18, fontWeight: '700', letterSpacing: -0.4, lineHeight: 24 },
   collectionCount: { color: colors.textMuted, fontSize: 11, lineHeight: 17, marginTop: 3 },
+  queryLabel: { color: colors.primaryDark, fontSize: 13, fontWeight: '600', lineHeight: 19, marginTop: 4 },
   layoutSwitch: { backgroundColor: '#EAF0E4', borderRadius: 13, flexDirection: 'row', padding: 3 },
   layoutButton: { alignItems: 'center', borderRadius: 10, height: 44, justifyContent: 'center', width: 44 },
   selectedLayout: { backgroundColor: colors.white },
   pressed: { opacity: 0.65 },
   row: { alignItems: 'stretch', gap: 12, paddingHorizontal: 22 },
-  cardShell: { flex: 1, marginBottom: 14 },
+  cardShell: { marginBottom: 14 },
   singleCard: { marginHorizontal: 22 },
   emptyState: { alignItems: 'center', paddingHorizontal: 30, paddingVertical: 36 },
   stateTitle: { color: colors.text, fontSize: 19, fontWeight: '700', lineHeight: 26, marginTop: 16, textAlign: 'center' },

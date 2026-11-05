@@ -35,6 +35,7 @@ export function useCatalogViewModel(listCatalog: ListCatalog, onSelectProduct?: 
   const [layout, setLayout] = useState<CatalogLayout>('grid');
 
   return { ...state, products, layout, setLayout, refresh: controller.refresh,
+    setSearchQuery: controller.setSearchQuery, submitSearch: controller.submitSearch, clearSearch: controller.clearSearch,
     loadMore: controller.loadMore, hasMore: state.page < state.totalPages,
     openProduct(id: string) {
       const product = controller.getSnapshot().products.find((item) => item.id === id);
