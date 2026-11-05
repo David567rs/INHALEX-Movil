@@ -19,11 +19,11 @@ En la próxima etapa, el backend ya ofrece `GET /api/reviews/me/eligible` y `POS
 
 ## Criterios de la tarjeta
 
-Todos quedan pendientes de aceptación en su etapa. La primera revisión en Expo Go corresponde al formulario y a la captura local de calificación y comentario.
+El usuario aceptó el formulario y la captura local en Expo Go el 4 de noviembre de 2026. La conexión y sus pruebas siguen en su propia etapa; no se ha accedido a Trello.
 
-- [ ] Crear formulario de reseña.
+- [x] Crear formulario de reseña.
 - [ ] Validar que el usuario pueda publicar la reseña.
-- [ ] Capturar calificación y comentario.
+- [x] Capturar calificación y comentario.
 - [ ] Validar campos requeridos.
 - [ ] Enviar la reseña a la API.
 - [ ] Mostrar confirmación de publicación.
@@ -33,6 +33,8 @@ Todos quedan pendientes de aceptación en su etapa. La primera revisión en Expo
 - [ ] Revisar el código.
 
 ## Verificación del diseño
+
+Aceptación posterior de Expo Go 58: «Amigo, ya abrió Reseñas en Expo Go y funcionan las estrellas y el comentario. Sigamos con la API en feature/resenas, manteniendo MVVM, Repository y commits por etapa.». Este reporte acepta los criterios 1 y 3 (2/10), sin atribuir observación directa del teléfono al agente. También informó que no puede iniciar sesión: se diagnosticará la conexión antes de la aceptación de la API. La confirmación del diseño no acredita acceso, publicación ni continuidad de sesión.
 
 TypeScript, lint y exportación Android de Expo finalizaron correctamente (1 540 módulos exportados). En Expo web se abrió la ruta desde Cuenta, se cambió de dos a cinco estrellas y el contador reflejó 20 caracteres al escribir. Publicar siguió deshabilitado. Después de volver y entrar de nuevo, aparecieron cero estrellas y el comentario vacío. La [captura del formulario](evidencias/resenas/formulario-web.png) corresponde a la versión web con tamaño de teléfono; la revisión en Expo Go la realizará el equipo.
 
