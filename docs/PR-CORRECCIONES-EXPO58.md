@@ -1,11 +1,11 @@
-# Preparación: corregir arranque y acceso tras migrar a Expo SDK 58
+# PR #19: corregir arranque y acceso tras migrar a Expo SDK 58
 
-Estado al 5 de noviembre de 2026: preparación local, sin publicación ni nuevo PR. No se realizó ninguna fusión en esta etapa. El PR #18 ya está cerrado y fusionado; este documento prepara una revisión posterior hacia `develop`.
+Estado al 5 de noviembre de 2026: el [PR #19](https://github.com/David567rs/INHALEX-Movil/pull/19) está abierto, sin draft, de David567rs hacia `develop`, con revisión solicitada a ZenaidaGR. HEAD de apertura: `08b05c2efb7ac0f45014551119cf5c04a09014f8`; base consultada: `2aa6d86fd3c247a438b3fc54a20b3c9c3b5e59f5`. Backend CI y Mobile CI aprobaron sobre ese HEAD; la nueva aprobación sigue pendiente. El PR #18 ya está cerrado y fusionado; el PR #19 no está fusionado y su apertura no autoriza integrarlo. Este registro no anticipa los checks del HEAD que incorporará el enlace documental: consultar los resultados actuales en el PR.
 
 ## Actividad y alcance
 
 - Tarea de infraestructura: recuperación del arranque y del acceso tras la migración.
-- Responsable: David567rs. Revisión prevista: ZenaidaGR desde su cuenta.
+- Responsable y autor del PR: David567rs. Revisión solicitada: ZenaidaGR desde su cuenta; aprobación todavía pendiente.
 - Rama de origen y destino: `codex/correcciones-expo58` → `develop`.
 - Criterios: abrir la app, entrar y restaurar sesión con cuentas antiguas válidas, completar Perfil y comprobar la generación nativa de la clave de pedido.
 
@@ -25,6 +25,8 @@ El [PR #18](https://github.com/David567rs/INHALEX-Movil/pull/18) integró cuatro
 
 La preparación se hizo en un worktree independiente. Las ramas de las dos copias de desarrollo permanecieron en su lugar. Reseñas y los ajustes visuales posteriores conservan su trabajo e historial aparte y no se incorporan al alcance de esta revisión.
 
+En la apertura, el merge `2aa6d86` del PR #18 no es ancestro de la rama de correcciones. Su árbol coincide exactamente con el de la base común `4bf34a2`: la diferencia de historial corresponde al commit de fusión, sin código de `develop` omitido. Se mantiene la historia original de las correcciones.
+
 ## Dependencias y contratos
 
 Requiere la migración a SDK 58 del PR #18. Mantiene MVVM y Repository, la validación del JWT, el almacenamiento de sesión y la protección contra envíos duplicados. No cambia endpoints ni el backend. El mapeo conserva únicamente datos públicos, acepta el `name` anterior sin inventar apellidos o teléfono y rechaza campos presentes malformados. No hay modificaciones de dependencias o del lockfile respecto del PR #18.
@@ -42,7 +44,8 @@ Comprobaciones ejecutadas en el worktree aislado sobre `bd5bd28`, con las depend
 | Acceso y Perfil en David | Reportes del usuario en Expo Go | Entrada, guardado, actualización y restauración al reabrir aceptados. |
 | Acceso en Zenaida | Reporte independiente del usuario en Expo Go | Entrada, datos visibles y sesión restaurada al reabrir aceptados. |
 | Flujo nativo que utiliza UUID al confirmar pedido | Nueva confirmación en Expo Go de David, según la guía y el reporte posterior del usuario | Aceptado: recibo En revisión, bolsa vacía y mismo pedido en Historial con referencia, cantidades e importes coincidentes. No es una inspección del UUID. |
-| CI y revisión de la corrección | Requieren publicar y abrir un nuevo PR | Pendientes; no se reutiliza la aprobación del PR #18. |
+| CI inicial de la corrección | [Backend CI 42030823131](https://github.com/David567rs/INHALEX-Movil/actions/runs/42030823131) y [Mobile CI 42030823149](https://github.com/David567rs/INHALEX-Movil/actions/runs/42030823149) | Ambas `success` sobre `08b05c2`; no anticipa el resultado del siguiente commit documental. |
+| Revisión de la corrección | PR #19 abierto y revisión solicitada a ZenaidaGR | Pendiente; no se reutiliza la aprobación del PR #18. |
 
 Los reportes nativos están registrados en [Recuperación del inicio de sesión](RECUPERACION-INICIO-SESION.md). El agente no observó directamente el teléfono. Las pruebas de sesión usan almacenamiento y transporte simulados y no sustituyen SecureStore ni la confirmación de pedido en el dispositivo. Durante esta preparación no se arrancó ni detuvo Expo, Metro o el backend.
 
@@ -54,8 +57,9 @@ La aceptación posterior de pedido se realizó siguiendo la guía para una confi
 - [x] Separación de arquitectura y contratos revisados.
 - [x] Sin secretos, dependencias instaladas ni archivos generados en el cambio.
 - [x] TypeScript, lint y pruebas móviles aprobados en la preparación aislada.
-- [ ] CI del nuevo PR aprobada sobre su HEAD vigente.
+- [x] Backend CI y Mobile CI del PR #19 aprobadas sobre el HEAD de apertura `08b05c2`.
+- [ ] Consultar CI del HEAD vigente tras publicar este registro documental.
 - [ ] Revisión y aprobación nueva de ZenaidaGR sobre las correcciones.
 - [ ] Integración autorizada hacia `develop` mediante merge commit.
 
-La aceptación nativa se registra en un commit documental separado de la preparación `762e844`. El siguiente paso es publicar esta rama y abrir el PR posterior hacia `develop` para revisión de Zenaida, cuando el usuario indique continuar con la apertura; no fusionarlo. La publicación, la apertura y la integración se identificarán con sus propios enlaces y commits cuando ocurran. El PR #18 y las ramas originales se conservan.
+La aceptación nativa quedó registrada en `08b05c2`, separada de la preparación `762e844`. Tras la autorización del usuario se publicó la rama y se abrió el [PR #19](https://github.com/David567rs/INHALEX-Movil/pull/19), con revisión solicitada a ZenaidaGR. Sigue comprobar CI del HEAD vigente y obtener su nueva revisión desde su cuenta. No se realizó ninguna fusión; la integración requiere autorización posterior. El PR #18 y las ramas originales se conservan.
