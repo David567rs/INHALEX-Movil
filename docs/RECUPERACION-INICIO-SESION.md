@@ -31,6 +31,14 @@ En la prueba independiente de Zenaida confirmó: «Amigo, en la copia de Zenaida
 
 El usuario conserva el control del QR y de Expo en sus terminales. Ambas aplicaciones utilizan un solo backend compartido en 3200. Esta etapa se registra con commits locales separados de arranque, compatibilidad de cuenta y aceptación, sin crear ni actualizar PR.
 
-## Siguiente etapa
+## Siguiente etapa registrada tras la recuperación (histórica)
 
 Recuperar visualmente Inicio, Cuenta y Login desde Proyecto-INHALEX, conservando los servicios y las validaciones reparados. Empezar por Inicio y verificarlo con el usuario antes de continuar. Reseñas sigue a cargo de Zenaida, con David como futuro revisor; su conexión nativa a la API y Confirmación de recepción siguen pendientes. La generación nativa de la clave de un pedido requiere su prueba explícita y no queda aceptada por el inicio de sesión.
+
+## Preparación posterior a la fusión del PR #18
+
+El 5 de noviembre se verificó que ZenaidaGR aprobó y fusionó el PR #18, con merge `2aa6d86`. Los commits de recuperación `a35d643`, `ca009a8` y `bd5bd28` quedaron fuera de esa fusión. Se conservaron sus identificadores y autores al preparar la rama local `codex/correcciones-expo58` en un worktree independiente. No se publicó ni fusionó esta rama, ni se cambiaron las ramas activas de David y Zenaida.
+
+Sobre este conjunto se repitieron TypeScript, lint y las 741 pruebas móviles: todos aprobados. La revisión de código no encontró un bloqueo, pero mantiene pendiente la prueba nativa de creación de pedido con el nuevo UUID. Las aceptaciones de acceso y Perfil anteriores permanecen válidas dentro de su alcance; no prueban esa operación. La revisión de Zenaida sobre el PR #18 tampoco cubre los commits posteriores.
+
+El [borrador para la revisión posterior](PR-CORRECCIONES-EXPO58.md) identifica los cambios, comprobaciones y pendientes. Los ajustes visuales y Reseñas se conservan fuera de este alcance. Expo, los QR y el backend siguen bajo control del usuario.

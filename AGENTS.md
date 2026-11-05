@@ -1,6 +1,6 @@
 # INHALEX Movil
 
-**Migración en curso a Expo SDK 58.** David trabaja en `chore/expo-sdk-58` desde `develop` `6b38ba8`. El diseño de Reseñas de Zenaida permanece en `feature/resenas` `30de297`. Consulta [el alcance y la verificación](docs/MIGRACION-EXPO-58.md) antes de retomar las pruebas nativas.
+**Estado verificado el 5 de noviembre de 2026:** el PR #18 fue aprobado y fusionado por ZenaidaGR en `develop` (`2aa6d86`). Las correcciones posteriores de arranque y acceso se preparan localmente en `codex/correcciones-expo58`, conservando `a35d643`, `ca009a8` y `bd5bd28`. Consulta [la preparación de la revisión posterior](docs/PR-CORRECCIONES-EXPO58.md). Esta preparación no publica ni fusiona cambios; falta verificar la creación de pedido en Expo Go con el generador UUID corregido. El usuario controla Expo y los QR. Reseñas sigue a cargo de Zenaida en su copia, con David como revisor; el pulido visual permanece en su rama independiente. Los apartados siguientes son registros históricos y no sustituyen este estado.
 
 ## Snapshot histórico previo a la migración
 
