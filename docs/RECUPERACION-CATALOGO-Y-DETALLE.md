@@ -165,3 +165,7 @@ Se mantienen MVVM y Repository. El cambio se realizó en la copia de David, sin 
 ### Siguiente comprobación en Expo Go
 
 Recargar la instancia existente. En Cuenta, recorrer desde el perfil hasta Cerrar sesión y abrir los cinco accesos. En Detalle, llegar al final de la descripción, comprobar Agregar y los enlaces secundarios, cerrar con X y con Atrás, y regresar al catálogo filtrado. Repetir con texto grande y en horizontal, incluidos los mensajes de Bolsa. Registrar la aceptación del usuario por separado.
+
+### Aceptación posterior y siguiente etapa
+
+El 5 de noviembre de 2026 el usuario informó: «Cuenta y Detalle ya se desplazan bien». Se registra la aceptación de esos desplazamientos sin atribuirle pruebas adicionales de texto grande, TalkBack o todos los recorridos anteriores. Solicitó continuar con las tres mejoras recomendadas; su alcance, commits y pruebas están en [Cuenta, teclado y mensajes](PULIDO-CUENTA-FORMULARIOS.md).
