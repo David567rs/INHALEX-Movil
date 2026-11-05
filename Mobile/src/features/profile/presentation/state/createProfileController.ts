@@ -35,7 +35,8 @@ function expiredState(auth: AuthSessionState): ProfileState {
 /** Only the public profile fields can enter controller snapshots or the session callback. */
 function confirmedProfile(profile: Profile): Profile {
   return Object.freeze({ id: profile.id, firstName: profile.firstName, lastName: profile.lastName,
-    email: profile.email, phone: profile.phone });
+    email: profile.email, phone: profile.phone,
+    ...(profile.displayName ? { displayName: profile.displayName } : {}) });
 }
 
 function draftFrom(profile: Profile): ProfileDraft {
@@ -45,7 +46,8 @@ function draftFrom(profile: Profile): ProfileDraft {
 function matchesConfirmedUser(auth: AuthSessionState, profile: Profile) {
   return auth.status === 'authenticated' && auth.user?.id === profile.id
     && auth.user.firstName === profile.firstName && auth.user.lastName === profile.lastName
-    && auth.user.email === profile.email && auth.user.phone === profile.phone;
+    && auth.user.email === profile.email && auth.user.phone === profile.phone
+    && auth.user.displayName === profile.displayName;
 }
 
 const readError = (error: unknown) => error instanceof ProfileError

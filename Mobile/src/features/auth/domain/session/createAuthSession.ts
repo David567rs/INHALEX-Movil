@@ -23,6 +23,7 @@ function publicUser(user: LoginUser): LoginUser {
     lastName: user.lastName,
     email: user.email,
     phone: user.phone,
+    ...(user.displayName ? { displayName: user.displayName } : {}),
   });
 }
 

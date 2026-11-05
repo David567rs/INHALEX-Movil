@@ -28,7 +28,7 @@ export function AccountScreen({ user, signOut, status, message, restore }: {
       </View>
       <ModuleCard
         icon={<Ionicons accessible={false} name="person-outline" size={29} color={colors.primary} />}
-        title={`Hola, ${user.firstName}`}
+        title={`Hola, ${user.firstName || user.displayName || 'bienvenido'}`}
         description="Qué bueno tenerte de vuelta en INHALEX."
       />
       <Text selectable style={styles.email}>{user.email}</Text>

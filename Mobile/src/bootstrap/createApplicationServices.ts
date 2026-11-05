@@ -30,7 +30,7 @@ import { ApiShippingAddressRepository } from '../features/shippingAddresses/data
 import { ShippingAddressError } from '../features/shippingAddresses/domain/errors/ShippingAddressError';
 import { createShippingAddressActions, type ShippingAddressActions } from '../features/shippingAddresses/domain/useCases/shippingAddressActions';
 import { createShippingAddressesController } from '../features/shippingAddresses/presentation/state/createShippingAddressesController';
-import { randomUUID } from 'expo-crypto';
+import { uuid } from 'expo';
 import { ApiOrderCreationRepository } from '../features/orderCreation/data/repositories/ApiOrderCreationRepository';
 import { createOrderAttemptStore } from '../features/orderCreation/data/storage/createOrderAttemptStore';
 import { OrderCreationError } from '../features/orderCreation/domain/errors/OrderCreationError';
@@ -225,7 +225,7 @@ export function createApplicationRuntime(options: Omit<ApplicationServicesOption
     confirm: (input, key, requestOptions) => getOrderActions().confirm(input, key, requestOptions),
     readCart: (requestOptions) => getOrderActions().readCart(requestOptions),
     clearCart: (requestOptions) => getOrderActions().clearCart(requestOptions),
-  }, { attemptStore: createOrderAttemptStore(), createKey: randomUUID, cart });
+  }, { attemptStore: createOrderAttemptStore(), createKey: () => uuid.v4(), cart });
   let historyActions: OrderHistoryActions | undefined;
   function getHistoryActions(): OrderHistoryActions {
     if (!historyActions) {

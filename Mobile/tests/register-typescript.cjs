@@ -6,6 +6,7 @@ const ts = require('typescript');
 
 const sourceRoots = [
   '../src/core',
+  '../src/shared/data',
   '../src/features/auth/domain',
   '../src/features/auth/data',
   '../src/features/catalog/domain',
