@@ -1,5 +1,9 @@
 # Plan de trabajo de INHALEX Movil
 
+**Migración en curso a Expo SDK 58.** David trabaja en `chore/expo-sdk-58` desde `develop` `6b38ba8`. El diseño de Reseñas de Zenaida permanece en `feature/resenas` `30de297`. Consulta [el alcance y la verificación](MIGRACION-EXPO-58.md) antes de retomar las pruebas nativas.
+
+## Snapshot histórico previo a la migración
+
 **Estado actual:** Avisos está **8/9**, criterios 1-8 aceptados, Zenaida, `feature/avisos`. El [PR #17](https://github.com/David567rs/INHALEX-Movil/pull/17) está abierto hacia `develop`, sin draft, y David567rs figura como revisor solicitado, verificado por REST. Solo **Revisar el código** (9) sigue pendiente; no se confirman aprobación o merge. La preparación local aprobada no anticipa la CI del HEAD que incluirá el enlace: consultar los checks actuales del PR. Mantener En progreso, marcado Trello no confirmado y commits por fase; sin observación del teléfono o prueba de otra cuenta por el agente.
 
 Acuerdos del 14 de octubre de 2026 para reiniciar la aplicación móvil con un repositorio independiente, aprovechar el backend y el código anterior, y documentar el flujo de trabajo del profesor desde el inicio.

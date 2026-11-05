@@ -7,6 +7,7 @@ import {
   Text,
   TextInput,
   View,
+  type TextInputInstance,
   type TextInputProps,
 } from 'react-native';
 import { colors } from '@/core/theme/colors';
@@ -18,7 +19,7 @@ export interface FormFieldProps extends TextInputProps {
   error?: string;
 }
 
-export const FormField = forwardRef<TextInput, FormFieldProps>(function FormField({
+export const FormField = forwardRef<TextInputInstance, FormFieldProps>(function FormField({
   label,
   icon,
   isPassword = false,
