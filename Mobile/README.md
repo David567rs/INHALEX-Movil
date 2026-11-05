@@ -1,6 +1,6 @@
 # INHALEX: base móvil
 
-**Reseñas · diseño local en SDK 58.** Zenaida continúa en `feature/resenas`; David revisará Reseñas. Expo 58.0.23 ya está instalado y verificado en esta copia, con Metro en 8083. Abre Cuenta → Reseñas para revisar estrellas y comentario en Expo Go 58. Publicar sigue deshabilitado durante el diseño. El PR #18 todavía no está integrado en `develop`. [Guía y verificaciones](../docs/DISENO-RESENAS.md).
+**Estado actual: Reseñas conectada técnicamente a la API en SDK 58.** Zenaida desarrolla en `feature/resenas`; David revisará el futuro PR. El formulario, estrellas y comentario fueron aceptados en Expo Go (2/10); la consulta/publicación real y el inicio de sesión físico siguen pendientes. TypeScript y 782 pruebas aprobaron; la revisión web y las exportaciones finales están en curso. Abre Cuenta → Reseñas desde Metro 8083; el backend usa 3200 y la IP de esta sesión es `192.168.1.78`. Se mantienen MVVM, Repository, historial y commits por etapa. El PR técnico #18 todavía está pendiente de revisión de Zenaida e integración a `develop`. [Conexión y primera prueba](../docs/CONEXION-RESENAS.md); [diseño aceptado](../docs/DISENO-RESENAS.md).
 
 ## Snapshot histórico del cierre de Avisos
 
