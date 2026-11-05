@@ -1,11 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { useState } from 'react';
-import { ActivityIndicator, Image, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View, useWindowDimensions } from 'react-native';
+import { useRef, useState } from 'react';
+import { ActivityIndicator, Image, Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, View, useWindowDimensions, type TextInputInstance } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { getCatalogImage } from '@/features/catalog/presentation/assets/catalogImages';
 import { Reveal } from '@/shared/components/Motion';
+import { FormKeyboardLayout } from '@/shared/components/FormKeyboardLayout';
 import type { OrderContactField } from '../../domain/models/OrderCreation';
 import { useOrderCreationViewModel } from '../viewModels/useOrderCreationViewModel';
 
@@ -20,17 +21,19 @@ const fields: readonly { key: OrderContactField; label: string; maxLength: numbe
 
 export function OrderCreationScreen() {
   const vm = useOrderCreationViewModel();
+  const contactInputs = useRef<Partial<Record<OrderContactField, TextInputInstance | null>>>({});
   const { width, fontScale } = useWindowDimensions();
   const stacked = width < 350 || fontScale > 1.25;
   const needsSession = vm.status === 'anonymous' || vm.status === 'expired';
   function returnToBag() {
+    Keyboard.dismiss();
     if (router.canGoBack()) router.back(); else router.replace('/(tabs)/bolsa');
   }
   async function signIn() { if (await vm.prepareSignIn()) router.push('/sign-in'); }
 
   return <SafeAreaView edges={['top', 'left', 'right', 'bottom']} style={styles.safeArea}>
-    <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+    <FormKeyboardLayout>
+      <ScrollView style={styles.flex} contentContainerStyle={styles.content} showsVerticalScrollIndicator keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
         <View style={styles.topBar}>
           <Pressable accessibilityRole="button" accessibilityLabel="Volver a Bolsa" onPress={returnToBag}
             style={({ pressed }) => [styles.backButton, pressed && styles.pressed]}>
@@ -116,12 +119,19 @@ export function OrderCreationScreen() {
                   {vm.contact && <View style={styles.contact}>
                     <Text accessibilityRole="header" style={styles.contactTitle}>Contacto del pedido</Text>
                     <Text style={styles.help}>Confirma los datos que usaremos para comunicarnos contigo sobre este pedido.</Text>
-                    {fields.map((field) => <View key={field.key} style={styles.field}>
+                    {fields.map((field, index) => <View key={field.key} style={styles.field}>
                       <Text nativeID={`order-${field.key}-label`} style={styles.fieldLabel}>{field.label}</Text>
-                      <TextInput accessibilityLabel={field.label} aria-invalid={!!vm.fieldErrors[field.key]}
+                      <TextInput ref={(input) => { contactInputs.current[field.key] = input; }}
+                        accessibilityLabel={field.label} aria-invalid={!!vm.fieldErrors[field.key]}
                         editable={vm.canEdit} value={vm.contact?.[field.key] ?? ''} maxLength={field.maxLength}
                         keyboardType={field.keyboardType} autoCapitalize={field.key === 'customerEmail' ? 'none' : 'sentences'}
                         autoCorrect={field.key === 'customerName' || field.key === 'notes'} multiline={field.key === 'notes'}
+                        returnKeyType={field.key === 'notes' ? 'default' : 'next'}
+                        submitBehavior={field.key === 'notes' ? 'newline' : 'submit'}
+                        onSubmitEditing={field.key === 'notes' ? undefined : () => {
+                          const next = fields[index + 1];
+                          if (next) contactInputs.current[next.key]?.focus();
+                        }}
                         onChangeText={(value) => vm.editContact(field.key, value)}
                         style={[styles.input, field.key === 'notes' && styles.notesInput, !!vm.fieldErrors[field.key] && styles.invalidInput, !vm.canEdit && styles.disabled]} />
                       {vm.fieldErrors[field.key] && <Text accessibilityLiveRegion="polite" style={styles.fieldError}>{vm.fieldErrors[field.key]}</Text>}
@@ -143,7 +153,7 @@ export function OrderCreationScreen() {
                     </View>
                     <Pressable accessibilityRole="button" accessibilityLabel={vm.confirming ? 'Confirmando pedido' : 'Confirmar pedido'}
                       accessibilityState={{ disabled: !vm.canConfirm, busy: vm.confirming }} disabled={!vm.canConfirm}
-                      onPress={() => { void vm.confirm(); }} style={[styles.primaryButton, !vm.canConfirm && styles.disabled]}>
+                      onPress={() => { Keyboard.dismiss(); void vm.confirm(); }} style={[styles.primaryButton, !vm.canConfirm && styles.disabled]}>
                       {vm.confirming ? <ActivityIndicator color={colors.white} size="small" /> : null}
                       <Text style={styles.primaryText}>{vm.confirming ? 'Confirmando…' : 'Confirmar pedido'}</Text>
                       {!vm.confirming && <Ionicons accessible={false} name="arrow-forward" size={18} color={colors.white} />}
@@ -159,7 +169,7 @@ export function OrderCreationScreen() {
           <Ionicons accessible={false} name="arrow-back" size={17} color={colors.primaryDark} /><Text style={styles.returnText}>Volver a mi bolsa</Text>
         </Pressable>}
       </ScrollView>
-    </KeyboardAvoidingView>
+    </FormKeyboardLayout>
   </SafeAreaView>;
 }
 

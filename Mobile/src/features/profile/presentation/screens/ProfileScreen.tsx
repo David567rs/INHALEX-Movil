@@ -1,10 +1,11 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useEffect, useRef } from 'react';
-import { ActivityIndicator, Image, Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions, type ScrollViewInstance } from 'react-native';
+import { ActivityIndicator, Image, Keyboard, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions, type ScrollViewInstance } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { Reveal, SoftPressable } from '@/shared/components/Motion';
+import { FormKeyboardLayout } from '@/shared/components/FormKeyboardLayout';
 import { ProfileForm } from '../components/ProfileForm';
 import { useProfileViewModel } from '../viewModels/useProfileViewModel';
 
@@ -28,9 +29,9 @@ export function ProfileScreen() {
   }
 
   return <SafeAreaView edges={['top', 'left', 'right', 'bottom']} style={styles.safeArea}>
-    <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : Platform.OS === 'android' ? 'height' : undefined}>
-      <ScrollView ref={scroll} contentContainerStyle={styles.content} keyboardDismissMode="on-drag"
-        keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+    <FormKeyboardLayout>
+      <ScrollView ref={scroll} style={styles.flex} contentContainerStyle={styles.content} keyboardDismissMode="on-drag"
+        keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator>
         <View style={styles.topBar}>
           <Pressable accessibilityRole="button" accessibilityLabel="Volver a Cuenta" onPress={returnToAccount}
             style={({ pressed }) => [styles.back, pressed && styles.pressed]}>
@@ -131,7 +132,7 @@ export function ProfileScreen() {
           <View style={styles.footerLine} />
         </View>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </FormKeyboardLayout>
   </SafeAreaView>;
 }
 

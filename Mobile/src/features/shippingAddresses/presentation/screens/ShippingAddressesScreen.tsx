@@ -1,10 +1,11 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Image, Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, View, type ScrollViewInstance } from 'react-native';
+import { ActivityIndicator, Image, Keyboard, Pressable, ScrollView, StyleSheet, Text, View, type ScrollViewInstance } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { Reveal, SoftPressable } from '@/shared/components/Motion';
+import { FormKeyboardLayout } from '@/shared/components/FormKeyboardLayout';
 
 import type { ShippingAddress } from '../../domain/models/ShippingAddress';
 import { ShippingAddressForm } from '../components/ShippingAddressForm';
@@ -79,8 +80,8 @@ export function ShippingAddressesScreen() {
   }
 
   return <SafeAreaView edges={['top', 'left', 'right', 'bottom']} style={styles.screen}>
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : Platform.OS === 'android' ? 'height' : undefined} style={styles.screen}>
-      <ScrollView ref={scroll} contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
+    <FormKeyboardLayout>
+      <ScrollView ref={scroll} style={styles.screen} contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" showsVerticalScrollIndicator>
         <View style={styles.topBar}>
           <Pressable accessibilityRole="button" accessibilityLabel="Volver a Cuenta" onPress={back} style={({ pressed }) => [styles.backButton, pressed && styles.pressed]}>
             <Ionicons accessible={false} name="arrow-back" size={22} color={colors.primaryDark} />
@@ -136,7 +137,7 @@ export function ShippingAddressesScreen() {
         </Reveal>}
         </>}
       </ScrollView>
-    </KeyboardAvoidingView>
+    </FormKeyboardLayout>
   </SafeAreaView>;
 }
 
