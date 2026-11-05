@@ -4,6 +4,8 @@ import { ActivityIndicator, FlatList, Image, Keyboard, Pressable, StyleSheet, Te
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { Reveal } from '@/shared/components/Motion';
+import { ScreenHeader } from '@/shared/components/ScreenHeader';
+import { FeedbackBanner, ScreenState } from '@/shared/components/ScreenFeedback';
 import type { ListCatalog } from '../../domain/useCases/listCatalog';
 import type { CatalogProduct } from '../../domain/models/Catalog';
 import { CatalogProductCard } from '../components/CatalogProductCard';
@@ -58,11 +60,7 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
                   <Ionicons accessible={false} name="person-outline" size={20} color={colors.primaryDark} />
                 </Pressable>
               </View>
-              <View style={styles.heading}>
-                <Text style={styles.eyebrow}>CATÁLOGO INHALEX</Text>
-                <Text accessibilityRole="header" style={styles.title}>Un aroma para ti<Text style={styles.titleDot}>.</Text></Text>
-                <Text style={styles.description}>Pequeñas esencias para acompañar tu día.</Text>
-              </View>
+              <ScreenHeader title="Un aroma para ti" eyebrow="Catálogo INHALEX" />
               <View style={styles.searchEntry}>
                 <CatalogSearchField value={vm.searchQuery} onChange={vm.setSearchQuery}
                   onSubmit={() => { Keyboard.dismiss(); void vm.submitSearch(); }}
@@ -99,9 +97,8 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
                   <Ionicons accessible={false} name="close-circle-outline" size={18} color={colors.primaryDark} />
                 </Pressable>
               </View>}
-              {vm.error && vm.products.length > 0 && <View accessibilityLiveRegion="polite" style={styles.notice}>
-                <Text style={styles.noticeText}>{vm.error} Se conserva la última colección cargada.</Text>
-              </View>}
+              {vm.error && vm.products.length > 0 && <FeedbackBanner
+                message={`${vm.error} Se conserva la última colección cargada.`} />}
             </Reveal>
             <Reveal delay={60} style={styles.inset}>
               <View style={[styles.collectionRow, largeText && styles.collectionRowStacked]}>
@@ -140,27 +137,24 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
           </Reveal>
         )}
         ListEmptyComponent={
-          <View accessibilityLiveRegion="polite" style={styles.emptyState}>
-            {vm.status === 'loading'
-              ? <ActivityIndicator accessibilityLabel="Cargando productos" color={colors.primary} size="large" />
-              : <Ionicons accessible={false} name={vm.status === 'error' ? 'cloud-offline-outline' : searching ? 'search-outline' : 'leaf-outline'} color={colors.primary} size={34} />}
-            <Text accessibilityRole="header" style={styles.stateTitle}>{vm.status === 'loading' ? 'Un momento para descubrir'
-              : vm.status === 'error' ? 'No pudimos cargar la colección' : searching ? 'No encontramos coincidencias' : categoryName === undefined ? 'Nuevos aromas están por llegar' : 'Esta línea aún no tiene productos'}</Text>
-            <Text style={styles.stateCopy}>{vm.status === 'loading' ? 'Estamos preparando el catálogo para ti.'
-              : vm.status === 'error' ? vm.error : searching ? 'Prueba otro nombre o aroma, o limpia la búsqueda para ver la colección.' : categoryName === undefined
+          <View style={styles.inset}>
+            <ScreenState busy={vm.status === 'loading'}
+              icon={vm.status === 'error' ? 'cloud-offline-outline' : searching ? 'search-outline' : 'leaf-outline'}
+              title={vm.status === 'loading' ? 'Cargando catálogo…'
+              : vm.status === 'error' ? 'No pudimos cargar la colección' : searching ? 'No encontramos coincidencias' : categoryName === undefined ? 'Nuevos aromas están por llegar' : 'Esta línea aún no tiene productos'}
+              message={vm.status === 'loading' ? 'Estamos preparando el catálogo para ti.'
+              : vm.status === 'error' ? vm.error ?? undefined : searching ? 'Prueba otro nombre o aroma, o limpia la búsqueda para ver la colección.' : categoryName === undefined
                 ? 'Por ahora no hay productos disponibles. Puedes volver a consultar en un momento.'
-                : 'Puedes consultar otra línea o volver a ver todos los productos.'}</Text>
-            {vm.status !== 'loading' && <Pressable accessibilityRole="button" onPress={() => { void (searching && vm.status !== 'error' ? vm.clearSearch() : vm.refresh()); }}
-              style={({ pressed }) => [styles.actionButton, pressed && styles.pressed]}>
-              <Text style={styles.actionText}>{vm.status === 'error' ? 'Reintentar' : searching ? 'Limpiar búsqueda' : 'Volver a consultar'}</Text>
-            </Pressable>}
+                : 'Puedes consultar otra línea o volver a ver todos los productos.'}
+              onAction={() => { void (searching && vm.status !== 'error' ? vm.clearSearch() : vm.refresh()); }}
+              actionLabel={vm.status === 'error' ? 'Reintentar' : searching ? 'Limpiar búsqueda' : 'Volver a consultar'} />
           </View>
         }
         ListFooterComponent={
           <View style={styles.footer}>
             {vm.products.length > 0 && <>
               {vm.hasMore && <Text style={styles.loadedCount}>{vm.products.length} de {vm.total} productos</Text>}
-              {vm.moreError && <Text accessibilityLiveRegion="polite" style={styles.paginationError}>{vm.moreError}</Text>}
+              {vm.moreError && <FeedbackBanner message={vm.moreError} />}
               {vm.hasMore && <Pressable accessibilityRole="button"
                 accessibilityState={{ disabled: vm.loadingMore || vm.refreshing, busy: vm.loadingMore }}
                 disabled={vm.loadingMore || vm.refreshing}
@@ -188,15 +182,10 @@ const styles = StyleSheet.create({
   list: { alignSelf: 'center', flex: 1, maxWidth: 600, width: '100%' },
   content: { paddingBottom: 28 },
   inset: { paddingHorizontal: 22 },
-  brandRow: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 },
+  brandRow: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, marginBottom: 20 },
   brand: { height: 44, width: 142 },
   account: { alignItems: 'center', backgroundColor: '#ECF3E7', borderColor: '#E0E9D9', borderRadius: 24, borderWidth: 1, height: 44, justifyContent: 'center', width: 44 },
-  heading: { marginTop: 28 },
-  eyebrow: { color: colors.primary, fontSize: 10, fontWeight: '700', letterSpacing: 1.7 },
-  title: { color: colors.text, fontSize: 31, fontWeight: '700', letterSpacing: -1, lineHeight: 38, marginTop: 7 },
-  titleDot: { color: colors.primary },
-  description: { color: colors.textMuted, fontSize: 13, lineHeight: 21, marginTop: 6 },
-  searchEntry: { marginTop: 19 },
+  searchEntry: { marginTop: 0 },
   refreshButton: { alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', gap: 8, marginTop: 10, minHeight: 44, paddingRight: 12 },
   refreshText: { color: colors.primary, fontSize: 12, fontWeight: '600' },
   linesEntry: { alignItems: 'center', backgroundColor: '#EAF1E5', borderColor: '#DDE8D5', borderRadius: 17, borderWidth: 1, flexDirection: 'row', gap: 12, marginTop: 12, minHeight: 76, padding: 14 },
@@ -208,8 +197,6 @@ const styles = StyleSheet.create({
   filterTitle: { color: colors.primaryDark, fontSize: 16, fontWeight: '700', lineHeight: 23 },
   clearFilter: { alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', gap: 8, minHeight: 44 },
   clearFilterText: { color: colors.primaryDark, flexShrink: 1, fontSize: 12, lineHeight: 19 },
-  notice: { backgroundColor: '#F8EFE5', borderRadius: 12, padding: 12, marginTop: 8 },
-  noticeText: { color: '#79543B', fontSize: 12, lineHeight: 19 },
   collectionRow: { alignItems: 'center', flexDirection: 'row', gap: 12, justifyContent: 'space-between', marginBottom: 17, marginTop: 28 },
   collectionRowStacked: { alignItems: 'flex-start', flexDirection: 'column' },
   collectionCopy: { flex: 1 },
@@ -223,14 +210,10 @@ const styles = StyleSheet.create({
   row: { alignItems: 'stretch', gap: 12, paddingHorizontal: 22 },
   cardShell: { marginBottom: 14 },
   singleCard: { marginHorizontal: 22 },
-  emptyState: { alignItems: 'center', paddingHorizontal: 30, paddingVertical: 36 },
-  stateTitle: { color: colors.text, fontSize: 19, fontWeight: '700', lineHeight: 26, marginTop: 16, textAlign: 'center' },
-  stateCopy: { color: colors.textMuted, fontSize: 13, lineHeight: 21, marginTop: 9, textAlign: 'center' },
   actionButton: { alignItems: 'center', backgroundColor: colors.primaryDark, borderRadius: 14, flexDirection: 'row', gap: 9, justifyContent: 'center', marginTop: 20, minHeight: 48, paddingHorizontal: 22, paddingVertical: 12 },
   actionText: { color: colors.white, fontSize: 13, fontWeight: '700', textAlign: 'center' },
   moreButton: { marginBottom: 26, marginTop: 12 },
   loadedCount: { color: colors.textMuted, fontSize: 12, lineHeight: 18, marginBottom: 4, textAlign: 'center' },
-  paginationError: { color: '#8A4E3B', fontSize: 12, lineHeight: 19, marginTop: 8, textAlign: 'center' },
   footer: { alignItems: 'center', paddingHorizontal: 22, paddingTop: 14 },
   signature: { alignItems: 'center', flexDirection: 'row', gap: 14 },
   signatureLine: { backgroundColor: colors.border, height: 1, width: 42 },

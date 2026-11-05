@@ -1,8 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { ActivityIndicator, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { colors } from '@/core/theme/colors';
 import { AppScreen } from '@/shared/components/AppScreen';
+import { BackButton } from '@/shared/components/ScreenHeader';
+import { FeedbackBanner, LoadingState } from '@/shared/components/ScreenFeedback';
 import { SoftPressable } from '@/shared/components/Motion';
 import type { Notice } from '../../domain/models/Notice';
 import { useNoticesViewModel, formatNoticeDate as formatDate, noticeTypeLabel } from '../viewModels/useNoticesViewModel';
@@ -17,10 +19,7 @@ export function NoticesScreen() {
     : router.canGoBack() ? router.back() : router.navigate('/cuenta');
 
   return <AppScreen title="Avisos" eyebrow="Siempre cerca de ti" includeBottomInset
-    action={<SoftPressable accessibilityRole="button" accessibilityLabel={selected ? 'Volver a la bandeja de avisos' : 'Volver a Cuenta'}
-      onPress={goBack} style={styles.back}>
-      <Ionicons accessible={false} aria-hidden name="arrow-back" size={21} color={colors.primaryDark} />
-    </SoftPressable>}>
+    action={<BackButton label={selected ? 'Volver a la bandeja de avisos' : 'Volver a Cuenta'} onPress={goBack} />}>
     <View style={styles.hero}>
       <View style={styles.heroCopy}>
         <Text style={styles.overline}>TU BANDEJA INHALEX</Text>
@@ -33,24 +32,22 @@ export function NoticesScreen() {
       </View>
     </View>
 
-    {vm.status === 'checking' ? <Loading label="Comprobando tu sesión…" /> : gated ? <View style={styles.empty}>
+    {vm.status === 'checking' ? <LoadingState label="Comprobando tu sesión…" /> : gated ? <View style={styles.empty}>
       <StateIcon name="person-circle-outline" />
       <Text accessibilityRole="header" style={styles.emptyTitle}>Tus novedades empiezan contigo</Text>
       <Text accessibilityLiveRegion="polite" style={styles.emptyCopy}>{vm.error || 'Inicia sesión para consultar los avisos de tu cuenta.'}</Text>
       {vm.status === 'recovery-error' ? <Action label="Reintentar sesión" onPress={() => void vm.restoreSession()} />
         : <Action label={vm.openingSignIn ? 'Abriendo…' : 'Iniciar sesión'} disabled={vm.openingSignIn}
           onPress={() => void vm.prepareSignIn().then((ready) => { if (ready) router.push('/sign-in'); })} />}
-    </View> : vm.status === 'loading' ? <Loading label="Consultando tus avisos…" /> : <>
+    </View> : vm.status === 'loading' ? <LoadingState label="Cargando tus avisos…" /> : <>
       <SoftPressable accessibilityRole="button" accessibilityLabel="Actualizar avisos"
         accessibilityState={{ disabled: !vm.canRefresh, busy: vm.refreshing }} disabled={!vm.canRefresh}
         onPress={() => void vm.refresh()} style={[styles.refresh, !vm.canRefresh && styles.disabled]}>
         <Ionicons accessible={false} aria-hidden name="refresh-outline" size={18} color={colors.primary} />
         <Text accessibilityLiveRegion="polite" style={styles.refreshLabel}>{vm.refreshing ? 'Actualizando…' : 'Actualizar avisos'}</Text>
       </SoftPressable>
-      {vm.error ? <View style={styles.notice}>
-        <Text accessibilityRole="alert" style={styles.noticeCopy}>{vm.error}</Text>
-        <Action label="Reintentar" secondary disabled={!vm.canRefresh} onPress={() => void vm.refresh()} />
-      </View> : null}
+      {vm.error ? <FeedbackBanner message={vm.error} disabled={!vm.canRefresh}
+        busy={vm.refreshing} onRetry={() => void vm.refresh()} /> : null}
 
       {selected ? <View style={styles.detail}>
         <View style={styles.detailTop}><NoticeIcon type={selected.type} /><ReadBadge read={selected.readAt !== null} /></View>
@@ -60,7 +57,7 @@ export function NoticesScreen() {
         <View style={styles.divider} />
         <Text selectable style={styles.message}>{selected.message}</Text>
         {selected.readAt ? <Text style={styles.footnote}>Leído el {formatDate(selected.readAt)}</Text> : null}
-        {vm.readError ? <Text accessibilityRole="alert" style={styles.readError}>{vm.readError}</Text> : null}
+        {vm.readError ? <FeedbackBanner message={vm.readError} /> : null}
         {!selected.readAt ? <Action label={vm.markingReadId === selected.id ? 'Marcando como leído…'
           : vm.readError ? 'Intentar marcar como leído' : 'Marcar como leído'} disabled={!vm.canMarkRead}
           busy={vm.markingReadId === selected.id} onPress={() => void vm.markSelectedRead()} /> : null}
@@ -139,10 +136,6 @@ function StateIcon({ name }: { name: 'person-circle-outline' | 'notifications-of
   </View>;
 }
 
-function Loading({ label }: { label: string }) {
-  return <View style={styles.empty}><ActivityIndicator color={colors.primary} size="large" />
-    <Text accessibilityLiveRegion="polite" style={styles.emptyCopy}>{label}</Text></View>;
-}
 
 function Action({ label, onPress, disabled = false, secondary = false, busy = false }: {
   label: string; onPress: () => void; disabled?: boolean; secondary?: boolean; busy?: boolean;

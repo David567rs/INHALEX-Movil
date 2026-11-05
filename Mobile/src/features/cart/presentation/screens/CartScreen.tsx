@@ -3,6 +3,8 @@ import { router } from 'expo-router';
 import { ActivityIndicator, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
+import { FeedbackBanner, ScreenState } from '@/shared/components/ScreenFeedback';
+import { ScreenHeader } from '@/shared/components/ScreenHeader';
 import { Reveal, SoftPressable } from '@/shared/components/Motion';
 import { CartItemCard } from '../components/CartItemCard';
 import { useCartViewModel } from '../viewModels/useCartViewModel';
@@ -25,20 +27,11 @@ export function CartScreen() {
       refreshControl={showCollection ? <RefreshControl refreshing={vm.refreshing} enabled={vm.canRefresh}
         onRefresh={() => { if (vm.canRefresh) refresh(); }} colors={[colors.primary]} tintColor={colors.primary} /> : undefined}>
       <Reveal>
-        <View style={styles.header}>
-          <View style={styles.sectionCopy}>
-            <Text style={styles.eyebrow}>TU PRÓXIMA PAUSA</Text>
-            <Text accessibilityRole="header" style={styles.title}>Tu bolsa<Text style={styles.dot}>.</Text></Text>
-          </View>
-          <View accessible={false} aria-hidden accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={styles.headerBag}>
-            <Ionicons name="bag-handle-outline" size={30} color={colors.primaryDark} />
-          </View>
-        </View>
-        <Text style={styles.intro}>Tus aromas elegidos, un paso más cerca de ti.</Text>
-
+        <ScreenHeader title="Tu bolsa" eyebrow="Tu próxima pausa"
+          description="Tus aromas elegidos, un paso más cerca de ti." />
       </Reveal>
 
-      {vm.checkoutLocked && <Text accessibilityLiveRegion="polite" style={styles.notice}>Estamos confirmando tu pedido. Tu bolsa se actualizará al terminar.</Text>}
+      {vm.checkoutLocked && <FeedbackBanner tone="info" message="Estamos confirmando tu pedido. Tu bolsa se actualizará al terminar." />}
       {(vm.status === 'error' || vm.loaded && vm.items.length === 0) && !needsSession && !recovering && <Pressable
         accessibilityRole="button" accessibilityLabel="Revisar pedido pendiente"
         onPress={() => router.push('/creacion-pedido')} style={styles.refreshButton}>
@@ -46,22 +39,21 @@ export function CartScreen() {
         <Text style={styles.refreshText}>Revisar pedido pendiente</Text>
       </Pressable>}
 
-      {needsSession ? <StatusPanel title={vm.status === 'session-expired' ? 'Vuelve a iniciar sesión' : 'Tu selección te espera'}
+      {needsSession ? <ScreenState icon="bag-handle-outline" title={vm.status === 'session-expired' ? 'Vuelve a iniciar sesión' : 'Tu selección te espera'}
         message={vm.status === 'session-expired' ? 'Inicia sesión de nuevo para consultar tu bolsa.' : 'Inicia sesión para agregar productos y preparar tu selección.'}
         actionLabel={vm.openingSignIn ? 'Abriendo…' : 'Iniciar sesión'} actionBusy={vm.openingSignIn}
         onAction={() => { void openSignIn(); }} />
-        : recovering ? <StatusPanel title="No pudimos comprobar tu sesión" message="Comprueba tu conexión e intenta recuperar tu sesión para consultar la bolsa."
+        : recovering ? <ScreenState icon="bag-handle-outline" title="No pudimos comprobar tu sesión" message="Comprueba tu conexión e intenta recuperar tu sesión para consultar la bolsa."
           actionLabel="Reintentar sesión" onAction={() => { void vm.restoreSession(); }} />
-        : !vm.loaded && vm.busy ? <StatusPanel title={vm.status === 'checking' ? 'Comprobando tu sesión' : 'Preparando tu bolsa'}
+        : !vm.loaded && vm.busy ? <ScreenState icon="bag-handle-outline" title={vm.status === 'checking' ? 'Comprobando tu sesión' : 'Cargando tu bolsa…'}
           message="Estamos consultando tu selección." busy />
-        : !vm.loaded && vm.status === 'error' ? <StatusPanel title="No pudimos cargar tu bolsa"
+        : !vm.loaded && vm.status === 'error' ? <ScreenState icon="bag-handle-outline" title="No pudimos cargar tu bolsa"
           message={vm.error || 'Comprueba tu conexión e inténtalo de nuevo.'} actionLabel="Reintentar" onAction={refresh} /> : null}
 
       {showCollection && <>
-        {(vm.error || vm.mutationError) && <View accessibilityLiveRegion="polite" style={styles.errorNotice}>
-          <Text style={styles.errorCopy}>{vm.mutationError || vm.error} Se conservan los últimos datos confirmados. Reintenta para comprobar el estado actual.</Text>
-        </View>}
-        {vm.notice && <Text accessibilityLiveRegion="polite" style={styles.notice}>{vm.notice}</Text>}
+        {(vm.error || vm.mutationError) && <FeedbackBanner
+          message={`${vm.mutationError || vm.error} Se conservan los últimos datos confirmados. Reintenta para comprobar el estado actual.`} />}
+        {vm.notice && <FeedbackBanner tone="info" message={vm.notice} />}
         <Pressable accessibilityRole="button" accessibilityLabel={vm.error || vm.mutationError ? 'Reintentar carga de bolsa' : 'Actualizar bolsa'}
           accessibilityState={{ disabled: !vm.canRefresh, busy: vm.refreshing }} disabled={!vm.canRefresh}
           onPress={refresh} style={[styles.refreshButton, !vm.canRefresh && styles.disabled]}>
@@ -161,35 +153,12 @@ export function CartScreen() {
   </SafeAreaView>;
 }
 
-function StatusPanel({ title, message, busy = false, actionBusy = false, actionLabel, onAction }: {
-  title: string; message: string; busy?: boolean; actionBusy?: boolean; actionLabel?: string; onAction?(): void;
-}) {
-  return <View accessibilityLiveRegion="polite" style={styles.emptyPanel}>
-    {busy ? <ActivityIndicator accessibilityLabel={title} color={colors.primary} size="large" />
-      : <Ionicons accessible={false} name="bag-handle-outline" size={38} color={colors.primary} />}
-    <Text accessibilityRole="header" style={styles.emptyTitle}>{title}</Text>
-    <Text style={styles.emptyCopy}>{message}</Text>
-    {onAction && <Pressable accessibilityRole="button" accessibilityLabel={actionLabel} onPress={onAction}
-      accessibilityState={{ disabled: actionBusy, busy: actionBusy }} disabled={actionBusy}
-      style={[styles.primaryButton, actionBusy && styles.disabled]}><Text style={styles.primaryText}>{actionLabel}</Text></Pressable>}
-  </View>;
-}
-
 const styles = StyleSheet.create({
   refreshButton: { alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', gap: 8, marginTop: 18, minHeight: 44, paddingVertical: 8 },
   refreshText: { color: colors.primaryDark, fontSize: 12, fontWeight: '700' },
-  errorNotice: { backgroundColor: colors.dangerSoft, borderRadius: 14, marginTop: 18, padding: 13 },
-  errorCopy: { color: colors.danger, fontSize: 12, lineHeight: 20 },
-  notice: { color: colors.primaryDark, fontSize: 12, lineHeight: 20, marginTop: 18 },
   disabled: { opacity: 0.6 },
   safeArea: { backgroundColor: colors.background, flex: 1 },
   content: { alignSelf: 'center', maxWidth: 600, padding: 22, paddingBottom: 30, width: '100%' },
-  header: { alignItems: 'center', flexDirection: 'row', gap: 12, justifyContent: 'space-between' },
-  headerBag: { alignItems: 'center', height: 46, justifyContent: 'center', width: 40 },
-  eyebrow: { color: colors.primary, fontSize: 10, fontWeight: '800', letterSpacing: 1.8 },
-  title: { color: colors.text, fontSize: 32, fontWeight: '800', letterSpacing: -1.1, marginTop: 6 },
-  dot: { color: colors.accent },
-  intro: { color: colors.textMuted, fontSize: 14, lineHeight: 22, marginTop: 8 },
   sectionHeading: { alignItems: 'center', flexDirection: 'row', gap: 12, marginBottom: 14, marginTop: 16 },
   sectionCopy: { flex: 1, minWidth: 0 },
   sectionTitle: { color: colors.text, fontSize: 20, fontWeight: '800', letterSpacing: -0.5 },

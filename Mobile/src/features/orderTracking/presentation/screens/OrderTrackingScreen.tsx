@@ -1,8 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { ActivityIndicator, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { colors } from '@/core/theme/colors';
 import { AppScreen } from '@/shared/components/AppScreen';
+import { BackButton } from '@/shared/components/ScreenHeader';
+import { FeedbackBanner, LoadingState, ScreenState } from '@/shared/components/ScreenFeedback';
 import { SoftPressable } from '@/shared/components/Motion';
 import { useOrderTrackingViewModel, formatTrackingDate, formatTrackingPrice,
   type OrderTrackingStep } from '../viewModels/useOrderTrackingViewModel';
@@ -16,10 +18,7 @@ export function OrderTrackingScreen({ orderId }: { orderId: string | null }) {
   const cancelled = order?.status === 'cancelled';
   const gated = vm.status === 'anonymous' || vm.status === 'recovery-error' || vm.status === 'session-expired';
   return <AppScreen title="Seguimiento" eyebrow="Tu pedido, paso a paso" includeBottomInset
-    action={<SoftPressable accessibilityRole="button" accessibilityLabel="Volver"
-      onPress={() => router.canGoBack() ? router.back() : openHistory()} style={styles.back}>
-      <Ionicons accessible={false} aria-hidden name="arrow-back" size={21} color={colors.primaryDark} />
-    </SoftPressable>}>
+    action={<BackButton onPress={() => router.canGoBack() ? router.back() : openHistory()} />}>
     <View style={styles.hero}>
       <View style={styles.heroCopy}>
         <Text style={styles.overline}>SEGUIMIENTO DEL PEDIDO</Text>
@@ -30,7 +29,7 @@ export function OrderTrackingScreen({ orderId }: { orderId: string | null }) {
         <Ionicons name="git-branch-outline" size={29} color={colors.primaryDark} />
       </View>
     </View>
-    {vm.status === 'checking' ? <Loading label="Comprobando tu sesión…" /> : gated ? <View style={styles.empty}>
+    {vm.status === 'checking' ? <LoadingState label="Comprobando tu sesión…" /> : gated ? <View style={styles.empty}>
       <DecorativeIcon name="person-circle-outline" />
       <Text accessibilityRole="header" style={styles.emptyTitle}>El recorrido empieza contigo</Text>
       <Text accessibilityLiveRegion="polite" style={styles.emptyCopy}>{vm.error || 'Inicia sesión para consultar el estado de tus pedidos.'}</Text>
@@ -42,30 +41,27 @@ export function OrderTrackingScreen({ orderId }: { orderId: string | null }) {
       <Text accessibilityRole="header" style={styles.emptyTitle}>Elige un pedido para seguir su historia</Text>
       <Text style={styles.emptyCopy}>Abre Mis pedidos, selecciona uno y consulta su seguimiento.</Text>
       <Action label="Ver mis pedidos" onPress={openHistory} />
-    </View> : vm.status === 'loading' ? <Loading label="Consultando tu pedido…" />
+    </View> : vm.status === 'loading' ? <LoadingState label="Cargando tu pedido…" />
       : vm.status === 'not-found' ? <View style={styles.empty}>
         <DecorativeIcon name="receipt-outline" />
         <Text accessibilityRole="header" style={styles.emptyTitle}>No encontramos este pedido</Text>
         <Text style={styles.emptyCopy}>{vm.error}</Text>
         <Action label="Ver mis pedidos" onPress={openHistory} />
         {vm.canRefresh ? <Action label="Reintentar" onPress={() => void vm.refresh()} secondary /> : null}
-      </View> : vm.status === 'error' && !order ? <View style={styles.empty}>
-        <DecorativeIcon name="cloud-offline-outline" />
-        <Text accessibilityRole="header" style={styles.emptyTitle}>No pudimos cargar el seguimiento</Text>
-        <Text accessibilityRole="alert" style={styles.emptyCopy}>{vm.error}</Text>
-        {vm.canRefresh ? <Action label="Reintentar" onPress={() => void vm.refresh()} /> : null}
+      </View> : vm.status === 'error' && !order ? <>
+        <ScreenState icon="cloud-offline-outline" title="No pudimos cargar el seguimiento"
+          message={vm.error || 'Comprueba tu conexión e inténtalo de nuevo.'}
+          actionLabel={vm.canRefresh ? 'Reintentar' : undefined} onAction={() => void vm.refresh()} />
         <Action label="Ver mis pedidos" onPress={openHistory} secondary />
-      </View> : order ? <>
+      </> : order ? <>
         <SoftPressable accessibilityRole="button" accessibilityLabel="Actualizar seguimiento"
           accessibilityState={{ disabled: !vm.canRefresh, busy: vm.refreshing }} disabled={!vm.canRefresh}
           onPress={() => void vm.refresh()} style={[styles.refresh, !vm.canRefresh && styles.disabled]}>
           <Ionicons accessible={false} aria-hidden name="refresh-outline" size={17} color={colors.primary} />
           <Text accessibilityLiveRegion="polite" style={styles.actionLabel}>{vm.refreshing ? 'Actualizando…' : 'Actualizar seguimiento'}</Text>
         </SoftPressable>
-        {vm.error ? <View style={styles.notice}>
-          <Text accessibilityRole="alert" style={styles.noticeCopy}>{vm.error}</Text>
-          <Action label="Reintentar" onPress={() => void vm.refresh()} disabled={!vm.canRefresh} secondary />
-        </View> : null}
+        {vm.error ? <FeedbackBanner message={vm.error} disabled={!vm.canRefresh}
+          busy={vm.refreshing} onRetry={() => void vm.refresh()} /> : null}
         <View style={styles.card}>
           <View style={styles.cardHeading}>
             <View style={styles.flexCopy}><Text style={styles.label}>TU PEDIDO</Text>
@@ -123,11 +119,6 @@ export function OrderTrackingScreen({ orderId }: { orderId: string | null }) {
 function DecorativeIcon({ name }: { name: 'person-circle-outline' | 'receipt-outline' | 'cloud-offline-outline' }) {
   return <View accessible={false} importantForAccessibility="no-hide-descendants" aria-hidden style={styles.emptyIcon}>
     <Ionicons name={name} size={35} color={colors.primary} />
-  </View>;
-}
-function Loading({ label }: { label: string }) {
-  return <View accessibilityRole="progressbar" accessibilityLabel={label} style={styles.loading}>
-    <ActivityIndicator color={colors.primary} /><Text accessibilityLiveRegion="polite" style={styles.body}>{label}</Text>
   </View>;
 }
 function Action({ label, onPress, disabled = false, secondary = false }: {

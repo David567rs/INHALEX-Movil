@@ -1,8 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { colors } from '@/core/theme/colors';
 import { AppScreen } from '@/shared/components/AppScreen';
+import { BackButton } from '@/shared/components/ScreenHeader';
+import { FeedbackBanner, LoadingState } from '@/shared/components/ScreenFeedback';
 import { Reveal, SoftPressable } from '@/shared/components/Motion';
 import type { OrderHistoryDetail, OrderHistorySummary } from '../../domain/models/OrderHistory';
 import { useOrderHistoryViewModel, formatHistoryDate, formatHistoryPrice, historyStatusLabel,
@@ -17,10 +19,7 @@ export function OrderHistoryScreen() {
   const checking = vm.status === 'checking';
   const gated = vm.status === 'anonymous' || vm.status === 'session-expired' || vm.status === 'recovery-error';
   return <AppScreen title="Mis pedidos" eyebrow="Tu historia con INHALEX" includeBottomInset
-    action={<SoftPressable accessibilityRole="button" accessibilityLabel="Volver a Cuenta"
-      onPress={() => router.replace('/(tabs)/cuenta')} style={styles.back}>
-      <Ionicons accessible={false} aria-hidden name="arrow-back" size={21} color={colors.primaryDark} />
-    </SoftPressable>}>
+    action={<BackButton label="Volver a Cuenta" onPress={() => router.replace('/(tabs)/cuenta')} />}>
     <Reveal><View style={styles.hero}>
       <View style={styles.heroCopy}>
         <Text style={styles.overline}>HISTORIAL DE PEDIDOS</Text>
@@ -31,7 +30,7 @@ export function OrderHistoryScreen() {
         <Ionicons name="receipt-outline" size={29} color={colors.primaryDark} />
       </View>
     </View></Reveal>
-    {checking ? <Loading label="Comprobando tu sesión…" /> : gated ? <View style={styles.empty}>
+    {checking ? <LoadingState label="Comprobando tu sesión…" /> : gated ? <View style={styles.empty}>
       <Ionicons accessible={false} aria-hidden name="person-circle-outline" size={48} color={colors.primary} />
       <Text accessibilityRole="header" style={styles.emptyTitle}>Tu historia empieza contigo</Text>
       <Text accessibilityLiveRegion="polite" style={styles.emptyCopy}>
@@ -47,8 +46,8 @@ export function OrderHistoryScreen() {
         <Ionicons accessible={false} aria-hidden name="refresh-outline" size={17} color={colors.primary} />
         <Text accessibilityLiveRegion="polite" style={styles.selectionLabel}>{vm.refreshing ? 'Actualizando…' : 'Actualizar historial'}</Text>
       </SoftPressable>
-      {vm.error ? <Notice message={vm.error} disabled={!vm.canRefresh} onRetry={() => void vm.refresh()} /> : null}
-      {vm.status === 'loading' ? <Loading label="Consultando tus pedidos…" /> : vm.isEmpty ? <View style={styles.empty}>
+      {vm.error ? <FeedbackBanner message={vm.error} disabled={!vm.canRefresh} onRetry={() => void vm.refresh()} /> : null}
+      {vm.status === 'loading' ? <LoadingState label="Cargando tus pedidos…" /> : vm.isEmpty ? <View style={styles.empty}>
         <View accessible={false} importantForAccessibility="no-hide-descendants" aria-hidden style={styles.emptyIcon}>
           <Ionicons name="receipt-outline" size={35} color={colors.primary} />
         </View>
@@ -80,7 +79,7 @@ export function OrderHistoryScreen() {
           <Text style={styles.emptyCopy}>{vm.nextCursor ? 'Puedes cargar más pedidos o consultar todos los que ya están disponibles.' : 'Consulta todos tus pedidos para ver el resto de tu historia.'}</Text>
           <Action label="Ver todos" onPress={() => vm.selectFilter('all')} disabled={vm.busy} />
         </View>}
-        {vm.loadMoreError ? <Notice message={vm.loadMoreError} disabled={vm.busy} onRetry={() => void vm.loadMore()} /> : null}
+        {vm.loadMoreError ? <FeedbackBanner message={vm.loadMoreError} disabled={vm.busy} onRetry={() => void vm.loadMore()} /> : null}
         {vm.nextCursor ? <Action label={vm.loadingMore ? 'Cargando más pedidos…' : 'Cargar más pedidos'}
           disabled={vm.busy} onPress={() => void vm.loadMore()} /> : null}
       </> : null}
@@ -93,20 +92,6 @@ function Action({ label, onPress, disabled = false }: { label: string; onPress: 
     accessibilityState={{ disabled }} onPress={onPress} style={[styles.primaryButton, disabled && styles.disabled]}>
     <Text style={styles.primaryLabel}>{label}</Text>
   </SoftPressable>;
-}
-function Loading({ label }: { label: string }) {
-  return <View accessibilityRole="progressbar" accessibilityLabel={label} style={styles.loading}>
-    <ActivityIndicator color={colors.primary} /><Text accessibilityLiveRegion="polite" style={styles.emptyCopy}>{label}</Text>
-  </View>;
-}
-function Notice({ message, onRetry, disabled }: { message: string; onRetry: () => void; disabled: boolean }) {
-  return <View style={styles.notice}>
-    <Text accessibilityRole="alert" style={styles.noticeCopy}>{message}</Text>
-    <SoftPressable accessibilityRole="button" accessibilityLabel="Reintentar" disabled={disabled}
-      accessibilityState={{ disabled }} onPress={onRetry} style={styles.retry}>
-      <Text style={styles.selectionLabel}>Reintentar</Text>
-    </SoftPressable>
-  </View>;
 }
 function HistoryCard({ order, selected, disabled, onSelect, detail, loading, error, onRetry }: {
   order: OrderHistorySummary; selected: boolean; disabled: boolean; onSelect: () => void;
@@ -137,8 +122,8 @@ function HistoryCard({ order, selected, disabled, onSelect, detail, loading, err
       </View>
     </SoftPressable>
     {selected ? <View style={styles.details}>
-      {loading ? <Loading label="Consultando el resumen…" /> : null}
-      {error ? <Notice message={error} onRetry={onRetry} disabled={loading || disabled} /> : null}
+      {loading ? <LoadingState label="Cargando el resumen…" /> : null}
+      {error ? <FeedbackBanner message={error} onRetry={onRetry} disabled={loading || disabled} /> : null}
       {detail && detail.id === order.id ? <>
         <Text accessibilityRole="header" style={styles.detailsTitle}>Productos del pedido</Text>
         {detail.items.map((item) => <View key={item.productId} style={styles.item}>
@@ -166,7 +151,6 @@ function HistoryCard({ order, selected, disabled, onSelect, detail, loading, err
 }
 
 const styles = StyleSheet.create({
-  back: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 14, borderWidth: 1, height: 44, justifyContent: 'center', marginLeft: 6, width: 44 },
   hero: { backgroundColor: colors.surfaceSoft, borderColor: colors.border, borderRadius: 24, borderWidth: 1, flexDirection: 'row', gap: 8, marginBottom: 27, overflow: 'hidden', padding: 21 },
   heroCopy: { flex: 1, minWidth: 0 },
   overline: { color: colors.primary, fontSize: 9, fontWeight: '800', letterSpacing: 1.1, lineHeight: 16 },
@@ -224,9 +208,5 @@ const styles = StyleSheet.create({
   emptyCopy: { color: colors.textMuted, fontSize: 12, lineHeight: 21, marginTop: 12, textAlign: 'center' },
   primaryButton: { alignItems: 'center', backgroundColor: colors.primaryDark, borderRadius: 14, justifyContent: 'center', marginTop: 25, minHeight: 50, padding: 14 },
   primaryLabel: { color: colors.white, fontSize: 12, fontWeight: '700' },
-  loading: { alignItems: 'center', paddingVertical: 25 },
-  notice: { backgroundColor: colors.warningSoft, borderRadius: 14, marginBottom: 16, padding: 14 },
-  noticeCopy: { color: colors.text, fontSize: 12, lineHeight: 20 },
-  retry: { alignItems: 'center', alignSelf: 'flex-start', justifyContent: 'center', minHeight: 44, paddingHorizontal: 8 },
   disabled: { opacity: 0.55 },
 });

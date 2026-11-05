@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { colors } from '@/core/theme/colors';
 import { AppScreen, ModuleCard } from '@/shared/components/AppScreen';
 import { SoftPressable } from '@/shared/components/Motion';
+import { FeedbackBanner } from '@/shared/components/ScreenFeedback';
 
 const sections = {
   catalogo: {
@@ -50,10 +51,8 @@ export function PreparationScreen({ section, notice, retry, isRetrying = false }
         <View style={styles.statusDot} />
         <Text style={styles.statusLabel}>EN PREPARACIÓN</Text>
       </View> : null}
-      {notice ? <View accessibilityLiveRegion="polite" style={styles.notice}>
-        <Text style={styles.noticeText}>{notice}</Text>
-        {retry ? <SoftPressable accessibilityRole="button" accessibilityState={{ disabled: isRetrying, busy: isRetrying }} disabled={isRetrying} onPress={retry} style={styles.retry}><Text style={styles.noticeText}>{isRetrying ? 'Eliminando…' : 'Reintentar eliminación'}</Text></SoftPressable> : null}
-      </View> : null}
+      {notice ? <FeedbackBanner message={notice} onRetry={retry} busy={isRetrying}
+        retryLabel="Reintentar eliminación" busyLabel="Eliminando…" /> : null}
       {section === 'cuenta' ? (
         <>
           <View style={styles.guestCard}>
@@ -137,9 +136,6 @@ const styles = StyleSheet.create({
   explore: { alignItems: 'center', marginTop: 16 },
   exploreButton: { flexDirection: 'row', gap: 8, paddingHorizontal: 14 },
   exploreLabel: { color: colors.primary, flexShrink: 1, fontSize: 14, fontWeight: '600' },
-  notice: { backgroundColor: colors.dangerSoft, borderRadius: 12, marginBottom: 18, padding: 12 },
-  noticeText: { color: colors.danger, fontSize: 13, lineHeight: 20 },
-  retry: { justifyContent: 'center', minHeight: 44 },
   status: { alignItems: 'center', alignSelf: 'flex-start', backgroundColor: colors.surfaceSoft, borderRadius: 14, flexDirection: 'row', gap: 7, marginBottom: 18, paddingHorizontal: 12, paddingVertical: 8 },
   statusDot: { backgroundColor: colors.primary, borderRadius: 4, height: 6, width: 6 },
   statusLabel: { color: colors.primaryDark, fontSize: 10, fontWeight: '700', letterSpacing: 1 },

@@ -7,6 +7,7 @@ import { FavoriteProductButton, FavoriteProductFeedback } from '@/features/favor
 import { AddToCartAction } from '@/features/cart/presentation/components/AddToCartButton';
 import { useCartViewModel } from '@/features/cart/presentation/viewModels/useCartViewModel';
 import { BottomSheet, useBottomSheetDismiss } from '@/shared/components/BottomSheet';
+import { FeedbackBanner, LoadingState, ScreenState } from '@/shared/components/ScreenFeedback';
 import type { GetProductDetail } from '../../domain/useCases/getProductDetail';
 import { ProductDetailImage } from '../components/ProductDetailImage';
 import { useProductDetailViewModel } from '../viewModels/useProductDetailViewModel';
@@ -32,15 +33,9 @@ export function ProductDetailScreen({ productId, getProduct }: { productId: stri
     onContentHeightChange={setContentHeight}
     adaptiveFooter
     footer={product ? <AddToCartAction product={product} vm={cartViewModel} /> : undefined}>
-    {vm.status === 'loading' ? <View accessibilityLiveRegion="polite" style={styles.missing}>
-      <ActivityIndicator accessibilityLabel="Cargando producto" color={colors.primary} size="large" />
-      <Text accessibilityRole="header" style={styles.missingTitle}>Preparando tu aroma</Text>
-      <Text style={styles.missingCopy}>Estamos consultando la información del producto.</Text>
-    </View> : product ? <>
-      {vm.error ? <View accessibilityLiveRegion="polite" style={styles.notice}>
-        <Ionicons accessible={false} name="information-circle-outline" size={20} color={colors.primaryDark} />
-        <Text style={styles.noticeText}>{vm.error} Se conserva la última información cargada.</Text>
-      </View> : null}
+    {vm.status === 'loading' ? <LoadingState label="Cargando producto…"
+      message="Estamos consultando la información del producto." /> : product ? <>
+      {vm.error ? <FeedbackBanner message={`${vm.error} Se conserva la última información cargada.`} /> : null}
       <ProductDetailImage key={product.id} image={product.image} name={product.name}
         height={imageHeight} presentation={product.presentation} />
       <Text style={styles.category}>ESENCIA INHALEX</Text>
@@ -96,19 +91,16 @@ export function ProductDetailScreen({ productId, getProduct }: { productId: stri
         <Text style={styles.linkLabel}>{vm.refreshing ? 'Actualizando…' : vm.error ? 'Reintentar' : 'Actualizar producto'}</Text>
       </Pressable>
       <ProductDetailAccesses />
-    </> : <View accessibilityLiveRegion="polite" style={styles.missing}>
-      <Ionicons accessible={false} name="leaf-outline" size={38} color={colors.primary} />
-      <Text accessibilityRole="header" style={styles.missingTitle}>{vm.status === 'not-found' ? 'Producto no disponible' : 'No pudimos cargar este aroma'}</Text>
-      <Text style={styles.missingCopy}>{vm.error}</Text>
-      {vm.status !== 'not-found' ? <Pressable accessibilityRole="button" onPress={() => { void vm.refresh(); }}
-        style={({ pressed }) => [styles.retryButton, pressed && styles.pressed]}>
-        <Text style={styles.retryLabel}>Reintentar</Text>
-      </Pressable> : null}
+    </> : <>
+      <ScreenState title={vm.status === 'not-found' ? 'Producto no disponible' : 'No pudimos cargar este aroma'}
+        message={vm.error ?? undefined} icon={vm.status === 'not-found' ? 'leaf-outline' : 'cloud-offline-outline'}
+        onAction={vm.status !== 'not-found' ? () => { void vm.refresh(); } : undefined}
+        actionLabel="Reintentar" actionBusy={vm.refreshing} />
       <Pressable accessibilityRole="button" onPress={returnToCatalog}
         style={({ pressed }) => [styles.returnButton, pressed && styles.pressed]}>
         <Text style={styles.linkLabel}>Volver al catálogo</Text>
       </Pressable>
-    </View>}
+    </>}
   </BottomSheet>;
 }
 
@@ -154,18 +146,11 @@ const styles = StyleSheet.create({
   benefits: { backgroundColor: colors.surfaceSoft, borderRadius: 18, marginTop: 20, padding: 17 },
   benefit: { alignItems: 'flex-start', flexDirection: 'row', gap: 8, marginTop: 10 },
   benefitText: { color: colors.textMuted, flex: 1, fontSize: 13, lineHeight: 21 },
-  notice: { alignItems: 'flex-start', backgroundColor: colors.surfaceSoft, borderRadius: 14, flexDirection: 'row', gap: 9, marginBottom: 14, padding: 13 },
-  noticeText: { color: colors.textMuted, flex: 1, fontSize: 12, lineHeight: 19 },
   refreshButton: { alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', gap: 8, marginTop: 16, minHeight: 44, paddingVertical: 10 },
   linkLabel: { color: colors.primaryDark, flexShrink: 1, fontSize: 12, fontWeight: '600', lineHeight: 20, textAlign: 'center' },
   accesses: { alignItems: 'center', borderTopColor: colors.border, borderTopWidth: StyleSheet.hairlineWidth, flexDirection: 'row', marginTop: 16, paddingTop: 10 },
   access: { alignItems: 'center', flex: 1, flexDirection: 'row', gap: 7, justifyContent: 'center', minHeight: 44, paddingHorizontal: 8, paddingVertical: 9 },
   accessDivider: { backgroundColor: colors.border, height: 16, width: 1 },
-  missing: { alignItems: 'center', paddingHorizontal: 8, paddingVertical: 36 },
-  missingTitle: { color: colors.text, fontSize: 23, fontWeight: '600', lineHeight: 31, marginTop: 18, textAlign: 'center' },
-  missingCopy: { color: colors.textMuted, fontSize: 13, lineHeight: 22, marginTop: 10, textAlign: 'center' },
-  retryButton: { backgroundColor: colors.primaryDark, borderRadius: 14, justifyContent: 'center', marginTop: 23, minHeight: 48, paddingHorizontal: 23, paddingVertical: 13 },
-  retryLabel: { color: colors.white, fontSize: 13, fontWeight: '600', lineHeight: 21, textAlign: 'center' },
   returnButton: { alignItems: 'center', marginTop: 12, minHeight: 44, paddingHorizontal: 15, paddingVertical: 11 },
   pressed: { opacity: 0.7 },
 });

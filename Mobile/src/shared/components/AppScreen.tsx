@@ -3,6 +3,7 @@ import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { Reveal } from './Motion';
+import { ScreenHeader } from './ScreenHeader';
 
 interface AppScreenProps extends PropsWithChildren {
   title: string;
@@ -16,19 +17,12 @@ export function AppScreen({ title, eyebrow, action, includeBottomInset = false, 
     <SafeAreaView edges={includeBottomInset ? ['top', 'left', 'right', 'bottom'] : ['top', 'left', 'right']} style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <Reveal>
-          <View style={styles.header}>
-            <Image
+          <ScreenHeader title={title} eyebrow={eyebrow} leading={action ?? <Image
               accessibilityLabel="INHALEX"
               resizeMode="contain"
               source={require('../../../assets/inhalex-mark.png')}
               style={styles.mark}
-            />
-            <View style={styles.heading}>
-              {eyebrow ? <Text style={styles.eyebrow}>{eyebrow}</Text> : null}
-              <Text accessibilityRole="header" style={styles.title}>{title}</Text>
-            </View>
-            {action}
-          </View>
+            />} />
           {children}
         </Reveal>
       </ScrollView>
@@ -53,11 +47,7 @@ export function ModuleCard({ icon, title, description }: {
 const styles = StyleSheet.create({
   safeArea: { backgroundColor: colors.background, flex: 1 },
   content: { alignSelf: 'center', flexGrow: 1, maxWidth: 600, padding: 22, paddingBottom: 36, width: '100%' },
-  header: { alignItems: 'center', flexDirection: 'row', marginBottom: 26, minHeight: 58 },
-  mark: { height: 52, width: 52 },
-  heading: { flex: 1, marginLeft: 12 },
-  eyebrow: { color: colors.primary, fontSize: 11, fontWeight: '800', letterSpacing: 1, textTransform: 'uppercase' },
-  title: { color: colors.text, fontSize: 27, fontWeight: '800', letterSpacing: -0.5, marginTop: 3 },
+  mark: { height: 42, width: 42 },
   card: {
     alignItems: 'center',
     backgroundColor: colors.surface,
