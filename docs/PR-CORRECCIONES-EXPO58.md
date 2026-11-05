@@ -41,14 +41,16 @@ Comprobaciones ejecutadas en el worktree aislado sobre `bd5bd28`, con las depend
 | Revisión de diferencias | Auditoría de los 17 archivos funcionales/documentales de los tres commits | Sin defecto bloqueante identificado; conservación de validaciones y datos públicos. |
 | Acceso y Perfil en David | Reportes del usuario en Expo Go | Entrada, guardado, actualización y restauración al reabrir aceptados. |
 | Acceso en Zenaida | Reporte independiente del usuario en Expo Go | Entrada, datos visibles y sesión restaurada al reabrir aceptados. |
-| UUID al confirmar pedido en Android | Crear un pedido de prueba explícitamente acordado, desde Expo Go | **Pendiente.** Abrir la app e iniciar sesión no ejecuta este generador. |
+| Flujo nativo que utiliza UUID al confirmar pedido | Nueva confirmación en Expo Go de David, según la guía y el reporte posterior del usuario | Aceptado: recibo En revisión, bolsa vacía y mismo pedido en Historial con referencia, cantidades e importes coincidentes. No es una inspección del UUID. |
 | CI y revisión de la corrección | Requieren publicar y abrir un nuevo PR | Pendientes; no se reutiliza la aprobación del PR #18. |
 
 Los reportes nativos están registrados en [Recuperación del inicio de sesión](RECUPERACION-INICIO-SESION.md). El agente no observó directamente el teléfono. Las pruebas de sesión usan almacenamiento y transporte simulados y no sustituyen SecureStore ni la confirmación de pedido en el dispositivo. Durante esta preparación no se arrancó ni detuvo Expo, Metro o el backend.
 
+La aceptación posterior de pedido se realizó siguiendo la guía para una confirmación nueva en la copia activa de David, `codex/recuperar-inicio` (`2b74324`). Antes de guiarla se comprobó que contiene `a35d643` y que bootstrap, controlador, dominio, validación, almacenamiento y dependencias del flujo coinciden con la rama de correcciones; la pantalla tiene pulido visual posterior. No se atribuye prueba de doble toque, respuestas perdidas, inspección de base de datos ni ausencia global de duplicados a este reporte.
+
 ## Revisión e integración
 
-- [ ] Criterios de aceptación completos: falta la creación de pedido con UUID nativo.
+- [x] Criterios funcionales de la corrección aceptados: acceso, Perfil, restauración y nueva creación de pedido, con el alcance reportado por el usuario.
 - [x] Separación de arquitectura y contratos revisados.
 - [x] Sin secretos, dependencias instaladas ni archivos generados en el cambio.
 - [x] TypeScript, lint y pruebas móviles aprobados en la preparación aislada.
@@ -56,4 +58,4 @@ Los reportes nativos están registrados en [Recuperación del inicio de sesión]
 - [ ] Revisión y aprobación nueva de ZenaidaGR sobre las correcciones.
 - [ ] Integración autorizada hacia `develop` mediante merge commit.
 
-El siguiente paso es completar la prueba nativa pendiente y registrar su resultado por separado. La publicación, la apertura de un PR posterior y su integración se identificarán con sus propios enlaces y commits cuando ocurran. El PR #18 y las ramas originales se conservan.
+La aceptación nativa se registra en un commit documental separado de la preparación `762e844`. El siguiente paso es publicar esta rama y abrir el PR posterior hacia `develop` para revisión de Zenaida, cuando el usuario indique continuar con la apertura; no fusionarlo. La publicación, la apertura y la integración se identificarán con sus propios enlaces y commits cuando ocurran. El PR #18 y las ramas originales se conservan.

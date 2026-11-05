@@ -39,6 +39,18 @@ Recuperar visualmente Inicio, Cuenta y Login desde Proyecto-INHALEX, conservando
 
 El 5 de noviembre se verificó que ZenaidaGR aprobó y fusionó el PR #18, con merge `2aa6d86`. Los commits de recuperación `a35d643`, `ca009a8` y `bd5bd28` quedaron fuera de esa fusión. Se conservaron sus identificadores y autores al preparar la rama local `codex/correcciones-expo58` en un worktree independiente. No se publicó ni fusionó esta rama, ni se cambiaron las ramas activas de David y Zenaida.
 
-Sobre este conjunto se repitieron TypeScript, lint y las 741 pruebas móviles: todos aprobados. La revisión de código no encontró un bloqueo, pero mantiene pendiente la prueba nativa de creación de pedido con el nuevo UUID. Las aceptaciones de acceso y Perfil anteriores permanecen válidas dentro de su alcance; no prueban esa operación. La revisión de Zenaida sobre el PR #18 tampoco cubre los commits posteriores.
+Sobre este conjunto se repitieron TypeScript, lint y las 741 pruebas móviles: todos aprobados. La revisión de código no encontró un bloqueo. Al preparar la rama seguía pendiente la prueba nativa de creación de pedido con el nuevo UUID; su aceptación posterior se registra abajo. Las aceptaciones de acceso y Perfil anteriores permanecen válidas dentro de su alcance; por sí solas no prueban esa operación. La revisión de Zenaida sobre el PR #18 tampoco cubre los commits posteriores.
 
 El [borrador para la revisión posterior](PR-CORRECCIONES-EXPO58.md) identifica los cambios, comprobaciones y pendientes. Los ajustes visuales y Reseñas se conservan fuera de este alcance. Expo, los QR y el backend siguen bajo control del usuario.
+
+## Aceptación de una creación nueva de pedido en Expo Go
+
+El 5 de noviembre de 2026, después de la guía para confirmar un pedido nuevo en la copia de David, el usuario reportó exactamente:
+
+> Amigo, apareció el recibo En revisión, la bolsa quedó vacía y el pedido aparece en Historial con la misma referencia. Las cantidades e importes coinciden.
+
+Se acepta el recorrido nativo de una nueva creación: confirmación con recibo En revisión, limpieza de Bolsa y consulta posterior en Historial con referencia, cantidades e importes coincidentes. Completa la aceptación funcional pendiente del flujo que utiliza `uuid.v4()` de Expo. La guía distinguió una confirmación nueva de recuperar un intento pendiente, que reutiliza la clave guardada.
+
+La copia activa comprobada fue `codex/recuperar-inicio`, HEAD `2b74324`, que incluye `a35d643`. Bootstrap, controlador, dominio, validación, almacenamiento y dependencias del flujo coinciden con la rama preparada; su presentación contiene los ajustes visuales posteriores. El agente no observó el dispositivo, no inspeccionó el UUID, SecureStore, HTTP o la base de datos y no recibió el valor concreto de la referencia. Esta aceptación no añade prueba de doble toque, errores, recuperación o ausencia global de duplicados.
+
+Este reporte se guarda en un commit documental propio, sin cambios funcionales ni nueva ejecución de las 741 pruebas ya aprobadas. Se conservan sus resultados con el alcance original. La rama de correcciones queda preparada para publicación y revisión nueva de Zenaida; todavía no se abrió otro PR ni se fusionó. Las dos copias, sus ramas, identidades, stash y servicios se conservan.
