@@ -1,5 +1,7 @@
 export type Profile = Readonly<{
   id: string;
+  /** Display-only full name; editable missing fields remain empty. */
+  displayName?: string;
   firstName: string;
   lastName: string;
   email: string;

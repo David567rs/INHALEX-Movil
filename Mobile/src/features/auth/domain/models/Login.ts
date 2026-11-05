@@ -5,6 +5,8 @@ export type LoginInput = {
 
 export type LoginUser = {
   id: string;
+  /** Full name of a legacy account until its split profile fields are completed. */
+  displayName?: string;
   firstName: string;
   lastName: string;
   email: string;

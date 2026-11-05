@@ -10,6 +10,7 @@ const result = spawnSync(process.execPath, [
   path.join(__dirname, 'RegistrationValidation.test.cjs'),
   path.join(__dirname, 'LoginValidation.test.cjs'),
   path.join(__dirname, 'LoginRepository.test.cjs'),
+  path.join(__dirname, 'LegacyAccountCompatibility.test.cjs'),
   path.join(__dirname, 'LoginUseCase.test.cjs'),
   path.join(__dirname, 'AuthSession.test.cjs'),
   path.join(__dirname, 'SessionRestoration.test.cjs'),
