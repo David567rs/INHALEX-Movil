@@ -125,3 +125,43 @@ El registro de este pulido se guarda en un commit documental separado. No se hiz
 ### Próxima revisión en Expo Go
 
 Recargar la instancia de David que ya controla el usuario, con `r` o Reload, sin generar otro QR. Revisar el corazón y el acceso al detalle en Inicio; el margen de las fotos; Catálogo en cuadrícula y lista con búsqueda y categorías; y reproducción/cierre del panel de experiencia. Confirmar que Detalle conserva la descripción y el perfil aromático completos. La revisión nativa, incluidos texto grande y pantallas estrechas, queda pendiente del reporte del usuario.
+
+## Cuenta y Detalle: desplazamiento y espacio disponible — 5 de noviembre de 2026
+
+La captura del usuario mostró que el resumen de Cuenta quedaba cortado por cinco accesos fijos. La ruta componía `AccountScreen`, que contiene un `ScrollView`, y después los accesos como hermanos fuera de ese desplazamiento. Las filas reservaban casi toda la altura disponible.
+
+### Corrección de Cuenta
+
+- Perfil, accesos y cierre de sesión comparten ahora el `ScrollView` de `AppScreen`, por encima de las pestañas. La ruta solo compone sesión, pantalla y menú.
+- El resumen de perfil es compacto y mantiene nombre, correo y estado de sesión. Los accesos se agrupan en «Tu información» y «Tus pedidos y novedades» con filas que crecen al envolver texto.
+- El menú se muestra únicamente junto a una sesión autenticada. Se mantienen los estados de comprobación, recuperación y bienvenida. El aviso de fallo al cerrar sesión queda visible junto al botón; su bloqueo y el ViewModel existente se conservan.
+- `AccountMenuItem` concentra la presentación de las filas. Cada componente de acceso conserva su ruta y etiqueta de accesibilidad.
+
+### Corrección de Detalle
+
+- Solo la acción principal de Bolsa permanece en el pie habitual. Los accesos a Favoritos y Bolsa se desplazan con la información y conservan el cierre protegido del panel antes de navegar.
+- El pie pasa al contenido desplazable cuando la ventana mide menos de 640 puntos de alto, la escala de texto es al menos 1.3 o la altura medida de las acciones supera el 25 % del espacio útil. Así, un aviso extenso no reduce el producto a una franja pequeña.
+- Se conserva el encabezado con cierre, el indicador de desplazamiento, las zonas seguras y todos los datos del producto. El modo adaptable se activa solo en Detalle.
+- El ViewModel de la acción de Bolsa reside en `ProductDetailScreen`. `AddToCartAction` es presentacional: cambiar la ubicación del pie no reinicia el bloqueo de apertura de Login. Los demás consumidores siguen utilizando el contenedor `AddToCartButton`.
+
+### Verificación y límites
+
+- TypeScript y lint pasaron después de retirar la ruta temporal. `git diff --check` pasó. Una revisión independiente detectó el riesgo de reiniciar el estado al reubicar el pie; se corrigió y la revisión final no señaló problemas adicionales.
+- Se probaron las pantallas reales con datos Demo y controladores aislados en memoria, sin credenciales ni operaciones sobre la API real. La ruta temporal `qa-cuenta-detalle-local.tsx` fue eliminada antes de los commits.
+- **Cuenta, 390 × 844 y 320 × 568:** un único desplazamiento, todas las filas y Cerrar sesión alcanzables, sin desbordamiento horizontal. El cierre de la sesión simulada ocultó perfil y accesos; reingresar a Demo los recuperó. La barra inferior de esta prueba era un espacio simulado de 64 puntos, no el navegador real de pestañas.
+- **Detalle:** a 390 × 844 se alcanzaron los últimos datos y enlaces con la acción principal reservada abajo. A 320 × 568 la acción pasó al desplazamiento. A 320 × 700, un error simulado de Bolsa movió botón y mensaje al contenido y ambos pudieron leerse completos. Una adición simulada mostró confirmación, conservada al cambiar el tamaño de ventana.
+- Se verificó que Cerrar retira el panel. En la ruta de prueba regresó a Inicio por su historial de navegación; esto no acredita la conservación del filtro real de Catálogo. El acceso «Ver favoritos» cerró el panel y abrió `/favoritos`, observado en la URL y la pantalla.
+- Esta verificación web no sustituye Expo Go, TalkBack, texto grande nativo ni Atrás físico. Tampoco valida nuevamente el inicio de sesión o la API. Las pruebas automatizadas y exportaciones de las secciones anteriores siguen siendo evidencia histórica; no se repitieron en esta etapa de presentación.
+
+Evidencia local: `C:\Users\David\.codex\visualizations\2026\11\05\cuenta-detalle\cuenta-inicio-demo.png`, `cuenta-final-demo.png`, `cuenta-pequena-demo.png`, `detalle-inicio-demo.png`, `detalle-pequeno-demo.png` y `detalle-aviso-demo.png`.
+
+| Commit local | Etapa |
+| --- | --- |
+| `2099f16` | Unificar el desplazamiento de Cuenta y agrupar accesos. |
+| `34f3a0a` | Adaptar las acciones de Detalle y conservar su ViewModel estable. |
+
+Se mantienen MVVM y Repository. El cambio se realizó en la copia de David, sin modificar API, dependencias, configuración, la copia de Zenaida o los recursos originales. No se inició ni detuvo Expo/Metro o el backend; no se hizo push ni se abrió un PR.
+
+### Siguiente comprobación en Expo Go
+
+Recargar la instancia existente. En Cuenta, recorrer desde el perfil hasta Cerrar sesión y abrir los cinco accesos. En Detalle, llegar al final de la descripción, comprobar Agregar y los enlaces secundarios, cerrar con X y con Atrás, y regresar al catálogo filtrado. Repetir con texto grande y en horizontal, incluidos los mensajes de Bolsa. Registrar la aceptación del usuario por separado.
