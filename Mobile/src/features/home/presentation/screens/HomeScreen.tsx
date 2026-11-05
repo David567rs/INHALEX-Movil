@@ -108,8 +108,6 @@ export function HomeView({ firstName, focused = true, listCatalog, listProductLi
         <Text style={styles.aboutTitle}>Elige tu aroma.{'\n'}Haz tuya la pausa.</Text>
         <Text style={styles.aboutBody}>INHALEX reúne perfiles florales, herbales, frescos y especiados en un formato práctico para acompañar tus momentos cotidianos.</Text>
         {aboutVisible && focused ? <ExperienceVideo focused={focused} /> : null}
-        <View style={[styles.guideSteps, fontScale > 1.4 && { flexDirection: 'column' }]}>{['Aplica', 'Frota', 'Inhala'].map((step, index) => <View key={step} style={styles.guideStep}><Text style={styles.stepNumber}>0{index + 1}</Text><Text style={styles.stepLabel}>{step}</Text></View>)}</View>
-        <Text style={styles.aboutBody}>Consulta la información y las indicaciones específicas de cada producto para conocer su presentación y perfil aromático.</Text>
         <SoftPressable accessibilityRole="button" onPress={() => { setAboutVisible(false); explore(); }} style={[styles.heroButton, styles.aboutButton]}><Text style={styles.heroButtonLabel}>Encontrar mi aroma</Text><Ionicons name="arrow-forward" color={colors.white} size={18} /></SoftPressable>
       </BottomSheet>
     </SafeAreaView>
@@ -169,9 +167,5 @@ const styles = StyleSheet.create({
   closingCopy: { color: colors.textMuted, fontSize: 11, marginTop: 8, textAlign: 'center' },
   aboutTitle: { color: colors.primaryDark, fontSize: 29, fontWeight: '700', letterSpacing: -0.7, lineHeight: 35, marginBottom: 13 },
   aboutBody: { color: colors.textMuted, fontSize: 14, lineHeight: 23 },
-  guideSteps: { flexDirection: 'row', gap: 10, marginBottom: 23, marginTop: 17 },
-  guideStep: { backgroundColor: colors.surfaceSoft, borderRadius: 14, flex: 1, padding: 12 },
-  stepNumber: { color: colors.primary, fontSize: 10, fontWeight: '700', letterSpacing: 1 },
-  stepLabel: { color: colors.text, fontSize: 14, fontWeight: '600', marginTop: 5 },
-  aboutButton: { alignSelf: 'stretch', marginTop: 22 },
+  aboutButton: { alignSelf: 'stretch', marginTop: 18 },
 });

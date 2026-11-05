@@ -104,8 +104,7 @@ export function ExperienceVideo({ focused = true }: { focused?: boolean }) {
         {!firstFrameVisible && !failed ? <View style={styles.loading} accessibilityLabel="Cargando el vídeo de INHALEX"><ActivityIndicator color={colors.primary} /><Text style={styles.loadingText}>Tu pausa empieza aquí</Text></View> : null}
         {failed ? <View style={styles.error} accessibilityLiveRegion="polite"><Ionicons name="videocam-outline" size={24} color={colors.primary} /><Text style={styles.errorTitle}>No se pudo reproducir el vídeo</Text><Pressable accessibilityRole="button" accessibilityState={{ disabled: retrying }} disabled={retrying} onPress={() => void retry()} style={({ pressed }) => [styles.retry, pressed && styles.pressed]}><Text style={styles.retryLabel}>{retrying ? 'Cargando…' : 'Volver a intentar'}</Text></Pressable></View> : null}
       </View>
-      <View style={styles.caption}>
-        <View style={styles.captionCopy}><Ionicons name="repeat-outline" size={15} color={colors.primary} /><Text style={styles.captionText}>Aplica · frota · inhala</Text></View>
+      <View style={styles.controls}>
         <Pressable accessibilityRole="button" accessibilityLabel={isPlaying ? 'Pausar vídeo de INHALEX' : 'Reproducir vídeo de INHALEX'} accessibilityState={{ disabled: failed || retrying }} disabled={failed || retrying} onPress={togglePlayback} style={({ pressed }) => [styles.control, pressed && styles.pressed, (failed || retrying) && styles.disabled]}>
           <Ionicons name={isPlaying ? 'pause' : 'play'} size={14} color={colors.primaryDark} />
           <Text style={styles.controlLabel}>{isPlaying ? 'Pausar' : 'Reproducir'}</Text>
@@ -124,10 +123,8 @@ const styles = StyleSheet.create({
   errorTitle: { color: colors.text, fontSize: 13, fontWeight: '600', textAlign: 'center' },
   retry: { justifyContent: 'center', minHeight: 44, paddingHorizontal: 14 },
   retryLabel: { color: colors.primaryDark, fontSize: 12, fontWeight: '700' },
-  caption: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 4, justifyContent: 'space-between', paddingHorizontal: 13, paddingVertical: 3 },
-  captionCopy: { alignItems: 'center', flexDirection: 'row', flexShrink: 1, gap: 6, minHeight: 44 },
-  captionText: { color: colors.primaryDark, flexShrink: 1, fontSize: 11, fontWeight: '500' },
-  control: { alignItems: 'center', flexDirection: 'row', gap: 5, justifyContent: 'center', minHeight: 44, paddingHorizontal: 5 },
+  controls: { alignItems: 'center', flexDirection: 'row', justifyContent: 'flex-end', paddingHorizontal: 8, paddingVertical: 2 },
+  control: { alignItems: 'center', flexDirection: 'row', gap: 6, justifyContent: 'center', minHeight: 44, minWidth: 44, paddingHorizontal: 12 },
   controlLabel: { color: colors.primaryDark, fontSize: 11, fontWeight: '600' },
   pressed: { opacity: 0.65 },
   disabled: { opacity: 0.4 },
