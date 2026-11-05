@@ -108,10 +108,9 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
                 <View style={styles.collectionCopy}>
                   <Text accessibilityRole="header" style={styles.collectionTitle}>{searching ? 'Resultados de búsqueda' : categoryName === undefined ? 'Nuestra colección' : 'Productos de esta línea'}</Text>
                   {searching && <Text style={styles.queryLabel} numberOfLines={2}>para “{vm.appliedQuery}”</Text>}
-                  <Text accessibilityLiveRegion="polite" style={styles.collectionCount}>{vm.status === 'loading' ? 'Buscando tus próximos aromas…'
+                  {(searching || vm.status !== 'ready') && <Text accessibilityLiveRegion="polite" style={styles.collectionCount}>{vm.status === 'loading' ? 'Buscando tus próximos aromas…'
                     : vm.status === 'error' ? 'La colección estará aquí al reconectar'
-                    : searching ? `${vm.total} ${vm.total === 1 ? 'coincidencia' : 'coincidencias'}${categoryName === undefined ? '' : ' en esta línea'}`
-                    : `${vm.total} ${vm.total === 1 ? 'producto' : 'productos'} para descubrir`}</Text>
+                    : `${vm.total} ${vm.total === 1 ? 'coincidencia' : 'coincidencias'}${categoryName === undefined ? '' : ' en esta línea'}`}</Text>}
                 </View>
                 <View accessibilityRole="radiogroup" accessibilityLabel="Presentación del catálogo" style={styles.layoutSwitch}>
                   {([
@@ -137,7 +136,7 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
         }
         renderItem={({ item, index }) => (
           <Reveal delay={Math.min(index, 5) * 35} style={[styles.cardShell, { width: cardWidth }, columns === 1 && styles.singleCard]}>
-            <CatalogProductCard product={item} horizontal={horizontal} onPress={() => vm.openProduct(item.id)} />
+            <CatalogProductCard product={item} horizontal={horizontal} concise onPress={() => vm.openProduct(item.id)} />
           </Reveal>
         )}
         ListEmptyComponent={
@@ -160,7 +159,7 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
         ListFooterComponent={
           <View style={styles.footer}>
             {vm.products.length > 0 && <>
-              <Text style={styles.loadedCount}>{vm.products.length} de {vm.total} productos</Text>
+              {vm.hasMore && <Text style={styles.loadedCount}>{vm.products.length} de {vm.total} productos</Text>}
               {vm.moreError && <Text accessibilityLiveRegion="polite" style={styles.paginationError}>{vm.moreError}</Text>}
               {vm.hasMore && <Pressable accessibilityRole="button"
                 accessibilityState={{ disabled: vm.loadingMore || vm.refreshing, busy: vm.loadingMore }}
