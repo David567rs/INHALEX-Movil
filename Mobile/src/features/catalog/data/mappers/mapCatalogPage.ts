@@ -77,6 +77,9 @@ export function mapCatalogProduct(value: unknown, now = Date.now()): CatalogProd
     image: mapCatalogImage(value.image),
     inStock: value.inStock,
     originalPrice: hasPromotion ? value.price : null,
+    ...(typeof value.category === 'string' && /^[a-z0-9-]+$/.test(value.category)
+      ? { categoryId: value.category } : {}),
+    ...(isNonemptyString(value.presentation) ? { presentation: value.presentation.trim() } : {}),
   };
 }
 
