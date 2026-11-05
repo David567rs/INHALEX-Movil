@@ -21,7 +21,7 @@ export function HomeProductCarousel({ products, width, fontScale, categoryLabel,
   const [activePage, setActivePage] = useState(0);
   const reducedMotion = useReducedMotion();
   const favorites = useFavoritesViewModel();
-  // All cards share the same coordinator: show its feedback once, outside the image overlays.
+  // All cards share the same coordinator: show its feedback once, below the collection.
   const sessionHint = favorites.status === 'session-expired' ? 'Tu sesión ya no está disponible. Vuelve a iniciar sesión.'
     : favorites.status === 'recovery-error' ? 'No pudimos comprobar tu sesión. Comprueba tu conexión e inténtalo de nuevo.' : null;
   const feedback = [...new Set([sessionHint ?? favorites.error, favorites.mutationError].filter((message): message is string => Boolean(message)))];
