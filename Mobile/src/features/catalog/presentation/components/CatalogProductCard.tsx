@@ -27,7 +27,7 @@ export function CatalogProductCard({ product, horizontal, onPress }: CatalogProd
           accessible={false}
           source={source}
           onError={() => setFailedImage(product.image)}
-          resizeMode="contain"
+          resizeMode="cover"
           style={styles.photo}
         /> : <View accessible={false} style={styles.placeholder}>
           <Ionicons name="leaf-outline" size={30} color={colors.primary} />
@@ -54,14 +54,14 @@ export function CatalogProductCard({ product, horizontal, onPress }: CatalogProd
 
 const styles = StyleSheet.create({
   card: { backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 22, borderWidth: 1, flex: 1, overflow: 'hidden' },
-  horizontal: { flexDirection: 'row' },
-  artwork: { alignItems: 'center', backgroundColor: '#F5F5F7', height: 186, justifyContent: 'center', overflow: 'hidden' },
-  horizontalArtwork: { alignSelf: 'stretch', height: undefined, minHeight: 154, width: 104 },
-  photo: { height: '100%', width: '100%' },
+  horizontal: { alignItems: 'center', flexDirection: 'row' },
+  artwork: { alignItems: 'center', backgroundColor: '#EDF3E9', height: 164, justifyContent: 'center', overflow: 'hidden' },
+  horizontalArtwork: { borderRadius: 16, flexShrink: 0, height: 132, marginLeft: 12, marginVertical: 12, width: 104 },
+  photo: { position: 'absolute', top: 0, left: 0, height: '100%', width: '100%' },
   placeholder: { alignItems: 'center', gap: 9, justifyContent: 'center', padding: 12 },
   placeholderText: { color: colors.textMuted, fontSize: 11, textAlign: 'center' },
   copy: { flex: 1, padding: 14, paddingTop: 15 },
-  horizontalCopy: { justifyContent: 'center', paddingHorizontal: 17, paddingVertical: 19 },
+  horizontalCopy: { justifyContent: 'center', paddingHorizontal: 14, paddingVertical: 16 },
   productType: { color: colors.primary, fontSize: 8, fontWeight: '700', letterSpacing: 1 },
   name: { color: colors.text, fontSize: 17, fontWeight: '700', letterSpacing: -0.4, lineHeight: 23, marginTop: 6 },
   note: { color: colors.textMuted, fontSize: 12, lineHeight: 18, marginTop: 3, minHeight: 36 },
