@@ -87,3 +87,41 @@ Usar **la instancia de David que el usuario ya tiene abierta**. En su terminal d
 4. **Detalle y sesión:** abrir dos productos y revisar que cambian la imagen y los datos. Cerrar y volver a abrir el panel. Sin sesión, pulsar el corazón o Agregar, comprobar que se abre Login, iniciar sesión y regresar al detalle; revisar que el panel vuelve a responder. Probar Atrás físico durante estos recorridos.
 
 Registrar los resultados que el usuario comunique como aceptación nativa en una etapa posterior. Esta documentación no afirma que esos cuatro recorridos ya se hayan completado en el dispositivo.
+
+## Pulido visual posterior solicitado por el usuario — 5 de noviembre de 2026
+
+El usuario indicó que la recuperación visual estaba mejorando y aportó nuevas capturas con ajustes concretos. Ese comentario no confirma individualmente todos los recorridos anteriores. Esta etapa aplica la reducción de textos solicitada y conserva la información completa en Detalle.
+
+### Cambios de presentación
+
+- **Inicio:** el corazón deja de superponerse a la fotografía y aparece junto al precio, sobre el fondo blanco de la tarjeta y sin círculo. Su contraste ya no depende de la imagen. Conserva un área táctil mínima de 44 × 44; la foto, el nombre y el precio mantienen el acceso al detalle. La acción de favorito es independiente de esos accesos.
+- **Fotografías:** Inicio y las tarjetas simplificadas de Catálogo incorporan un margen blanco de 8 puntos alrededor de la foto, con esquinas interiores redondeadas. Se ajustan las proporciones y los espacios sin reemplazar los recursos originales.
+- **Catálogo:** se retiran de la presentación normal el contador «productos para descubrir», «ESENCIA INHALEX» y las notas aromáticas de las tarjetas. Se conservan nombre, precio, disponibilidad y acceso al detalle, tanto en cuadrícula como en lista. Los recuentos de resultados de búsqueda y la información necesaria durante carga, error o paginación siguen disponibles. La variante simplificada se activa solo desde Catálogo; no cambia la pantalla independiente de Búsqueda ni el contenido de Detalle. Las notas siguen disponibles en la etiqueta de accesibilidad de la tarjeta.
+- **Experiencia:** se eliminan la leyenda repetida «Aplica · frota · inhala», las tres instrucciones numeradas y el párrafo posterior. Se mantienen el recurso original, los controles de reproducción, carga/error/reintento y la llamada a explorar el catálogo. El panel de Inicio y la pantalla independiente comparten esta limpieza.
+
+Solo se modificó presentación. MVVM, Repository, autenticación y las operaciones con la API permanecen sin cambios; tampoco se añadieron dependencias.
+
+### Comprobaciones de esta etapa
+
+- TypeScript y lint de Mobile finalizaron correctamente después de todos los cambios y de retirar la ruta temporal de revisión. `git diff --check` también pasó.
+- Se revisaron los componentes reales con datos Demo en una vista web de **390 × 844**: tarjetas de Inicio, corazón seleccionado y sin seleccionar, Catálogo en cuadrícula y lista. Los accesos de producto ejecutaron su acción de detalle de prueba. Esta comprobación no utiliza ni modifica favoritos reales.
+- En el panel de experiencia de Inicio se verificaron el video original, Pausar/Reproducir y el cierre. Al cerrar se retiró el video del documento. Se confirmó la ausencia de la leyenda, instrucciones y párrafo repetidos.
+- La ruta temporal `preview-pulido-local` se eliminó antes de las comprobaciones finales; no forma parte de los commits.
+- La limitación CORS del navegador descrita arriba sigue fuera de esta intervención. La revisión con datos Demo no equivale a una nueva aceptación de la API ni a una prueba en Expo Go.
+- Las 766 pruebas y la exportación Android descritas en la etapa anterior son evidencia histórica: no se volvieron a ejecutar en este pulido de presentación.
+
+Capturas locales de esta revisión: `C:\Users\David\.codex\visualizations\2026\11\05\pulido-inhalex\inicio-demo.jpg`, `catalogo-demo.jpg`, `catalogo-lista-demo.jpg` y `experiencia-real.jpg`. Las capturas son evidencia local, no recursos versionados de la aplicación.
+
+### Commits locales por etapa
+
+| Commit | Cambio |
+| --- | --- |
+| `437612f` | Separar el corazón de la foto y enmarcar imágenes de Inicio. |
+| `35907d3` | Simplificar tarjetas y espacios de Catálogo. |
+| `12f7522` | Quitar instrucciones duplicadas de la experiencia. |
+
+El registro de este pulido se guarda en un commit documental separado. No se hizo push, no se abrió un PR y no se trasladaron cambios a Zenaida. No se inició ni detuvo Expo, Metro o el backend.
+
+### Próxima revisión en Expo Go
+
+Recargar la instancia de David que ya controla el usuario, con `r` o Reload, sin generar otro QR. Revisar el corazón y el acceso al detalle en Inicio; el margen de las fotos; Catálogo en cuadrícula y lista con búsqueda y categorías; y reproducción/cierre del panel de experiencia. Confirmar que Detalle conserva la descripción y el perfil aromático completos. La revisión nativa, incluidos texto grande y pantallas estrechas, queda pendiente del reporte del usuario.
