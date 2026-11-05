@@ -1,6 +1,6 @@
 # INHALEX Movil
 
-**Recuperación local, 5 de noviembre de 2026:** acceso, datos y reapertura aceptados por el usuario en ambas copias; véase [el registro](docs/RECUPERACION-INICIO-SESION.md). David continúa en `codex/recuperar-inicio` recuperando Inicio desde la app original, con [verificación técnica y revisión nativa pendiente](docs/RECUPERACION-INICIO.md). Zenaida permanece en `feature/resenas`. El usuario controla Expo/QR; se utiliza un backend compartido. Los snapshots siguientes son históricos.
+**Recuperación local, 5 de noviembre de 2026:** acceso, datos y reapertura aceptados por el usuario en ambas copias; véase [el registro](docs/RECUPERACION-INICIO-SESION.md). David continúa en `codex/recuperar-inicio`. El usuario revisó Inicio y pidió corregir búsqueda, tarjetas, corazones e imágenes: ya están implementados en cuatro commits locales, con [verificación y revisión nativa pendiente](docs/RECUPERACION-CATALOGO-Y-DETALLE.md). Se conservan la [etapa previa de Inicio](docs/RECUPERACION-INICIO.md), MVVM, Repository y commits por etapa. Zenaida permanece intacta en `feature/resenas`. El usuario controla Expo/QR; se utiliza un backend compartido. No publicar PR ni trasladar estos cambios antes de su revisión. Los snapshots siguientes son históricos.
 
 **Migración en curso a Expo SDK 58.** David trabaja en `chore/expo-sdk-58` desde `develop` `6b38ba8`. El diseño de Reseñas de Zenaida permanece en `feature/resenas` `30de297`. Consulta [el alcance y la verificación](docs/MIGRACION-EXPO-58.md) antes de retomar las pruebas nativas.
 

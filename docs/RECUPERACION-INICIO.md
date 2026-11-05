@@ -2,6 +2,8 @@
 
 Etapa local del 5 de noviembre de 2026. Copia de David: `INHALEX-Movil`, rama `codex/recuperar-inicio`, creada después de registrar la recuperación de autenticación. Zenaida continúa en `feature/resenas`; esta recuperación visual todavía no se transfirió allí.
 
+**Revisión posterior del usuario:** revisó Inicio en Expo Go y reportó diferencias en la búsqueda del Catálogo, las tarjetas de Favoritos/Bolsa y las imágenes y presentación de Detalle. Esa revisión no acepta todas las pantallas. Las correcciones y sus nuevas comprobaciones están en [Recuperación de Catálogo, Favoritos, Bolsa y Detalle](RECUPERACION-CATALOGO-Y-DETALLE.md); la evidencia y pendientes de esta etapa se conservan abajo como registro histórico.
+
 ## Fuente y alcance
 
 La referencia se leyó en `C:\Users\David\Documents\Proyecto-INHALEX\Mobile\inhalex-app`, sin modificar sus archivos. Se recuperaron la composición de `HomeScreen.tsx`, controles y tarjetas originales, carrusel, panel de experiencia y vídeo. Las imágenes de marca y del hero ya existían en la copia móvil.
