@@ -116,7 +116,7 @@ export function createOrderCreationController(session: AuthSession, actions: Ord
     if (!live(task)) return false;
     const selected = context.addresses.find((address) => address.id === state.selectedAddressId)
       ?? context.addresses.find((address) => address.isDefault) ?? context.addresses[0];
-    const contact = state.contact ?? Object.freeze({ customerName: `${context.profile.firstName} ${context.profile.lastName}`.trim(),
+    const contact = state.contact ?? Object.freeze({ customerName: context.profile.displayName ?? `${context.profile.firstName} ${context.profile.lastName}`.trim(),
       customerEmail: context.profile.email, customerPhone: context.profile.phone, notes: '' });
     publish({ context, quote, selectedAddressId: selected?.id ?? null, contact,
       loading: false, recovering: false, requiresRefresh: false });

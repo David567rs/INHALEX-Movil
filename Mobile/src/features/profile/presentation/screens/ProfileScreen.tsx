@@ -57,6 +57,9 @@ export function ProfileScreen() {
             message={vm.error || 'Comprueba tu conexión e inténtalo de nuevo.'} action="Reintentar" onAction={() => { void vm.refresh(); }} /> : null}
 
         {vm.profile && <>
+        {vm.needsProfileDetails && <Text accessibilityLiveRegion="polite" style={styles.notice}>
+          Completa tus nombres, apellidos y teléfono en «Editar datos» para mantener tu perfil actualizado.
+        </Text>}
         {(vm.error || vm.saveError || vm.requiresRefresh) && <View accessibilityLiveRegion="polite" style={styles.errorNotice}>
           {(vm.saveError || vm.error) && <Text style={styles.errorText}>{vm.saveError || vm.error}</Text>}
           {vm.requiresRefresh && <Text style={styles.errorText}>{vm.mode === 'edit' ? 'Tu borrador se conserva. ' : ''}Reintenta la carga para comprobar los datos guardados antes de volver a guardar.</Text>}
@@ -153,7 +156,7 @@ function InfoRow({ icon, label, value, hint, last = false }: {
     </View>
     <View style={styles.infoCopy}>
       <Text style={styles.infoLabel}>{label}</Text>
-      <Text selectable style={styles.infoValue}>{value}</Text>
+      <Text selectable style={styles.infoValue}>{value || 'Pendiente de completar'}</Text>
       {hint && <Text style={styles.infoHint}>{hint}</Text>}
     </View>
   </View>;
