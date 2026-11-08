@@ -1,0 +1,27 @@
+{
+  "fecha": "2026-11-08",
+  "copia": "INHALEX-Movil",
+  "rama": "feature/confirmacion-recepcion",
+  "fuente": "reporte textual del usuario sobre Expo Go",
+  "reporte": "Amigo, el pedido no completado no aparece en Recepción. El ya confirmado conserva su estado y no permite confirmar otra vez. ¿Qué marco en Trello y qué sigue?",
+  "resultadoReportado": {
+    "pedidoNoCompletadoExcluido": true,
+    "recepcionConfirmadaConservada": true,
+    "sinOpcionDeRepetir": true,
+    "estadoConcretoNoCompletado": "no especificado por el usuario"
+  },
+  "criteriosAceptadosEnEsteReporte": [2],
+  "criteriosAceptadosAcumulados": [1, 2, 3, 5, 6],
+  "criteriosPendientes": [4, 7, 8, 9],
+  "siguientePrueba": "Doble toque con otro pedido Completado pendiente de recepcion; adaptar si no hay uno disponible",
+  "observacionDirectaDelTelefonoPorAgente": false,
+  "inspeccionHttpODatabasePorAgente": false,
+  "accionesAgente": "Registro documental local en commit separado; sin iniciar Expo, modificar pedidos, servicios, Trello, la copia de Zenaida ni publicar la rama",
+  "noAcreditadoEnEsteReporte": [
+    "Todos los estados no completados, incidencias o pedidos ajenos",
+    "Doble toque, concurrencia o conteo de escrituras/notificaciones",
+    "Errores, respuesta perdida y verificacion posterior",
+    "Reapertura o cierre y restauracion de sesion",
+    "Revision del codigo por Zenaida"
+  ]
+}
