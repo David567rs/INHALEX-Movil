@@ -2,6 +2,10 @@
 
 ## Etapa vigente: API de Confirmación de recepción, 8 de noviembre de 2026
 
+**Preparación del PR autorizada, 8 de noviembre de 2026:** David567rs publicará `feature/confirmacion-recepcion` hacia `develop` para revisión de ZenaidaGR, conservando todos los commits y sin fusionar. La aceptación funcional sigue en **8/9**; Revisar el código espera a Zenaida. El usuario controla Expo y backend; no iniciar ni detener servicios. La copia de Zenaida permanece intacta. Alcance y comprobaciones: [PR de recepción](docs/PR-CONFIRMACION-RECEPCION.md).
+
+Los estados de no publicación y los pendientes de etapas anteriores que aparecen abajo son históricos. Esta autorización vigente permite publicar y solicitar revisión; no permite fusionar.
+
 **Confirmación de recepción aceptada funcionalmente: 8/9.** El reporte nativo del vacío, actualización, navegación a Historial y regreso a datos reales se registró en `855746b`, junto con los recorridos previos. Solo **Revisar el código (9)** espera a Zenaida. Se retiraron el helper vacío, su panel y sus tres pruebas temporales: el flujo normal conserva MVVM y Repository; pasaron **861/861 pruebas móviles**, TypeScript, lint y revisión técnica. El código móvil y sus pruebas coinciden con la base anterior al helper (`7307e28`). Las guías, evidencias, ramas y commits permanecen. David sigue en `feature/confirmacion-recepcion`. Siguiente etapa: preparar el PR hacia develop para Zenaida cuando el usuario lo solicite; todavía no se publicó ni abrió PR. El usuario controla Expo y backend; no iniciar ni detener servicios. Evidencia: `docs/evidencias/confirmacion-recepcion/aceptacion-vacio-expo-go.json`.
 
 El PR #21 de Reseñas ya está integrado mediante merge commit `0f619021b4de5d5436b0f43c122d9cba6b306da3`, conservando sus 23 commits y la revisión de David. Ambas copias se sincronizaron. Los registros de PR abierto que siguen son históricos.
