@@ -56,6 +56,11 @@ import { ReviewsError } from '../features/reviews/domain/errors/ReviewsError';
 import type { ReviewsActions } from '../features/reviews/domain/repositories/ReviewsRepository';
 import { createReviewsController } from '../features/reviews/presentation/state/createReviewsController';
 import { buildReviewsActions } from './createReviewsActions';
+import { ApiOrderReceiptRepository } from '../features/orderReceipt/data/repositories/ApiOrderReceiptRepository';
+import { OrderReceiptError } from '../features/orderReceipt/domain/errors/OrderReceiptError';
+import type { OrderReceiptActions } from '../features/orderReceipt/domain/repositories/OrderReceiptRepository';
+import { buildOrderReceiptActions } from '../features/orderReceipt/domain/useCases/orderReceiptActions';
+import { createOrderReceiptController } from '../features/orderReceipt/presentation/state/createOrderReceiptController';
 
 export interface ApplicationServicesOptions {
   environment?: Environment;
@@ -309,8 +314,28 @@ export function createApplicationRuntime(options: Omit<ApplicationServicesOption
     list: (requestOptions) => getReviewsActions().list(requestOptions),
     publish: (input, requestOptions) => getReviewsActions().publish(input, requestOptions),
   });
+  let receiptActions: OrderReceiptActions | undefined;
+  function getReceiptActions(): OrderReceiptActions {
+    if (!receiptActions) {
+      try {
+        const environment = options.environment ?? readEnvironment();
+        receiptActions = buildOrderReceiptActions(new ApiOrderReceiptRepository(new HttpClient({
+          baseUrl: environment.apiUrl, isDevelopment: environment.isDevelopment,
+          requestTimeoutMs: environment.requestTimeoutMs, fetch: options.fetch,
+          getAccessToken: auth.getAccessToken,
+        })));
+      } catch {
+        throw new OrderReceiptError('La recepción no está disponible en este momento. Inténtalo más tarde.', 'configuration');
+      }
+    }
+    return receiptActions;
+  }
+  const orderReceipt = createOrderReceiptController(auth.authorizationSession, {
+    list: (requestOptions) => getReceiptActions().list(requestOptions),
+    confirm: (id, requestOptions) => getReceiptActions().confirm(id, requestOptions),
+  });
   // No transport, recovery key or credential is exposed to the React tree.
-  return Object.freeze({ session: auth.session, favorites, cart, profile, shippingAddresses, orderCreation, orderHistory, orderTracking, notices, reviews });
+  return Object.freeze({ session: auth.session, favorites, cart, profile, shippingAddresses, orderCreation, orderHistory, orderTracking, notices, reviews, orderReceipt });
 }
 
 /** Defer configuration until submission so navigation never depends on the API. */

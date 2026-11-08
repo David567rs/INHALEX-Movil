@@ -1,0 +1,31 @@
+{
+  "fecha": "2026-11-08",
+  "copia": "INHALEX-Movil",
+  "rama": "feature/confirmacion-recepcion",
+  "fuente": "reporte textual del usuario sobre Expo Go",
+  "reporte": "Amigo, apareció Recepción confirmada, desapareció el botón y se conservó al actualizar. La referencia, cantidades e importes coinciden con Historial. ¿Qué marco en Trello y qué sigue?",
+  "resultadoReportado": {
+    "recepcionConfirmadaVisible": true,
+    "botonConfirmarDesaparecio": true,
+    "confirmacionConservadaAlActualizar": true,
+    "referenciaCoincideConHistorial": true,
+    "cantidadesCoincidenConHistorial": true,
+    "importesCoincidenConHistorial": true
+  },
+  "criteriosAceptadosEnEsteReporte": [3, 5, 6],
+  "criteriosAceptadosAcumulados": [1, 3, 5, 6],
+  "criteriosPendientes": [2, 4, 7, 8, 9],
+  "alcanceEstado": "Confirmacion de recepcion; no cambia el estado general Completado",
+  "siguientePrueba": "Pedido no completado excluido y recepcion confirmada sin opcion de repetir desde la UI",
+  "observacionDirectaDelTelefonoPorAgente": false,
+  "inspeccionHttpODatabasePorAgente": false,
+  "accionesAgente": "Registro documental local en commit separado; sin iniciar Expo, modificar pedidos, servicios, Trello, la copia de Zenaida ni publicar la rama",
+  "noAcreditadoEnEsteReporte": [
+    "Cancelacion del dialogo y fecha mostrada",
+    "Pedidos no elegibles o ajenos",
+    "Doble toque, concurrencia o numero de escrituras",
+    "Errores, respuesta perdida y verificacion posterior",
+    "Reapertura o cierre y restauracion de sesion",
+    "Revision del codigo por Zenaida"
+  ]
+}

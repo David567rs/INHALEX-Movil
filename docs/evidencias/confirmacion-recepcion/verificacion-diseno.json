@@ -1,0 +1,45 @@
+{
+  "fecha": "2026-11-08",
+  "copia": "INHALEX-Movil",
+  "responsable": "David",
+  "rama": "feature/confirmacion-recepcion",
+  "baseDevelop": "0f619021b4de5d5436b0f43c122d9cba6b306da3",
+  "commitPreparacion": "ef8c964",
+  "commitDiseno": "12b5aed",
+  "alcance": "Vista previa local; sin consultas ni escrituras de recepcion a la API",
+  "arquitectura": "View -> ViewModel -> ReadReceiptPreview -> ReceiptPreviewRepository -> LocalReceiptPreviewRepository",
+  "comprobaciones": {
+    "typecheck": "correcto",
+    "lint": "correcto",
+    "diffCheck": "correcto",
+    "revisionArquitectura": "sin problemas bloqueantes",
+    "web": {
+      "url": "http://localhost:8081/confirmacion-recepcion",
+      "viewport": { "width": 360, "height": 800 },
+      "escenas": ["pending", "confirmed", "issue", "empty"],
+      "cancelarConservaPendiente": true,
+      "confirmarCambiaSoloEjemplo": true,
+      "incidenciaDeshabilitaConfirmar": true,
+      "vacioNavegaAlHistorial": true,
+      "recargarReiniciaEjemplo": true,
+      "erroresConsolaObservados": [],
+      "captura": "diseno-dialogo-web.jpg"
+    }
+  },
+  "serviciosConservados": {
+    "backend": { "puerto": 3200, "pid": 28420 },
+    "metro": { "puerto": 8081, "pid": 33804 },
+    "iniciadosPorAgente": false
+  },
+  "copiaZenaida": "sin modificaciones; develop limpio",
+  "aceptacionExpoGo": "pendiente del usuario",
+  "checklistTrelloAceptado": [],
+  "publicado": false,
+  "prAbierto": false,
+  "limites": [
+    "No verifica funcionamiento nativo ni boton Atras de Android",
+    "No verifica autorizacion, confirmacion real, concurrencia ni recuperacion de errores",
+    "Los ejemplos no son pedidos de la cuenta ni se guardan",
+    "No sustituye la futura revision del PR por Zenaida"
+  ]
+}

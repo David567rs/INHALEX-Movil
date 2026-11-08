@@ -1,0 +1,33 @@
+{
+  "fecha": "2026-11-08",
+  "rama": "feature/confirmacion-recepcion",
+  "base": "0f619021b4de5d5436b0f43c122d9cba6b306da3",
+  "headAntesDeDocumentar": "827cd67423564e00c69fbd2b63ed8de371264497",
+  "autorGitHubVerificado": "David567rs",
+  "revisorSolicitadoPorUsuario": "ZenaidaGR",
+  "mobile": {
+    "pruebasCorrectas": 861,
+    "fallos": 0,
+    "omitidas": 0,
+    "typecheck": "correcto",
+    "lint": "correcto",
+    "origen": "ultima retirada del helper, registro y logs comprobados en la preparacion del PR",
+    "runtimeYTestsCoincidenCon": "7307e28"
+  },
+  "backend": {
+    "ejecutadoEnEstaPreparacion": true,
+    "build": "correcto",
+    "suitesUnitarias": 18,
+    "pruebasUnitariasCorrectas": 176,
+    "pruebasE2eCorrectas": 1,
+    "persistencia": "simulada; sin modificaciones de pedidos reales"
+  },
+  "diffCheck": "correcto",
+  "checklist": "8/9; revision humana pendiente",
+  "ciRemota": "se verifica despues de publicar el ultimo HEAD",
+  "expoIniciado": false,
+  "serviciosModificados": false,
+  "copiaZenaidaModificada": false,
+  "trelloModificado": false,
+  "fusionAutorizada": false
+}

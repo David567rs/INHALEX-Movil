@@ -1,0 +1,46 @@
+{
+  "fecha": "2026-11-08",
+  "copia": "INHALEX-Movil",
+  "rama": "feature/confirmacion-recepcion",
+  "aceptacionCommit": "855746b",
+  "preparacionCommit": "46555c9",
+  "baselineRuntime": "7307e28",
+  "cambios": [
+    "Retirada de tres archivos runtime temporales del escenario vacio",
+    "Ruta directa a OrderReceiptScreen sin panel ni prop de desarrollo",
+    "Retirada de tres casos de prueba exclusivos del escenario y sus registros"
+  ],
+  "coberturaPermanente": "Conservada sin cambios; Mobile/src y Mobile/tests coinciden con baselineRuntime",
+  "verificacion": {
+    "pruebasMoviles": {
+      "correctas": 861,
+      "fallos": 0,
+      "omitidas": 0
+    },
+    "typecheck": "correcto",
+    "lint": "correcto",
+    "diffCheck": "correcto",
+    "revisionTecnica": "sin bloqueadores",
+    "referenciasTemporalesEnCodigoYPruebas": 0,
+    "nuevaObservacionDelTelefono": false,
+    "nuevaQaWeb": false
+  },
+  "checklist": "8/9",
+  "pendiente": "Revisar el código por Zenaida",
+  "servicios": {
+    "iniciadosODetenidos": false,
+    "backend": {
+      "puerto": 3200,
+      "pid": 12968
+    },
+    "metro": {
+      "puerto": 8081,
+      "pid": 33804
+    }
+  },
+  "trelloModificado": false,
+  "copiaZenaidaModificada": false,
+  "datosRealesModificados": false,
+  "push": false,
+  "prAbierto": false
+}

@@ -1,0 +1,24 @@
+{
+  "fecha": "2026-11-08",
+  "pr": 22,
+  "url": "https://github.com/David567rs/INHALEX-Movil/pull/22",
+  "autorVerificado": "David567rs",
+  "revisorSolicitadoVerificado": "ZenaidaGR",
+  "ramaOrigen": "feature/confirmacion-recepcion",
+  "ramaDestino": "develop",
+  "estadoVerificado": "open",
+  "fusionado": false,
+  "headAlPublicar": "2933643c0989b64c694a7fb03f2f32ad3092f45c",
+  "commitsAlPublicar": 22,
+  "ciHeadAlPublicar": {
+    "mobile": { "runId": 42466650780, "resultado": "success" },
+    "backend": { "runId": 42466650793, "resultado": "success" }
+  },
+  "ciCommitDeEnlace": "se verifica despues de publicar este registro; sin anticipar resultado",
+  "checklist": "8/9; revision humana de Zenaida pendiente",
+  "historialReescrito": false,
+  "expoIniciado": false,
+  "serviciosModificados": false,
+  "copiaZenaidaModificada": false,
+  "trelloModificado": false
+}
