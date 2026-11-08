@@ -17,6 +17,7 @@ import { ReviewsModule } from './modules/reviews/reviews.module';
 import { SalesModule } from './modules/sales/sales.module';
 import { IntelligenceModule } from './modules/intelligence/intelligence.module';
 import { validateEnv } from './config/env.validation';
+import { AccountDeletionModule } from './modules/account-deletion/account-deletion.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { validateEnv } from './config/env.validation';
     }),
     UsersModule,
     AuthModule,
+    AccountDeletionModule,
     AdminModule,
     ProductsModule,
     OrdersModule,
