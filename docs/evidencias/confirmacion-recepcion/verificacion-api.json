@@ -1,0 +1,83 @@
+{
+  "fecha": "2026-11-08",
+  "copia": "INHALEX-Movil",
+  "responsable": "David",
+  "rama": "feature/confirmacion-recepcion",
+  "baseDevelop": "0f619021b4de5d5436b0f43c122d9cba6b306da3",
+  "commits": {
+    "aceptacionDiseno": "3a16618",
+    "backend": "858a316",
+    "mobile": "af106e0"
+  },
+  "arquitectura": "View -> ViewModel/controller -> use cases -> OrderReceiptRepository -> ApiOrderReceiptRepository -> HttpClient",
+  "contrato": {
+    "consulta": "GET /api/orders/me/receipt-confirmations",
+    "confirmacion": "PATCH /api/orders/:id/receipt/confirm",
+    "autenticacion": "Bearer; propietario derivado de la sesion",
+    "cuerpoConfirmacion": false,
+    "limitePedidos": 12,
+    "estadoGeneral": "completed",
+    "estadosRecepcion": ["pending", "confirmed", "issue_reported"],
+    "verificarTrasError": "GET explicito; nunca reenvia PATCH automaticamente"
+  },
+  "comprobaciones": {
+    "mobile": {
+      "tests": 861,
+      "aprobados": 861,
+      "fallos": 0,
+      "nuevosRecepcion": 48,
+      "typecheck": "correcto",
+      "lint": "correcto",
+      "transporte": "HttpClient real con fetch simulado; sin peticiones externas"
+    },
+    "backend": {
+      "suites": ["customer-receipt.service.spec.ts", "orders.service.spec.ts"],
+      "tests": 21,
+      "aprobados": 21,
+      "fallos": 0,
+      "recepcion": 16,
+      "pedidosExistentes": 5,
+      "build": "correcto",
+      "lintNuevoSpec": "correcto",
+      "persistencia": "modelos simulados; sin pedidos reales modificados"
+    },
+    "diffCheck": "correcto",
+    "revisionArquitecturaYControlador": "sin problemas bloqueantes detectados",
+    "web": {
+      "viewport": { "width": 360, "height": 800 },
+      "metro": "existente; iniciado por el usuario",
+      "rutaProduccionProtegidaSinSesion": true,
+      "rutaTemporal": "/qa-receipt-local",
+      "rutaTemporalEliminadaAntesDelCommit": true,
+      "datos": "pedidos DEMO-008 y DEMO-007 ficticios en memoria; autenticacion aislada, sin HTTP, tokens ni almacenamiento",
+      "seleccionYResumen": true,
+      "cancelarConservaPendiente": true,
+      "confirmarMuestraReciboYRetiraBoton": true,
+      "actualizarConservaConfirmacion": true,
+      "incidenciaBloqueaConfirmacion": true,
+      "erroresConsolaObservados": [],
+      "capturas": ["api-dialogo-demo-web.jpg", "api-confirmada-demo-web.jpg"]
+    }
+  },
+  "restriccionesRespetadas": {
+    "expoIniciadoPorAgente": false,
+    "qrGeneradoPorAgente": false,
+    "serviciosIniciadosDetenidosOReiniciadosPorAgente": false,
+    "pedidosRealesConfirmados": false,
+    "copiaZenaidaModificada": false,
+    "dependenciasModificadas": false,
+    "ramaPublicada": false,
+    "prAbierto": false,
+    "trelloModificado": false
+  },
+  "aceptacionDisenoExpoGo": "reportada por el usuario",
+  "aceptacionApiExpoGo": "pendiente del usuario",
+  "checklistTrelloAceptado": [1],
+  "revisionFuturaZenaida": "pendiente",
+  "limites": [
+    "Web con datos ficticios y tests no sustituyen aceptacion nativa con API real",
+    "La transicion atomica evita efectos duplicados entre solicitudes concurrentes, no garantiza notificaciones exactamente una vez ante caida del proceso",
+    "No incluye crear reportes de incidencia",
+    "No se han ejecutado confirmaciones reales desde el agente"
+  ]
+}

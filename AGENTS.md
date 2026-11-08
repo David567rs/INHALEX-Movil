@@ -2,6 +2,8 @@
 
 ## Etapa vigente: API de Confirmación de recepción, 8 de noviembre de 2026
 
+**Conexión implementada, aceptación nativa pendiente:** lectura y confirmación de recepción están conectadas mediante MVVM y Repository; el backend protege la transición simultánea y la app verifica una escritura incierta antes de permitir otro envío. Pasaron 861 pruebas móviles, 21 pruebas de pedidos del backend, TypeScript, lint y compilación del servidor. La comprobación visual usó pedidos ficticios en web; no acredita la API en Expo Go. Solo el criterio 1 tiene aceptación del usuario. Próximo paso: prueba real guiada descrita en [conexión de recepción](docs/CONEXION-CONFIRMACION-RECEPCION.md). Commits locales por etapa, sin publicar, iniciar Expo ni modificar la copia de Zenaida.
+
 El PR #21 de Reseñas ya está integrado mediante merge commit `0f619021b4de5d5436b0f43c122d9cba6b306da3`, conservando sus 23 commits y la revisión de David. Ambas copias se sincronizaron. Los registros de PR abierto que siguen son históricos.
 
 David trabaja ahora en `C:\Users\David\Documents\INHALEX-Movil`, rama `feature/confirmacion-recepcion`, creada desde ese `develop`. El usuario aceptó el diseño en Expo Go y autorizó conectar la API, manteniendo MVVM, Repository y commits por etapa. Implementar consulta y confirmación de recepción, validación, exclusión de duplicados y recuperación ante errores. Las comprobaciones del agente usan datos aislados; las confirmaciones reales las prueba el usuario. El usuario ya arrancó backend y Expo: conservar esos procesos; no generar otro QR. La copia de Zenaida no se modifica. No publicar ni abrir PR durante esta etapa. Zenaida revisará el futuro PR de David. Alcance y checklist: [diseño de recepción](docs/DISENO-CONFIRMACION-RECEPCION.md).

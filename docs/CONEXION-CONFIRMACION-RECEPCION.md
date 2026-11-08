@@ -1,0 +1,89 @@
+# Confirmación de recepción: conexión a la API
+
+8 de noviembre de 2026. Implementación de David en `INHALEX-Movil`, rama `feature/confirmacion-recepcion`, desde `develop` `0f619021b4de5d5436b0f43c122d9cba6b306da3`. El usuario aceptó el diseño en Expo Go y autorizó esta etapa. Se mantiene el diseño aprobado y el historial de commits; la aceptación de la API en el teléfono sigue pendiente.
+
+## Comportamiento y arquitectura
+
+Cuenta → Confirmación de recepción consulta los pedidos completados de la cuenta, permite seleccionar uno y muestra referencia, productos, cantidades y subtotal. Confirmar abre el diálogo de segunda acción. La respuesta confirmada muestra la fecha y retira la opción de repetir la operación. Los pedidos con incidencia no admiten confirmación. El contenido conserva un único desplazamiento; el diálogo también puede desplazarse.
+
+La ruta es delgada. La pantalla usa `useOrderReceiptViewModel`, el controlador y los casos de uso; estos dependen del contrato `OrderReceiptRepository`, implementado por `ApiOrderReceiptRepository` y el `HttpClient` compartido. Bootstrap compone las dependencias y `OrderReceiptProvider` vincula la sesión. El token se resuelve en la capa HTTP, sin entregarlo a la vista. Los ejemplos de diseño se retiraron del flujo de producción y permanecen en el historial Git.
+
+## Contrato y reglas
+
+Todas las rutas requieren Bearer y el servidor identifica al propietario con la sesión.
+
+| Operación | Ruta | Resultado |
+| --- | --- | --- |
+| Consultar | `GET /api/orders/me/receipt-confirmations` | Hasta 12 pedidos propios completados, ordenados por fecha reciente. |
+| Confirmar | `PATCH /api/orders/:id/receipt/confirm` | Sin cuerpo. Devuelve la recepción confirmada del pedido solicitado. |
+
+El estado general permanece `completed` (Completado). La recepción tiene su propio estado: `pending`, `confirmed` o `issue_reported`. No se inventa un estado general Entregado ni una dirección que el contrato no proporciona. Los registros antiguos completados sin recepción o con `not_required` se tratan como pendientes.
+
+El mapper comprueba identificadores, estructura, fechas, límites de cantidades e importes y coherencia del subtotal. El resultado de confirmar debe corresponder al ID solicitado, estar confirmado y contener su fecha. Se mantienen los límites actuales del contrato: 12 pedidos, 20 líneas por pedido y cantidades de 1 a 25 por línea.
+
+El servidor valida pertenencia y estado. La escritura usa una condición atómica sobre propietario, pedido completado y recepción todavía pendiente; solo la petición que efectúa la transición añade la nota y notifica. Una repetición de una recepción confirmada devuelve el resultado existente. Un pedido con incidencia devuelve conflicto; un pedido ajeno o no completado no se confirma.
+
+## Errores, sesión y repeticiones
+
+- El controlador bloquea sincrónicamente envíos y actualizaciones simultáneas, incluido el doble toque.
+- Si falla una lectura de red, se conserva la última colección y se ofrece reintento explícito.
+- Si falla la confirmación, se conserva el pedido y se ofrece **Verificar recepción**. Esta acción solo consulta: nunca repite el PATCH automáticamente. Si el servidor ya confirmó, recupera el resultado; si sigue pendiente, permite una nueva confirmación explícita.
+- Una respuesta de consulta antigua no hace retroceder una recepción ya reconocida como confirmada en la sesión. Este registro es acotado, reside en memoria y se limpia al cambiar la autenticación.
+- Cerrar sesión o cambiar de cuenta oculta los datos y descarta respuestas tardías. Solo un 401 se interpreta como sesión expirada; un 403 retira la información privada y requiere nueva consulta. El diálogo se cierra al salir de la vista o perder validez la selección.
+
+No se implementa reporte de incidencias en esta actividad. La exclusión de solicitudes concurrentes no equivale a garantizar notificaciones exactamente una vez ante una caída del proceso del servidor.
+
+## Commits de esta etapa
+
+1. `3a16618`: aceptación del diseño y autorización de la API.
+2. `858a316`: protección de confirmaciones simultáneas en el backend y sus pruebas.
+3. `af106e0`: integración móvil, MVVM, Repository, protección de sesión y pruebas.
+4. Registro documental posterior de comprobaciones y guía de aceptación.
+
+## Comprobaciones realizadas
+
+| Comprobación | Resultado |
+| --- | --- |
+| Suite móvil `npm test` | 861 aprobadas, 0 fallos; incluye 48 nuevas de recepción. |
+| TypeScript móvil `npm run typecheck` | Correcto. |
+| Lint móvil `npm run lint` | Correcto. |
+| Backend: `customer-receipt.service.spec.ts` y `orders.service.spec.ts` | 21 aprobadas: 16 de recepción y 5 existentes. |
+| Compilación del backend | Correcta. |
+| Lint del nuevo spec del backend | Correcto. |
+| `git diff --check` | Correcto. |
+| Revisión de arquitectura y de concurrencia/sesión | Sin problemas bloqueantes detectados. |
+
+Los tests móviles ejercitan también el `HttpClient` real con `fetch` sustituido por respuestas controladas. Cubren fallo antes de guardar y respuesta perdida después de guardar, sin peticiones externas. Los tests del servidor usan modelos simulados. No representan confirmaciones reales ni sustituyen la aceptación en Expo Go.
+
+Se revisó la pantalla real en web de 360 × 800 usando exclusivamente el Metro que el usuario ya tenía abierto. La ruta de producción mostró la protección sin sesión. Una ruta temporal aislada utilizó autenticación y pedidos ficticios en memoria, sin HTTP, tokens ni almacenamiento: selección, resumen, cancelación, confirmación, conservación al actualizar y bloqueo por incidencia. La consola no registró errores. La ruta temporal fue eliminada antes de guardar el commit móvil.
+
+Evidencia visual ficticia: [diálogo](evidencias/confirmacion-recepcion/api-dialogo-demo-web.jpg) y [recepción confirmada](evidencias/confirmacion-recepcion/api-confirmada-demo-web.jpg). Registro estructurado: [verificacion-api.json](evidencias/confirmacion-recepcion/verificacion-api.json).
+
+El agente no arrancó Expo, no generó QR, no reinició ni detuvo servicios, no confirmó pedidos reales, no cambió dependencias ni la copia de Zenaida y no publicó la rama, abrió PR ni modificó Trello.
+
+## Trello y primera prueba en Expo Go
+
+El diseño aceptado permite marcar únicamente **Mostrar opción de confirmar recepción** por ahora. Los otros ocho criterios siguen pendientes de sus comprobaciones nativas o revisión:
+
+- [x] Mostrar opción de confirmar recepción
+- [ ] Validar que el pedido pueda ser confirmado
+- [ ] Enviar confirmación a la API
+- [ ] Evitar confirmaciones duplicadas
+- [ ] Actualizar el estado del pedido
+- [ ] Mostrar mensaje de confirmación
+- [ ] Manejar errores
+- [ ] Probar la funcionalidad
+- [ ] Revisar el código
+
+Primero validar un caso correcto:
+
+1. Recargar el Expo ya abierto de David e iniciar sesión con la cuenta de prueba.
+2. Entrar en **Cuenta → Confirmación de recepción** y seleccionar un pedido completado pendiente de recepción. Si no hay uno disponible, informar ese resultado para preparar el caso siguiente.
+3. Comparar referencia, productos, cantidades y subtotal con Historial.
+4. Abrir **Confirmar recepción** y elegir **Todavía no**: el pedido debe conservarse pendiente.
+5. Con un pedido de prueba o realmente recibido, volver a abrir el diálogo y confirmar. Debe aparecer **Recepción confirmada**, su fecha y desaparecer la opción de confirmar de nuevo.
+6. Pulsar **Actualizar recepciones**: la confirmación debe conservarse.
+
+Respuesta sugerida: «Amigo, apareció Recepción confirmada, desapareció el botón y se conservó al actualizar. La referencia, las cantidades y los importes coinciden con Historial.»
+
+Después se guiarán por separado los casos de pedido no elegible y vacío, doble toque, fallo de lectura, fallo al confirmar/verificación y reapertura/cierre de sesión. No se marcan como aceptados anticipadamente. El PR y la revisión de Zenaida corresponden a una etapa posterior.

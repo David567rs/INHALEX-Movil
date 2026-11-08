@@ -2,6 +2,8 @@
 
 ## Etapa vigente: Confirmación de recepción — conexión a la API
 
+**Conexión preparada para prueba nativa:** implementación móvil y protección de confirmaciones simultáneas del backend terminadas en commits separados. Verificados 861 tests móviles, 21 tests de pedidos del servidor, TypeScript, lint y compilación del backend. La revisión web empleó ejemplos aislados. Falta la aceptación con pedidos reales en Expo Go y, posteriormente, la revisión de Zenaida. Se conserva aceptado únicamente el primer criterio de Trello. [Contrato, evidencias y primera prueba](CONEXION-CONFIRMACION-RECEPCION.md).
+
 El PR #21 de Reseñas quedó revisado por David e integrado en `develop` (`0f619021b4de5d5436b0f43c122d9cba6b306da3`) conservando 23 commits. La sincronización de ambas copias está terminada. Los estados de PR abierto siguientes se conservan como historia.
 
 El 8 de noviembre de 2026 el usuario aceptó el diseño de Confirmación de recepción en Expo Go y autorizó conectar la API, a cargo de David en `INHALEX-Movil`, rama `feature/confirmacion-recepcion`. Zenaida revisará el futuro PR. Se mantienen el diseño aprobado, MVVM, Repository y commits por etapa. El usuario controla Expo y los servicios ya abiertos. No arrancar Expo, publicar PR ni empezar una release. El criterio Mostrar opción de confirmar recepción queda aceptado; los otros ocho requieren sus pruebas y revisión correspondientes. [Alcance y nueve criterios exactos](DISENO-CONFIRMACION-RECEPCION.md).
