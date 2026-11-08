@@ -1,0 +1,41 @@
+{
+  "fecha": "2026-11-08",
+  "copia": "INHALEX-Movil",
+  "rama": "feature/confirmacion-recepcion",
+  "fuente": "reporte textual del usuario sobre Expo Go",
+  "reporte": "Amigo, Actualizar y Reintentar fallaron sin perder el pedido ni la confirmación. Reinicié el backend y Reintentar recuperó los datos y quitó el aviso. ¿Qué marco en Trello y qué sigue?",
+  "resultadoReportado": {
+    "actualizarFallo": true,
+    "reintentarFallo": true,
+    "pedidoConservado": true,
+    "confirmacionConservada": true,
+    "usuarioReinicioBackend": true,
+    "reintentarRecuperoDatos": true,
+    "avisoRetiradoTrasRecuperacion": true
+  },
+  "casoAceptadoEnEsteReporte": "Error de lectura y recuperacion mediante reintento",
+  "criteriosAceptadosEnEsteReporte": [],
+  "criteriosAceptadosAcumulados": [1, 2, 3, 4, 5, 6],
+  "criteriosPendientes": [7, 8, 9],
+  "checklist": "6/9",
+  "criterio7": "Manejar errores sigue pendiente del fallo al confirmar y la recuperacion con Verificar recepcion",
+  "siguientePrueba": {
+    "modalidad": "controlada con datos ficticios aislados",
+    "motivo": "El usuario no dispone de otro pedido completado pendiente de recepcion, de prueba o realmente recibido",
+    "eleccionDelUsuario": "Continuar con una prueba controlada",
+    "alcancePrevisto": "Fallo al confirmar, Verificar recepcion fallida, recuperacion de lectura sin reenvio automatico y confirmacion explicita posterior",
+    "estado": "autorizada; preparacion y aceptacion pendientes de sus propias evidencias"
+  },
+  "observacionDirectaDelTelefonoPorAgente": false,
+  "inspeccionHttpODatabasePorAgente": false,
+  "trelloModificadoPorAgente": false,
+  "accionesAgente": "Registro documental local; sin iniciar Expo, modificar pedidos, servicios, la copia de Zenaida ni publicar la rama",
+  "noAcreditadoEnEsteReporte": [
+    "Fallo al confirmar y recuperacion mediante Verificar recepcion",
+    "Respuesta perdida despues de guardar o ausencia de reenvio automatico de una escritura",
+    "Numero exacto de peticiones, escrituras, notas o notificaciones",
+    "Preparacion, ejecucion o resultado de la siguiente prueba controlada",
+    "Vacio, reapertura o cierre y restauracion de sesion",
+    "Revision del codigo por Zenaida"
+  ]
+}

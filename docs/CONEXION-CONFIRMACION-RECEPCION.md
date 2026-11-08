@@ -1,6 +1,6 @@
 # Confirmación de recepción: conexión a la API
 
-8 de noviembre de 2026. Implementación de David en `INHALEX-Movil`, rama `feature/confirmacion-recepcion`, desde `develop` `0f619021b4de5d5436b0f43c122d9cba6b306da3`. El usuario aceptó el diseño en Expo Go y autorizó esta etapa. Se mantiene el diseño aprobado y el historial de commits. El primer caso correcto de la API, la elegibilidad visible y el doble toque ya fueron aceptados por reporte del usuario; los escenarios restantes siguen pendientes.
+8 de noviembre de 2026. Implementación de David en `INHALEX-Movil`, rama `feature/confirmacion-recepcion`, desde `develop` `0f619021b4de5d5436b0f43c122d9cba6b306da3`. El usuario aceptó el diseño en Expo Go y autorizó esta etapa. Se mantiene el diseño aprobado y el historial de commits. El primer caso correcto de la API, la elegibilidad visible, el doble toque y el error de lectura con recuperación ya fueron aceptados por reporte del usuario. El checklist permanece en 6/9; Manejar errores espera también el fallo al confirmar y la verificación posterior.
 
 ## Comportamiento y arquitectura
 
@@ -71,6 +71,10 @@ Después, el usuario informó: «Amigo, el pedido no completado no aparece en Re
 
 El usuario posteriormente reportó: «Amigo, hice dos toques rápidos: se cerró el diálogo, apareció Recepción confirmada y al actualizar conservó la misma referencia, sin permitir confirmar otra vez. ¿Qué marco en Trello y qué sigue?» Se acepta **Evitar confirmaciones duplicadas (4)** por este comportamiento nativo y las pruebas técnicas previas de exclusión e idempotencia. Checklist vigente: **6/9**, criterios 1 a 6. El reporte no afirma que alcanzó a ver Confirmando ni permite contar peticiones, escrituras, notas o notificaciones reales. No acredita concurrencia entre dispositivos ni caída del proceso. Evidencia: [aceptacion-doble-toque-expo-go.json](evidencias/confirmacion-recepcion/aceptacion-doble-toque-expo-go.json).
 
+El usuario informó después exactamente: «Amigo, Actualizar y Reintentar fallaron sin perder el pedido ni la confirmación. Reinicié el backend y Reintentar recuperó los datos y quitó el aviso. ¿Qué marco en Trello y qué sigue?» Se acepta el caso de **error de lectura y recuperación**, sin añadir un criterio completo: **Manejar errores (7)** continúa pendiente del fallo al confirmar y la recuperación con **Verificar recepción**. Por tanto, permanecen **6/9**, criterios 1 a 6. La fuente es el reporte textual del usuario sobre Expo Go; el agente no observó el teléfono ni inspeccionó peticiones HTTP o la base. No se atribuye al reporte prueba de escritura fallida, respuesta perdida después de guardar o reenvío automático. Evidencia: [aceptacion-error-lectura-expo-go.json](evidencias/confirmacion-recepcion/aceptacion-error-lectura-expo-go.json).
+
+El usuario no dispone de otro pedido Completado pendiente de recepción, de prueba o realmente recibido, y eligió continuar con una **prueba controlada**. Esa elección autoriza preparar un caso ficticio aislado para el fallo al confirmar y su verificación; no constituye su preparación, ejecución o aceptación. La indicación para Trello es mantener **En progreso**: este reporte no permite marcar un punto nuevo y el agente no ha comprobado ni modificado el tablero.
+
 - [x] Mostrar opción de confirmar recepción
 - [x] Validar que el pedido pueda ser confirmado
 - [x] Enviar confirmación a la API
@@ -92,7 +96,7 @@ El usuario posteriormente reportó: «Amigo, hice dos toques rápidos: se cerró
 
 Respuesta sugerida: «Amigo, apareció Recepción confirmada, desapareció el botón y se conservó al actualizar. La referencia, las cantidades y los importes coinciden con Historial.»
 
-Los casos pendientes se guían por separado: fallo de lectura, fallo al confirmar/verificación, vacío y reapertura/cierre de sesión. No se marcan como aceptados anticipadamente. El PR y la revisión de Zenaida corresponden a una etapa posterior.
+Los casos pendientes se guían por separado: fallo al confirmar/verificación mediante la prueba controlada elegida, vacío y reapertura/cierre de sesión según disponibilidad. No se marcan como aceptados anticipadamente. El PR y la revisión de Zenaida corresponden a una etapa posterior.
 
 ## Guía de elegibilidad (conservada como referencia)
 
@@ -115,7 +119,7 @@ Se necesita otro pedido Completado cuya recepción siga pendiente, de prueba o r
 
 Reportar el comportamiento observado sin afirmar un número de escrituras o notificaciones del servidor a partir de la pantalla. El bloqueo nativo complementa las pruebas técnicas existentes de exclusión síncrona, transición atómica e idempotencia; no demuestra por sí solo exactamente una escritura ni recuperación ante caída del proceso.
 
-## Siguiente prueba: error de lectura y reintento
+## Guía de error de lectura y reintento (conservada como referencia)
 
 1. Con el backend funcionando, entrar en Confirmación de recepción y dejar seleccionado el pedido confirmado, con sus datos visibles.
 2. El usuario detiene solo el backend compartido en la terminal donde lo arrancó, mediante Ctrl+C. Expo permanece abierto. El agente no inicia ni detiene procesos.
@@ -125,3 +129,17 @@ Reportar el comportamiento observado sin afirmar un número de escrituras o noti
 6. Deben desaparecer el aviso y recuperarse los datos de la misma referencia, manteniendo Recepción confirmada y sin ofrecer repetirla.
 
 Este caso solo comprueba lectura. Manejar errores sigue pendiente hasta verificar también el fallo al confirmar y la recuperación con Verificar recepción, con otro pedido pendiente o una prueba controlada si no hay uno disponible. No enviar una confirmación durante esta prueba de lectura.
+
+## Siguiente prueba: fallo controlado al confirmar y verificación
+
+La alternativa controlada fue elegida por el usuario porque no dispone de otro pedido completado pendiente de recepción, de prueba o realmente recibido. Su preparación y aceptación quedan pendientes de sus propias evidencias. Debe usar datos ficticios aislados, sin modificar pedidos reales ni revertir una recepción ya confirmada. El usuario conserva el control de Expo y del backend compartido; esta aceptación no inicia ni detiene servicios.
+
+El recorrido previsto, una vez preparado el caso y documentado su acceso, es:
+
+1. Abrir el pedido ficticio pendiente, pulsar **Confirmar recepción** y después **Sí, recibí mi pedido** con el fallo controlado de escritura activo.
+2. Comprobar que aparece un aviso, se conservan la referencia y el resumen, no se anuncia una confirmación nueva y se ofrece **Verificar recepción**. Debe permanecer bloqueada una nueva confirmación hasta consultar correctamente.
+3. Probar **Verificar recepción** con el fallo controlado de lectura activo: el aviso y el pedido deben conservarse al terminar el intento.
+4. Restablecer la consulta en el caso controlado y pulsar **Verificar recepción**. Si el caso simula que la escritura no se guardó, debe conservar la recepción pendiente y habilitar **Confirmar recepción**, sin enviarla automáticamente.
+5. Confirmar de forma explícita y comprobar **Recepción confirmada** y ausencia de opción de repetir. El resultado debe registrarse como comportamiento de un caso ficticio controlado, sin atribuirlo a una escritura real del backend.
+
+La guía no acredita resultados anticipados. La respuesta perdida después de guardar es un escenario distinto y no queda demostrada por este recorrido de fallo antes de guardar. **Manejar errores (7)** permanece pendiente hasta evaluar el reporte de esta prueba junto con la lectura real ya aceptada. **Probar la funcionalidad (8)** y **Revisar el código (9)** también siguen pendientes.
