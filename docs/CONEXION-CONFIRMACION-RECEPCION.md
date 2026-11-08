@@ -166,3 +166,11 @@ Después falta comprobar el estado vacío según disponibilidad de una cuenta si
 Se registra el resultado reportado del pedido real confirmado: reapertura, ocultación al cerrar sesión, recuperación con la misma cuenta, actualización y bloqueo de repetir la confirmación. El agente no observó el teléfono ni verificó otra cuenta o sesión caducada. [Evidencia textual](evidencias/confirmacion-recepcion/aceptacion-sesion-expo-go.json).
 
 El checklist permanece **7/9**. Para completar **Probar la funcionalidad (8)** queda el vacío; el usuario eligió «Preparemos un caso vacío aislado». Esta aceptación se conserva en un commit documental separado de la preparación. No se modifican pedidos, Trello o servicios y no se publica PR. **Revisar el código (9)** sigue pendiente de Zenaida.
+
+## Preparación vigente: vacío aislado — 8 de noviembre de 2026
+
+La aceptación de sesión quedó en `7307e28`; el caso vacío temporal se preparó en `46555c9`. La [guía de vacío](PRUEBA-VACIO-RECEPCION.md) explica **Probar recepciones vacías**, actualización, **Ver mis pedidos** hacia el Historial real, regreso y **Salir de la prueba**. Reutiliza MVVM y Repository con una lista ficticia en memoria, solo en desarrollo, sin cambiar pedidos ni credenciales reales. La simulación se descarta al salir o perder foco.
+
+Pasaron **864/864 pruebas móviles**, TypeScript, lint y `git diff --check`, además de revisión técnica sin bloqueadores. La QA web sobre el Metro existente comprobó vacío, actualización, navegación y descarte a 1280 × 720; el navegador estaba sin sesión, por lo que la vuelta mostró la protección real de acceso. No se atribuye observación de las recepciones personales del teléfono. Sin errores de consola; una advertencia web de Animated sobre el fallback de `useNativeDriver`. [Evidencia](evidencias/confirmacion-recepcion/prueba-vacio-controlada.json) y [captura](evidencias/confirmacion-recepcion/prueba-vacio-web.png).
+
+Falta el reporte nativo del usuario. El checklist permanece **7/9**; Probar la funcionalidad (8) espera esta comprobación y Revisar el código (9) espera a Zenaida. Tras la aceptación se retirarán el helper y su acceso en otro commit antes del PR. Se conservan la guía, las evidencias, las ramas y los commits. No se iniciaron ni detuvieron servicios, no se modificó Trello ni se publicó la rama.
