@@ -1,0 +1,36 @@
+{
+  "fecha": "2026-11-08",
+  "copia": "INHALEX-Movil",
+  "rama": "feature/confirmacion-recepcion",
+  "fuente": "reporte textual del usuario sobre Expo Go",
+  "reporte": "Amigo, la recepción se conservó al reabrir, se ocultó al cerrar sesión y volvió con la misma cuenta. Actualizar funciona y no permite confirmar otra vez. Sigamos con la prueba del estado vacío.",
+  "resultadoReportado": {
+    "recepcionConservadaAlReabrir": true,
+    "ocultaAlCerrarSesion": true,
+    "recuperadaConLaMismaCuenta": true,
+    "actualizarFunciona": true,
+    "noPermiteReconfirmar": true
+  },
+  "criteriosAceptadosAcumulados": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "criteriosPendientes": [
+    8,
+    9
+  ],
+  "checklist": "7/9",
+  "observacionDirectaDelTelefonoPorAgente": false,
+  "trelloModificadoPorAgente": false,
+  "noAcreditado": [
+    "Estado vacio",
+    "Otra cuenta o sesion caducada",
+    "Revision real de Zenaida"
+  ],
+  "siguienteEtapa": "Caso vacio aislado autorizado por el usuario, seguido de su comprobacion en Expo Go"
+}

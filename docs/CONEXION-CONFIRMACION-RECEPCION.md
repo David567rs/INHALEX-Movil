@@ -158,3 +158,11 @@ El siguiente recorrido usa el pedido **real ya confirmado**, sin enviar otra con
 4. Ingresar con la misma cuenta: recuperar el pedido confirmado, sin otro envío, y comprobar Actualizar recepciones.
 
 Después falta comprobar el estado vacío según disponibilidad de una cuenta sin pedidos Completados: **No hay recepciones disponibles**, permanencia al actualizar y **Ver mis pedidos** hacia Historial. No se borran ni cambian pedidos para provocar este estado. Si no existe esa cuenta, se acordará un caso aislado. **Probar la funcionalidad (8)** y **Revisar el código (9)** permanecen pendientes; esta retirada no los completa ni autoriza un PR.
+
+## Aceptación de reapertura y sesión — 8 de noviembre de 2026
+
+> Amigo, la recepción se conservó al reabrir, se ocultó al cerrar sesión y volvió con la misma cuenta. Actualizar funciona y no permite confirmar otra vez. Sigamos con la prueba del estado vacío.
+
+Se registra el resultado reportado del pedido real confirmado: reapertura, ocultación al cerrar sesión, recuperación con la misma cuenta, actualización y bloqueo de repetir la confirmación. El agente no observó el teléfono ni verificó otra cuenta o sesión caducada. [Evidencia textual](evidencias/confirmacion-recepcion/aceptacion-sesion-expo-go.json).
+
+El checklist permanece **7/9**. Para completar **Probar la funcionalidad (8)** queda el vacío; el usuario eligió «Preparemos un caso vacío aislado». Esta aceptación se conserva en un commit documental separado de la preparación. No se modifican pedidos, Trello o servicios y no se publica PR. **Revisar el código (9)** sigue pendiente de Zenaida.
