@@ -1,5 +1,13 @@
 # Prueba controlada de error al confirmar recepción
 
+## Resultado posterior: aceptado por el usuario
+
+8 de noviembre de 2026. «Amigo, Confirmar y Verificar fallaron sin perder el pedido ficticio. Restablecer y verificar habilitaron Confirmar sin envío automático. Confirmé: quedaron 2 intentos y 1 recepción, se conservó al actualizar y salí. ¿Qué sigue?» Se acepta el comportamiento visible del caso ficticio en Expo Go, junto con la lectura real previa: **Manejar errores (7)**, avance **7/9**. La evidencia es el reporte del usuario; no hubo observación directa del teléfono por el agente ni escritura real en este caso. [Registro estructurado](evidencias/confirmacion-recepcion/aceptacion-error-confirmacion-controlada-expo-go.json). La retirada del helper seguirá en un commit separado.
+
+## Preparación y guía históricas
+
+Lo siguiente conserva las instrucciones y comprobaciones de la preparación; los pendientes de aceptación nativa de ese snapshot quedan resueltos por el reporte anterior. El acceso dejará de estar disponible tras retirar el helper.
+
 8 de noviembre de 2026. David, `INHALEX-Movil`, rama `feature/confirmacion-recepcion`. El usuario eligió esta alternativa porque no dispone de otro pedido Completado pendiente de recepción, de prueba o realmente recibido. El caso de lectura real y su recuperación ya fueron aceptados por su reporte en `39ce307`. Esta preparación no añade aceptación de Expo Go: el checklist permanece **6/9**, criterios 1 a 6; están pendientes Manejar errores (7), Probar la funcionalidad (8) y Revisar el código (9).
 
 ## Acceso y alcance

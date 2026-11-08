@@ -1,0 +1,53 @@
+{
+  "fecha": "2026-11-08",
+  "copia": "INHALEX-Movil",
+  "rama": "feature/confirmacion-recepcion",
+  "fuente": "reporte textual del usuario sobre Expo Go",
+  "reporte": "Amigo, Confirmar y Verificar fallaron sin perder el pedido ficticio. Restablecer y verificar habilitaron Confirmar sin envío automático. Confirmé: quedaron 2 intentos y 1 recepción, se conservó al actualizar y salí. ¿Qué sigue?",
+  "escenario": "pedido ficticio DEMO-RECEPCION-01 y Repository en memoria",
+  "preparacionCommits": [
+    "9b6f9f5",
+    "1caa639"
+  ],
+  "lecturaRealPreviaCommit": "39ce307",
+  "resultadoReportado": {
+    "confirmarFallo": true,
+    "verificarFallo": true,
+    "pedidoFicticioConservado": true,
+    "restablecerYVerificarHabilitaronConfirmar": true,
+    "sinEnvioAutomatico": true,
+    "confirmacionExplicita": true,
+    "intentosFicticios": 2,
+    "recepcionesFicticiasGuardadas": 1,
+    "seConservoAlActualizar": true,
+    "usuarioSalioDeLaPrueba": true
+  },
+  "criteriosAceptadosEnEsteReporte": [
+    7
+  ],
+  "criteriosAceptadosAcumulados": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "criteriosPendientes": [
+    8,
+    9
+  ],
+  "checklist": "7/9",
+  "observacionDirectaDelTelefonoPorAgente": false,
+  "escrituraRealEnElCaso": false,
+  "trelloModificadoPorAgente": false,
+  "noAcreditado": [
+    "Escritura fallida real en el backend",
+    "Respuesta perdida despues de guardar mediante este recorrido",
+    "Conteos de HTTP, escrituras o notificaciones reales",
+    "Vacio o reapertura y cierre/restauracion de sesion",
+    "Revision real de Zenaida"
+  ],
+  "siguienteEtapa": "Retirar helper temporal en commit separado y continuar pruebas de funcionalidad sin iniciar servicios ni publicar PR"
+}

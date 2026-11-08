@@ -1,6 +1,6 @@
 # Confirmación de recepción: conexión a la API
 
-8 de noviembre de 2026. Implementación de David en `INHALEX-Movil`, rama `feature/confirmacion-recepcion`, desde `develop` `0f619021b4de5d5436b0f43c122d9cba6b306da3`. El usuario aceptó el diseño en Expo Go y autorizó esta etapa. Se mantiene el diseño aprobado y el historial de commits. El primer caso correcto de la API, la elegibilidad visible, el doble toque y el error de lectura con recuperación ya fueron aceptados por reporte del usuario. El checklist permanece en 6/9; Manejar errores espera también el fallo al confirmar y la verificación posterior.
+8 de noviembre de 2026. Implementación de David en `INHALEX-Movil`, rama `feature/confirmacion-recepcion`, desde `develop` `0f619021b4de5d5436b0f43c122d9cba6b306da3`. El usuario aceptó el diseño en Expo Go y autorizó esta etapa. Se mantiene el diseño aprobado y el historial de commits. El primer caso correcto de la API, la elegibilidad visible, el doble toque y el error de lectura con recuperación ya fueron aceptados por reporte del usuario. El usuario aceptó después el fallo al confirmar y su verificación mediante un caso ficticio aislado. El checklist vigente es **7/9**; siguen pendientes Probar la funcionalidad y Revisar el código.
 
 ## Comportamiento y arquitectura
 
@@ -75,13 +75,17 @@ El usuario informó después exactamente: «Amigo, Actualizar y Reintentar falla
 
 El usuario no dispone de otro pedido Completado pendiente de recepción, de prueba o realmente recibido, y eligió continuar con una **prueba controlada**. Esa elección autoriza preparar un caso ficticio aislado para el fallo al confirmar y su verificación; no constituye su preparación, ejecución o aceptación. La indicación para Trello es mantener **En progreso**: este reporte no permite marcar un punto nuevo y el agente no ha comprobado ni modificado el tablero.
 
+### Aceptación del caso controlado, 8 de noviembre de 2026
+
+El usuario informó exactamente: «Amigo, Confirmar y Verificar fallaron sin perder el pedido ficticio. Restablecer y verificar habilitaron Confirmar sin envío automático. Confirmé: quedaron 2 intentos y 1 recepción, se conservó al actualizar y salí. ¿Qué sigue?» Se acepta **Manejar errores (7)** combinando este caso de fallo de confirmación/verificación con la lectura real aceptada previamente. El avance es **7/9**, criterios 1 a 7. El caso ficticio no escribió en el backend: los 2 intentos y 1 recepción son contadores de memoria. No se atribuyen a este reporte prueba de respuesta perdida después de guardar, escritura real fallida, reapertura/sesión o vacío. El agente no observó el teléfono ni modificó Trello. Evidencia: [aceptacion-error-confirmacion-controlada-expo-go.json](evidencias/confirmacion-recepcion/aceptacion-error-confirmacion-controlada-expo-go.json).
+
 - [x] Mostrar opción de confirmar recepción
 - [x] Validar que el pedido pueda ser confirmado
 - [x] Enviar confirmación a la API
 - [x] Evitar confirmaciones duplicadas
 - [x] Actualizar el estado del pedido
 - [x] Mostrar mensaje de confirmación
-- [ ] Manejar errores
+- [x] Manejar errores
 - [ ] Probar la funcionalidad
 - [ ] Revisar el código
 
@@ -96,7 +100,7 @@ El usuario no dispone de otro pedido Completado pendiente de recepción, de prue
 
 Respuesta sugerida: «Amigo, apareció Recepción confirmada, desapareció el botón y se conservó al actualizar. La referencia, las cantidades y los importes coinciden con Historial.»
 
-Los casos pendientes se guían por separado: fallo al confirmar/verificación mediante la prueba controlada elegida, vacío y reapertura/cierre de sesión según disponibilidad. No se marcan como aceptados anticipadamente. El PR y la revisión de Zenaida corresponden a una etapa posterior.
+Los casos pendientes se guían por separado: vacío y reapertura/cierre de sesión según disponibilidad. El fallo al confirmar/verificación controlado ya fue aceptado; se retirará su acceso temporal en una etapa separada. No se marcan como aceptados anticipadamente. El PR y la revisión de Zenaida corresponden a una etapa posterior.
 
 ## Guía de elegibilidad (conservada como referencia)
 
@@ -130,7 +134,7 @@ Reportar el comportamiento observado sin afirmar un número de escrituras o noti
 
 Este caso solo comprueba lectura. Manejar errores sigue pendiente hasta verificar también el fallo al confirmar y la recuperación con Verificar recepción, con otro pedido pendiente o una prueba controlada si no hay uno disponible. No enviar una confirmación durante esta prueba de lectura.
 
-## Siguiente prueba: fallo controlado al confirmar y verificación
+## Preparación histórica: fallo controlado al confirmar y verificación
 
 La alternativa elegida por el usuario ya está preparada en desarrollo. La aceptación de lectura real anterior quedó en `39ce307`; la implementación controlada tiene su etapa separada en `9b6f9f5`. El acceso **Cuenta → Confirmación de recepción → Probar fallo de confirmación** crea `DEMO-RECEPCION-01`, con 2 unidades y subtotal de $120.00 MXN. Si el botón no aparece, recargar solo el Expo existente. No se necesita otro pedido real ni detener el backend.
 
@@ -139,3 +143,5 @@ La [guía completa](PRUEBA-CONTROLADA-RECEPCION.md) detalla el fallo antes de gu
 La preparación pasó **866/866 pruebas móviles**, TypeScript, lint con 0 errores y 0 advertencias y `git diff --check`. La QA web de 390 × 844 en el Metro `8081` que el usuario ya tenía abierto comprobó la entrada real anónima, el caso ficticio, fallo y conservación con contadores 1/0, verificación fallida, restablecimiento sin envío, verificación que habilita confirmar manteniendo 1/0 y confirmación explícita que termina en 2/1. Actualizar conservó la confirmación y 2/1; Salir devolvió la pantalla real anónima, y reentrar creó otro caso pendiente desde 0/0, que también se cerró. No hubo errores de consola; apareció una advertencia web de Animated por usar el fallback JavaScript de `useNativeDriver`. La revisión técnica no identificó bloqueadores. Evidencia separada: [prueba-error-confirmacion-controlada.json](evidencias/confirmacion-recepcion/prueba-error-confirmacion-controlada.json) y [captura web del pedido ficticio confirmado](evidencias/confirmacion-recepcion/prueba-controlada-confirmada-web.png).
 
 Esta evidencia web y técnica no sustituye el reporte nativo del usuario. El checklist continúa **6/9**; **Manejar errores (7)** espera ese reporte junto con la lectura real aceptada. **Probar la funcionalidad (8)** y **Revisar el código (9)** siguen pendientes. La respuesta perdida después de guardar es otro escenario y no se acredita con este fallo previo a guardar. Después de la aceptación se retirarán el helper y su acceso temporal en otro commit, conservando la historia y antes de publicar o abrir PR. No se modifica Trello ni se inicia Expo o el backend por esta preparación.
+
+La preparación y sus pendientes descritos en el apartado anterior son históricos. El reporte nativo posterior registrado en la aceptación vigente completa Manejar errores (7), con el alcance ficticio declarado. La retirada del acceso temporal se registra por separado.
