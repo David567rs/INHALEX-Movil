@@ -2,11 +2,9 @@ import { StyleSheet } from 'react-native';
 import { colors } from '@/core/theme/colors';
 
 export const trackingStyles = StyleSheet.create({
-  loading: { alignItems: 'center', gap: 12, paddingVertical: 30 },
   disabled: { opacity: 0.55 },
   secondaryButton: { alignItems: 'center', justifyContent: 'center', marginTop: 10, minHeight: 44, padding: 10 },
   timestamp: { color: colors.primaryDark, fontSize: 10, lineHeight: 18, marginTop: 7 },
-  back: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 14, borderWidth: 1, height: 44, justifyContent: 'center', marginLeft: 6, width: 44 },
   hero: { backgroundColor: colors.surfaceSoft, borderColor: colors.border, borderRadius: 24, borderWidth: 1, flexDirection: 'row', gap: 8, marginBottom: 20, padding: 20 },
   heroCopy: { flex: 1, minWidth: 0 },
   overline: { color: colors.primary, fontSize: 9, fontWeight: '800', letterSpacing: 1, lineHeight: 16 },
@@ -15,8 +13,6 @@ export const trackingStyles = StyleSheet.create({
   heroIcon: { alignItems: 'center', alignSelf: 'flex-start', backgroundColor: colors.background, borderRadius: 19, height: 56, justifyContent: 'center', marginTop: 24, width: 56 },
   refresh: { alignItems: 'center', alignSelf: 'flex-end', flexDirection: 'row', gap: 7, marginBottom: 12, minHeight: 44, padding: 8 },
   actionLabel: { color: colors.primary, fontSize: 12, fontWeight: '700', lineHeight: 20 },
-  notice: { backgroundColor: colors.surfaceSoft, borderColor: colors.border, borderRadius: 12, borderWidth: 1, marginBottom: 14, padding: 12 },
-  noticeCopy: { color: colors.primaryDark, fontSize: 11, lineHeight: 19 },
   card: { backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 22, borderWidth: 1, marginBottom: 16, padding: 18 },
   cardHeading: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 10, justifyContent: 'space-between' },
   flexCopy: { flex: 1, minWidth: 0 },

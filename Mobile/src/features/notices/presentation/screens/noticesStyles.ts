@@ -2,7 +2,6 @@ import { StyleSheet } from 'react-native';
 import { colors } from '@/core/theme/colors';
 
 export const noticesStyles = StyleSheet.create({
-  back: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 15, borderWidth: 1, height: 46, justifyContent: 'center', width: 46 },
   hero: { alignItems: 'center', backgroundColor: colors.surfaceSoft, borderColor: colors.border, borderRadius: 26, borderWidth: 1, flexDirection: 'row', gap: 12, marginBottom: 18, padding: 22 },
   heroCopy: { flex: 1, minWidth: 0 },
   overline: { color: colors.primary, fontSize: 10, fontWeight: '800', letterSpacing: 1.1, lineHeight: 17 },
@@ -55,9 +54,6 @@ export const noticesStyles = StyleSheet.create({
   refresh: { alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', gap: 8, justifyContent: 'center', marginBottom: 20, minHeight: 44, paddingHorizontal: 4, paddingVertical: 10 },
   refreshLabel: { color: colors.primary, fontSize: 13, fontWeight: '700', lineHeight: 21 },
   scopeNote: { color: colors.textMuted, fontSize: 12, lineHeight: 20, marginBottom: 15 },
-  notice: { backgroundColor: colors.warningSoft, borderColor: colors.border, borderRadius: 18, borderWidth: 1, marginBottom: 20, padding: 17 },
-  noticeCopy: { color: colors.text, fontSize: 13, lineHeight: 22 },
-  readError: { color: colors.danger, fontSize: 13, lineHeight: 22, marginTop: 18 },
   secondaryAction: { backgroundColor: colors.surfaceSoft, borderColor: colors.border, borderWidth: 1 },
   secondaryLabel: { color: colors.primaryDark },
   disabled: { opacity: 0.55 },

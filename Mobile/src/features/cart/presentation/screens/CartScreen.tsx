@@ -1,8 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
+import { FeedbackBanner, ScreenState } from '@/shared/components/ScreenFeedback';
+import { ScreenHeader } from '@/shared/components/ScreenHeader';
 import { Reveal, SoftPressable } from '@/shared/components/Motion';
 import { CartItemCard } from '../components/CartItemCard';
 import { useCartViewModel } from '../viewModels/useCartViewModel';
@@ -21,22 +23,15 @@ export function CartScreen() {
   }
 
   return <SafeAreaView edges={['top', 'left', 'right']} style={styles.safeArea}>
-    <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+    <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}
+      refreshControl={showCollection ? <RefreshControl refreshing={vm.refreshing} enabled={vm.canRefresh}
+        onRefresh={() => { if (vm.canRefresh) refresh(); }} colors={[colors.primary]} tintColor={colors.primary} /> : undefined}>
       <Reveal>
-        <View style={styles.header}>
-          <Image accessibilityLabel="INHALEX, el respiro que alivia" resizeMode="contain"
-            source={require('../../../../../assets/home/brand.png')} style={styles.brand} />
-          <View accessible={false} aria-hidden accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={styles.headerBag}>
-            <Ionicons name="bag-handle-outline" size={22} color={colors.primaryDark} />
-          </View>
-        </View>
-        <Text style={styles.eyebrow}>TU PRÓXIMA PAUSA</Text>
-        <Text accessibilityRole="header" style={styles.title}>Tu bolsa<Text style={styles.dot}>.</Text></Text>
-        <Text style={styles.intro}>Tus aromas elegidos, un paso más cerca de ti.</Text>
-
+        <ScreenHeader title="Tu bolsa" eyebrow="Tu próxima pausa"
+          description="Tus aromas elegidos, un paso más cerca de ti." />
       </Reveal>
 
-      {vm.checkoutLocked && <Text accessibilityLiveRegion="polite" style={styles.notice}>Estamos confirmando tu pedido. Tu bolsa se actualizará al terminar.</Text>}
+      {vm.checkoutLocked && <FeedbackBanner tone="info" message="Estamos confirmando tu pedido. Tu bolsa se actualizará al terminar." />}
       {(vm.status === 'error' || vm.loaded && vm.items.length === 0) && !needsSession && !recovering && <Pressable
         accessibilityRole="button" accessibilityLabel="Revisar pedido pendiente"
         onPress={() => router.push('/creacion-pedido')} style={styles.refreshButton}>
@@ -44,22 +39,21 @@ export function CartScreen() {
         <Text style={styles.refreshText}>Revisar pedido pendiente</Text>
       </Pressable>}
 
-      {needsSession ? <StatusPanel title={vm.status === 'session-expired' ? 'Vuelve a iniciar sesión' : 'Tu selección te espera'}
+      {needsSession ? <ScreenState icon="bag-handle-outline" title={vm.status === 'session-expired' ? 'Vuelve a iniciar sesión' : 'Tu selección te espera'}
         message={vm.status === 'session-expired' ? 'Inicia sesión de nuevo para consultar tu bolsa.' : 'Inicia sesión para agregar productos y preparar tu selección.'}
         actionLabel={vm.openingSignIn ? 'Abriendo…' : 'Iniciar sesión'} actionBusy={vm.openingSignIn}
         onAction={() => { void openSignIn(); }} />
-        : recovering ? <StatusPanel title="No pudimos comprobar tu sesión" message="Comprueba tu conexión e intenta recuperar tu sesión para consultar la bolsa."
+        : recovering ? <ScreenState icon="bag-handle-outline" title="No pudimos comprobar tu sesión" message="Comprueba tu conexión e intenta recuperar tu sesión para consultar la bolsa."
           actionLabel="Reintentar sesión" onAction={() => { void vm.restoreSession(); }} />
-        : !vm.loaded && vm.busy ? <StatusPanel title={vm.status === 'checking' ? 'Comprobando tu sesión' : 'Preparando tu bolsa'}
+        : !vm.loaded && vm.busy ? <ScreenState icon="bag-handle-outline" title={vm.status === 'checking' ? 'Comprobando tu sesión' : 'Cargando tu bolsa…'}
           message="Estamos consultando tu selección." busy />
-        : !vm.loaded && vm.status === 'error' ? <StatusPanel title="No pudimos cargar tu bolsa"
+        : !vm.loaded && vm.status === 'error' ? <ScreenState icon="bag-handle-outline" title="No pudimos cargar tu bolsa"
           message={vm.error || 'Comprueba tu conexión e inténtalo de nuevo.'} actionLabel="Reintentar" onAction={refresh} /> : null}
 
       {showCollection && <>
-        {(vm.error || vm.mutationError) && <View accessibilityLiveRegion="polite" style={styles.errorNotice}>
-          <Text style={styles.errorCopy}>{vm.mutationError || vm.error} Se conservan los últimos datos confirmados. Reintenta para comprobar el estado actual.</Text>
-        </View>}
-        {vm.notice && <Text accessibilityLiveRegion="polite" style={styles.notice}>{vm.notice}</Text>}
+        {(vm.error || vm.mutationError) && <FeedbackBanner
+          message={`${vm.mutationError || vm.error} Se conservan los últimos datos confirmados. Reintenta para comprobar el estado actual.`} />}
+        {vm.notice && <FeedbackBanner tone="info" message={vm.notice} />}
         <Pressable accessibilityRole="button" accessibilityLabel={vm.error || vm.mutationError ? 'Reintentar carga de bolsa' : 'Actualizar bolsa'}
           accessibilityState={{ disabled: !vm.canRefresh, busy: vm.refreshing }} disabled={!vm.canRefresh}
           onPress={refresh} style={[styles.refreshButton, !vm.canRefresh && styles.disabled]}>
@@ -99,12 +93,12 @@ export function CartScreen() {
               <View style={styles.totalCopy}><Text style={styles.totalTitle}>Total de productos</Text><Text style={styles.totalHint}>Solo productos · no incluye envío</Text></View>
               <Text style={styles.totalPrice}>{vm.totalLabel}</Text>
             </View>
-            <Pressable accessibilityRole="button" accessibilityLabel="Continuar con mi pedido"
+            {stacked && <Pressable accessibilityRole="button" accessibilityLabel="Continuar con mi pedido"
               accessibilityState={{ disabled: !vm.canMutate }} disabled={!vm.canMutate}
               onPress={() => router.push('/creacion-pedido')} style={[styles.continueButton, !vm.canMutate && styles.disabled]}>
               <Text style={styles.continueText}>Continuar con mi pedido</Text>
               <Ionicons accessible={false} name="arrow-forward" size={18} color={colors.white} />
-            </Pressable>
+            </Pressable>}
             <Text style={styles.summaryHint}>Revisa tus productos y tu dirección antes de confirmar.</Text>
           </View>
           <View style={styles.stageNote}>
@@ -143,40 +137,29 @@ export function CartScreen() {
         <Text style={styles.footerText}>Cada aroma, un momento para ti.</Text>
       </View>
     </ScrollView>
+    {showCollection && vm.items.length > 0 && !stacked && <View style={styles.checkoutDock}>
+      <View style={styles.dockTotal}>
+        <Text style={styles.dockLabel}>Total de productos</Text>
+        <Text accessibilityLiveRegion="polite" style={styles.dockPrice}>{vm.totalLabel}</Text>
+      </View>
+      <Pressable accessibilityRole="button" accessibilityLabel="Continuar con mi pedido"
+        accessibilityState={{ disabled: !vm.canMutate }} disabled={!vm.canMutate}
+        onPress={() => router.push('/creacion-pedido')}
+        style={({ pressed }) => [styles.continueButton, styles.dockButton, !vm.canMutate && styles.disabled, pressed && styles.pressed]}>
+        <Text style={styles.continueText}>Continuar</Text>
+        <Ionicons accessible={false} name="arrow-forward" size={18} color={colors.white} />
+      </Pressable>
+    </View>}
   </SafeAreaView>;
-}
-
-function StatusPanel({ title, message, busy = false, actionBusy = false, actionLabel, onAction }: {
-  title: string; message: string; busy?: boolean; actionBusy?: boolean; actionLabel?: string; onAction?(): void;
-}) {
-  return <View accessibilityLiveRegion="polite" style={styles.emptyPanel}>
-    {busy ? <ActivityIndicator accessibilityLabel={title} color={colors.primary} size="large" />
-      : <Ionicons accessible={false} name="bag-handle-outline" size={38} color={colors.primary} />}
-    <Text accessibilityRole="header" style={styles.emptyTitle}>{title}</Text>
-    <Text style={styles.emptyCopy}>{message}</Text>
-    {onAction && <Pressable accessibilityRole="button" accessibilityLabel={actionLabel} onPress={onAction}
-      accessibilityState={{ disabled: actionBusy, busy: actionBusy }} disabled={actionBusy}
-      style={[styles.primaryButton, actionBusy && styles.disabled]}><Text style={styles.primaryText}>{actionLabel}</Text></Pressable>}
-  </View>;
 }
 
 const styles = StyleSheet.create({
   refreshButton: { alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', gap: 8, marginTop: 18, minHeight: 44, paddingVertical: 8 },
   refreshText: { color: colors.primaryDark, fontSize: 12, fontWeight: '700' },
-  errorNotice: { backgroundColor: colors.dangerSoft, borderRadius: 14, marginTop: 18, padding: 13 },
-  errorCopy: { color: colors.danger, fontSize: 12, lineHeight: 20 },
-  notice: { color: colors.primaryDark, fontSize: 12, lineHeight: 20, marginTop: 18 },
   disabled: { opacity: 0.6 },
   safeArea: { backgroundColor: colors.background, flex: 1 },
-  content: { alignSelf: 'center', maxWidth: 620, padding: 22, paddingBottom: 30, width: '100%' },
-  header: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 27 },
-  brand: { height: 43, width: 148 },
-  headerBag: { alignItems: 'center', backgroundColor: colors.surfaceSoft, borderColor: colors.border, borderRadius: 23, borderWidth: 1, height: 46, justifyContent: 'center', width: 46 },
-  eyebrow: { color: colors.primary, fontSize: 10, fontWeight: '800', letterSpacing: 1.8 },
-  title: { color: colors.text, fontSize: 34, fontWeight: '800', letterSpacing: -1.2, marginTop: 6 },
-  dot: { color: colors.accent },
-  intro: { color: colors.textMuted, fontSize: 14, lineHeight: 22, marginTop: 8 },
-  sectionHeading: { alignItems: 'center', flexDirection: 'row', gap: 12, marginBottom: 16, marginTop: 27 },
+  content: { alignSelf: 'center', maxWidth: 600, padding: 22, paddingBottom: 30, width: '100%' },
+  sectionHeading: { alignItems: 'center', flexDirection: 'row', gap: 12, marginBottom: 14, marginTop: 16 },
   sectionCopy: { flex: 1, minWidth: 0 },
   sectionTitle: { color: colors.text, fontSize: 20, fontWeight: '800', letterSpacing: -0.5 },
   sectionDescription: { color: colors.textMuted, fontSize: 11, lineHeight: 19, marginTop: 4 },
@@ -198,6 +181,11 @@ const styles = StyleSheet.create({
   continueButton: { alignItems: 'center', backgroundColor: colors.primaryDark, borderRadius: 14, flexDirection: 'row', flexWrap: 'wrap', gap: 9, justifyContent: 'center', minHeight: 52, padding: 14 },
   continueText: { color: colors.white, flexShrink: 1, fontSize: 12, fontWeight: '800', lineHeight: 21, textAlign: 'center' },
   summaryHint: { color: colors.textMuted, fontSize: 10, lineHeight: 17, marginTop: 11, textAlign: 'center' },
+  checkoutDock: { alignItems: 'center', alignSelf: 'center', backgroundColor: colors.surface, borderTopColor: colors.border, borderTopWidth: 1, flexDirection: 'row', gap: 14, maxWidth: 600, paddingHorizontal: 22, paddingVertical: 12, width: '100%' },
+  dockTotal: { flex: 1, minWidth: 0 },
+  dockLabel: { color: colors.textMuted, fontSize: 10, lineHeight: 16 },
+  dockPrice: { color: colors.primaryDark, fontSize: 19, fontWeight: '800', lineHeight: 26 },
+  dockButton: { flexShrink: 1, minWidth: 126 },
   stageNote: { alignItems: 'flex-start', flexDirection: 'row', gap: 7, marginBottom: 19, marginTop: 17 },
   stageNoteText: { color: colors.textMuted, flex: 1, fontSize: 11, lineHeight: 18 },
   secondaryButton: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 14, borderWidth: 1, flexDirection: 'row', gap: 10, justifyContent: 'center', minHeight: 50, padding: 15 },

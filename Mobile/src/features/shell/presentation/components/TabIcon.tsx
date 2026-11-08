@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Animated, StyleSheet } from 'react-native';
-import { colors } from '@/core/theme/colors';
 
 export type TabIconName = keyof typeof Ionicons.glyphMap;
 
@@ -37,7 +36,6 @@ export function TabIcon({ color, focused, size, focusedName, outlineName, reduce
     <Animated.View
       style={[
         styles.iconContainer,
-        focused && styles.iconContainerFocused,
         {
           opacity: progress.interpolate({ inputRange: [0, 1], outputRange: [0.76, 1] }),
           transform: [
@@ -54,5 +52,4 @@ export function TabIcon({ color, focused, size, focusedName, outlineName, reduce
 
 const styles = StyleSheet.create({
   iconContainer: { alignItems: 'center', borderRadius: 17, height: 34, justifyContent: 'center', width: 48 },
-  iconContainerFocused: { backgroundColor: colors.surfaceSoft },
 });

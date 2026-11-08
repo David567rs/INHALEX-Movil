@@ -52,7 +52,7 @@ export default function RootLayout() {
           <Stack.Screen name="sign-in" />
           <Stack.Screen name="lineas-categorias" />
           <Stack.Screen name="busqueda-productos" />
-          <Stack.Screen name="producto/[id]" />
+          <Stack.Screen name="producto/[id]" options={{ presentation: 'transparentModal', animation: 'none', contentStyle: { backgroundColor: 'transparent' } }} />
           <Stack.Screen name="perfil-usuario" />
           <Stack.Screen name="direcciones-envio" />
           <Stack.Screen name="creacion-pedido" />

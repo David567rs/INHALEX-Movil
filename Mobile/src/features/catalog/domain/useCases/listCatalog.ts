@@ -3,6 +3,7 @@ import type { CatalogPage } from '../models/Catalog';
 import type { CatalogListInput, CatalogRepository, CatalogRequestOptions } from '../repositories/CatalogRepository';
 
 export type ListCatalog = (input: CatalogListInput, options?: CatalogRequestOptions) => Promise<CatalogPage>;
+export const CATALOG_SEARCH_MAX_LENGTH = 100;
 
 function cancelled(): CatalogError {
   return new CatalogError('Se canceló la carga del catálogo.', 'cancelled');
@@ -19,10 +20,17 @@ export function createListCatalog(repository: CatalogRepository): ListCatalog {
     if (category !== undefined && (typeof category !== 'string' || !/^[a-z0-9-]+$/.test(category))) {
       throw new CatalogError('No pudimos identificar esta línea. Vuelve al catálogo y selecciona otra.', 'configuration');
     }
+    if (input.search !== undefined && typeof input.search !== 'string') {
+      throw new CatalogError('Escribe un texto válido para buscar un producto.', 'configuration');
+    }
+    const search = input.search?.trim();
+    if (search && search.length > CATALOG_SEARCH_MAX_LENGTH) {
+      throw new CatalogError('Usa hasta 100 caracteres para buscar un producto.', 'configuration');
+    }
 
     try {
       const result = await repository.list({ page: input.page, limit: input.limit,
-        ...(category === undefined ? {} : { category }) }, options);
+        ...(category === undefined ? {} : { category }), ...(search ? { search } : {}) }, options);
       if (options?.signal?.aborted) throw cancelled();
       return result;
     } catch (error) {

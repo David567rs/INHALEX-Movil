@@ -12,6 +12,7 @@ const sourceRoots = [
   '../src/features/catalog/domain',
   '../src/features/catalog/data',
   '../src/features/catalog/presentation/state',
+  '../src/features/home/presentation/state',
   '../src/features/productLines/domain',
   '../src/features/productLines/data',
   '../src/features/productLines/presentation/state',

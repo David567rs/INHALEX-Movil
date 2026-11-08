@@ -31,15 +31,15 @@ test('catalog use case follows DTO limits: positive safe pages without a 100-pag
   }
 });
 
-test('catalog use case forwards a normalized category and pagination without leaking unrelated search fields', async () => {
+test('catalog use case forwards normalized category and search without mutating input', async () => {
   let sentInput;
   let sentOptions;
   const list = createListCatalog({ list: async (input, options) => { sentInput = input; sentOptions = options; return emptyPage; } });
-  const input = Object.freeze({ page: 1, limit: 20, search: 'not-part-of-this-activity', category: ' LINEA-VERDE ' });
+  const input = Object.freeze({ page: 1, limit: 20, search: ' Lavanda ', category: ' LINEA-VERDE ' });
   const before = { ...input };
   const options = { signal: new AbortController().signal };
   assert.equal(await list(input, options), emptyPage);
-  assert.deepEqual(sentInput, { page: 1, limit: 20, category: 'linea-verde' });
+  assert.deepEqual(sentInput, { page: 1, limit: 20, category: 'linea-verde', search: 'Lavanda' });
   assert.equal(sentOptions, options);
   assert.deepEqual(input, before);
 });

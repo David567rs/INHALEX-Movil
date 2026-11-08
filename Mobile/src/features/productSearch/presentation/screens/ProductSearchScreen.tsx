@@ -6,6 +6,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { CatalogProductCard } from '@/features/catalog/presentation/components/CatalogProductCard';
 import { Reveal, SoftPressable } from '@/shared/components/Motion';
+import { BackButton, ScreenHeader } from '@/shared/components/ScreenHeader';
+import { FeedbackBanner, ScreenState } from '@/shared/components/ScreenFeedback';
 import type { SearchProducts } from '../../domain/useCases/searchProducts';
 import { useProductSearchViewModel } from '../viewModels/useProductSearchViewModel';
 
@@ -37,22 +39,8 @@ export function ProductSearchScreen({ searchProducts }: { searchProducts: Search
           </View>}
           ListHeaderComponent={<>
           <Reveal>
-            <View style={styles.topBar}>
-              <Pressable accessibilityRole="button" accessibilityLabel="Volver al catálogo"
-                onPress={returnToCatalog} style={({ pressed }) => [styles.backButton, pressed && styles.pressed]}>
-                <Ionicons accessible={false} name="arrow-back" size={21} color={colors.primaryDark} />
-              </Pressable>
-              <Image accessibilityLabel="INHALEX, el respiro que alivia" resizeMode="contain"
-                source={require('../../../../../assets/home/brand.png')} style={styles.brand} />
-            </View>
-
-            <View style={styles.heading}>
-              <View style={styles.eyebrowRow}>
-                <Text style={styles.eyebrow}>BÚSQUEDA INHALEX</Text>
-              </View>
-              <Text accessibilityRole="header" style={styles.title}>Encuentra tu{'\n'}próximo aroma<Text style={styles.dot}>.</Text></Text>
-              <Text style={styles.description}>Una palabra puede ser el inicio de tu próxima pausa.</Text>
-            </View>
+            <ScreenHeader title="Buscar productos" eyebrow="Tu próximo aroma"
+              leading={<BackButton label="Volver al catálogo" onPress={returnToCatalog} />} />
 
             <View style={styles.searchPanel}>
               <Text nativeID="search-label" style={styles.fieldLabel}>¿Qué aroma buscas?</Text>
@@ -101,33 +89,25 @@ export function ProductSearchScreen({ searchProducts }: { searchProducts: Search
             {vm.status === 'ready' && <Text accessibilityLiveRegion="polite" style={styles.sectionDescription}>
               {vm.total} {vm.total === 1 ? 'coincidencia' : 'coincidencias'}
             </Text>}
-            {vm.error && vm.products.length > 0 && <View accessibilityLiveRegion="polite" style={styles.notice}>
-              <Text style={styles.noticeText}>{vm.error} Conservamos los últimos resultados de esta búsqueda.</Text>
-              <Pressable accessibilityRole="button" accessibilityLabel="Reintentar búsqueda"
-                onPress={() => { void vm.retry(); }} style={({ pressed }) => [styles.retryLink, pressed && styles.pressed]}>
-                <Text style={styles.retryLinkText}>Reintentar</Text>
-              </Pressable>
-            </View>}
+            {vm.error && vm.products.length > 0 && <FeedbackBanner
+              message={`${vm.error} Conservamos los últimos resultados de esta búsqueda.`}
+              onRetry={() => { void vm.retry(); }} busy={vm.refreshing} />}
           </View>
           </>}
-          ListEmptyComponent={<View accessibilityLiveRegion="polite" style={styles.statePanel}>
-            {vm.status === 'loading' ? <ActivityIndicator accessibilityLabel="Buscando productos" color={colors.primary} size="large" />
-              : <Ionicons accessible={false} name={vm.status === 'error' ? 'cloud-offline-outline' : 'search-outline'} size={32} color={colors.primary} />}
-            <Text accessibilityRole="header" style={styles.stateTitle}>{vm.status === 'idle' ? 'Empieza con un aroma'
-              : vm.status === 'loading' ? 'Buscando tu próxima esencia'
-              : vm.status === 'error' ? 'No pudimos buscar' : 'No encontramos coincidencias'}</Text>
-            <Text style={styles.stateDescription}>{vm.status === 'idle' ? 'Escribe un nombre o una palabra clave para explorar la colección.'
+          ListEmptyComponent={<ScreenState busy={vm.status === 'loading'}
+            icon={vm.status === 'error' ? 'cloud-offline-outline' : 'search-outline'}
+            title={vm.status === 'idle' ? 'Empieza con un aroma'
+              : vm.status === 'loading' ? 'Buscando productos…'
+              : vm.status === 'error' ? 'No pudimos buscar' : 'No encontramos coincidencias'}
+            message={vm.status === 'idle' ? 'Escribe un nombre o una palabra clave para explorar la colección.'
               : vm.status === 'loading' ? 'Un momento, estamos consultando la colección.'
-              : vm.status === 'error' ? vm.error : 'Prueba con otra palabra o revisa cómo la escribiste.'}</Text>
-            {vm.status === 'error' && <Pressable accessibilityRole="button" accessibilityLabel="Reintentar búsqueda"
-              onPress={() => { void vm.retry(); }} style={({ pressed }) => [styles.retryLink, pressed && styles.pressed]}>
-              <Text style={styles.retryLinkText}>Reintentar</Text>
-            </Pressable>}
-          </View>}
+              : vm.status === 'error' ? vm.error ?? undefined : 'Prueba con otra palabra o revisa cómo la escribiste.'}
+            onAction={vm.status === 'error' ? () => { void vm.retry(); } : undefined}
+            actionLabel="Reintentar búsqueda" />}
           ListFooterComponent={<>
             {vm.products.length > 0 && <View style={styles.pagination}>
               <Text style={styles.sectionDescription}>{vm.products.length} de {vm.total} productos</Text>
-              {vm.moreError && <Text accessibilityLiveRegion="polite" style={styles.noticeText}>{vm.moreError}</Text>}
+              {vm.moreError && <FeedbackBanner message={vm.moreError} />}
               {vm.hasMore && <Pressable accessibilityRole="button" accessibilityLabel="Cargar más resultados"
                 accessibilityState={{ disabled: vm.loadingMore || vm.refreshing, busy: vm.loadingMore }}
                 disabled={vm.loadingMore || vm.refreshing} onPress={() => { void vm.loadMore(); }}
@@ -155,16 +135,7 @@ const styles = StyleSheet.create({
   keyboardArea: { flex: 1 },
   list: { alignSelf: 'center', maxWidth: 600, width: '100%' },
   content: { alignSelf: 'center', flexGrow: 1, maxWidth: 600, padding: 22, paddingBottom: 30, width: '100%' },
-  topBar: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', gap: 16 },
-  backButton: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 23, borderWidth: 1, height: 46, justifyContent: 'center', width: 46 },
-  brand: { height: 40, width: 132 },
-  heading: { marginTop: 28 },
-  eyebrowRow: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
-  eyebrow: { color: colors.primary, fontSize: 10, fontWeight: '700', letterSpacing: 1.5 },
-  title: { color: colors.text, fontSize: 32, fontWeight: '700', letterSpacing: -1, lineHeight: 39, marginTop: 12 },
-  dot: { color: colors.primary },
-  description: { color: colors.textMuted, fontSize: 14, lineHeight: 22, marginTop: 10 },
-  searchPanel: { marginTop: 28 },
+  searchPanel: { marginTop: 0 },
   fieldLabel: { color: colors.primaryDark, fontSize: 13, fontWeight: '600', marginBottom: 9 },
   field: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 17, borderWidth: 1, flexDirection: 'row', gap: 10, minHeight: 60, paddingLeft: 15, paddingRight: 5 },
   focusedField: { borderColor: colors.primary, borderWidth: 1 },
@@ -182,12 +153,6 @@ const styles = StyleSheet.create({
   chipText: { color: colors.primaryDark, fontSize: 12, fontWeight: '600' },
   resultsHeading: { marginTop: 28, marginBottom: 16 },
   resultCard: { marginBottom: 14 },
-  statePanel: { alignItems: 'center', backgroundColor: colors.surfaceSoft, borderColor: colors.border, borderRadius: 20, borderWidth: 1, padding: 24 },
-  stateTitle: { color: colors.primaryDark, fontSize: 18, fontWeight: '700', lineHeight: 27, marginTop: 12, textAlign: 'center' },
-  stateDescription: { color: colors.textMuted, fontSize: 13, lineHeight: 21, marginTop: 8, textAlign: 'center' },
-  notice: { backgroundColor: '#FFF4DA', borderRadius: 12, marginTop: 12, padding: 12 },
-  noticeText: { color: '#79543B', fontSize: 12, lineHeight: 20 },
-  retryLink: { justifyContent: 'center', minHeight: 46, paddingHorizontal: 8, paddingVertical: 10 },
   retryLinkText: { color: colors.primaryDark, fontSize: 13, fontWeight: '600' },
   pagination: { alignItems: 'center', gap: 10, marginTop: 10 },
   moreButton: { alignItems: 'center', backgroundColor: colors.surfaceSoft, borderColor: colors.border, borderRadius: 16, borderWidth: 1, flexDirection: 'row', gap: 8, justifyContent: 'center', minHeight: 48, paddingHorizontal: 18, paddingVertical: 12 },

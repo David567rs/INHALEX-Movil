@@ -1,10 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useEffect, useRef } from 'react';
-import { ActivityIndicator, Image, Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions, type ScrollViewInstance } from 'react-native';
+import { ActivityIndicator, Image, Keyboard, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions, type ScrollViewInstance } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { Reveal, SoftPressable } from '@/shared/components/Motion';
+import { FormKeyboardLayout } from '@/shared/components/FormKeyboardLayout';
+import { BackButton, ScreenHeader } from '@/shared/components/ScreenHeader';
+import { FeedbackBanner, ScreenState } from '@/shared/components/ScreenFeedback';
 import { ProfileForm } from '../components/ProfileForm';
 import { useProfileViewModel } from '../viewModels/useProfileViewModel';
 
@@ -18,6 +21,10 @@ export function ProfileScreen() {
     if (vm.error || vm.saveError) scroll.current?.scrollTo({ y: 0, animated: false });
   }, [vm.error, vm.saveError]);
   const needsSession = vm.status === 'anonymous' || vm.status === 'session-expired';
+  const feedback = [
+    vm.saveError || vm.error,
+    vm.requiresRefresh ? `${vm.mode === 'edit' ? 'Tu borrador se conserva. ' : ''}Reintenta la carga para comprobar los datos guardados antes de volver a guardar.` : null,
+  ].filter(Boolean).join('\n');
   async function openSignIn() {
     if (await vm.prepareSignIn()) router.push('/sign-in');
   }
@@ -28,43 +35,26 @@ export function ProfileScreen() {
   }
 
   return <SafeAreaView edges={['top', 'left', 'right', 'bottom']} style={styles.safeArea}>
-    <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : Platform.OS === 'android' ? 'height' : undefined}>
-      <ScrollView ref={scroll} contentContainerStyle={styles.content} keyboardDismissMode="on-drag"
-        keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
-        <View style={styles.topBar}>
-          <Pressable accessibilityRole="button" accessibilityLabel="Volver a Cuenta" onPress={returnToAccount}
-            style={({ pressed }) => [styles.back, pressed && styles.pressed]}>
-            <Ionicons accessible={false} name="arrow-back" size={20} color={colors.primaryDark} />
-          </Pressable>
-          <Image source={require('../../../../../assets/home/brand.png')} accessibilityLabel="INHALEX, el respiro que alivia"
-            resizeMode="contain" style={styles.brand} />
-        </View>
-        <Reveal>
-          <Text style={styles.eyebrow}>TU ESPACIO PERSONAL</Text>
-          <Text accessibilityRole="header" style={styles.title}>Tu perfil<Text style={styles.dot}>.</Text></Text>
-          <Text style={styles.intro}>Lo esencial de ti, en un solo lugar.</Text>
-        </Reveal>
+    <FormKeyboardLayout>
+      <ScrollView ref={scroll} style={styles.flex} contentContainerStyle={styles.content} keyboardDismissMode="on-drag"
+        keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator>
+        <ScreenHeader title="Tu perfil" leading={<BackButton label="Volver a Cuenta" onPress={returnToAccount} />} />
 
-        {needsSession ? <ProfileStatus title={vm.status === 'session-expired' ? 'Vuelve a iniciar sesión' : 'Un perfil muy tuyo'}
+        {needsSession ? <ScreenState title={vm.status === 'session-expired' ? 'Vuelve a iniciar sesión' : 'Un perfil muy tuyo'} icon="person-outline"
           message="Inicia sesión para consultar y actualizar tus datos personales."
-          action={vm.openingSignIn ? 'Abriendo…' : 'Iniciar sesión'} disabled={vm.openingSignIn}
+          actionLabel={vm.openingSignIn ? 'Abriendo…' : 'Iniciar sesión'} actionBusy={vm.openingSignIn}
           onAction={() => { void openSignIn(); }} />
-          : vm.status === 'recovery-error' ? <ProfileStatus title="No pudimos comprobar tu sesión"
+          : vm.status === 'recovery-error' ? <ScreenState title="No pudimos comprobar tu sesión"
             message="Comprueba tu conexión e intenta recuperar tu sesión."
-            action="Reintentar sesión" onAction={() => { void vm.restoreSession(); }} />
-          : !vm.profile && vm.busy ? <ProfileStatus title={vm.status === 'checking' ? 'Comprobando tu sesión' : 'Preparando tu perfil'} message="Un momento, estamos consultando tus datos." busy />
-          : !vm.profile && vm.status === 'error' ? <ProfileStatus title="No pudimos cargar tu perfil"
-            message={vm.error || 'Comprueba tu conexión e inténtalo de nuevo.'} action="Reintentar" onAction={() => { void vm.refresh(); }} /> : null}
+            actionLabel="Reintentar sesión" onAction={() => { void vm.restoreSession(); }} />
+          : !vm.profile && vm.busy ? <ScreenState title={vm.status === 'checking' ? 'Comprobando tu sesión…' : 'Cargando tu perfil…'} busy />
+          : !vm.profile && vm.status === 'error' ? <ScreenState title="No pudimos cargar tu perfil"
+            message={vm.error || 'Comprueba tu conexión e inténtalo de nuevo.'} actionLabel="Reintentar" onAction={() => { void vm.refresh(); }} /> : null}
 
         {vm.profile && <>
-        {vm.needsProfileDetails && <Text accessibilityLiveRegion="polite" style={styles.notice}>
-          Completa tus nombres, apellidos y teléfono en «Editar datos» para mantener tu perfil actualizado.
-        </Text>}
-        {(vm.error || vm.saveError || vm.requiresRefresh) && <View accessibilityLiveRegion="polite" style={styles.errorNotice}>
-          {(vm.saveError || vm.error) && <Text style={styles.errorText}>{vm.saveError || vm.error}</Text>}
-          {vm.requiresRefresh && <Text style={styles.errorText}>{vm.mode === 'edit' ? 'Tu borrador se conserva. ' : ''}Reintenta la carga para comprobar los datos guardados antes de volver a guardar.</Text>}
-        </View>}
-        {vm.notice && <Text accessibilityLiveRegion="polite" style={styles.notice}>{vm.notice}</Text>}
+        {vm.needsProfileDetails && <FeedbackBanner tone="info" message="Completa tus nombres, apellidos y teléfono en «Editar datos» para mantener tu perfil actualizado." />}
+        {!!feedback && <FeedbackBanner message={feedback} />}
+        {vm.notice && <FeedbackBanner tone="success" message={vm.notice} />}
         <Pressable accessibilityRole="button" accessibilityLabel={vm.error || vm.requiresRefresh ? 'Reintentar carga de perfil' : 'Actualizar perfil'}
           accessibilityState={{ disabled: !vm.canRefresh, busy: vm.refreshing }} disabled={!vm.canRefresh}
           onPress={() => { void vm.refresh(); }} style={[styles.refreshButton, !vm.canRefresh && styles.disabled]}>
@@ -131,20 +121,8 @@ export function ProfileScreen() {
           <View style={styles.footerLine} />
         </View>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </FormKeyboardLayout>
   </SafeAreaView>;
-}
-
-function ProfileStatus({ title, message, action, onAction, busy = false, disabled = false }: {
-  title: string; message: string; action?: string; onAction?: () => void; busy?: boolean; disabled?: boolean;
-}) {
-  return <View style={styles.statusPanel} accessibilityLiveRegion="polite">
-    {busy && <ActivityIndicator color={colors.primary} />}
-    <Text accessibilityRole="header" style={styles.sectionTitle}>{title}</Text>
-    <Text style={styles.sectionHint}>{message}</Text>
-    {action && <Pressable accessibilityRole="button" disabled={disabled} accessibilityState={{ disabled }} onPress={onAction}
-      style={[styles.editButton, disabled && styles.disabled]}><Text style={styles.editText}>{action}</Text></Pressable>}
-  </View>;
 }
 
 function InfoRow({ icon, label, value, hint, last = false }: {
@@ -165,16 +143,6 @@ function InfoRow({ icon, label, value, hint, last = false }: {
 const styles = StyleSheet.create({
   safeArea: { backgroundColor: colors.background, flex: 1 }, flex: { flex: 1 },
   content: { alignSelf: 'center', maxWidth: 620, padding: 22, paddingBottom: 30, width: '100%' },
-  topBar: { alignItems: 'center', flexDirection: 'row', gap: 16, justifyContent: 'space-between', marginBottom: 29 },
-  back: { alignItems: 'center', backgroundColor: colors.surfaceSoft, borderColor: colors.border, borderRadius: 23, borderWidth: 1, height: 46, justifyContent: 'center', width: 46 },
-  brand: { height: 42, width: 140 },
-  eyebrow: { color: colors.primary, fontSize: 10, fontWeight: '800', letterSpacing: 1.6 },
-  title: { color: colors.text, fontSize: 34, fontWeight: '800', letterSpacing: -1.1, marginTop: 6 },
-  dot: { color: colors.accent }, intro: { color: colors.textMuted, fontSize: 14, lineHeight: 22, marginTop: 8, marginBottom: 20 },
-  statusPanel: { backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 21, borderWidth: 1, gap: 10, marginTop: 5, padding: 22 },
-  errorNotice: { backgroundColor: colors.dangerSoft, borderColor: colors.danger, borderWidth: 1, borderRadius: 15, gap: 6, marginBottom: 12, padding: 15 },
-  errorText: { color: colors.danger, fontSize: 12, lineHeight: 20 },
-  notice: { backgroundColor: colors.surfaceSoft, borderRadius: 13, color: colors.primaryDark, fontSize: 13, lineHeight: 21, marginBottom: 12, padding: 15 },
   refreshButton: { alignItems: 'center', alignSelf: 'flex-end', flexDirection: 'row', gap: 7, justifyContent: 'center', minHeight: 44, marginBottom: 12, paddingHorizontal: 12, paddingVertical: 10 },
   refreshText: { color: colors.primaryDark, flexShrink: 1, fontSize: 12, fontWeight: '700' },
   disabled: { opacity: 0.55 },

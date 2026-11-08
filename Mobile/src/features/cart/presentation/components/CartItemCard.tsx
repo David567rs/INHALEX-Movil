@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '@/core/theme/colors';
 import { getCatalogImage } from '@/features/catalog/presentation/assets/catalogImages';
 import type { CartItemViewModel } from '../viewModels/useCartViewModel';
@@ -12,25 +12,29 @@ export function CartItemCard({ item, stacked, canMutate, onQuantity, onRemove, o
   const [failedImage, setFailedImage] = useState<string | null>(null);
   const image = item.image !== failedImage ? getCatalogImage(item.image) : null;
 
-  return <View style={[styles.card, stacked && styles.stacked]}>
-    <View accessible={false} aria-hidden accessibilityElementsHidden importantForAccessibility="no-hide-descendants"
-      style={[styles.artwork, stacked && styles.stackedArtwork]}>
-      {image ? <Image accessible={false} source={image} resizeMode="contain" onError={() => setFailedImage(item.image)} style={styles.photo} />
-        : <Ionicons accessible={false} name="leaf-outline" size={32} color={colors.primary} />}
-      <View style={styles.bagBadge}><Ionicons name="bag-handle-outline" size={16} color={colors.primaryDark} /></View>
-    </View>
-    <View style={styles.copy}>
-      <Text style={styles.eyebrow}>ESENCIA INHALEX</Text>
-      <Pressable accessibilityRole="button" accessibilityLabel={`Ver detalle de ${item.name}`} onPress={onOpen} style={styles.openProduct}><Text style={styles.name}>{item.name}</Text></Pressable>
-      <Text style={styles.note}>{item.aromaNote}</Text>
-
-      <View style={styles.unitPrice}>
-        <Text style={styles.fieldLabel}>Precio unitario</Text>
-        <Text style={styles.unitPriceValue}>{item.unitPriceLabel}</Text>
+  return <View style={styles.card}>
+    <View style={[styles.productRow, stacked && styles.stacked]}>
+      <Pressable accessibilityRole="button" accessibilityLabel={`Ver detalle de ${item.name}`} onPress={onOpen}
+        style={({ pressed }) => [styles.artwork, stacked && styles.stackedArtwork, pressed && styles.pressed]}>
+        {image ? <Image accessible={false} source={image} resizeMode="cover" onError={() => setFailedImage(item.image)} style={styles.photo} />
+          : <Ionicons accessible={false} name="leaf-outline" size={32} color={colors.primary} />}
+      </Pressable>
+      <View style={[styles.copy, stacked && styles.stackedCopy]}>
+        <Text style={styles.eyebrow}>ESENCIA INHALEX</Text>
+        <Pressable accessibilityRole="button" accessibilityLabel={`Ver detalle de ${item.name}`} onPress={onOpen} style={styles.openProduct}>
+          <Text style={styles.name}>{item.name}</Text>
+        </Pressable>
+        <Text numberOfLines={stacked ? undefined : 2} style={styles.note}>{item.aromaNote}</Text>
+        <View style={styles.unitPrice}>
+          <Text style={styles.fieldLabel}>Precio unitario</Text>
+          <Text style={styles.unitPriceValue}>{item.unitPriceLabel}</Text>
+        </View>
       </View>
+    </View>
 
-      <Text style={styles.quantityLabel}>Cantidad</Text>
-      <View style={styles.controlsRow}>
+    <View style={[styles.bottom, stacked && styles.stackedBottom]}>
+      <View>
+        <Text style={styles.quantityLabel}>Cantidad</Text>
         <View style={styles.quantityControls}>
           <Pressable accessibilityRole="button" accessibilityLabel={`Disminuir cantidad de ${item.name}`}
             accessibilityState={{ disabled: !canMutate || item.quantity <= 1 }} disabled={!canMutate || item.quantity <= 1}
@@ -44,44 +48,50 @@ export function CartItemCard({ item, stacked, canMutate, onQuantity, onRemove, o
             <Ionicons accessible={false} name="add" size={17} color={colors.textMuted} />
           </Pressable>
         </View>
-        <Pressable accessibilityRole="button" accessibilityLabel={`Quitar ${item.name}`}
-          accessibilityState={{ disabled: !canMutate, busy: item.pending }} disabled={!canMutate} onPress={onRemove} style={[styles.remove, !canMutate && styles.disabled]}>
-          <Ionicons accessible={false} name="trash-outline" size={15} color={colors.textMuted} />
-          <Text style={styles.removeText}>{item.pending ? 'Guardando…' : 'Quitar'}</Text>
-        </Pressable>
       </View>
-
-      <View style={styles.lineTotal}>
+      <View style={[styles.lineTotal, stacked && styles.stackedTotal]}>
         <Text style={styles.fieldLabel}>Importe</Text>
         <Text style={styles.lineTotalValue}>{item.lineTotalLabel}</Text>
       </View>
     </View>
+    <Pressable accessibilityRole="button" accessibilityLabel={`Quitar ${item.name}`}
+      accessibilityState={{ disabled: !canMutate, busy: item.pending }} disabled={!canMutate} onPress={onRemove}
+      style={({ pressed }) => [styles.remove, !canMutate && styles.disabled, pressed && styles.pressed]}>
+      {item.pending ? <ActivityIndicator color={colors.primary} size="small" />
+        : <Ionicons accessible={false} name="trash-outline" size={16} color={colors.textMuted} />}
+      <Text style={styles.removeText}>{item.pending ? 'Guardando…' : 'Quitar'}</Text>
+    </Pressable>
   </View>;
 }
 
 const styles = StyleSheet.create({
   disabled: { opacity: 0.5 },
   openProduct: { minHeight: 44, justifyContent: 'center' },
-  card: { backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 22, borderWidth: 1, flexDirection: 'row', overflow: 'hidden' },
-  stacked: { flexDirection: 'column' },
-  artwork: { alignItems: 'center', backgroundColor: '#F5F5F7', justifyContent: 'center', minHeight: 186, width: 112 },
-  stackedArtwork: { height: 188, minHeight: 188, width: '100%' },
-  photo: { height: '100%', minHeight: 186, width: '100%' },
-  bagBadge: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 18, borderWidth: 1, height: 34, justifyContent: 'center', left: 9, position: 'absolute', top: 9, width: 34 },
-  copy: { flex: 1, minWidth: 0, padding: 16 },
+  card: { backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 22, borderWidth: 1, padding: 14 },
+  productRow: { alignItems: 'flex-start', flexDirection: 'row', gap: 14 },
+  stacked: { alignItems: 'stretch', flexDirection: 'column' },
+  artwork: { alignItems: 'center', backgroundColor: '#F1F4EE', borderRadius: 15, flexShrink: 0, height: 120, justifyContent: 'center', overflow: 'hidden', width: 96 },
+  stackedArtwork: { height: 172, width: '100%' },
+  // Fixed artwork bounds keep native image dimensions out of row measurement.
+  photo: { position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, height: '100%', width: '100%' },
+  copy: { flexBasis: 0, flexGrow: 1, flexShrink: 1, minWidth: 0, paddingTop: 3 },
+  stackedCopy: { flexBasis: 'auto', flexGrow: 0 },
   eyebrow: { color: colors.primary, fontSize: 8, fontWeight: '700', letterSpacing: 1.2 },
-  name: { color: colors.text, fontSize: 21, fontWeight: '800', letterSpacing: -0.5, lineHeight: 28, marginTop: 5 },
-  note: { color: colors.textMuted, fontSize: 12, lineHeight: 18, marginTop: 5 },
-  unitPrice: { marginTop: 14 },
+  name: { color: colors.text, fontSize: 18, fontWeight: '800', letterSpacing: -0.4, lineHeight: 24, paddingVertical: 5 },
+  note: { color: colors.textMuted, fontSize: 11, lineHeight: 17, marginTop: 1 },
+  unitPrice: { marginTop: 8 },
   fieldLabel: { color: colors.textMuted, fontSize: 10, lineHeight: 17 },
   unitPriceValue: { color: colors.text, fontSize: 13, fontWeight: '600', lineHeight: 21, marginTop: 2 },
-  quantityLabel: { color: colors.textMuted, fontSize: 10, lineHeight: 17, marginTop: 13 },
-  controlsRow: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 6, justifyContent: 'space-between', marginTop: 4 },
-  quantityControls: { alignItems: 'center', borderColor: colors.border, borderRadius: 11, borderWidth: 1, flexDirection: 'row', flexWrap: 'wrap', maxWidth: '100%' },
+  bottom: { alignItems: 'center', borderTopColor: colors.border, borderTopWidth: 1, flexDirection: 'row', gap: 12, justifyContent: 'space-between', marginTop: 16, paddingTop: 12 },
+  stackedBottom: { alignItems: 'flex-start', flexDirection: 'column' },
+  quantityLabel: { color: colors.textMuted, fontSize: 10, lineHeight: 17, marginBottom: 4 },
+  quantityControls: { alignItems: 'center', backgroundColor: colors.background, borderColor: colors.border, borderRadius: 12, borderWidth: 1, flexDirection: 'row', maxWidth: '100%' },
   quantityButton: { alignItems: 'center', justifyContent: 'center', minHeight: 44, minWidth: 44 },
-  quantityValue: { color: colors.text, flexShrink: 1, fontSize: 13, fontWeight: '700', minWidth: 32, paddingHorizontal: 4, textAlign: 'center' },
-  remove: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 5, justifyContent: 'center', minHeight: 44, minWidth: 62, paddingVertical: 8 },
+  quantityValue: { color: colors.text, flexShrink: 1, fontSize: 14, fontWeight: '700', minWidth: 30, paddingHorizontal: 4, textAlign: 'center' },
+  remove: { alignItems: 'center', alignSelf: 'flex-end', flexDirection: 'row', flexWrap: 'wrap', gap: 6, justifyContent: 'center', marginBottom: -5, marginTop: 3, minHeight: 44, minWidth: 64, paddingVertical: 8 },
   removeText: { color: colors.textMuted, flexShrink: 1, fontSize: 11, fontWeight: '600' },
-  lineTotal: { borderTopColor: colors.border, borderTopWidth: 1, marginTop: 12, paddingTop: 11 },
-  lineTotalValue: { color: colors.primaryDark, fontSize: 17, fontWeight: '800', lineHeight: 26, marginTop: 3 },
+  lineTotal: { alignItems: 'flex-end', flexShrink: 1 },
+  stackedTotal: { alignItems: 'flex-start' },
+  lineTotalValue: { color: colors.primaryDark, fontSize: 18, fontWeight: '800', lineHeight: 26, marginTop: 3 },
+  pressed: { opacity: 0.75 },
 });

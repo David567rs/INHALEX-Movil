@@ -1,151 +1,115 @@
+import { useRef, useState, type ComponentRef } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
-import { Image, Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { router, useIsFocused } from 'expo-router';
+import { Image, Keyboard, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
+import { useAuthSession } from '@/features/auth/presentation/context/AuthSessionProvider';
+import { createCatalogAction } from '@/bootstrap/createCatalogAction';
+import { createProductLinesAction } from '@/bootstrap/createProductLinesAction';
+import type { ListCatalog } from '@/features/catalog/domain/useCases/listCatalog';
+import type { ListProductLines } from '@/features/productLines/domain/useCases/listProductLines';
+import { CatalogSearch, CategoryChips, CategoryLoadNotice, CatalogRefreshNotice, CatalogResultsSummary } from '../components/CatalogControls';
+import { CatalogState } from '../components/CatalogState';
+import { useHomeViewModel } from '../viewModels/useHomeViewModel';
+import { BottomSheet } from '@/shared/components/BottomSheet';
 import { Reveal, SoftPressable } from '@/shared/components/Motion';
+import { useReducedMotion } from '@/shared/hooks/useReducedMotion';
+import { HomeProductCarousel } from '../components/HomeProductCarousel';
+import { ExperienceVideo } from '../components/ExperienceVideo';
 
 export default function HomeScreen() {
-  const { fontScale } = useWindowDimensions();
+  const { user } = useAuthSession();
+  const focused = useIsFocused();
+  const firstName = user?.firstName?.trim() || user?.displayName?.trim().split(/\s+/)[0] || 'bienvenido';
+  const [actions] = useState(() => ({ listCatalog: createCatalogAction(), listProductLines: createProductLinesAction() }));
+  return <HomeView firstName={firstName} focused={focused} {...actions} />;
+}
+
+export function HomeView({ firstName, focused = true, listCatalog, listProductLines }: {
+  firstName: string; focused?: boolean; listCatalog: ListCatalog; listProductLines: ListProductLines;
+}) {
+  const vm = useHomeViewModel(listCatalog, listProductLines);
+  const reducedMotion = useReducedMotion();
+  const scrollRef = useRef<ComponentRef<typeof ScrollView>>(null);
+  const catalogY = useRef(0);
+  const [aboutVisible, setAboutVisible] = useState(false);
+  const { width, fontScale } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+  const carouselWidth = Math.max(1, Math.min(width - insets.left - insets.right, 600) - 44);
+  const categoryLabel = (categoryId: string) => vm.categories.find((category) => category.id === categoryId)?.name ?? 'Colección INHALEX';
+  const filtered = vm.appliedQuery.length > 0 || vm.selectedCategoryId !== 'all';
+
+  function explore() {
+    Keyboard.dismiss();
+    scrollRef.current?.scrollTo({ y: Math.max(0, catalogY.current - 12), animated: reducedMotion === false });
+  }
 
   return (
     <SafeAreaView edges={['top', 'left', 'right']} style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView ref={scrollRef} contentContainerStyle={styles.content} keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl refreshing={vm.refreshing} onRefresh={() => void vm.refresh()} colors={[colors.primary]} tintColor={colors.primary} />}>
         <Reveal style={styles.inset}>
           <View style={styles.header}>
-            <Image
-              accessibilityLabel="INHALEX, el respiro que alivia"
-              resizeMode="contain"
-              source={require('../../../../../assets/home/brand.png')}
-              style={styles.logo}
-            />
-            <Pressable
-              accessibilityLabel="Ir a mi cuenta"
-              accessibilityRole="button"
-              onPress={() => router.navigate('/(tabs)/cuenta')}
-              style={({ pressed }) => [styles.account, pressed && styles.pressed]}
-            >
-              <Ionicons name="person-outline" size={20} color={colors.primaryDark} />
-            </Pressable>
+            <Image accessibilityLabel="INHALEX, el respiro que alivia" resizeMode="contain" source={require('../../../../../assets/home/brand.png')} style={styles.logo} />
+            <Pressable accessibilityLabel="Ir a mi cuenta" accessibilityRole="button" onPress={() => router.navigate('/(tabs)/cuenta')} style={({ pressed }) => [styles.account, pressed && styles.pressed]}><Ionicons name="person-outline" size={20} color={colors.primaryDark} /></Pressable>
           </View>
-          <View style={styles.welcome}>
-            <Text style={styles.welcomeEyebrow}>UN MOMENTO PARA TI</Text>
-            <Text accessibilityRole="header" style={styles.welcomeTitle}>
-              Hola, bienvenido<Text style={styles.greetingDot}>.</Text>
-            </Text>
-          </View>
+          <View style={styles.welcome}><Text style={styles.welcomeEyebrow}>UN MOMENTO PARA TI</Text><Text accessibilityRole="header" style={styles.welcomeTitle}>Hola, {firstName}<Text style={styles.greetingDot}>.</Text></Text></View>
+          <CatalogSearch value={vm.searchQuery} onChange={vm.setSearchQuery} onSubmit={() => { void vm.submitSearch(); explore(); }} />
         </Reveal>
-
         <Reveal delay={65} style={styles.inset}>
           <View style={styles.hero}>
-            <Image
-              accessible={false}
-              source={require('../../../../../assets/home/hero-botanical.jpg')}
-              resizeMode="cover"
-              style={styles.heroPhoto}
-            />
+            <Image accessible={false} source={require('../../../../../assets/home/hero-botanical.jpg')} resizeMode="cover" style={styles.heroPhoto} />
             <View pointerEvents="none" style={styles.heroWash} />
             <View style={styles.heroCopy}>
-              <View style={styles.heroBadge}>
-                <View style={styles.badgeDot} />
-                <Text style={styles.heroBadgeLabel}>INHALADORES AROMÁTICOS</Text>
-              </View>
-              <Text accessibilityRole="header" style={styles.heroTitle}>
-                El respiro{'\n'}que <Text style={styles.heroAccent}>alivia.</Text>
-              </Text>
-              <Text style={styles.heroBody}>
-                Encuentra el aroma que acompaña tu día. Tu próxima pausa empieza aquí.
-              </Text>
-              <SoftPressable
-                accessibilityRole="button"
-                onPress={() => router.navigate('/(tabs)/catalogo')}
-                style={styles.heroButton}
-              >
-                <Text style={styles.heroButtonLabel}>Descubrir aromas</Text>
-                <Ionicons name="arrow-forward" color={colors.white} size={18} />
-              </SoftPressable>
+              <View style={styles.heroBadge}><View style={styles.badgeDot} /><Text style={styles.heroBadgeLabel}>INHALADORES AROMÁTICOS</Text></View>
+              <Text accessibilityRole="header" style={styles.heroTitle}>El respiro{'\n'}que <Text style={styles.heroAccent}>alivia.</Text></Text>
+              <Text style={styles.heroBody}>Encuentra el aroma que acompaña tu día. Tu próxima pausa empieza aquí.</Text>
+              <SoftPressable accessibilityRole="button" onPress={explore} style={styles.heroButton}><Text style={styles.heroButtonLabel}>Descubrir aromas</Text><Ionicons name="arrow-forward" color={colors.white} size={18} /></SoftPressable>
             </View>
-            {fontScale <= 1.2 ? (
-              <View accessible={false} importantForAccessibility="no-hide-descendants" pointerEvents="none" style={styles.heroSeal}>
-                <Ionicons name="leaf-outline" color={colors.primaryDark} size={26} />
-                <Text style={styles.heroSealLabel}>ESENCIA{'\n'}INHALEX</Text>
-              </View>
-            ) : null}
+            {fontScale <= 1.2 ? <View accessible={false} importantForAccessibility="no-hide-descendants" pointerEvents="none" style={styles.heroSeal}><Ionicons name="leaf-outline" color={colors.primaryDark} size={26} /><Text style={styles.heroSealLabel}>ESENCIA{'\n'}INHALEX</Text></View> : null}
           </View>
           <View style={[styles.featureStrip, fontScale > 1.4 && styles.featureStripStacked]}>
-            {([
-              ['leaf-outline', 'Perfiles', 'aromáticos'],
-              ['water-outline', 'Formato', 'portátil'],
-              ['sparkles-outline', 'Experiencia', 'personal'],
-            ] as const).map(([icon, firstLine, secondLine], index) => (
-              <View key={icon} style={[
-                styles.feature,
-                fontScale > 1.4 && styles.featureStacked,
-                index > 0 && fontScale <= 1.4 && styles.featureDivider,
-              ]}>
-                <Ionicons accessible={false} color={colors.primary} name={icon} size={20} />
-                <Text style={styles.featureLabel}>{firstLine}{'\n'}{secondLine}</Text>
-              </View>
+            {([['leaf-outline', 'Perfiles', 'aromáticos'], ['water-outline', 'Formato', 'portátil'], ['sparkles-outline', 'Experiencia', 'personal']] as const).map(([icon, firstLine, secondLine], index) => (
+              <View key={icon} style={[styles.feature, fontScale > 1.4 && styles.featureStacked, index > 0 && fontScale <= 1.4 && styles.featureDivider]}><Ionicons color={colors.primary} name={icon} size={20} /><Text style={styles.featureLabel}>{firstLine}{'\n'}{secondLine}</Text></View>
             ))}
           </View>
         </Reveal>
-
-        <Reveal delay={110} style={[styles.inset, styles.collection]}>
-          <View style={styles.sectionHeading}>
-            <View style={styles.sectionCopy}>
-              <Text style={styles.eyebrow}>NUESTRA COLECCIÓN</Text>
-              <Text accessibilityRole="header" style={styles.sectionTitle}>Encuentra tu aroma</Text>
-            </View>
+        <View onLayout={(event) => { catalogY.current = event.nativeEvent.layout.y; }} style={styles.collection}>
+          <View style={[styles.sectionHeading, styles.inset]}>
+            <View style={styles.sectionCopy}><Text style={styles.eyebrow}>NUESTRA COLECCIÓN</Text><Text accessibilityRole="header" style={styles.sectionTitle}>{filtered ? 'Tu selección' : 'Encuentra tu aroma'}</Text></View>
+            <Pressable accessibilityRole="button" onPress={() => router.navigate({ pathname: '/(tabs)/catalogo', params: { category: '', lineName: '' } })} style={styles.textLink}><Text style={styles.textLinkLabel}>Ver todos</Text><Ionicons name="arrow-forward" size={16} color={colors.primary} /></Pressable>
           </View>
-          <View style={styles.collectionCard}>
-            <View style={styles.collectionIcon}>
-              <Ionicons accessible={false} name="leaf-outline" color={colors.primary} size={27} />
-            </View>
-            <Text style={styles.collectionTitle}>La colección está en preparación</Text>
-            <Text style={styles.collectionBody}>
-              Pronto podrás explorar los aromas de INHALEX y conocer la información de cada producto.
-            </Text>
-            <Pressable
-              accessibilityRole="button"
-              onPress={() => router.navigate('/(tabs)/catalogo')}
-              style={({ pressed }) => [styles.textLink, pressed && styles.pressed]}
-            >
-              <Text style={styles.textLinkLabel}>Ir al catálogo</Text>
-              <Ionicons name="arrow-forward" size={16} color={colors.primary} />
-            </Pressable>
-          </View>
-        </Reveal>
-
-        <Reveal delay={150} style={styles.inset}>
-          <SoftPressable
-            accessibilityRole="button"
-            accessibilityLabel="Conocer la experiencia INHALEX"
-            onPress={() => router.push('/experiencia')}
-            style={styles.ritual}
-          >
-            <View accessible={false} importantForAccessibility="no-hide-descendants" style={styles.ritualArtwork}>
-              <Ionicons name="leaf-outline" color="#C8DABB" size={76} />
-              <View style={styles.ritualSmallLeaf}>
-                <Ionicons name="leaf" color="#90B381" size={32} />
-              </View>
-            </View>
-            <View style={styles.ritualCopy}>
-              <Text style={styles.eyebrow}>LA EXPERIENCIA INHALEX</Text>
-              <Text style={styles.ritualTitle}>Una pequeña pausa.{'\n'}Un momento para ti.</Text>
-              <View style={styles.ritualLink}>
-                <Text style={styles.ritualLinkLabel}>Conocer más</Text>
-                <Ionicons name="arrow-forward" color={colors.primaryDark} size={17} />
-              </View>
-            </View>
+          <CategoryChips categories={vm.categories} selectedId={vm.selectedCategoryId} loading={vm.categoriesLoading} focused={focused}
+            onSelect={(categoryId) => { Keyboard.dismiss(); void vm.selectCategory(categoryId); }} />
+          {(vm.status === 'ready' || vm.status === 'empty') ? <CategoryLoadNotice error={vm.categoriesErrorMessage} onRetry={() => void vm.refresh()} refreshing={vm.refreshing} /> : null}
+          {(vm.status === 'ready' || vm.status === 'empty') ? <CatalogRefreshNotice error={vm.errorMessage} onRetry={() => void vm.refresh()} refreshing={vm.refreshing} /> : null}
+          <CatalogState status={vm.status} errorMessage={vm.errorMessage} hasFilters={filtered} searchQuery={vm.appliedQuery} categoryName={vm.selectedCategoryId !== 'all' ? categoryLabel(vm.selectedCategoryId) : undefined} onRetry={() => void vm.retry()} onReset={() => void vm.resetFilters()} />
+          {vm.status === 'ready' && filtered ? <View style={styles.searchResults}><CatalogResultsSummary shown={vm.products.length} total={vm.total} query={vm.appliedQuery} /></View> : null}
+          {vm.status === 'ready' ? <HomeProductCarousel
+            key={`${carouselWidth}:${fontScale}:${vm.products.map((product) => product.id).join(',')}`}
+            products={vm.products}
+            width={carouselWidth}
+            fontScale={fontScale}
+            categoryLabel={categoryLabel}
+            onOpen={(product) => { Keyboard.dismiss(); router.push({ pathname: '/producto/[id]', params: { id: product.id } }); }}
+          /> : null}
+        </View>
+        <View style={styles.inset}>
+          <SoftPressable accessibilityRole="button" accessibilityLabel="Conocer la experiencia INHALEX" onPress={() => setAboutVisible(true)} style={styles.ritual}>
+            <View accessible={false} importantForAccessibility="no-hide-descendants" style={styles.ritualArtwork}><Ionicons name="leaf-outline" color="#C8DABB" size={76} /><View style={styles.ritualSmallLeaf}><Ionicons name="leaf" color="#90B381" size={32} /></View></View>
+            <View style={styles.ritualCopy}><Text style={styles.eyebrow}>LA EXPERIENCIA INHALEX</Text><Text style={styles.ritualTitle}>Una pequeña pausa.{'\n'}Un momento para ti.</Text><View style={styles.ritualLink}><Text style={styles.ritualLinkLabel}>Conocer más</Text><Ionicons name="arrow-forward" color={colors.primaryDark} size={17} /></View></View>
           </SoftPressable>
-          <View accessible={false} importantForAccessibility="no-hide-descendants" style={styles.closing}>
-            <View style={styles.closingLine} />
-            <Image source={require('../../../../../assets/inhalex-mark.png')} resizeMode="contain" style={styles.closingMark} />
-            <View style={styles.closingLine} />
-          </View>
+          <View accessible={false} importantForAccessibility="no-hide-descendants" style={styles.closing}><View style={styles.closingLine} /><Image source={require('../../../../../assets/inhalex-mark.png')} resizeMode="contain" style={styles.closingMark} /><View style={styles.closingLine} /></View>
           <Text style={styles.closingCopy}>Tu bienestar, siempre contigo.</Text>
-        </Reveal>
+        </View>
       </ScrollView>
+      <BottomSheet visible={aboutVisible && focused} onClose={() => setAboutVisible(false)} title="La experiencia INHALEX">
+        <Text style={styles.aboutTitle}>Elige tu aroma.{'\n'}Haz tuya la pausa.</Text>
+        <Text style={styles.aboutBody}>INHALEX reúne perfiles florales, herbales, frescos y especiados en un formato práctico para acompañar tus momentos cotidianos.</Text>
+        {aboutVisible && focused ? <ExperienceVideo focused={focused} /> : null}
+        <SoftPressable accessibilityRole="button" onPress={() => { setAboutVisible(false); explore(); }} style={[styles.heroButton, styles.aboutButton]}><Text style={styles.heroButtonLabel}>Encontrar mi aroma</Text><Ionicons name="arrow-forward" color={colors.white} size={18} /></SoftPressable>
+      </BottomSheet>
     </SafeAreaView>
   );
 }
@@ -162,7 +126,7 @@ const styles = StyleSheet.create({
   welcomeEyebrow: { color: colors.textMuted, fontSize: 10, fontWeight: '600', letterSpacing: 1.7 },
   welcomeTitle: { color: colors.text, fontSize: 27, fontWeight: '700', letterSpacing: -0.8, marginTop: 5 },
   greetingDot: { color: colors.primary },
-  hero: { backgroundColor: '#E9F1E3', borderColor: '#DEE8D5', borderRadius: 28, borderWidth: 1, overflow: 'hidden' },
+  hero: { backgroundColor: '#E9F1E3', borderColor: '#DEE8D5', borderRadius: 28, borderWidth: 1, marginTop: 20, overflow: 'hidden' },
   heroPhoto: { bottom: 0, height: '100%', opacity: 0.3, position: 'absolute', right: 0, width: '100%' },
   heroWash: { position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, backgroundColor: '#EDF4E4', opacity: 0.42 },
   heroCopy: { padding: 25, paddingBottom: 27 },
@@ -178,21 +142,18 @@ const styles = StyleSheet.create({
   heroSealLabel: { color: colors.primaryDark, fontSize: 7, fontWeight: '700', letterSpacing: 1.3, lineHeight: 11, marginTop: 5, textAlign: 'center' },
   featureStrip: { flexDirection: 'row', marginTop: 21, paddingVertical: 4 },
   featureStripStacked: { flexDirection: 'column', gap: 14 },
-  feature: { alignItems: 'center', flex: 1, gap: 7, paddingHorizontal: 4 },
   featureStacked: { flexDirection: 'row', flex: 0, gap: 14 },
+  feature: { alignItems: 'center', flex: 1, gap: 7, paddingHorizontal: 4 },
   featureDivider: { borderLeftColor: colors.border, borderLeftWidth: 1 },
   featureLabel: { color: '#596B5A', fontSize: 10, fontWeight: '500', lineHeight: 15, textAlign: 'center' },
   collection: { marginTop: 31 },
-  sectionHeading: { marginBottom: 18 },
+  searchResults: { marginHorizontal: 22, marginBottom: 16, marginTop: 12 },
+  sectionHeading: { alignItems: 'center', flexDirection: 'row', gap: 8, justifyContent: 'space-between', marginBottom: 18 },
   sectionCopy: { flex: 1 },
   eyebrow: { color: colors.primary, fontSize: 9, fontWeight: '700', letterSpacing: 1.5 },
   sectionTitle: { color: colors.text, fontSize: 23, fontWeight: '700', letterSpacing: -0.7, marginTop: 6 },
-  collectionCard: { alignItems: 'flex-start', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 24, borderWidth: 1, padding: 22 },
-  collectionIcon: { alignItems: 'center', backgroundColor: colors.surfaceSoft, borderRadius: 15, height: 48, justifyContent: 'center', marginBottom: 16, width: 48 },
-  collectionTitle: { color: colors.text, fontSize: 17, fontWeight: '700', lineHeight: 24 },
-  collectionBody: { color: colors.textMuted, fontSize: 13, lineHeight: 21, marginTop: 8 },
-  textLink: { alignItems: 'center', flexDirection: 'row', gap: 7, marginTop: 10, minHeight: 44 },
-  textLinkLabel: { color: colors.primary, fontSize: 13, fontWeight: '700' },
+  textLink: { alignItems: 'center', flexDirection: 'row', gap: 5, minHeight: 44 },
+  textLinkLabel: { color: colors.primary, fontSize: 12, fontWeight: '600' },
   ritual: { backgroundColor: '#EAF1E3', borderColor: '#DDE7D5', borderRadius: 24, borderWidth: 1, marginTop: 30, overflow: 'hidden', padding: 23 },
   ritualCopy: { position: 'relative' },
   ritualTitle: { color: colors.text, fontSize: 21, fontWeight: '600', letterSpacing: -0.4, lineHeight: 28, marginTop: 11 },
@@ -204,4 +165,7 @@ const styles = StyleSheet.create({
   closingLine: { backgroundColor: colors.border, height: 1, width: 54 },
   closingMark: { height: 27, opacity: 0.65, width: 26 },
   closingCopy: { color: colors.textMuted, fontSize: 11, marginTop: 8, textAlign: 'center' },
+  aboutTitle: { color: colors.primaryDark, fontSize: 29, fontWeight: '700', letterSpacing: -0.7, lineHeight: 35, marginBottom: 13 },
+  aboutBody: { color: colors.textMuted, fontSize: 14, lineHeight: 23 },
+  aboutButton: { alignSelf: 'stretch', marginTop: 18 },
 });
