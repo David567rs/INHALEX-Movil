@@ -2,7 +2,7 @@
 
 David trabaja en `feature/confirmacion-recepcion`, desde `develop` `0f619021b4de5d5436b0f43c122d9cba6b306da3`. La referencia visual es la app INHALEX recuperada y pulida. Reseñas de Zenaida está integrada mediante el PR #21; no se cambia su implementación.
 
-## Alcance autorizado
+## Alcance histórico de la etapa de diseño
 
 Preparar la opción desde Cuenta y una vista previa con pedido de ejemplo, resumen de productos y diálogo de confirmación. Los ejemplos son ficticios y las interacciones viven solo en memoria. No se consultan pedidos reales, no se cambia su recepción y no se envían escrituras a la API. La conexión, validaciones del servidor, duplicados y recuperación se trabajan después de la aceptación del diseño en Expo Go.
 
@@ -12,9 +12,9 @@ El usuario ya arrancó Expo y el backend. El agente no inicia, reinicia ni detie
 
 ## Criterios exactos de Trello
 
-Todos pendientes de su aceptación correspondiente; una vista previa no acredita funcionamiento con pedidos reales.
+Diseño aceptado por el usuario el 8 de noviembre de 2026. La aceptación visual no acredita funcionamiento con pedidos reales.
 
-- [ ] Mostrar opción de confirmar recepción
+- [x] Mostrar opción de confirmar recepción
 - [ ] Validar que el pedido pueda ser confirmado
 - [ ] Enviar confirmación a la API
 - [ ] Evitar confirmaciones duplicadas
@@ -68,3 +68,9 @@ Nada de este contrato está conectado al nuevo módulo durante la etapa de dise�
 6. Probar cerrar el diálogo con su X y con Atrás de Android; volver a Cuenta y comprobar que los controles siguen alcanzables.
 
 Solo después de la aceptación visual se registra un commit documental separado y se comienza la conexión a la API, cuando el usuario la solicite. La revisión de Zenaida y el PR pertenecen a una etapa posterior.
+
+## Aceptación y autorización de la siguiente etapa
+
+El 8 de noviembre de 2026 el usuario informó: «Amigo, ya revisé el diseño de Confirmación de recepción en Expo Go y me gustó. Sigamos con la API en feature/confirmacion-recepcion, manteniendo MVVM, Repository y commits por etapa. No arranques Expo.»
+
+Se acepta el criterio 1 por ese reporte. No se atribuyen observación directa del teléfono, pruebas detalladas del diálogo ni resultados de la API. Se registra esta aceptación en un commit documental separado antes de conectar la API. Se conserva la rama y el historial local; no se publica ni abre PR en esta etapa.

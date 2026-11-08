@@ -1,10 +1,10 @@
 # Plan de trabajo de INHALEX Movil
 
-## Etapa vigente: Confirmación de recepción — diseño
+## Etapa vigente: Confirmación de recepción — conexión a la API
 
 El PR #21 de Reseñas quedó revisado por David e integrado en `develop` (`0f619021b4de5d5436b0f43c122d9cba6b306da3`) conservando 23 commits. La sincronización de ambas copias está terminada. Los estados de PR abierto siguientes se conservan como historia.
 
-El 8 de noviembre de 2026 el usuario solicita **solo diseño de Confirmación de recepción**, a cargo de David en `INHALEX-Movil`, rama `feature/confirmacion-recepcion`. Zenaida revisará el futuro PR. Usar el diseño pulido, MVVM, Repository y commits separados de preparación, implementación y verificación. El usuario controla Expo y el backend ya abiertos. No publicar, conectar la API ni empezar una release en esta etapa. [Alcance y nueve criterios exactos](DISENO-CONFIRMACION-RECEPCION.md).
+El 8 de noviembre de 2026 el usuario aceptó el diseño de Confirmación de recepción en Expo Go y autorizó conectar la API, a cargo de David en `INHALEX-Movil`, rama `feature/confirmacion-recepcion`. Zenaida revisará el futuro PR. Se mantienen el diseño aprobado, MVVM, Repository y commits por etapa. El usuario controla Expo y los servicios ya abiertos. No arrancar Expo, publicar PR ni empezar una release. El criterio Mostrar opción de confirmar recepción queda aceptado; los otros ocho requieren sus pruebas y revisión correspondientes. [Alcance y nueve criterios exactos](DISENO-CONFIRMACION-RECEPCION.md).
 
 **PR de Reseñas publicado, 8 de noviembre de 2026:** [PR #21](https://github.com/David567rs/INHALEX-Movil/pull/21), de ZenaidaGR, `feature/resenas` → `develop`, abierto y sin fusionar. Se verificó por API la solicitud de revisión a **David567rs**. Reseñas permanece **9/10**; falta su revisión real. Los commits por etapa y la integración visual se conservan. El agente no inició Expo, no generó QR ni modificó servicios, Trello o la copia de David. La CI del último HEAD se consulta aparte; este registro no anticipa su resultado. [Alcance y comprobaciones](PR-RESENAS.md).
 

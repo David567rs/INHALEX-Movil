@@ -1,10 +1,10 @@
 # INHALEX Movil
 
-## Etapa vigente: diseño de Confirmación de recepción, 8 de noviembre de 2026
+## Etapa vigente: API de Confirmación de recepción, 8 de noviembre de 2026
 
 El PR #21 de Reseñas ya está integrado mediante merge commit `0f619021b4de5d5436b0f43c122d9cba6b306da3`, conservando sus 23 commits y la revisión de David. Ambas copias se sincronizaron. Los registros de PR abierto que siguen son históricos.
 
-David trabaja ahora en `C:\Users\David\Documents\INHALEX-Movil`, rama `feature/confirmacion-recepcion`, creada desde ese `develop`. La autorización es **solo diseño**, con MVVM, Repository local de lectura y commits por etapa. No confirmar pedidos reales ni conectar escrituras a la API. El usuario ya arrancó backend y Expo: conservar esos procesos; no generar otro QR. La copia de Zenaida no se modifica. No publicar ni abrir PR durante esta etapa. Zenaida revisará el futuro PR de David. Alcance y checklist: [diseño de recepción](docs/DISENO-CONFIRMACION-RECEPCION.md).
+David trabaja ahora en `C:\Users\David\Documents\INHALEX-Movil`, rama `feature/confirmacion-recepcion`, creada desde ese `develop`. El usuario aceptó el diseño en Expo Go y autorizó conectar la API, manteniendo MVVM, Repository y commits por etapa. Implementar consulta y confirmación de recepción, validación, exclusión de duplicados y recuperación ante errores. Las comprobaciones del agente usan datos aislados; las confirmaciones reales las prueba el usuario. El usuario ya arrancó backend y Expo: conservar esos procesos; no generar otro QR. La copia de Zenaida no se modifica. No publicar ni abrir PR durante esta etapa. Zenaida revisará el futuro PR de David. Alcance y checklist: [diseño de recepción](docs/DISENO-CONFIRMACION-RECEPCION.md).
 
 **PR de Reseñas publicado, 8 de noviembre de 2026:** [PR #21](https://github.com/David567rs/INHALEX-Movil/pull/21), de ZenaidaGR, `feature/resenas` → `develop`, abierto y sin fusionar. Se verificó por API la solicitud de revisión a **David567rs**. Reseñas permanece **9/10**; falta su revisión real. Los commits por etapa y la integración visual se conservan. El agente no inició Expo, no generó QR ni modificó servicios, Trello o la copia de David. La CI del último HEAD se consulta aparte; este registro no anticipa su resultado. [Alcance y comprobaciones](docs/PR-RESENAS.md).
 
