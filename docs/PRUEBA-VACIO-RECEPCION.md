@@ -1,5 +1,7 @@
 # Confirmación de recepción: prueba del estado vacío
 
+**Estado vigente:** aceptada por el usuario y helper retirado. El recorrido siguiente queda como evidencia histórica; sus botones temporales ya no están disponibles. Checklist **8/9**, pendiente solo la revisión de Zenaida.
+
 Preparación del 8 de noviembre de 2026 en la copia de David, rama `feature/confirmacion-recepcion`. El usuario eligió «Preparemos un caso vacío aislado». La aceptación previa de reapertura y sesión está en `7307e28`; la preparación del caso está en `46555c9`.
 
 ## Alcance
@@ -42,3 +44,11 @@ No se cambiaron servicios, Trello, la copia de Zenaida ni pedidos reales. No se 
 El usuario reportó: «Amigo, apareció “No hay recepciones disponibles”, se mantuvo al actualizar y “Ver mis pedidos” abrió Historial. Al volver y al salir de la prueba regresaron mis recepciones reales sin cambios. ¿Qué marco en Trello y qué sigue?»
 
 Se acepta el recorrido vacío aislado y **Probar la funcionalidad (8)** junto con los casos previos: **8/9**, pendiente solo la revisión real de Zenaida. La fuente es el reporte del usuario sobre Expo Go; no se afirma observación directa del teléfono ni vacío real de la API. El texto exacto queda en [la evidencia de aceptación](evidencias/confirmacion-recepcion/aceptacion-vacio-expo-go.json). Las instrucciones de preparación anteriores pasan a ser referencia histórica. La retirada del acceso temporal se registra por separado, conservando esta guía, sus evidencias y el historial.
+
+## Retirada verificada — 8 de noviembre de 2026
+
+La aceptación quedó en `855746b`. Se retiraron los tres archivos runtime temporales, la prueba de escenario con sus tres casos y sus registros en el runner y loader; la ruta vuelve a renderizar OrderReceiptScreen directamente, sin prop ni panel de desarrollo. Los contratos, Repository HTTP, acciones, controlador, ViewModel y pruebas permanentes siguen intactos. `Mobile/src` y `Mobile/tests` coinciden con `7307e28`, antes de preparar el vacío.
+
+Pasaron **861/861 pruebas móviles**, TypeScript, lint y `git diff --check`. La revisión técnica no encontró bloqueadores y la búsqueda de referencias temporales en código y pruebas quedó vacía. Las tres pruebas retiradas pertenecían exclusivamente al helper ficticio; se conserva la cobertura permanente del estado vacío y de los demás comportamientos. No se observó nuevamente el dispositivo ni se hizo una nueva QA web en esta retirada.
+
+Los procesos existentes de backend y Metro se conservaron. No se modificaron pedidos, Trello, la copia de Zenaida ni dependencias; no se publicó la rama ni se abrió PR. [Registro de retirada](evidencias/confirmacion-recepcion/retirada-vacio-controlado.json). El siguiente paso es preparar el PR de David hacia develop para Zenaida cuando el usuario lo solicite, conservando todos los commits y sin anticipar su revisión.

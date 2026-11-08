@@ -1,5 +1,5 @@
-import { OrderReceiptEntryScreen } from '@/features/orderReceipt/presentation/screens/OrderReceiptEntryScreen';
+import { OrderReceiptScreen } from '@/features/orderReceipt/presentation/screens/OrderReceiptScreen';
 
 export default function ReceiptRoute() {
-  return <OrderReceiptEntryScreen />;
+  return <OrderReceiptScreen />;
 }

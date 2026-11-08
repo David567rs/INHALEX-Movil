@@ -184,3 +184,9 @@ Falta el reporte nativo del usuario. El checklist permanece **7/9**; Probar la f
 Se acepta **Probar la funcionalidad (8)** sumando este recorrido a las comprobaciones previas: **8/9**. Solo **Revisar el código (9)** queda pendiente de Zenaida. El vacío fue simulado en memoria, sin alterar pedidos reales; la navegación, actualización y salida fueron comprobadas en Expo Go según el reporte del usuario. No hubo observación directa del teléfono por el agente ni prueba del vacío real de la API con otra cuenta. [Evidencia textual](evidencias/confirmacion-recepcion/aceptacion-vacio-expo-go.json).
 
 Esta aceptación se registra antes de retirar el helper en un commit separado. El siguiente paso tras esa retirada será preparar el PR hacia develop para revisión de Zenaida cuando el usuario lo solicite. No se ha modificado Trello ni publicado la rama; Expo y backend siguen bajo control del usuario.
+
+## Retirada del vacío y siguiente etapa
+
+La aceptación quedó en `855746b`. Se retiraron el acceso, el Repository y la sesión ficticios del vacío, junto con sus tres casos de prueba temporales. La ruta vuelve a la pantalla real directamente y conserva las pruebas permanentes; el árbol de código y pruebas móviles coincide con `7307e28`, anterior al helper. Pasaron **861/861 pruebas móviles**, TypeScript, lint y `git diff --check`, con revisión técnica sin bloqueadores. No se hizo una nueva observación del teléfono ni QA web en esta retirada. [Registro](evidencias/confirmacion-recepcion/retirada-vacio-controlado.json).
+
+Trello puede marcar **Probar la funcionalidad**: **8/9**; solo **Revisar el código** espera la revisión real de Zenaida. El siguiente paso es preparar y abrir el PR de `feature/confirmacion-recepcion` hacia `develop` cuando el usuario lo solicite, conservando commits y sin fusionar. La rama sigue local y no se ha abierto ese PR. No se iniciaron ni detuvieron servicios, no se modificó la copia de Zenaida ni se cambiaron pedidos reales.

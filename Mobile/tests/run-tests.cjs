@@ -70,7 +70,6 @@ const result = spawnSync(process.execPath, [
   path.join(__dirname, 'OrderReceiptRepository.test.cjs'),
   path.join(__dirname, 'OrderReceiptController.test.cjs'),
   path.join(__dirname, 'OrderReceiptHttpIntegration.test.cjs'),
-  path.join(__dirname, 'OrderReceiptEmptyScenario.test.cjs'),
   path.join(__dirname, 'ReviewsDomain.test.cjs'),
   path.join(__dirname, 'ReviewsRepository.test.cjs'),
   path.join(__dirname, 'ReviewsHttpIntegration.test.cjs'),
