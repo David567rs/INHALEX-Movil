@@ -36,4 +36,3 @@ Respuesta sugerida:
 Estas comprobaciones no sustituyen la aceptación nativa. El checklist sigue **7/9**; **Probar la funcionalidad (8)** queda pendiente del reporte del usuario y **Revisar el código (9)** de Zenaida. Después de aceptar el vacío se retirará el helper en un commit separado antes de preparar el PR, conservando esta guía y sus evidencias.
 
 No se cambiaron servicios, Trello, la copia de Zenaida ni pedidos reales. No se publicó la rama ni se abrió PR.
-
