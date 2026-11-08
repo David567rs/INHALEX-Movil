@@ -1,6 +1,6 @@
 # Reseñas: conexión a la API
 
-**Preparación autorizada el 8 de noviembre:** el usuario solicitó publicar y abrir el PR de Zenaida hacia develop para David567rs, sin fusionar ni arrancar Expo. Véase [el registro de preparación](PR-RESENAS.md), con las comprobaciones actuales separadas de las evidencias históricas.
+**PR publicado el 8 de noviembre:** [#21](https://github.com/David567rs/INHALEX-Movil/pull/21), abierto por ZenaidaGR desde `feature/resenas` hacia `develop`, con revisión solicitada y verificada a David567rs. Sigue abierto, sin fusionar. [Registro de publicación y comprobaciones](PR-RESENAS.md). Los textos de preparación posteriores conservan el estado anterior a esta autorización; el checklist sigue 9/10 hasta la revisión real de David.
 
 ## Estado de esta etapa
 

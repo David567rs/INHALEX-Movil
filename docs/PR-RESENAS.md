@@ -1,5 +1,7 @@
 # Implementar Reseñas con MVVM y Repository
 
+**Publicado:** [PR #21](https://github.com/David567rs/INHALEX-Movil/pull/21), autor ZenaidaGR, revisión solicitada y verificada a David567rs. Abierto, sin draft y sin fusionar. Este enlace se registra en un commit documental separado. La aprobación y la CI del último HEAD se comprueban por separado.
+
 ## Actividad y alcance
 
 Desde Cuenta, el usuario autenticado puede elegir un producto de un pedido Completado, calificarlo de 1 a 5 estrellas y publicar un comentario de 4 a 700 caracteres. La reseña pasa a Enviadas y el producto deja de ofrecerse en Por reseñar. La pantalla permite actualizar, conserva los datos ante errores recuperables y verifica la colección antes de habilitar un nuevo intento de publicación.
@@ -54,4 +56,4 @@ Evidencia: [checklist y contrato](CONEXION-RESENAS.md), [aceptación reportada](
 - [ ] David567rs revisó y aprobó desde su propia cuenta.
 - [x] El destino es develop y se conserva el historial; cualquier integración posterior usará merge commit y requiere otra instrucción.
 
-Preparación local: todavía no se registra un número de PR, solicitud de revisión efectiva ni resultado de CI remota.
+La apertura y la solicitud de revisión están verificadas en [el registro del PR #21](evidencias/resenas/preparacion-pr21.json). La revisión humana sigue pendiente.

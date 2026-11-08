@@ -1,6 +1,6 @@
 # INHALEX: base móvil
 
-**Estado actual: Reseñas aceptada funcionalmente, PR en preparación (9/10).** Zenaida desarrolla en `feature/resenas` y David567rs revisará el PR hacia `develop`. Los reportes de Expo Go aceptan formulario, validación, elegibilidad, publicación, prevención de repetición, errores y continuidad con la misma cuenta. Los PR #18, #19 y #20 ya están integrados; la rama incorpora esa base. La preparación del 8 de noviembre pasó TypeScript, lint, 813 pruebas, Doctor 20/20 y exportación Android. Se conservan MVVM, Repository y commits por etapa. El usuario controla Expo y el QR; se comparte el backend y no se presupone una IP a partir de registros históricos. [Preparación del PR](../docs/PR-RESENAS.md); [conexión y checklist](../docs/CONEXION-RESENAS.md).
+**Reseñas: PR #21 abierto, revisión de David567rs pendiente (9/10).** ZenaidaGR publicó `feature/resenas` hacia `develop` y se verificó la solicitud de revisión a David. Se conservan MVVM, Repository, commits por etapa y la base visual de los PR #18, #19 y #20. Pasaron TypeScript, lint, 813 pruebas, Doctor 20/20 y exportación Android. La aceptación funcional procede de los reportes del usuario en Expo Go; solo falta Revisar el código. El usuario controla Expo y el QR; el backend sigue compartido. [PR #21](https://github.com/David567rs/INHALEX-Movil/pull/21); [alcance y evidencia](../docs/PR-RESENAS.md); [checklist](../docs/CONEXION-RESENAS.md).
 
 ## Snapshot histórico del cierre de Avisos
 

@@ -1,0 +1,25 @@
+{
+  "number": 21,
+  "url": "https://github.com/David567rs/INHALEX-Movil/pull/21",
+  "state": "open",
+  "draft": false,
+  "merged": false,
+  "author": "ZenaidaGR",
+  "requestedReviewers": [
+    "David567rs"
+  ],
+  "head": "feature/resenas",
+  "base": "develop",
+  "baseSha": "199603a2fbda9e2e5e967fe0d0aefe2792752e6c",
+  "humanReview": "pending",
+  "mergePerformedByAgent": false,
+  "dateLocal": "2026-11-08",
+  "acceptedCount": "9/10",
+  "openingHead": "841a9200e267af527ab8ca9c33b797f832f4297d",
+  "ciStatusAtLinkCommit": "not asserted; verify checks on the published final HEAD",
+  "reviewRequestVerifiedBy": "GitHub REST using local ZenaidaGR credential",
+  "expoGoServerStartedByAgent": false,
+  "servicesChangedByAgent": false,
+  "trelloChangedByAgent": false,
+  "otherCloneChangedByAgent": false
+}
