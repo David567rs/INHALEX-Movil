@@ -1,0 +1,59 @@
+{
+  "activity": "Reseñas - preparación de PR",
+  "dateLocal": "2026-11-08",
+  "branch": "feature/resenas",
+  "target": "develop",
+  "owner": "ZenaidaGR",
+  "reviewer": "David567rs",
+  "testedHead": "cf2ccaca310924ed4617831abeb935703716f9e4",
+  "mobileTree": "98a549d32b4644038f6ec266ce8e0e47396d95a4",
+  "baseHead": "199603a2fbda9e2e5e967fe0d0aefe2792752e6c",
+  "baseIsAncestor": true,
+  "checks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "tests": {
+      "passed": 813,
+      "failed": 0,
+      "skipped": 0
+    },
+    "expoDoctor": {
+      "passed": 20,
+      "total": 20
+    },
+    "androidExport": {
+      "passed": true,
+      "modules": 1488
+    },
+    "independentCodeReview": "Sin bloqueantes; no equivale a aprobación de David"
+  },
+  "acceptedCriteria": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "acceptedCount": "9/10",
+  "nativeEvidenceSource": "Reporte textual del usuario; sin observación directa del teléfono por el agente",
+  "runtimeDiffChangesBackend": false,
+  "runtimeDiffChangesDependencies": false,
+  "expoGoServerStartedByAgent": false,
+  "qrGeneratedByAgent": false,
+  "existingServicesChangedByAgent": false,
+  "otherCloneChangedByAgent": false,
+  "trelloChangedByAgent": false,
+  "reviewPostedByAgent": false,
+  "ciRemoteStatusAtPreparation": "pending publication",
+  "prStatusAtPreparation": "not yet opened",
+  "historyPolicy": "Conservar commits y ramas; sin rebase, squash, force push ni merge a develop",
+  "limits": [
+    "No nueva prueba nativa de otra cuenta o sesión caducada",
+    "No aceptación nativa de respuesta perdida tras guardar",
+    "Las pruebas HTTP usan fixtures aisladas; no escrituras reales por el agente"
+  ]
+}

@@ -1,5 +1,7 @@
 # Reseñas: conexión a la API
 
+**Preparación autorizada el 8 de noviembre:** el usuario solicitó publicar y abrir el PR de Zenaida hacia develop para David567rs, sin fusionar ni arrancar Expo. Véase [el registro de preparación](PR-RESENAS.md), con las comprobaciones actuales separadas de las evidencias históricas.
+
 ## Estado de esta etapa
 
 La conexión está implementada en `INHALEX-Movil-Zenaida`, rama `feature/resenas`, manteniendo MVVM y Repository. Zenaida desarrolla Reseñas y David (`David567rs`) revisará su futuro PR. Se conserva el historial y se continúa con commits por etapa.

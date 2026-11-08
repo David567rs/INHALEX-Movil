@@ -1,5 +1,7 @@
 # Diseño de Reseñas
 
+> Registro histórico de la etapa de diseño. El estado actual, los PR técnicos ya integrados y las pruebas aceptadas se consultan en [Conexión de Reseñas](CONEXION-RESENAS.md) y [Preparación del PR](PR-RESENAS.md).
+
 Zenaida prepara la pantalla móvil en `feature/resenas` a partir de `develop` (`6b38ba8`). El primer commit (`0d8dca5`) conserva los seis documentos del cierre de Avisos. David revisará el futuro PR hacia `develop`. Su actividad posterior es **Confirmación de recepción**.
 
 ## Recorrido en Expo Go

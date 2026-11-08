@@ -1,6 +1,6 @@
 # INHALEX: base móvil
 
-**Estado actual: Reseñas conectada técnicamente a la API en SDK 58.** Zenaida desarrolla en `feature/resenas`; David revisará el futuro PR. El formulario, estrellas y comentario fueron aceptados en Expo Go (2/10); la consulta/publicación real y el inicio de sesión físico siguen pendientes. TypeScript y 782 pruebas aprobaron; la revisión web y las exportaciones finales están en curso. Abre Cuenta → Reseñas desde Metro 8083; el backend usa 3200 y la IP de esta sesión es `192.168.1.78`. Se mantienen MVVM, Repository, historial y commits por etapa. El PR técnico #18 todavía está pendiente de revisión de Zenaida e integración a `develop`. [Conexión y primera prueba](../docs/CONEXION-RESENAS.md); [diseño aceptado](../docs/DISENO-RESENAS.md).
+**Estado actual: Reseñas aceptada funcionalmente, PR en preparación (9/10).** Zenaida desarrolla en `feature/resenas` y David567rs revisará el PR hacia `develop`. Los reportes de Expo Go aceptan formulario, validación, elegibilidad, publicación, prevención de repetición, errores y continuidad con la misma cuenta. Los PR #18, #19 y #20 ya están integrados; la rama incorpora esa base. La preparación del 8 de noviembre pasó TypeScript, lint, 813 pruebas, Doctor 20/20 y exportación Android. Se conservan MVVM, Repository y commits por etapa. El usuario controla Expo y el QR; se comparte el backend y no se presupone una IP a partir de registros históricos. [Preparación del PR](../docs/PR-RESENAS.md); [conexión y checklist](../docs/CONEXION-RESENAS.md).
 
 ## Snapshot histórico del cierre de Avisos
 
