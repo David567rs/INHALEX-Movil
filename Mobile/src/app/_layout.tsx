@@ -60,6 +60,7 @@ export default function RootLayout() {
           <Stack.Screen name="seguimiento-pedido" />
           <Stack.Screen name="avisos" />
           <Stack.Screen name="resenas" />
+          <Stack.Screen name="confirmacion-recepcion" />
         </Stack>
         </ReviewsProvider>
         </NoticesProvider>
