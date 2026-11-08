@@ -1,0 +1,38 @@
+{
+  "fecha": "2026-11-08",
+  "copia": "INHALEX-Movil",
+  "rama": "feature/confirmacion-recepcion",
+  "fuente": "reporte textual del usuario sobre Expo Go",
+  "reporte": "Amigo, apareció «No hay recepciones disponibles», se mantuvo al actualizar y «Ver mis pedidos» abrió Historial. Al volver y al salir de la prueba regresaron mis recepciones reales sin cambios. ¿Qué marco en Trello y qué sigue?",
+  "tipoDeCaso": "Repository vacio ficticio en memoria, solo desarrollo",
+  "preparacionCommit": "46555c9",
+  "resultadoReportado": {
+    "mensajeVacio": true,
+    "permanenciaAlActualizar": true,
+    "navegacionAHistorial": true,
+    "recepcionesRealesConservadasAlVolver": true,
+    "recepcionesRealesConservadasAlSalir": true
+  },
+  "criterioAceptado": 8,
+  "criteriosAceptadosAcumulados": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "criteriosPendientes": [
+    9
+  ],
+  "checklist": "8/9",
+  "observacionDirectaDelTelefonoPorAgente": false,
+  "trelloModificadoPorAgente": false,
+  "noAcreditado": [
+    "Vacio real de la API con otra cuenta",
+    "Revision real de Zenaida"
+  ],
+  "siguienteEtapa": "Retirar helper en commit separado, conservar evidencia e historial y preparar PR cuando el usuario lo solicite"
+}

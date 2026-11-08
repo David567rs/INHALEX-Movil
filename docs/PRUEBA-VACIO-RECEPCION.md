@@ -36,3 +36,9 @@ Respuesta sugerida:
 Estas comprobaciones no sustituyen la aceptación nativa. El checklist sigue **7/9**; **Probar la funcionalidad (8)** queda pendiente del reporte del usuario y **Revisar el código (9)** de Zenaida. Después de aceptar el vacío se retirará el helper en un commit separado antes de preparar el PR, conservando esta guía y sus evidencias.
 
 No se cambiaron servicios, Trello, la copia de Zenaida ni pedidos reales. No se publicó la rama ni se abrió PR.
+
+## Aceptación nativa — 8 de noviembre de 2026
+
+El usuario reportó: «Amigo, apareció “No hay recepciones disponibles”, se mantuvo al actualizar y “Ver mis pedidos” abrió Historial. Al volver y al salir de la prueba regresaron mis recepciones reales sin cambios. ¿Qué marco en Trello y qué sigue?»
+
+Se acepta el recorrido vacío aislado y **Probar la funcionalidad (8)** junto con los casos previos: **8/9**, pendiente solo la revisión real de Zenaida. La fuente es el reporte del usuario sobre Expo Go; no se afirma observación directa del teléfono ni vacío real de la API. El texto exacto queda en [la evidencia de aceptación](evidencias/confirmacion-recepcion/aceptacion-vacio-expo-go.json). Las instrucciones de preparación anteriores pasan a ser referencia histórica. La retirada del acceso temporal se registra por separado, conservando esta guía, sus evidencias y el historial.

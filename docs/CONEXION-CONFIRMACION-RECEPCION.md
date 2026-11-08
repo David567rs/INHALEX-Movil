@@ -1,6 +1,6 @@
 # Confirmación de recepción: conexión a la API
 
-8 de noviembre de 2026. Implementación de David en `INHALEX-Movil`, rama `feature/confirmacion-recepcion`, desde `develop` `0f619021b4de5d5436b0f43c122d9cba6b306da3`. El usuario aceptó el diseño en Expo Go y autorizó esta etapa. Se mantiene el diseño aprobado y el historial de commits. El primer caso correcto de la API, la elegibilidad visible, el doble toque y el error de lectura con recuperación ya fueron aceptados por reporte del usuario. El usuario aceptó después el fallo al confirmar y su verificación mediante un caso ficticio aislado. El checklist vigente es **7/9**; siguen pendientes Probar la funcionalidad y Revisar el código.
+8 de noviembre de 2026. Implementación de David en `INHALEX-Movil`, rama `feature/confirmacion-recepcion`, desde `develop` `0f619021b4de5d5436b0f43c122d9cba6b306da3`. El usuario aceptó el diseño, la consulta y confirmación reales, elegibilidad, doble toque, recuperación de lectura, reapertura y sesión en Expo Go. También aceptó el fallo al confirmar y el estado vacío mediante casos ficticios aislados. Se mantienen MVVM, Repository y commits por etapa. El checklist vigente es **8/9**; solo **Revisar el código** espera a Zenaida. Los apartados siguientes conservan la cronología y sus resultados históricos.
 
 ## Comportamiento y arquitectura
 
@@ -86,8 +86,10 @@ El usuario informó exactamente: «Amigo, Confirmar y Verificar fallaron sin per
 - [x] Actualizar el estado del pedido
 - [x] Mostrar mensaje de confirmación
 - [x] Manejar errores
-- [ ] Probar la funcionalidad
+- [x] Probar la funcionalidad
 - [ ] Revisar el código
+
+El criterio 8 se completó posteriormente con la aceptación de sesión y del vacío aislado, registradas al final de este documento. El checklist anterior refleja el acumulado vigente de **8/9**, no solo el caso de error.
 
 ## Guía del primer caso (conservada como referencia)
 
@@ -167,10 +169,18 @@ Se registra el resultado reportado del pedido real confirmado: reapertura, ocult
 
 El checklist permanece **7/9**. Para completar **Probar la funcionalidad (8)** queda el vacío; el usuario eligió «Preparemos un caso vacío aislado». Esta aceptación se conserva en un commit documental separado de la preparación. No se modifican pedidos, Trello o servicios y no se publica PR. **Revisar el código (9)** sigue pendiente de Zenaida.
 
-## Preparación vigente: vacío aislado — 8 de noviembre de 2026
+## Preparación histórica: vacío aislado — 8 de noviembre de 2026
 
 La aceptación de sesión quedó en `7307e28`; el caso vacío temporal se preparó en `46555c9`. La [guía de vacío](PRUEBA-VACIO-RECEPCION.md) explica **Probar recepciones vacías**, actualización, **Ver mis pedidos** hacia el Historial real, regreso y **Salir de la prueba**. Reutiliza MVVM y Repository con una lista ficticia en memoria, solo en desarrollo, sin cambiar pedidos ni credenciales reales. La simulación se descarta al salir o perder foco.
 
 Pasaron **864/864 pruebas móviles**, TypeScript, lint y `git diff --check`, además de revisión técnica sin bloqueadores. La QA web sobre el Metro existente comprobó vacío, actualización, navegación y descarte a 1280 × 720; el navegador estaba sin sesión, por lo que la vuelta mostró la protección real de acceso. No se atribuye observación de las recepciones personales del teléfono. Sin errores de consola; una advertencia web de Animated sobre el fallback de `useNativeDriver`. [Evidencia](evidencias/confirmacion-recepcion/prueba-vacio-controlada.json) y [captura](evidencias/confirmacion-recepcion/prueba-vacio-web.png).
 
 Falta el reporte nativo del usuario. El checklist permanece **7/9**; Probar la funcionalidad (8) espera esta comprobación y Revisar el código (9) espera a Zenaida. Tras la aceptación se retirarán el helper y su acceso en otro commit antes del PR. Se conservan la guía, las evidencias, las ramas y los commits. No se iniciaron ni detuvieron servicios, no se modificó Trello ni se publicó la rama.
+
+## Aceptación del vacío y cierre funcional — 8 de noviembre de 2026
+
+> Amigo, apareció «No hay recepciones disponibles», se mantuvo al actualizar y «Ver mis pedidos» abrió Historial. Al volver y al salir de la prueba regresaron mis recepciones reales sin cambios. ¿Qué marco en Trello y qué sigue?
+
+Se acepta **Probar la funcionalidad (8)** sumando este recorrido a las comprobaciones previas: **8/9**. Solo **Revisar el código (9)** queda pendiente de Zenaida. El vacío fue simulado en memoria, sin alterar pedidos reales; la navegación, actualización y salida fueron comprobadas en Expo Go según el reporte del usuario. No hubo observación directa del teléfono por el agente ni prueba del vacío real de la API con otra cuenta. [Evidencia textual](evidencias/confirmacion-recepcion/aceptacion-vacio-expo-go.json).
+
+Esta aceptación se registra antes de retirar el helper en un commit separado. El siguiente paso tras esa retirada será preparar el PR hacia develop para revisión de Zenaida cuando el usuario lo solicite. No se ha modificado Trello ni publicado la rama; Expo y backend siguen bajo control del usuario.
