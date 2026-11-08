@@ -1,0 +1,30 @@
+{
+  "fecha": "2026-11-08",
+  "copia": "INHALEX-Movil",
+  "rama": "feature/confirmacion-recepcion",
+  "fuente": "reporte textual del usuario sobre Expo Go",
+  "reporte": "Amigo, hice dos toques rápidos: se cerró el diálogo, apareció Recepción confirmada y al actualizar conservó la misma referencia, sin permitir confirmar otra vez. ¿Qué marco en Trello y qué sigue?",
+  "resultadoReportado": {
+    "dosToquesRapidos": true,
+    "dialogoCerrado": true,
+    "recepcionConfirmadaVisible": true,
+    "mismaReferenciaAlActualizar": true,
+    "sinOpcionDeRepetir": true
+  },
+  "criteriosAceptadosEnEsteReporte": [4],
+  "criteriosAceptadosAcumulados": [1, 2, 3, 4, 5, 6],
+  "criteriosPendientes": [7, 8, 9],
+  "fundamento": "Comportamiento visible reportado, complementado por las pruebas tecnicas previas de bloqueo sincrono, transicion atomica e idempotencia",
+  "siguientePrueba": "Fallo de Actualizar recepciones y Reintentar sin perder datos; recuperar al restaurar el backend",
+  "observacionDirectaDelTelefonoPorAgente": false,
+  "inspeccionHttpODatabasePorAgente": false,
+  "accionesAgente": "Registro documental local en commit separado; sin iniciar Expo, modificar pedidos, servicios, Trello, la copia de Zenaida ni publicar la rama",
+  "noAcreditadoEnEsteReporte": [
+    "Visualizacion del estado transitorio Confirmando",
+    "Numero exacto de peticiones, escrituras, notas o notificaciones",
+    "Concurrencia entre dispositivos o caida del proceso",
+    "Errores, respuesta perdida y verificacion posterior",
+    "Vacio, reapertura o cierre y restauracion de sesion",
+    "Revision del codigo por Zenaida"
+  ]
+}

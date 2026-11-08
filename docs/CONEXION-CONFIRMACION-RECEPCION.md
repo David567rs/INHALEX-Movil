@@ -1,6 +1,6 @@
 # Confirmación de recepción: conexión a la API
 
-8 de noviembre de 2026. Implementación de David en `INHALEX-Movil`, rama `feature/confirmacion-recepcion`, desde `develop` `0f619021b4de5d5436b0f43c122d9cba6b306da3`. El usuario aceptó el diseño en Expo Go y autorizó esta etapa. Se mantiene el diseño aprobado y el historial de commits. El primer caso correcto de la API y la elegibilidad visible ya fueron aceptados por reporte del usuario; los escenarios restantes siguen pendientes.
+8 de noviembre de 2026. Implementación de David en `INHALEX-Movil`, rama `feature/confirmacion-recepcion`, desde `develop` `0f619021b4de5d5436b0f43c122d9cba6b306da3`. El usuario aceptó el diseño en Expo Go y autorizó esta etapa. Se mantiene el diseño aprobado y el historial de commits. El primer caso correcto de la API, la elegibilidad visible y el doble toque ya fueron aceptados por reporte del usuario; los escenarios restantes siguen pendientes.
 
 ## Comportamiento y arquitectura
 
@@ -67,12 +67,14 @@ El usuario reportó el 8 de noviembre de 2026: «Amigo, apareció Recepción con
 
 Ese primer reporte permitió aceptar los criterios 3, 5 y 6, además del diseño previamente aceptado (1): en ese momento **4/9**. Actualizar el estado del pedido se entiende como actualizar su recepción; el estado general sigue siendo Completado. La fuente es el reporte del usuario, sin observación directa del teléfono, inspección de HTTP o conteo de escrituras en la base. Ese primer reporte no acreditaba cancelación del diálogo, fecha mostrada, doble toque, un pedido no elegible o errores. Evidencia: [aceptacion-api-expo-go.json](evidencias/confirmacion-recepcion/aceptacion-api-expo-go.json). El registro de verificación técnica anterior conserva su estado histórico.
 
-Después, el usuario informó: «Amigo, el pedido no completado no aparece en Recepción. El ya confirmado conserva su estado y no permite confirmar otra vez. ¿Qué marco en Trello y qué sigue?» Se acepta **Validar que el pedido pueda ser confirmado (2)** por ese caso y el caso positivo anterior: **5/9**. El estado concreto del pedido no completado no fue especificado; no se atribuye prueba de todos los estados, incidencia o pedido ajeno. La ausencia de la acción de repetir valida el bloqueo visible; el criterio Evitar confirmaciones duplicadas permanece pendiente de la prueba específica de doble toque. Evidencia: [aceptacion-elegibilidad-expo-go.json](evidencias/confirmacion-recepcion/aceptacion-elegibilidad-expo-go.json).
+Después, el usuario informó: «Amigo, el pedido no completado no aparece en Recepción. El ya confirmado conserva su estado y no permite confirmar otra vez. ¿Qué marco en Trello y qué sigue?» Se aceptó **Validar que el pedido pueda ser confirmado (2)** por ese caso y el caso positivo anterior: en ese momento **5/9**. El estado concreto del pedido no completado no fue especificado; no se atribuye prueba de todos los estados, incidencia o pedido ajeno. La ausencia de la acción de repetir validó el bloqueo visible; Evitar confirmaciones duplicadas quedó pendiente de la prueba específica de doble toque. Evidencia: [aceptacion-elegibilidad-expo-go.json](evidencias/confirmacion-recepcion/aceptacion-elegibilidad-expo-go.json).
+
+El usuario posteriormente reportó: «Amigo, hice dos toques rápidos: se cerró el diálogo, apareció Recepción confirmada y al actualizar conservó la misma referencia, sin permitir confirmar otra vez. ¿Qué marco en Trello y qué sigue?» Se acepta **Evitar confirmaciones duplicadas (4)** por este comportamiento nativo y las pruebas técnicas previas de exclusión e idempotencia. Checklist vigente: **6/9**, criterios 1 a 6. El reporte no afirma que alcanzó a ver Confirmando ni permite contar peticiones, escrituras, notas o notificaciones reales. No acredita concurrencia entre dispositivos ni caída del proceso. Evidencia: [aceptacion-doble-toque-expo-go.json](evidencias/confirmacion-recepcion/aceptacion-doble-toque-expo-go.json).
 
 - [x] Mostrar opción de confirmar recepción
 - [x] Validar que el pedido pueda ser confirmado
 - [x] Enviar confirmación a la API
-- [ ] Evitar confirmaciones duplicadas
+- [x] Evitar confirmaciones duplicadas
 - [x] Actualizar el estado del pedido
 - [x] Mostrar mensaje de confirmación
 - [ ] Manejar errores
@@ -90,7 +92,7 @@ Después, el usuario informó: «Amigo, el pedido no completado no aparece en Re
 
 Respuesta sugerida: «Amigo, apareció Recepción confirmada, desapareció el botón y se conservó al actualizar. La referencia, las cantidades y los importes coinciden con Historial.»
 
-Después se guiarán por separado los casos de pedido no elegible y vacío, doble toque, fallo de lectura, fallo al confirmar/verificación y reapertura/cierre de sesión. No se marcan como aceptados anticipadamente. El PR y la revisión de Zenaida corresponden a una etapa posterior.
+Los casos pendientes se guían por separado: fallo de lectura, fallo al confirmar/verificación, vacío y reapertura/cierre de sesión. No se marcan como aceptados anticipadamente. El PR y la revisión de Zenaida corresponden a una etapa posterior.
 
 ## Guía de elegibilidad (conservada como referencia)
 
@@ -103,7 +105,7 @@ Esta comprobación verifica el comportamiento visible de elegibilidad y la ausen
 
 La colección está limitada a los 12 pedidos completados más recientes. La ausencia de un pedido antiguo no demuestra por sí sola un bloqueo por estado, ni se exige que aparezcan todos los pedidos completados.
 
-## Siguiente prueba: doble toque
+## Guía de doble toque (conservada como referencia)
 
 Se necesita otro pedido Completado cuya recepción siga pendiente, de prueba o realmente recibido. No alterar pedidos ni generar compras para disponer de un ejemplo. Si no hay uno disponible, el usuario lo informa y se prepara una alternativa controlada.
 
@@ -112,3 +114,14 @@ Se necesita otro pedido Completado cuya recepción siga pendiente, de prueba o r
 3. Al finalizar, comprobar Recepción confirmada, misma referencia y ausencia del botón para repetir. Pulsar Actualizar recepciones y comprobar que se conserva.
 
 Reportar el comportamiento observado sin afirmar un número de escrituras o notificaciones del servidor a partir de la pantalla. El bloqueo nativo complementa las pruebas técnicas existentes de exclusión síncrona, transición atómica e idempotencia; no demuestra por sí solo exactamente una escritura ni recuperación ante caída del proceso.
+
+## Siguiente prueba: error de lectura y reintento
+
+1. Con el backend funcionando, entrar en Confirmación de recepción y dejar seleccionado el pedido confirmado, con sus datos visibles.
+2. El usuario detiene solo el backend compartido en la terminal donde lo arrancó, mediante Ctrl+C. Expo permanece abierto. El agente no inicia ni detiene procesos.
+3. Pulsar Actualizar recepciones y esperar el aviso. El pedido, su resumen y su confirmación deben conservarse.
+4. Con el backend todavía detenido, pulsar Reintentar. Debe volver a fallar sin vaciar los datos.
+5. El usuario vuelve a iniciar ese mismo backend con el comando que usó antes. Tras esperar a que esté listo, pulsa Reintentar en el teléfono.
+6. Deben desaparecer el aviso y recuperarse los datos de la misma referencia, manteniendo Recepción confirmada y sin ofrecer repetirla.
+
+Este caso solo comprueba lectura. Manejar errores sigue pendiente hasta verificar también el fallo al confirmar y la recuperación con Verificar recepción, con otro pedido pendiente o una prueba controlada si no hay uno disponible. No enviar una confirmación durante esta prueba de lectura.
