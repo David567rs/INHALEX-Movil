@@ -10,9 +10,10 @@
     3,
     4,
     5,
-    6
+    6,
+    7
   ],
-  "acceptedCount": "6/10",
+  "acceptedCount": "7/10",
   "loginIssueReported": true,
   "apiAcceptance": "Recorrido positivo de publicación aceptado por reporte del usuario; casos restantes pendientes",
   "trelloChangedByAgent": false,
@@ -106,6 +107,32 @@
     "negativeCaseAvailability": "Consultada al usuario; pendiente de respuesta",
     "reviewPostedByAgent": false,
     "expoStartedByAgent": false,
+    "trelloChangedByAgent": false,
+    "trelloMarkConfirmedByUser": false
+  },
+  "ineligibleOrderAcceptance": {
+    "date": "2026-11-07",
+    "recordedOnHead": "aa74542e4ca1a9f89a45ee5374198214ccbafc87",
+    "report": "ah no si, tengo uno cancelado y efectivamente no se puede escribir reseña, no me sale",
+    "source": "Reporte textual del usuario en el chat; sin observación directa del teléfono por el agente",
+    "supersededRequest": "No tengo uno identificado; preparemos una prueba controlada",
+    "controlledScenarioPrepared": false,
+    "newChecklistCriteriaAccepted": [
+      7
+    ],
+    "acceptedScope": [
+      "Producto de pedido Cancelado no disponible para escribir reseña",
+      "Complementa el bloqueo visible de repetir la reseña ya enviada, reportado en eligibilityAcceptance"
+    ],
+    "limits": [
+      "Aceptación contextual de interfaz; no se inspeccionó tráfico HTTP ni se intentó forzar un POST inválido",
+      "No acredita rechazo HTTP de duplicados ni prueba nativa de pedido ajeno",
+      "Errores, recuperación, reapertura y revisión real siguen pendientes"
+    ],
+    "nextStep": "Probar error de lectura y reintento desde Enviadas: detener solo el backend compartido, Actualizar reseñas y Reintentar conservan datos, restablecer el mismo backend y recuperar. Después probar el fallo de publicación por separado.",
+    "reviewPostedByAgent": false,
+    "expoStartedByAgent": false,
+    "ordersModifiedByAgent": false,
     "trelloChangedByAgent": false,
     "trelloMarkConfirmedByUser": false
   }
