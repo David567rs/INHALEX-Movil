@@ -7,11 +7,13 @@
   "acceptedCriteria": [
     1,
     3,
-    4
+    4,
+    5,
+    6
   ],
-  "acceptedCount": "3/10",
+  "acceptedCount": "5/10",
   "loginIssueReported": true,
-  "apiAcceptance": "Pendiente",
+  "apiAcceptance": "Recorrido positivo de publicación aceptado por reporte del usuario; casos restantes pendientes",
   "trelloChangedByAgent": false,
   "integrationAcceptance": {
     "date": "2026-11-07",
@@ -45,6 +47,33 @@
       "No se reportó prueba nativa del máximo de 700 caracteres"
     ],
     "nextStep": "Publicación válida explícita, confirmación, Enviadas y permanencia al actualizar",
+    "trelloChangedByAgent": false,
+    "trelloMarkConfirmedByUser": false
+  },
+  "publicationAcceptance": {
+    "date": "2026-11-07",
+    "recordedOnHead": "d2031dae58167f3cc84f435f9c04af3470637d0a",
+    "report": "Amigo, apareció la confirmación, la reseña está en Enviadas con las mismas estrellas y comentario, se conservó al actualizar y ya no aparece en Por reseñar.",
+    "source": "Reporte textual del usuario en el chat; sin observación directa del teléfono por el agente",
+    "newChecklistCriteriaAccepted": [
+      5,
+      6
+    ],
+    "acceptedScope": [
+      "Confirmación visible después de publicar",
+      "Reseña en Enviadas con las mismas estrellas y comentario",
+      "Reseña conservada al actualizar",
+      "Producto ausente de Por reseñar después de publicar"
+    ],
+    "limits": [
+      "No hay inspección de tráfico HTTP o base de datos por el agente en esta prueba",
+      "La actualización en la misma sesión no sustituye reapertura; el controlador conserva las publicaciones confirmadas",
+      "No acredita todavía referencia y estado del pedido, rechazo de duplicados HTTP ni casos negativos de elegibilidad",
+      "Errores, recuperación, continuidad de Reseñas y revisión real siguen pendientes"
+    ],
+    "nextStep": "Comparar la referencia de la reseña con el pedido Completado en Historial y comprobar que Enviadas no ofrezca volver a publicar.",
+    "reviewPostedByAgent": false,
+    "expoStartedByAgent": false,
     "trelloChangedByAgent": false,
     "trelloMarkConfirmedByUser": false
   }

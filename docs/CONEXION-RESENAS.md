@@ -4,7 +4,7 @@
 
 La conexión está implementada en `INHALEX-Movil-Zenaida`, rama `feature/resenas`, manteniendo MVVM y Repository. Zenaida desarrolla Reseñas y David (`David567rs`) revisará su futuro PR. Se conserva el historial y se continúa con commits por etapa.
 
-El usuario aceptó en Expo Go el formulario, las estrellas y el comentario. **Hay 3/10 criterios del checklist aceptados: crear el formulario, capturar calificación/comentario y validar campos requeridos.** El acceso y la reapertura de sesión ya se aceptaron en ambas copias durante la recuperación. Además, el 7 de noviembre confirmó las mejoras visuales integradas y la navegación Cuenta → Reseñas en la copia de Zenaida. Anteriormente informó que puede consultar sus reseñas enviadas; esto no acredita todavía una nueva publicación. Ahora confirmó el rechazo de estrellas/comentario vacíos y de `abc`, conservando el producto en Por reseñar; esa prueba acepta el criterio 4. [Reporte textual de aceptación](evidencias/resenas/expo-go-aceptacion.json).
+El usuario aceptó en Expo Go el formulario, las estrellas y el comentario. **Hay 5/10 criterios del checklist aceptados: crear el formulario, capturar calificación/comentario, validar campos requeridos, enviar la reseña a la API y mostrar confirmación de publicación.** El acceso y la reapertura de sesión ya se aceptaron en ambas copias durante la recuperación. Además, el 7 de noviembre confirmó las mejoras visuales integradas y la navegación Cuenta → Reseñas en la copia de Zenaida. Tras validar estrellas/comentario vacíos y `abc`, confirmó una publicación con mensaje de éxito, la reseña en Enviadas con las mismas estrellas/comentario, su permanencia al actualizar y la ausencia del producto en Por reseñar. Se aceptan los criterios 5 y 6 por ese reporte. Elegibilidad, casos negativos, errores y continuidad específica de Reseñas siguen pendientes. [Reporte textual de aceptación](evidencias/resenas/expo-go-aceptacion.json).
 
 Los PR #18, #19 y #20 están integrados en `develop`. La rama de Zenaida incorpora la base visual mediante el merge local `9bc231e`. Se mantiene un backend compartido; el usuario controla Expo y genera el QR. La IP y el puerto de Metro citados en registros anteriores son históricos: utilizar el QR actual de esta copia, sin arrancar otra instancia. [Registro de integración](INTEGRACION-VISUAL-RESENAS.md).
 
@@ -79,26 +79,35 @@ Antes del paso de publicación válida del recorrido anterior, confirmar si hay 
 
 El controlador valida antes de invocar la publicación. El campo limita la entrada a 700 caracteres. El usuario confirmó el rechazo de estrellas/comentario vacíos y de `abc`, conservando el producto en Por reseñar. Se acepta **Validar campos requeridos** por ese reporte, sin atribuir observación del dispositivo al agente ni una prueba nativa de 700/701 caracteres. La cita exacta está en el registro de aceptación.
 
-## Siguiente prueba: publicación y actualización
+## Prueba aceptada: publicación y actualización
 
 Con el producto pendiente, comprobar nombre y referencia, elegir una calificación de 1 a 5 estrellas y escribir una opinión real de 4 a 700 caracteres. Pulsar una vez **Publicar reseña**; esta acción sí registra la reseña en la cuenta. Esperar **«Tu reseña se publicó correctamente.»**. Si aparece otro aviso, reportarlo antes de repetir el envío.
 
-En **Enviadas**, verificar el mismo producto, calificación y comentario. Pulsar **Actualizar reseñas** y comprobar que la reseña permanece y el producto ya no aparece en **Por reseñar**. La publicación y su confirmación siguen pendientes hasta el reporte del usuario.
+En **Enviadas**, verificar el mismo producto, calificación y comentario. Pulsar **Actualizar reseñas** y comprobar que la reseña permanece y el producto ya no aparece en **Por reseñar**. El usuario confirmó estos resultados. Se aceptan **Enviar la reseña a la API** y **Mostrar confirmación de publicación** (5 y 6). El agente no observó el teléfono ni publicó la reseña. La permanencia al actualizar en la misma sesión no sustituye la prueba de reapertura: el controlador conserva temporalmente las publicaciones confirmadas.
 
-## Checklist de Trello: 3/10 aceptados
+## Siguiente prueba: pedido elegible y acceso después de publicar
+
+1. En **Enviadas**, anotar la referencia **Pedido …** de la reseña recién publicada.
+2. Volver a **Cuenta → Historial de pedidos**, localizar esa referencia y abrir **Ver resumen**. Comprobar que tenga estado **Completado** y contenga el producto reseñado.
+3. Regresar por **Cuenta → Reseñas → Enviadas**. Comprobar que la tarjeta sea de consulta y no ofrezca **Escribir reseña** ni **Publicar reseña** para ese producto.
+4. Revisar que el producto siga ausente de **Por reseñar**.
+
+No se necesita publicar otra reseña ni modificar pedidos. Esta prueba aún no está aceptada. El caso positivo de elegibilidad y el bloqueo visible de repetir la reseña se registrarán por separado de los casos negativos: no acreditan rechazo HTTP de duplicados, pedidos ajenos o no completados. Que un producto aparezca en un pedido Confirmado no basta para declararlo inelegible si también se compró antes en uno Completado. Después se comprobarán reapertura, errores y los casos negativos que falten.
+
+## Checklist de Trello: 5/10 aceptados
 
 - [x] Crear formulario de reseña.
 - [ ] Validar que el usuario pueda publicar la reseña.
 - [x] Capturar calificación y comentario.
 - [x] Validar campos requeridos.
-- [ ] Enviar la reseña a la API.
-- [ ] Mostrar confirmación de publicación.
+- [x] Enviar la reseña a la API.
+- [x] Mostrar confirmación de publicación.
 - [ ] Evitar reseñas cuando no corresponda.
 - [ ] Manejar errores.
 - [ ] Probar la funcionalidad.
 - [ ] Revisar el código.
 
-Los tres puntos aceptados proceden de los reportes del usuario. Los demás siguen pendientes de las pruebas guiadas y de revisión; disponer de código o pruebas automatizadas no equivale a aceptarlos en Expo Go. El agente no modificó Trello en esta etapa.
+Los cinco puntos aceptados proceden de los reportes del usuario. Los demás siguen pendientes de las pruebas guiadas y de revisión; disponer de código o pruebas automatizadas no equivale a aceptarlos en Expo Go. El agente no modificó Trello en esta etapa.
 
 ## Evidencia técnica y trabajo pendiente
 
@@ -106,6 +115,6 @@ Al preparar este documento, la suite móvil completa terminó con **782 pruebas 
 
 La verificación final pasó: TypeScript, lint, Expo Doctor **20/20** y exportaciones Android (**1454 módulos**) y web (**1104 módulos**), después de retirar la ruta temporal de QA. La revisión web comprobó el acceso real sin sesión y su navegación al login. Un escenario aislado con sesión y Repository simulados comprobó lista elegible, selección, validación local, estrellas, comentario, publicación simulada, Enviadas y actualización; no hubo publicación en la base real. La pantalla de 356 px no desbordó horizontalmente. Las capturas están rotuladas como prueba controlada. [Resultados](evidencias/resenas/verificacion-api.json).
 
-Estas verificaciones pertenecen a la preparación de la API. La integración visual posterior pasó 813 pruebas, TypeScript y lint, y el usuario confirmó el acceso desde Cuenta. La validación de campos requeridos ya se aceptó mediante el reporte nativo descrito arriba. La publicación real, vacío, errores, recuperación, duplicados y continuidad propia de Reseñas se aceptarán paso a paso. Los 3/10 aceptados no cambian por las comprobaciones técnicas.
+Estas verificaciones pertenecen a la preparación de la API. La integración visual posterior pasó 813 pruebas, TypeScript y lint, y el usuario confirmó el acceso desde Cuenta. La validación de campos y el recorrido positivo de publicación ya se aceptaron mediante los reportes nativos descritos arriba. Elegibilidad, vacío, errores, recuperación, duplicados y continuidad propia de Reseñas se aceptarán paso a paso. Los 5/10 aceptados no cambian por las comprobaciones técnicas.
 
 Los PR técnicos y visuales ya integrados no completan la actividad de Reseñas. Su futuro PR tendrá a David como revisor cuando finalicen las pruebas funcionales. La aceptación de diseño, conexión y pruebas se documenta por etapas; no se reescriben los commits anteriores ni se comienza Confirmación de recepción en esta etapa.
