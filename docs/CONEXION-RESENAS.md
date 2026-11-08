@@ -4,7 +4,7 @@
 
 La conexión está implementada en `INHALEX-Movil-Zenaida`, rama `feature/resenas`, manteniendo MVVM y Repository. Zenaida desarrolla Reseñas y David (`David567rs`) revisará su futuro PR. Se conserva el historial y se continúa con commits por etapa.
 
-El usuario aceptó en Expo Go el formulario, las estrellas y el comentario. **Hay 2/10 criterios del checklist aceptados: crear el formulario y capturar calificación/comentario.** El acceso y la reapertura de sesión ya se aceptaron en ambas copias durante la recuperación. Además, el 7 de noviembre confirmó las mejoras visuales integradas y la navegación Cuenta → Reseñas en la copia de Zenaida. Anteriormente informó que puede consultar sus reseñas enviadas; esto no acredita todavía una nueva publicación ni sus validaciones en esta etapa. [Reporte textual de aceptación](evidencias/resenas/expo-go-aceptacion.json).
+El usuario aceptó en Expo Go el formulario, las estrellas y el comentario. **Hay 3/10 criterios del checklist aceptados: crear el formulario, capturar calificación/comentario y validar campos requeridos.** El acceso y la reapertura de sesión ya se aceptaron en ambas copias durante la recuperación. Además, el 7 de noviembre confirmó las mejoras visuales integradas y la navegación Cuenta → Reseñas en la copia de Zenaida. Anteriormente informó que puede consultar sus reseñas enviadas; esto no acredita todavía una nueva publicación. Ahora confirmó el rechazo de estrellas/comentario vacíos y de `abc`, conservando el producto en Por reseñar; esa prueba acepta el criterio 4. [Reporte textual de aceptación](evidencias/resenas/expo-go-aceptacion.json).
 
 Los PR #18, #19 y #20 están integrados en `develop`. La rama de Zenaida incorpora la base visual mediante el merge local `9bc231e`. Se mantiene un backend compartido; el usuario controla Expo y genera el QR. La IP y el puerto de Metro citados en registros anteriores son históricos: utilizar el QR actual de esta copia, sin arrancar otra instancia. [Registro de integración](INTEGRACION-VISUAL-RESENAS.md).
 
@@ -68,7 +68,7 @@ Esta prueba es manual. La cuenta y sus credenciales se introducen en el teléfon
 
 Si no hay productos elegibles, **Ver mis pedidos** permite consultar los pedidos disponibles. No cambies un pedido real a Completado solamente para forzar la prueba: en ese caso se prepara después un escenario controlado. La prueba de errores se realiza en una etapa posterior, después de aceptar esta primera consulta y publicación.
 
-## Siguiente prueba: campos requeridos antes de publicar
+## Prueba aceptada: campos requeridos antes de publicar
 
 Antes del paso de publicación válida del recorrido anterior, confirmar si hay algún producto disponible en **Por reseñar**. Si está vacío, reportarlo y preparar un escenario controlado; no borrar reseñas ni alterar pedidos reales.
 
@@ -77,14 +77,20 @@ Antes del paso de publicación válida del recorrido anterior, confirmar si hay 
 3. Seleccionar cinco estrellas y escribir `abc`. Pulsar **Publicar reseña** de nuevo: debe permanecer el error de comentario, sin éxito de publicación ni traslado a Enviadas.
 4. Corregir a una opinión real de al menos cuatro caracteres y conservar el borrador sin pulsar Publicar todavía. Los espacios de los extremos no cuentan para cumplir el mínimo.
 
-El controlador valida antes de invocar la publicación. El campo limita la entrada a 700 caracteres. El criterio **Validar campos requeridos** permanece pendiente hasta el reporte del usuario; la revisión del código no sustituye esta prueba en Expo Go.
+El controlador valida antes de invocar la publicación. El campo limita la entrada a 700 caracteres. El usuario confirmó el rechazo de estrellas/comentario vacíos y de `abc`, conservando el producto en Por reseñar. Se acepta **Validar campos requeridos** por ese reporte, sin atribuir observación del dispositivo al agente ni una prueba nativa de 700/701 caracteres. La cita exacta está en el registro de aceptación.
 
-## Checklist de Trello: 2/10 aceptados
+## Siguiente prueba: publicación y actualización
+
+Con el producto pendiente, comprobar nombre y referencia, elegir una calificación de 1 a 5 estrellas y escribir una opinión real de 4 a 700 caracteres. Pulsar una vez **Publicar reseña**; esta acción sí registra la reseña en la cuenta. Esperar **«Tu reseña se publicó correctamente.»**. Si aparece otro aviso, reportarlo antes de repetir el envío.
+
+En **Enviadas**, verificar el mismo producto, calificación y comentario. Pulsar **Actualizar reseñas** y comprobar que la reseña permanece y el producto ya no aparece en **Por reseñar**. La publicación y su confirmación siguen pendientes hasta el reporte del usuario.
+
+## Checklist de Trello: 3/10 aceptados
 
 - [x] Crear formulario de reseña.
 - [ ] Validar que el usuario pueda publicar la reseña.
 - [x] Capturar calificación y comentario.
-- [ ] Validar campos requeridos.
+- [x] Validar campos requeridos.
 - [ ] Enviar la reseña a la API.
 - [ ] Mostrar confirmación de publicación.
 - [ ] Evitar reseñas cuando no corresponda.
@@ -92,7 +98,7 @@ El controlador valida antes de invocar la publicación. El campo limita la entra
 - [ ] Probar la funcionalidad.
 - [ ] Revisar el código.
 
-Los dos puntos aceptados proceden del reporte del usuario. Los demás siguen pendientes de las pruebas guiadas y de revisión; disponer de código o pruebas automatizadas no equivale a aceptarlos en Expo Go. El agente no modificó Trello en esta etapa.
+Los tres puntos aceptados proceden de los reportes del usuario. Los demás siguen pendientes de las pruebas guiadas y de revisión; disponer de código o pruebas automatizadas no equivale a aceptarlos en Expo Go. El agente no modificó Trello en esta etapa.
 
 ## Evidencia técnica y trabajo pendiente
 
@@ -100,6 +106,6 @@ Al preparar este documento, la suite móvil completa terminó con **782 pruebas 
 
 La verificación final pasó: TypeScript, lint, Expo Doctor **20/20** y exportaciones Android (**1454 módulos**) y web (**1104 módulos**), después de retirar la ruta temporal de QA. La revisión web comprobó el acceso real sin sesión y su navegación al login. Un escenario aislado con sesión y Repository simulados comprobó lista elegible, selección, validación local, estrellas, comentario, publicación simulada, Enviadas y actualización; no hubo publicación en la base real. La pantalla de 356 px no desbordó horizontalmente. Las capturas están rotuladas como prueba controlada. [Resultados](evidencias/resenas/verificacion-api.json).
 
-Estas verificaciones pertenecen a la preparación de la API. La integración visual posterior pasó 813 pruebas, TypeScript y lint, y el usuario confirmó el acceso desde Cuenta. La publicación real, validaciones en Expo Go, vacío, errores, recuperación, duplicados y continuidad propia de Reseñas se aceptarán paso a paso. Los 2/10 aceptados no cambian por las comprobaciones técnicas.
+Estas verificaciones pertenecen a la preparación de la API. La integración visual posterior pasó 813 pruebas, TypeScript y lint, y el usuario confirmó el acceso desde Cuenta. La validación de campos requeridos ya se aceptó mediante el reporte nativo descrito arriba. La publicación real, vacío, errores, recuperación, duplicados y continuidad propia de Reseñas se aceptarán paso a paso. Los 3/10 aceptados no cambian por las comprobaciones técnicas.
 
 Los PR técnicos y visuales ya integrados no completan la actividad de Reseñas. Su futuro PR tendrá a David como revisor cuando finalicen las pruebas funcionales. La aceptación de diseño, conexión y pruebas se documenta por etapas; no se reescriben los commits anteriores ni se comienza Confirmación de recepción en esta etapa.
