@@ -117,6 +117,10 @@ function CompanyContent({ company }: { company: MoreContent['company'] }) {
     </View>
     <View style={styles.stack}>
       <View style={styles.card}>
+        <SectionTitle icon="leaf-outline" title="A qué nos dedicamos" />
+        <Text selectable style={styles.body}>{company.activity}</Text>
+      </View>
+      <View style={styles.card}>
         <SectionTitle icon="compass-outline" title="Nuestra misión" />
         <Text selectable style={styles.body}>{company.mission}</Text>
       </View>
@@ -125,7 +129,15 @@ function CompanyContent({ company }: { company: MoreContent['company'] }) {
         <Text selectable style={styles.body}>{company.vision}</Text>
       </View>
       <View style={styles.card}>
-        <SectionTitle icon="sparkles-outline" title="Lo que nos guía" />
+        <SectionTitle icon="phone-portrait-outline" title="Innovación tecnológica" />
+        <Text selectable style={styles.body}>{company.innovation.description}</Text>
+        {company.innovation.benefits.map((benefit) => <View key={benefit.title} style={styles.value}>
+          <Text accessibilityRole="header" style={styles.smallTitle}>{benefit.title}</Text>
+          <Text selectable style={styles.body}>{benefit.body}</Text>
+        </View>)}
+      </View>
+      <View style={styles.card}>
+        <SectionTitle icon="sparkles-outline" title="Nuestros valores" />
         {company.values.map((value) => <View key={value.title} style={styles.value}>
           <Text accessibilityRole="header" style={styles.smallTitle}>{value.title}</Text>
           <Text selectable style={styles.body}>{value.body}</Text>

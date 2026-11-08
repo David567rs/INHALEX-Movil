@@ -14,8 +14,13 @@ export interface MoreContent {
   readonly company: {
     readonly name: string;
     readonly description: string;
+    readonly activity: string;
     readonly mission: string;
     readonly vision: string;
+    readonly innovation: {
+      readonly description: string;
+      readonly benefits: readonly { readonly title: string; readonly body: string }[];
+    };
     readonly values: readonly { readonly title: string; readonly body: string }[];
   };
   readonly documents: readonly MoreDocument[];

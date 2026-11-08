@@ -11,14 +11,23 @@ export const moreContent: MoreContent = {
   },
   company: {
     name: 'INHALEX S.A.S. de C.V.',
-    description: 'Aromas para acompañar tus momentos cotidianos. Conoce nuestra colección de productos aromáticos de uso personal y encuentra tu próxima pausa.',
-    mission: 'Ofrecer productos aromáticos de uso personal con información clara, una experiencia de compra sencilla y atención responsable, para que cada persona elija de manera informada.',
-    vision: 'Construir una marca reconocida por el cuidado de sus productos, la claridad de su información y la confianza de su comunidad, con un servicio cada vez más accesible.',
+    description: 'Somos una empresa mexicana de productos aromáticos de uso personal, con sede en Huejutla de Reyes, Hidalgo. Unimos aromas, bienestar cotidiano y tecnología para estar más cerca de ti.',
+    activity: 'Nos dedicamos al desarrollo y la comercialización de inhaladores aromáticos de uso personal. Nuestra colección reúne distintas líneas y aromas en un formato práctico y portátil. A través de nuestro sitio web y nuestra app, facilitamos la elección de productos y el seguimiento de cada pedido.',
+    mission: 'Acompañar el bienestar cotidiano de las personas con productos aromáticos de uso personal, información clara y atención cercana. Integramos la innovación en nuestros productos y servicios digitales para que elegir un aroma, realizar un pedido y consultar su progreso sea una experiencia sencilla y confiable.',
+    vision: 'Consolidarnos como una marca mexicana de referencia en productos aromáticos de uso personal, reconocida por su calidad, innovación y compromiso con las personas. Aspiramos a crecer en México y llegar a nuevas comunidades mediante una experiencia que combine cercanía, confianza y tecnología accesible.',
+    innovation: {
+      description: 'La innovación también está en cómo te acompañamos. Nuestro sitio web y nuestra app reúnen herramientas para elegir, organizar tus compras y mantenerte informado.',
+      benefits: [
+        { title: 'Encuentra tu aroma', body: 'Explora el catálogo por líneas, busca productos, consulta sus características y guarda tus favoritos.' },
+        { title: 'Sigue tu pedido', body: 'Organiza tu bolsa y tus direcciones, consulta el historial, sigue el estado del pedido y confirma su recepción.' },
+        { title: 'Tu experiencia cuenta', body: 'Consulta avisos y reseñas, y comparte tu opinión sobre productos de compras completadas. Escuchar a nuestra comunidad guía la mejora continua.' },
+      ],
+    },
     values: [
-      { title: 'Transparencia', body: 'Información clara para elegir con confianza.' },
-      { title: 'Responsabilidad', body: 'Atención cuidadosa a cada consulta y pedido.' },
-      { title: 'Cuidado', body: 'Respeto por las personas y sus datos.' },
-      { title: 'Mejora continua', body: 'Escuchamos para mejorar productos y servicio.' },
+      { title: 'Innovación', body: 'Buscamos mejorar nuestros productos y servicios con ideas y herramientas tecnológicas que aporten utilidad a la vida cotidiana.' },
+      { title: 'Calidad', body: 'Cuidamos la presentación de nuestros productos, la claridad de su información y la atención que recibe cada cliente.' },
+      { title: 'Salud y bienestar', body: 'Promovemos el autocuidado y una elección informada de productos aromáticos. Su uso no sustituye la atención médica profesional.' },
+      { title: 'Confianza y credibilidad', body: 'Construimos relaciones con comunicación honesta, atención responsable y respeto por las personas y sus datos.' },
     ],
   },
   faqs: [

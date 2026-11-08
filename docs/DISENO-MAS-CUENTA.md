@@ -21,6 +21,14 @@ Se incorporaron los borradores revisados `01_Politica_de_privacidad_INHALEX_revi
 
 Empresa y Contacto usan la información revisada y confirmada: INHALEX S.A.S. de C.V., correo `danielcruzhernandezinhalex@gmail.com`, teléfono `+52 771 203 4573` y domicilio en Palo de Rosa núm. 20, colonia Fovissste, Huejutla de Reyes, Hidalgo, C. P. 43000. La redacción corporativa describe productos aromáticos sin promesas terapéuticas.
 
+### Ampliación de Empresa solicitada por el usuario
+
+El 8 de noviembre de 2026, el usuario volvió a proporcionar la imagen **Misión y Visión — INHALEX SAS DE CV** y pidió adaptar la información, explicar a qué se dedica la empresa y añadir innovación tecnológica. La pantalla ahora incluye presentación, **A qué nos dedicamos**, misión, visión, innovación tecnológica y los cuatro valores de la imagen: **Innovación**, **Calidad**, **Salud y bienestar**, y **Confianza y credibilidad**.
+
+La actividad de desarrollo y comercialización de inhaladores aromáticos de uso personal se apoya en el contenido original del sistema web (`about` y descripción del responsable). La sede en Huejutla de Reyes procede del domicilio confirmado por el usuario. La innovación se explica con las funciones existentes: catálogo y búsqueda, favoritos, bolsa y direcciones, historial y seguimiento, avisos, reseñas y recepción. La misión y visión expresan propósitos; se adaptó la promesa de tratamiento seguro y eficaz de problemas de salud a bienestar cotidiano y elección informada, sin atribuir eficacia clínica, certificaciones ni fabricación propia. Tampoco se presenta Mercado Pago como integrado.
+
+Los textos y los nuevos campos siguen en el Repository local y el modelo de dominio; la vista solo los presenta en tarjetas. No se cambiaron los documentos legales originales, la copia de Zenaida ni la web. TypeScript, lint y `git diff --check` se verificaron para esta ampliación; su lectura final en Expo Go queda pendiente del usuario. El agente no arrancó Expo.
+
 ## MVVM y Repository
 
 `MoreContent` y `MoreRepository` definen el contrato de dominio. `LocalMoreRepository` entrega el contenido incluido en la app mediante `loadMoreContent`, compuesto en `createMoreAction`. Las rutas inyectan el caso de uso. `useMoreViewModel` administra carga, recuperación y acordeón; las vistas presentan el estado. El dominio no importa React Native ni HTTP.
