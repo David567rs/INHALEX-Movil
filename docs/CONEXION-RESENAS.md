@@ -4,7 +4,7 @@
 
 La conexión está implementada en `INHALEX-Movil-Zenaida`, rama `feature/resenas`, manteniendo MVVM y Repository. Zenaida desarrolla Reseñas y David (`David567rs`) revisará su futuro PR. Se conserva el historial y se continúa con commits por etapa.
 
-El usuario aceptó en Expo Go el formulario, las estrellas y el comentario. **Hay 8/10 criterios del checklist aceptados (1 a 8): formulario, elegibilidad, captura, validación de campos, publicación, confirmación, evitar reseñas cuando no corresponda y manejo de errores.** El acceso y la reapertura de sesión ya se aceptaron en ambas copias durante la recuperación. Además, el 7 de noviembre confirmó las mejoras visuales integradas y la navegación Cuenta → Reseñas en la copia de Zenaida. Tras validar estrellas/comentario vacíos y `abc`, confirmó una publicación con mensaje de éxito, la reseña en Enviadas con las mismas estrellas/comentario, su permanencia al actualizar y la ausencia del producto en Por reseñar. Se aceptaron los criterios 5 y 6 por ese reporte. Después comprobó que la referencia corresponde al pedido Completado que contiene el producto y que Enviadas no permite volver a publicarlo. Se aceptó el criterio 2 por ese caso positivo. Después el usuario identificó un producto de pedido Cancelado que no se ofrece para reseñar; se acepta el criterio 7 con ese caso y el bloqueo visible de repetir la reseña enviada. El usuario también confirmó el fallo de Actualizar y Reintentar sin perder las reseñas, y la recuperación al reiniciar el backend. Se aceptó el caso de lectura. Después confirmó fallo de Publicar y Verificar sin perder estrellas ni comentario, y recuperación con el borrador conservado y Publicar habilitado, sin envío automático. Se acepta Manejar errores (8); la continuidad específica de Reseñas y la revisión real siguen pendientes. [Reporte textual de aceptación](evidencias/resenas/expo-go-aceptacion.json).
+El usuario aceptó en Expo Go el formulario, las estrellas y el comentario. **Hay 9/10 criterios del checklist aceptados (1 a 9): formulario, elegibilidad, captura, validación de campos, publicación, confirmación, evitar reseñas cuando no corresponda, manejo de errores y prueba de la funcionalidad. Solo Revisar el código sigue pendiente.** El acceso y la reapertura de sesión ya se aceptaron en ambas copias durante la recuperación. Además, el 7 de noviembre confirmó las mejoras visuales integradas y la navegación Cuenta → Reseñas en la copia de Zenaida. Tras validar estrellas/comentario vacíos y `abc`, confirmó una publicación con mensaje de éxito, la reseña en Enviadas con las mismas estrellas/comentario, su permanencia al actualizar y la ausencia del producto en Por reseñar. Se aceptaron los criterios 5 y 6 por ese reporte. Después comprobó que la referencia corresponde al pedido Completado que contiene el producto y que Enviadas no permite volver a publicarlo. Se aceptó el criterio 2 por ese caso positivo. Después el usuario identificó un producto de pedido Cancelado que no se ofrece para reseñar; se acepta el criterio 7 con ese caso y el bloqueo visible de repetir la reseña enviada. El usuario también confirmó el fallo de Actualizar y Reintentar sin perder las reseñas, y la recuperación al reiniciar el backend. Se aceptó el caso de lectura. Después confirmó fallo de Publicar y Verificar sin perder estrellas ni comentario, y recuperación con el borrador conservado y Publicar habilitado, sin envío automático. Se aceptó Manejar errores (8). El 8 de noviembre el usuario confirmó reapertura, ocultación de datos y acceso al cerrar sesión, regreso con la misma cuenta y los mismos datos, actualización sin duplicados y ausencia del producto en Por reseñar. Se acepta Probar la funcionalidad (9); la revisión real de David sigue pendiente. [Reporte textual de aceptación](evidencias/resenas/expo-go-aceptacion.json).
 
 Los PR #18, #19 y #20 están integrados en `develop`. La rama de Zenaida incorpora la base visual mediante el merge local `9bc231e`. Se mantiene un backend compartido; el usuario controla Expo y genera el QR. La IP y el puerto de Metro citados en registros anteriores son históricos: utilizar el QR actual de esta copia, sin arrancar otra instancia. [Registro de integración](INTEGRACION-VISUAL-RESENAS.md).
 
@@ -123,7 +123,7 @@ La guía requirió otro producto disponible en **Por reseñar**, sin reutilizar 
 
 El usuario confirmó: «Amigo, fallaron Publicar y Verificar reseñas sin perder las estrellas ni el comentario. Reinicié el backend y Verificar reseñas habilitó Publicar, conservó el borrador y no lo envió automáticamente.». Se acepta **Manejar errores** (8) junto con el caso previo de lectura. La fuente es el reporte textual del usuario, sin observación del dispositivo, inspección HTTP ni publicación del agente. Cubre fallo de envío sin conexión y recuperación mediante GET; no acredita respuesta perdida después de guardar ni prueba nativa de 409, 401 o 403. El checklist queda **8/10**. No se confirma marcado en Trello.
 
-## Siguiente prueba: reapertura y continuidad de sesión
+## Prueba aceptada: reapertura y continuidad de sesión
 
 Esta etapa utiliza una reseña **ya enviada**. El borrador de la prueba anterior no se publica ni se conserva al salir del formulario; el filtro también puede volver a Por reseñar al montar la pantalla.
 
@@ -133,9 +133,15 @@ Esta etapa utiliza una reseña **ya enviada**. El borrador de la prueba anterior
 4. Ingresar con la misma cuenta y volver a **Cuenta → Reseñas → Enviadas**. Pulsar **Actualizar reseñas**.
 5. Comprobar la misma reseña, sin duplicados y con las mismas estrellas y comentario; verificar que el producto sigue fuera de **Por reseñar**.
 
-El resultado sigue pendiente y no se acepta aún Probar la funcionalidad (9). La guía no acredita aislamiento entre cuentas diferentes, token caducado o respuesta perdida de una publicación. Después de la aceptación funcional se podrá preparar el futuro PR para revisión real de David, cuando el usuario lo solicite.
+El 8 de noviembre de 2026 el usuario confirmó: «Amigo, la reseña volvió al reabrir. Al cerrar sesión desaparecieron mis datos y el acceso a Reseñas; al ingresar regresó con las mismas estrellas y comentario. Actualizar funciona, no hay duplicados y sigue fuera de Por reseñar.». Se acepta **Probar la funcionalidad** (9) con este reporte y los recorridos ya aceptados: **9/10**. La fuente es el reporte textual del usuario; el agente no observó el teléfono ni modificó Trello. No acredita aislamiento entre cuentas diferentes, sesión caducada, persistencia de borrador o respuesta perdida de una publicación.
 
-## Checklist de Trello: 8/10 aceptados
+## Siguiente etapa: preparación y revisión del PR
+
+La actividad funcional está aceptada en el alcance descrito. Solo **Revisar el código** (10) queda pendiente de la revisión real de **David567rs** sobre el futuro PR de **ZenaidaGR**, desde **feature/resenas** hacia **develop**. La aceptación se conserva en un commit documental separado. Este reporte no publica la rama ni abre el PR; se realizará cuando el usuario lo solicite, conservando ramas y commits.
+
+Antes de publicar, revisar el diff y las comprobaciones correspondientes al estado final. Los resultados técnicos históricos de abajo no sustituyen esa comprobación ni permiten anticipar la CI remota. La revisión de un agente tampoco sustituye la aprobación de David. El usuario continúa controlando Expo y el QR; se mantiene el backend compartido y no se comienza Confirmación de recepción en esta etapa.
+
+## Checklist de Trello: 9/10 aceptados
 
 - [x] Crear formulario de reseña.
 - [x] Validar que el usuario pueda publicar la reseña.
@@ -145,10 +151,10 @@ El resultado sigue pendiente y no se acepta aún Probar la funcionalidad (9). La
 - [x] Mostrar confirmación de publicación.
 - [x] Evitar reseñas cuando no corresponda.
 - [x] Manejar errores.
-- [ ] Probar la funcionalidad.
+- [x] Probar la funcionalidad.
 - [ ] Revisar el código.
 
-Los ocho puntos aceptados proceden de los reportes del usuario. Los demás siguen pendientes de las pruebas guiadas y de revisión; disponer de código o pruebas automatizadas no equivale a aceptarlos en Expo Go. El agente no modificó Trello en esta etapa.
+Los nueve puntos aceptados proceden de los reportes del usuario. Solo la revisión real de David queda pendiente; disponer de código, pruebas automatizadas o revisión técnica del agente no equivale a su aprobación. El agente no modificó Trello en esta etapa.
 
 ## Evidencia técnica y trabajo pendiente
 
@@ -156,6 +162,6 @@ Al preparar este documento, la suite móvil completa terminó con **782 pruebas 
 
 La verificación final pasó: TypeScript, lint, Expo Doctor **20/20** y exportaciones Android (**1454 módulos**) y web (**1104 módulos**), después de retirar la ruta temporal de QA. La revisión web comprobó el acceso real sin sesión y su navegación al login. Un escenario aislado con sesión y Repository simulados comprobó lista elegible, selección, validación local, estrellas, comentario, publicación simulada, Enviadas y actualización; no hubo publicación en la base real. La pantalla de 356 px no desbordó horizontalmente. Las capturas están rotuladas como prueba controlada. [Resultados](evidencias/resenas/verificacion-api.json).
 
-Estas verificaciones pertenecen a la preparación de la API. La integración visual posterior pasó 813 pruebas, TypeScript y lint, y el usuario confirmó el acceso desde Cuenta. La validación de campos, publicación y elegibilidad positiva ya se aceptaron mediante los reportes nativos descritos arriba. El pedido Cancelado y el bloqueo visible de repetir la reseña ya se aceptaron en el alcance de interfaz descrito arriba. El error de lectura y su recuperación también se aceptaron por reporte del usuario. El fallo de publicación y la recuperación del borrador también se aceptaron mediante el reporte del usuario. La continuidad propia de Reseñas sigue pendiente; no se atribuye prueba de bandeja vacía. Los 8/10 aceptados no cambian por las comprobaciones técnicas.
+Estas verificaciones pertenecen a la preparación de la API. La integración visual posterior pasó 813 pruebas, TypeScript y lint, y el usuario confirmó el acceso desde Cuenta. La validación de campos, publicación y elegibilidad positiva ya se aceptaron mediante los reportes nativos descritos arriba. El pedido Cancelado y el bloqueo visible de repetir la reseña ya se aceptaron en el alcance de interfaz descrito arriba. El error de lectura y su recuperación también se aceptaron por reporte del usuario. El fallo de publicación y la recuperación del borrador también se aceptaron mediante el reporte del usuario. La continuidad propia de Reseñas se aceptó con el reporte del 8 de noviembre; no se atribuye prueba de bandeja vacía. Los 9/10 aceptados no cambian por las comprobaciones técnicas.
 
-Los PR técnicos y visuales ya integrados no completan la actividad de Reseñas. Su futuro PR tendrá a David como revisor cuando finalicen las pruebas funcionales. La aceptación de diseño, conexión y pruebas se documenta por etapas; no se reescriben los commits anteriores ni se comienza Confirmación de recepción en esta etapa.
+Los PR técnicos y visuales ya integrados no completan la actividad de Reseñas. Las pruebas funcionales descritas están aceptadas; el futuro PR tendrá a David como revisor. La aceptación de diseño, conexión y pruebas se documenta por etapas; no se reescriben los commits anteriores ni se comienza Confirmación de recepción en esta etapa.

@@ -12,11 +12,12 @@
     5,
     6,
     7,
-    8
+    8,
+    9
   ],
-  "acceptedCount": "8/10",
+  "acceptedCount": "9/10",
   "loginIssueReported": true,
-  "apiAcceptance": "Recorrido positivo de publicación aceptado por reporte del usuario; casos restantes pendientes",
+  "apiAcceptance": "Recorridos funcionales descritos aceptados por reportes del usuario; revisión real del código pendiente",
   "trelloChangedByAgent": false,
   "integrationAcceptance": {
     "date": "2026-11-07",
@@ -32,7 +33,7 @@
     "expoStartedByAgent": false,
     "trelloChangedByAgent": false
   },
-  "lastAcceptanceDate": "2026-11-07",
+  "lastAcceptanceDate": "2026-11-08",
   "validationAcceptance": {
     "date": "2026-11-07",
     "recordedOnHead": "a703f766805a53098edb0104fe2ed9201ea1e3d0",
@@ -189,5 +190,34 @@
     "expoStartedByAgent": false,
     "trelloChangedByAgent": false,
     "trelloMarkConfirmedByUser": false
+  },
+  "sessionContinuityAcceptance": {
+    "date": "2026-11-08",
+    "recordedOnHead": "a2636aa908eac3126c8af2d8b4677437183ceb76",
+    "report": "Amigo, la reseña volvió al reabrir. Al cerrar sesión desaparecieron mis datos y el acceso a Reseñas; al ingresar regresó con las mismas estrellas y comentario. Actualizar funciona, no hay duplicados y sigue fuera de Por reseñar.",
+    "source": "Reporte textual del usuario en el chat; sin observación directa del teléfono por el agente",
+    "newChecklistCriteriaAccepted": [
+      9
+    ],
+    "acceptedScope": [
+      "La reseña enviada vuelve al reabrir el proyecto en Expo Go",
+      "Al cerrar sesión desaparecen datos personales y acceso a Reseñas",
+      "Al ingresar con la misma cuenta se recuperan las mismas estrellas y comentario",
+      "Actualizar reseñas funciona sin duplicados y el producto sigue fuera de Por reseñar"
+    ],
+    "limits": [
+      "No se observó el teléfono ni se inspeccionó tráfico HTTP",
+      "No acredita aislamiento entre cuentas diferentes ni sesión caducada",
+      "No acredita persistencia del borrador ni respuesta perdida después de guardar",
+      "La revisión real de David567rs sigue pendiente"
+    ],
+    "nextStep": "Preparar y abrir el futuro PR de ZenaidaGR desde feature/resenas hacia develop para revisión de David567rs cuando el usuario lo solicite; conservar ramas y commits.",
+    "reviewPostedByAgent": false,
+    "servicesChangedByAgent": false,
+    "expoStartedByAgent": false,
+    "trelloChangedByAgent": false,
+    "trelloMarkConfirmedByUser": false,
+    "branchPublishedByThisAcceptance": false,
+    "pullRequestOpenedByThisAcceptance": false
   }
 }
