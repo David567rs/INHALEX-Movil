@@ -2,6 +2,14 @@
 
 Trabajo local en la copia de David, rama `codex/recuperar-inicio`. El usuario aceptó el desplazamiento anterior: «Cuenta y Detalle ya se desplazan bien». Esta aceptación corresponde al desplazamiento; no acredita todavía las tres mejoras nuevas de este documento.
 
+## Aceptación de teclado y preparación de revisión — 7 de noviembre de 2026
+
+El usuario informó exactamente: «Amigo, en Perfil y Direcciones puedo alcanzar los botones con el teclado abierto, ocultarlo y conservar el borrador. Preparemos el PR de las mejoras visuales para que Zenaida lo revise, sin fusionarlo todavía.»
+
+Se acepta ese recorrido de teclado en Perfil y Direcciones en Expo Go: botones alcanzables, ocultación del teclado y conservación del borrador. Es evidencia reportada por el usuario, sin observación directa del teléfono por el agente. No acredita por extensión el teclado de Registro/Login, el avance de foco o la nota multilínea de Creación de pedido, TalkBack, iOS, texto ampliado ni todos los estados de la interfaz.
+
+Se autoriza publicar la rama de David `codex/recuperar-inicio` y abrir su PR hacia `develop`, conservando los commits por etapa y solicitando revisión a ZenaidaGR. No se autoriza fusionarlo. La copia de Zenaida y su trabajo de Reseñas se mantienen intactos hasta la integración posterior acordada. Las secciones siguientes conservan la evidencia histórica de implementación y sus pendientes específicos.
+
 ## Cambios por etapa
 
 | Commit | Cambio |
@@ -38,15 +46,15 @@ Se integran en Cuenta, Catálogo, Líneas, Búsqueda, Favoritos, Bolsa, Detalle,
 
 Capturas locales, no recursos de la app: `C:\Users\David\.codex\visualizations\2026\11\05\pulido-cuenta-formularios\cuenta-390.png`, `cuenta-320.png`, `perfil-demo-320.png`, `direccion-demo-320.png` y `feedback-demo-390.png`.
 
-## Próxima comprobación en Expo Go
+## Comprobaciones en Expo Go y alcance pendiente
 
 Recargar la instancia existente de David que controla el usuario.
 
 1. Sin sesión, abrir Cuenta y probar sus tres accesos.
-2. En Perfil y Direcciones, enfocar campos inferiores y campos numéricos; comprobar que se puede desplazar el formulario, ocultar el teclado, conservar el borrador y alcanzar Guardar/Cancelar.
+2. Perfil y Direcciones: el usuario aceptó el 7 de noviembre el alcance de botones con teclado abierto, ocultación y conservación del borrador. No ampliar ese reporte a otras plataformas ni a todos los tipos de campo.
 3. En Creación de pedido, comprobar avance de foco en contacto y salto de línea en la nota. Esta revisión de teclado no necesita confirmar un pedido real.
 4. Revisar encabezados y mensajes en pantalla estrecha y con texto grande. Durante una carga o un reintento, comprobar que el botón correspondiente permanece bloqueado.
 
-El teclado Android/iOS, TalkBack y el tamaño de texto nativo requieren validación en dispositivo. Las comprobaciones web no la sustituyen. No se repitieron las pruebas funcionales de API o exportaciones de etapas anteriores.
+Los recorridos nativos no cubiertos por la aceptación anterior, TalkBack, iOS y el tamaño de texto ampliado requieren validación específica. Las comprobaciones web no los sustituyen. No se repitieron las pruebas funcionales de API o exportaciones de etapas anteriores durante aquella implementación.
 
-Se conservan MVVM y Repository, el historial, la copia de Zenaida y el proyecto original. No se añadieron dependencias ni se modificaron servicios, configuración o credenciales. No se inició ni detuvo Expo/Metro o el backend. No se hizo push ni se abrió un PR.
+En la implementación del 5 de noviembre se conservaron MVVM y Repository, el historial, la copia de Zenaida y el proyecto original. No se añadieron dependencias ni se modificaron servicios, configuración o credenciales. No se inició ni detuvo Expo/Metro o el backend. En esa etapa no se hizo push ni se abrió un PR; la autorización posterior está registrada al inicio de este documento.
