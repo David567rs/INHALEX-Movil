@@ -1,6 +1,10 @@
 # INHALEX Movil
 
-## Etapa vigente: diseño de Más y acceso superior a Cuenta
+## Etapa vigente: conexión de Más y solicitudes de eliminación
+
+8 de noviembre de 2026. Tras aceptar el diseño de Más en Expo Go, el usuario autorizó completar la sección en la copia de David, `C:\Users\David\Documents\INHALEX-Movil`, rama `codex/diseno-mas-cuenta`. Mantener MVVM, Repository y commits por etapa. Se conecta contenido público versionado con respaldo local y se prepara la solicitud de eliminación desde app y formulario web. El usuario confirmó que el responsable de INHALEX atenderá las solicitudes mediante `danielcruzhernandezinhalex@gmail.com`. El registro solo crea una solicitud pendiente: no elimina datos, no envía correos ni procesa cierres. Los textos legales siguen en revisión; publicación HTTPS, retención y operación final están pendientes. Las pruebas de esta etapa son aisladas, sin cuentas reales. No iniciar, detener ni reiniciar Expo o backend, no modificar la copia de Zenaida, no publicar rama/PR ni desplegar. Guía vigente: [conexión, pruebas y pendientes](docs/CONEXION-MAS-CUENTA.md). Los estados siguientes son históricos.
+
+## Etapa anterior: diseño de Más y acceso superior a Cuenta
 
 8 de noviembre de 2026. El usuario revisó los borradores informativos y autorizó **solo el diseño** en la copia de David, rama local `codex/diseno-mas-cuenta` desde `develop` `6e4cd77`. Mantener MVVM, Repository y commits separados por etapa. Más reemplaza el quinto tab; Cuenta queda en `/cuenta`, accesible desde el encabezado de los cinco tabs. Las FAQ provienen del sistema web original y los textos legales son los borradores revisados, todavía identificados como tales. Ver [diseño, fuentes y comprobaciones](docs/DISENO-MAS-CUENTA.md). El usuario controla Expo y backend; no iniciar ni detener servicios. No modificar la copia de Zenaida ni publicar PR en esta etapa. El usuario aceptó visualmente Más y sus apartados en Expo Go, incluidos logos y animaciones; faltan confirmaciones específicas de navegación, Contacto y movimiento reducido. La API y el contenido legal final siguen pendientes. Los estados siguientes son históricos y no sustituyen este alcance.
 

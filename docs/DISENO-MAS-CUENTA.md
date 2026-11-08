@@ -1,5 +1,7 @@
 # Más y acceso superior a Cuenta
 
+La conexión posterior y el registro de solicitudes están documentados en [CONEXION-MAS-CUENTA.md](CONEXION-MAS-CUENTA.md). Este documento conserva la evidencia histórica del diseño; sus menciones a API pendiente corresponden a esa etapa.
+
 ## Etapa de diseño — 8 de noviembre de 2026
 
 Trabajo de David en `INHALEX-Movil`, rama local `codex/diseno-mas-cuenta`, desde `develop` `6e4cd77`. El usuario pidió solamente el diseño, manteniendo MVVM, Repository y commits por etapa. El usuario controla Expo y backend: no se inició, reinició ni detuvo ningún servicio. La copia de Zenaida no se modificó. No se publicó la rama ni se abrió un PR.

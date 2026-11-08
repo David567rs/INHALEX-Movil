@@ -1,6 +1,10 @@
 # Plan de trabajo de INHALEX Movil
 
-## Etapa vigente: diseño de Más y acceso superior a Cuenta
+## Etapa vigente: conexión de Más y solicitudes de eliminación
+
+8 de noviembre de 2026. El usuario aceptó el diseño y autorizó completar Más en la rama local `codex/diseno-mas-cuenta`, copia de David. Contenido público mediante API con respaldo incluido y última versión válida en memoria; contacto confirmado, páginas HTML de privacidad/términos y registro de solicitudes de eliminación con reautenticación. El responsable de INHALEX atenderá las solicitudes por el correo confirmado. El registro no elimina datos ni envía correos. Textos legales definitivos, conservación, procesamiento/cierre y publicación HTTPS siguen pendientes. Validación técnica: 886 pruebas móviles, 234 de backend, 1 de salud, TypeScript, build del backend y lint de móvil/archivos modificados correctos. El lint general del backend conserva hallazgos en 48 archivos no modificados. Aceptación nativa de esta conexión pendiente. Sin Expo, cambios de servicios, modificación de Zenaida, PR ni despliegue. [Guía vigente](CONEXION-MAS-CUENTA.md).
+
+## Etapa anterior: diseño de Más y acceso superior a Cuenta
 
 8 de noviembre de 2026. Diseño a cargo de David en `INHALEX-Movil`, rama local `codex/diseno-mas-cuenta`, desde `develop` `6e4cd77`. Más reúne ayuda, contacto, empresa y los borradores legales revisados; Cuenta pasa al acceso superior y conserva sus módulos. FAQ recuperadas del código del sistema web original. MVVM con Repository local, sin conectar una API de contenido ni empezar pagos o release. El usuario controla Expo y backend. La copia de Zenaida permanece intacta; sin publicación de rama ni PR. TypeScript, lint y 861 pruebas existentes aprobadas en la etapa inicial; el pulido posterior pasó TypeScript, lint y comprobaciones web. El usuario aceptó visualmente Más y sus apartados en Expo Go, incluidos logos y animaciones. Siguen pendientes las confirmaciones específicas de navegación, Contacto y movimiento reducido, así como la API y los textos legales finales. [Alcance, fuentes y recorrido en Expo Go](DISENO-MAS-CUENTA.md).
 

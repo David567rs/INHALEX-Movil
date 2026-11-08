@@ -1,0 +1,60 @@
+{
+  "date": "2026-11-08",
+  "repository": "INHALEX-Movil",
+  "branch": "codex/diseno-mas-cuenta",
+  "stage": "Conexion de Mas y registro de solicitudes de eliminacion",
+  "source": "Comprobaciones locales del agente; no aceptacion nativa del usuario",
+  "checks": {
+    "mobileTests": { "passed": 886, "failed": 0, "skipped": 0 },
+    "mobileTypecheck": "passed",
+    "mobileLint": "passed",
+    "serverBuild": "passed",
+    "serverTests": { "suites": 22, "passed": 234, "failed": 0 },
+    "serverHealthE2E": { "passed": 1, "database": "mock" },
+    "changedServerTypescriptLint": "passed",
+    "fullServerLint": {
+      "status": "failed",
+      "errors": 408,
+      "warnings": 36,
+      "files": 48,
+      "filesChangedInThisStageWithFindings": 0,
+      "scope": "Hallazgos en archivos no modificados por esta etapa; no se ocultaron ni corrigieron aqui"
+    },
+    "contentSnapshotCheck": "passed",
+    "gitDiffCheck": "passed"
+  },
+  "focusedCoverage": {
+    "accountDeletionBackend": { "suites": 3, "tests": 37 },
+    "accountDeletionMobile": { "tests": 17 },
+    "moreRepository": { "tests": 8 },
+    "publicReviewIdentity": "Primer nombre o Cliente INHALEX; sin prefijo de correo"
+  },
+  "content": { "schemaVersion": 1, "revision": "2026-11-08.2" },
+  "accountDeletion": {
+    "responsible": "Responsable de INHALEX mediante el correo confirmado por el usuario",
+    "implemented": ["Solicitud autenticada", "Formulario web", "Recibo pendiente idempotente", "Consulta administrativa limitada", "Verificacion antes de reenvio explicito"],
+    "notImplemented": ["Borrado o anonimizacion", "Desactivacion", "Correo automatico", "Pantalla operativa", "Cierre de solicitudes"],
+    "realRequestsCreatedDuringTests": 0
+  },
+  "preservation": {
+    "expoStarted": false,
+    "persistentServicesStartedStoppedOrRestarted": false,
+    "realDatabaseModified": false,
+    "zenaidaCopyModified": false,
+    "originalDocumentsModified": false,
+    "dependenciesChanged": false,
+    "pushed": false,
+    "pullRequestOpened": false,
+    "deployed": false
+  },
+  "pending": [
+    "Aceptacion nativa de navegacion, contacto, carga, respaldo local y recuperacion",
+    "Pruebas de solicitud con cuenta de prueba y verificacion por el responsable",
+    "Comprobacion nativa de teclado, accesibilidad y movimiento reducido",
+    "Definicion y ejecucion del proceso de eliminacion y conservacion de datos",
+    "Revision final de textos legales y publicacion HTTPS verificable",
+    "Revision por Zenaida y CI remota despues de autorizar la publicacion de la rama"
+  ],
+  "guide": "docs/CONEXION-MAS-CUENTA.md",
+  "operatingGuide": "docs/OPERACION-SOLICITUDES-ELIMINACION.md"
+}
