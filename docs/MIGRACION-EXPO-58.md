@@ -1,5 +1,13 @@
 # Migración a Expo SDK 58
 
+## Actualización local de Reseñas
+
+El 4 de noviembre de 2026, ante la petición del usuario de dejar funcional la copia de Zenaida, se incorporó `chore/expo-sdk-58` (`4bf34a2`) dentro de `feature/resenas` mediante el merge `a4f09b0`. El diseño `30de297` permanece íntegro, con el ajuste de referencia de comentario en `a7dcd2d`. Dependencias instaladas, verificaciones técnicas aprobadas y Metro 8083 con SDK 58. La aceptación física sigue pendiente. Consultar [los resultados de Reseñas](DISENO-RESENAS.md#compatibilidad-con-expo-58-4-de-noviembre-de-2026).
+
+El PR #18 sigue abierto y pendiente de revisión real; esta combinación local no es una aprobación ni una fusión a `develop`. Su integración revisada debe preceder al futuro PR de Reseñas. Reseñas conserva autora Zenaida y revisor David.
+
+## Preparación original de la migración
+
 La versión de Expo Go instalada en el teléfono usa SDK 58 y rechazaba INHALEX SDK 57 antes de abrir la aplicación. El usuario autorizó migrar el proyecto en una rama separada y conservar Reseñas. David prepara `chore/expo-sdk-58` desde `develop` `6b38ba8`. La copia de Zenaida conserva el diseño en `feature/resenas` `30de297` y el cierre anterior de Avisos en `0d8dca5`.
 
 El [PR #18](https://github.com/David567rs/INHALEX-Movil/pull/18), creado por David567rs hacia develop, solicita revisión de ZenaidaGR. Su integración y la aceptación física están pendientes. Consultar los checks sobre el HEAD actual del PR.

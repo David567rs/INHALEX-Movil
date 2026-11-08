@@ -52,6 +52,10 @@ import { NoticesError } from '../features/notices/domain/errors/NoticesError';
 import type { NoticesActions } from '../features/notices/domain/repositories/NoticesRepository';
 import { createNoticesActions } from '../features/notices/domain/useCases/noticesActions';
 import { createNoticesController } from '../features/notices/presentation/state/createNoticesController';
+import { ReviewsError } from '../features/reviews/domain/errors/ReviewsError';
+import type { ReviewsActions } from '../features/reviews/domain/repositories/ReviewsRepository';
+import { createReviewsController } from '../features/reviews/presentation/state/createReviewsController';
+import { buildReviewsActions } from './createReviewsActions';
 
 export interface ApplicationServicesOptions {
   environment?: Environment;
@@ -285,8 +289,28 @@ export function createApplicationRuntime(options: Omit<ApplicationServicesOption
     list: (requestOptions) => getNoticesActions().list(requestOptions),
     markRead: (id, requestOptions) => getNoticesActions().markRead(id, requestOptions),
   });
+  let reviewsActions: ReviewsActions | undefined;
+  function getReviewsActions(): ReviewsActions {
+    if (!reviewsActions) {
+      try {
+        const environment = options.environment ?? readEnvironment();
+        reviewsActions = buildReviewsActions(new HttpClient({
+          baseUrl: environment.apiUrl, isDevelopment: environment.isDevelopment,
+          requestTimeoutMs: environment.requestTimeoutMs, fetch: options.fetch,
+          getAccessToken: auth.getAccessToken,
+        }));
+      } catch {
+        throw new ReviewsError('Las reseñas no están disponibles en este momento. Inténtalo más tarde.', 'configuration');
+      }
+    }
+    return reviewsActions;
+  }
+  const reviews = createReviewsController(auth.authorizationSession, {
+    list: (requestOptions) => getReviewsActions().list(requestOptions),
+    publish: (input, requestOptions) => getReviewsActions().publish(input, requestOptions),
+  });
   // No transport, recovery key or credential is exposed to the React tree.
-  return Object.freeze({ session: auth.session, favorites, cart, profile, shippingAddresses, orderCreation, orderHistory, orderTracking, notices });
+  return Object.freeze({ session: auth.session, favorites, cart, profile, shippingAddresses, orderCreation, orderHistory, orderTracking, notices, reviews });
 }
 
 /** Defer configuration until submission so navigation never depends on the API. */

@@ -5,6 +5,7 @@ import { AddressesEntry } from '@/features/shippingAddresses/presentation/compon
 import { OrderHistoryEntry } from '@/features/orderHistory/presentation/components/OrderHistoryEntry';
 import { OrderTrackingEntry } from '@/features/orderTracking/presentation/components/OrderTrackingEntry';
 import { NoticesEntry } from '@/features/notices/presentation/components/NoticesEntry';
+import { ReviewsEntry } from '@/features/reviews/presentation/components/ReviewsEntry';
 
 export function AccountMenu() {
   return <View style={styles.menu}>
@@ -21,6 +22,8 @@ export function AccountMenu() {
       <OrderTrackingEntry />
       <View style={styles.divider} />
       <NoticesEntry />
+      <View style={styles.divider} />
+      <ReviewsEntry />
     </View>
   </View>;
 }

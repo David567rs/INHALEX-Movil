@@ -1,0 +1,223 @@
+{
+  "activity": "Reseñas",
+  "branch": "feature/resenas",
+  "date": "2026-11-04",
+  "source": "Reporte textual del usuario en el chat; sin observación del dispositivo por el agente",
+  "designReport": "Amigo, ya abrió Reseñas en Expo Go y funcionan las estrellas y el comentario. Sigamos con la API en feature/resenas, manteniendo MVVM, Repository y commits por etapa.",
+  "acceptedCriteria": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "acceptedCount": "9/10",
+  "loginIssueReported": true,
+  "apiAcceptance": "Recorridos funcionales descritos aceptados por reportes del usuario; revisión real del código pendiente",
+  "trelloChangedByAgent": false,
+  "integrationAcceptance": {
+    "date": "2026-11-07",
+    "testedCommit": "9bc231e06ee74408a7e46f4dc7260271ddb74380",
+    "report": "Amigo, ya veo las mejoras visuales en la copia de Zenaida y puedo abrir Reseñas desde Cuenta. Sigamos con las pruebas de Reseñas paso a paso.",
+    "source": "Reporte textual del usuario en el chat; sin observación directa del teléfono por el agente",
+    "acceptedScope": [
+      "Mejoras visuales visibles en la copia de Zenaida",
+      "Navegación Cuenta → Reseñas"
+    ],
+    "newChecklistCriteriaAccepted": [],
+    "nextStep": "Comprobar disponibilidad en Por reseñar y validar el formulario antes de publicar",
+    "expoStartedByAgent": false,
+    "trelloChangedByAgent": false
+  },
+  "lastAcceptanceDate": "2026-11-08",
+  "validationAcceptance": {
+    "date": "2026-11-07",
+    "recordedOnHead": "a703f766805a53098edb0104fe2ed9201ea1e3d0",
+    "report": "Amigo, rechazó las estrellas y el comentario vacíos, también rechazó «abc» y el producto sigue en Por reseñar. ¿Qué marco en Trello y qué sigue?",
+    "source": "Reporte textual del usuario en el chat; sin observación directa del teléfono por el agente",
+    "acceptedCriterion": 4,
+    "acceptedScope": [
+      "Rechazo de estrellas sin seleccionar",
+      "Rechazo del comentario vacío",
+      "Rechazo del comentario de tres caracteres abc",
+      "Producto conservado en Por reseñar"
+    ],
+    "limits": [
+      "No acredita publicación válida, recuperación ni prevención de duplicados",
+      "No se reportó prueba nativa del máximo de 700 caracteres"
+    ],
+    "nextStep": "Publicación válida explícita, confirmación, Enviadas y permanencia al actualizar",
+    "trelloChangedByAgent": false,
+    "trelloMarkConfirmedByUser": false
+  },
+  "publicationAcceptance": {
+    "date": "2026-11-07",
+    "recordedOnHead": "d2031dae58167f3cc84f435f9c04af3470637d0a",
+    "report": "Amigo, apareció la confirmación, la reseña está en Enviadas con las mismas estrellas y comentario, se conservó al actualizar y ya no aparece en Por reseñar.",
+    "source": "Reporte textual del usuario en el chat; sin observación directa del teléfono por el agente",
+    "newChecklistCriteriaAccepted": [
+      5,
+      6
+    ],
+    "acceptedScope": [
+      "Confirmación visible después de publicar",
+      "Reseña en Enviadas con las mismas estrellas y comentario",
+      "Reseña conservada al actualizar",
+      "Producto ausente de Por reseñar después de publicar"
+    ],
+    "limits": [
+      "No hay inspección de tráfico HTTP o base de datos por el agente en esta prueba",
+      "La actualización en la misma sesión no sustituye reapertura; el controlador conserva las publicaciones confirmadas",
+      "No acredita todavía referencia y estado del pedido, rechazo de duplicados HTTP ni casos negativos de elegibilidad",
+      "Errores, recuperación, continuidad de Reseñas y revisión real siguen pendientes"
+    ],
+    "nextStep": "Comparar la referencia de la reseña con el pedido Completado en Historial y comprobar que Enviadas no ofrezca volver a publicar.",
+    "reviewPostedByAgent": false,
+    "expoStartedByAgent": false,
+    "trelloChangedByAgent": false,
+    "trelloMarkConfirmedByUser": false
+  },
+  "eligibilityAcceptance": {
+    "date": "2026-11-07",
+    "recordedOnHead": "83f61a0e2b7c6e927cecd0817ebf16ab49dd7ea1",
+    "report": "Amigo, la referencia coincide con un pedido Completado que contiene ese producto. En Enviadas no permite volver a publicarlo y sigue fuera de Por reseñar. ¿Qué marco en Trello y qué sigue?",
+    "source": "Reporte textual del usuario en el chat; sin observación directa del teléfono por el agente",
+    "newChecklistCriteriaAccepted": [
+      2
+    ],
+    "acceptedScope": [
+      "Referencia de la reseña coincide con el pedido Completado",
+      "El pedido contiene el producto reseñado",
+      "Enviadas no ofrece volver a publicar ese producto",
+      "Producto ausente de Por reseñar"
+    ],
+    "partialCriteria": [
+      {
+        "criterion": 7,
+        "scope": "Bloqueo visible de repetir una reseña ya enviada; casos negativos de elegibilidad pendientes"
+      }
+    ],
+    "limits": [
+      "No acredita rechazo HTTP de duplicados ni pedidos ajenos o no completados",
+      "La persistencia tras reapertura, errores y revisión real siguen pendientes"
+    ],
+    "nextStep": "Identificar un producto comprado solo en pedidos no completados para probar que no aparezca en Por reseñar; si no existe un caso inequívoco, preparar una prueba controlada cuando el usuario lo confirme.",
+    "negativeCaseAvailability": "Consultada al usuario; pendiente de respuesta",
+    "reviewPostedByAgent": false,
+    "expoStartedByAgent": false,
+    "trelloChangedByAgent": false,
+    "trelloMarkConfirmedByUser": false
+  },
+  "ineligibleOrderAcceptance": {
+    "date": "2026-11-07",
+    "recordedOnHead": "aa74542e4ca1a9f89a45ee5374198214ccbafc87",
+    "report": "ah no si, tengo uno cancelado y efectivamente no se puede escribir reseña, no me sale",
+    "source": "Reporte textual del usuario en el chat; sin observación directa del teléfono por el agente",
+    "supersededRequest": "No tengo uno identificado; preparemos una prueba controlada",
+    "controlledScenarioPrepared": false,
+    "newChecklistCriteriaAccepted": [
+      7
+    ],
+    "acceptedScope": [
+      "Producto de pedido Cancelado no disponible para escribir reseña",
+      "Complementa el bloqueo visible de repetir la reseña ya enviada, reportado en eligibilityAcceptance"
+    ],
+    "limits": [
+      "Aceptación contextual de interfaz; no se inspeccionó tráfico HTTP ni se intentó forzar un POST inválido",
+      "No acredita rechazo HTTP de duplicados ni prueba nativa de pedido ajeno",
+      "Errores, recuperación, reapertura y revisión real siguen pendientes"
+    ],
+    "nextStep": "Probar error de lectura y reintento desde Enviadas: detener solo el backend compartido, Actualizar reseñas y Reintentar conservan datos, restablecer el mismo backend y recuperar. Después probar el fallo de publicación por separado.",
+    "reviewPostedByAgent": false,
+    "expoStartedByAgent": false,
+    "ordersModifiedByAgent": false,
+    "trelloChangedByAgent": false,
+    "trelloMarkConfirmedByUser": false
+  },
+  "readErrorAcceptance": {
+    "date": "2026-11-07",
+    "recordedOnHead": "7981d4049d220e983e9743a78e54d4ce55dbc820",
+    "report": "Amigo, Actualizar y Reintentar fallaron sin perder las reseñas. Reinicié el backend y Reintentar recuperó la lista y quitó el aviso",
+    "source": "Reporte textual del usuario en el chat; sin observación directa del teléfono por el agente",
+    "newChecklistCriteriaAccepted": [],
+    "partiallyVerifiedCriteria": [
+      8
+    ],
+    "acceptedScope": [
+      "Actualizar y Reintentar fallan conservando las reseñas",
+      "Tras reiniciar el backend, Reintentar recupera la lista y elimina el aviso"
+    ],
+    "limits": [
+      "Caso de lectura y recuperación; no acredita fallo de publicación ni conservación de su borrador",
+      "No se inspeccionó tráfico HTTP ni se observó el teléfono",
+      "Reapertura y revisión real de David siguen pendientes"
+    ],
+    "nextStep": "Confirmar otro producto en Por reseñar y probar fallo de Publicar, borrador conservado, bloqueo y Verificar reseñas; recuperar sin publicar automáticamente. Sin pendientes, preparar un escenario controlado por separado.",
+    "pendingProductAvailability": "Pendiente de respuesta del usuario",
+    "reviewPostedByAgent": false,
+    "servicesChangedByAgent": false,
+    "expoStartedByAgent": false,
+    "trelloChangedByAgent": false
+  },
+  "publicationErrorAcceptance": {
+    "date": "2026-11-07",
+    "recordedOnHead": "e87900a53cbaa60f9feecfdd9d8baf1151b47281",
+    "report": "Amigo, fallaron Publicar y Verificar reseñas sin perder las estrellas ni el comentario. Reinicié el backend y Verificar reseñas habilitó Publicar, conservó el borrador y no lo envió automáticamente.",
+    "source": "Reporte textual del usuario en el chat; sin observación directa del teléfono por el agente",
+    "newChecklistCriteriaAccepted": [
+      8
+    ],
+    "acceptedScope": [
+      "Fallo de Publicar y Verificar reseñas sin perder estrellas ni comentario",
+      "Tras reiniciar el backend, Verificar reseñas habilita Publicar y conserva el borrador",
+      "La recuperación no envía automáticamente la reseña",
+      "Completa Manejar errores junto con readErrorAcceptance"
+    ],
+    "limits": [
+      "No se inspeccionó tráfico HTTP ni se observó el dispositivo",
+      "No acredita respuesta perdida después de guardar ni pruebas nativas de 409, 401 o 403",
+      "La conservación del borrador se comprobó dentro del formulario, no al salir o reabrir",
+      "Reapertura y revisión real de David siguen pendientes"
+    ],
+    "nextStep": "Usar una reseña ya enviada para comprobar reapertura, ocultación de datos personales y menú al cerrar sesión, retorno con la misma cuenta y Actualizar reseñas sin duplicados.",
+    "reviewPostedByAgent": false,
+    "controlledScenarioPrepared": false,
+    "servicesChangedByAgent": false,
+    "expoStartedByAgent": false,
+    "trelloChangedByAgent": false,
+    "trelloMarkConfirmedByUser": false
+  },
+  "sessionContinuityAcceptance": {
+    "date": "2026-11-08",
+    "recordedOnHead": "a2636aa908eac3126c8af2d8b4677437183ceb76",
+    "report": "Amigo, la reseña volvió al reabrir. Al cerrar sesión desaparecieron mis datos y el acceso a Reseñas; al ingresar regresó con las mismas estrellas y comentario. Actualizar funciona, no hay duplicados y sigue fuera de Por reseñar.",
+    "source": "Reporte textual del usuario en el chat; sin observación directa del teléfono por el agente",
+    "newChecklistCriteriaAccepted": [
+      9
+    ],
+    "acceptedScope": [
+      "La reseña enviada vuelve al reabrir el proyecto en Expo Go",
+      "Al cerrar sesión desaparecen datos personales y acceso a Reseñas",
+      "Al ingresar con la misma cuenta se recuperan las mismas estrellas y comentario",
+      "Actualizar reseñas funciona sin duplicados y el producto sigue fuera de Por reseñar"
+    ],
+    "limits": [
+      "No se observó el teléfono ni se inspeccionó tráfico HTTP",
+      "No acredita aislamiento entre cuentas diferentes ni sesión caducada",
+      "No acredita persistencia del borrador ni respuesta perdida después de guardar",
+      "La revisión real de David567rs sigue pendiente"
+    ],
+    "nextStep": "Preparar y abrir el futuro PR de ZenaidaGR desde feature/resenas hacia develop para revisión de David567rs cuando el usuario lo solicite; conservar ramas y commits.",
+    "reviewPostedByAgent": false,
+    "servicesChangedByAgent": false,
+    "expoStartedByAgent": false,
+    "trelloChangedByAgent": false,
+    "trelloMarkConfirmedByUser": false,
+    "branchPublishedByThisAcceptance": false,
+    "pullRequestOpenedByThisAcceptance": false
+  }
+}

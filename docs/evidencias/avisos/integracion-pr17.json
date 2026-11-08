@@ -1,0 +1,145 @@
+{
+  "number": 17,
+  "url": "https://github.com/David567rs/INHALEX-Movil/pull/17",
+  "title": "Implementar Avisos con MVVM y Repository",
+  "author": "ZenaidaGR",
+  "state": "closed",
+  "head": "feature/avisos",
+  "headSha": "1d31c3cdf8c9efa01f3180699a9894bb5335901d",
+  "base": "develop",
+  "merged": true,
+  "mergedAt": "2026-10-20T19:11:43Z",
+  "mergedBy": "David567rs",
+  "mergeCommit": "6b38ba85af7575606ff181c2e5670deb3ce97e6e",
+  "mergeParents": [
+    "0f0b764a4ad78e40f12112c4debcd7982ccdfd2c",
+    "1d31c3cdf8c9efa01f3180699a9894bb5335901d"
+  ],
+  "verifiedAtUtc": "2026-10-20T19:14:42.3246811Z",
+  "reviews": [
+    {
+      "commit": "1d31c3cdf8c9efa01f3180699a9894bb5335901d",
+      "state": "APPROVED",
+      "url": "https://github.com/David567rs/INHALEX-Movil/pull/17#pullrequestreview-5590282213",
+      "id": 5590282213,
+      "submittedAt": "2026-10-20T19:11:32Z",
+      "reviewer": "David567rs"
+    }
+  ],
+  "checks": [
+    {
+      "name": "Backend verification",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39479523908/job/118824136935",
+      "head_sha": "1d31c3cdf8c9efa01f3180699a9894bb5335901d"
+    },
+    {
+      "name": "Mobile verification",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/David567rs/INHALEX-Movil/actions/runs/39479523910/job/118824136920",
+      "head_sha": "1d31c3cdf8c9efa01f3180699a9894bb5335901d"
+    }
+  ],
+  "checksScope": "HEAD final aprobado del PR; no se anticipa resultado de CI sobre el merge",
+  "commitsPreserved": 13,
+  "acceptedCriteria": 9,
+  "totalCriteria": 9,
+  "completedCriterionIds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "formalReviewCompletedCriterion": 9,
+  "newNativeEvidence": false,
+  "trelloReadByAgent": false,
+  "trelloModifiedByAgent": false,
+  "trelloFinalUpdateConfirmedByUser": true,
+  "recommendedTrelloStatus": "Terminado",
+  "publicationHistoryRewritten": false,
+  "prCreationSnapshot": "pr17.json",
+  "localPreparationChecks": "verificacion-pr.json",
+  "newAutomatedChecksRunForClosure": false,
+  "synchronization": {
+    "performed": true,
+    "checkedAtUtc": "2026-10-20T19:22:31.3870352Z",
+    "commit": "6b38ba85af7575606ff181c2e5670deb3ce97e6e",
+    "bothOnDevelop": true,
+    "bothEqualOriginDevelop": true,
+    "fastForwardOnly": true,
+    "bothClean": false,
+    "davidClean": true,
+    "zenaidaClean": false,
+    "zenaidaLocalClosureDocumentCount": 6,
+    "backupRoot": "C:\\Users\\David\\AppData\\Local\\Temp\\inhalex-sincronizacion-pr17-20261020-131953",
+    "backedUpDocuments": 12,
+    "backupHashesVerified": true,
+    "davidPreviousClosureAlreadyIntegratedCommit": "6610412",
+    "davidPreviousClosureSixBlobsMatched": true,
+    "davidOldClosureNotOverlaidOnNewAvisosDocs": true,
+    "zenaidaSixDocumentHashesMatchedBeforeAndAfterSwitch": true,
+    "environmentsAndPackagesPreserved": true,
+    "identitiesPreserved": true,
+    "stashPreserved": true,
+    "zenaidaStash": "81196109270f00fa7edf03a8a8ec6f8bdc963131",
+    "listenerPidsUnchanged": true,
+    "listeners": [
+      {
+        "port": 8083,
+        "originalPid": 13476,
+        "unchanged": true
+      },
+      {
+        "port": 8082,
+        "originalPid": 28288,
+        "unchanged": true
+      },
+      {
+        "port": 3200,
+        "originalPid": 33524,
+        "unchanged": true
+      }
+    ],
+    "healthAndMetrosHttp200": true,
+    "httpChecks": [
+      {
+        "url": "http://localhost:3200/api/health",
+        "status": 200
+      },
+      {
+        "url": "http://localhost:8082/status",
+        "status": 200
+      },
+      {
+        "url": "http://localhost:8083/status",
+        "status": 200
+      }
+    ],
+    "agentRestartedOrStoppedServices": false,
+    "agentInstalledDependencies": false,
+    "newFunctionalCodeChanges": false,
+    "newBranchCreated": false,
+    "newActivityStarted": false,
+    "verification": {
+      "typecheckDavidExitCode": 0,
+      "typecheckZenaidaExitCode": 0,
+      "lintZenaidaExitCode": 0,
+      "mobileUnitSuiteDoctorExportsRepeated": false,
+      "lintDavidExitCode": 0
+    },
+    "typecheckAndLintBothPassed": true
+  },
+  "closureDocumentation": {
+    "status": "Cierre de Avisos conservado en seis documentos locales de Zenaida tras sincronizar; pendiente de commit separado al iniciar la siguiente actividad",
+    "separateCommitRequiredBeforeNextActivity": true,
+    "sourceOrRuntimeChanged": false
+  },
+  "trelloFinalUpdateQuote": "Amigo, ya actualicé Trello. Actualicemos INHALEX-Movil e INHALEX-Movil-Zenaida con develop antes de empezar la siguiente actividad."
+}

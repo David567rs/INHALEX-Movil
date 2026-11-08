@@ -1,0 +1,48 @@
+{
+  "activity": "Reseñas - conexión a la API",
+  "dateLocal": "2026-11-04",
+  "branch": "feature/resenas",
+  "implementationCommit": "bbaa278",
+  "owner": "ZenaidaGR",
+  "futureReviewer": "David567rs",
+  "checks": {
+    "tests": { "passed": 782, "failed": 0, "reviewsNew": 47 },
+    "typecheck": "passed",
+    "lint": "passed",
+    "expoDoctor": { "passed": 20, "total": 20 },
+    "androidExport": { "passed": true, "modules": 1454 },
+    "webExport": { "passed": true, "modules": 1104 },
+    "temporaryQARouteRemovedBeforeExports": true,
+    "independentCodeReview": "completed; order reference for repeat purchase and disabled UI controls corrected"
+  },
+  "webQA": {
+    "realRoute": "/resenas",
+    "anonymousGateAndSignInNavigation": "passed",
+    "fixture": "Temporary /qa-resenas with real screen, controller and ViewModel; simulated session and Repository",
+    "casesPassed": ["eligible list", "select product", "required rating and comment", "capture five stars and comment", "simulated publication", "submitted list", "refresh preserves submitted review"],
+    "viewportWidth": 356,
+    "horizontalOverflow": false,
+    "screenshots": ["api-formulario-web.png", "api-publicacion-web.png"],
+    "realDatabaseWrites": false,
+    "temporaryRouteRemoved": true
+  },
+  "httpTests": "Real loopback HTTP with controlled server fixtures; not authenticated publication to the user's database",
+  "loginDiagnosis": {
+    "apiBefore": "No listener at port 3200; ECONNREFUSED",
+    "mongoBefore": "reachable",
+    "action": "Stopped verified orphan watcher and started Server/npm run start; restarted Metro 8083 with current LAN address",
+    "healthAfter": "HTTP 200; database connected at localhost and 192.168.1.78",
+    "oldMetroAddress": "172.20.10.5:8083",
+    "currentMetroAddress": "192.168.1.78:8083",
+    "envChanged": false,
+    "credentialsUsedByAgent": false,
+    "physicalLoginAcceptance": "pending",
+    "originalBackendExitCause": "not established"
+  },
+  "acceptedCriteria": [1, 3],
+  "acceptedCount": "2/10",
+  "trelloChangedByAgent": false,
+  "nativeApiAcceptance": "pending",
+  "prCreated": false,
+  "pr18TechnicalMigration": "Pending review and integration before the future Reviews PR"
+}

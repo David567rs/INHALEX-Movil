@@ -14,6 +14,7 @@ import { OrderCreationProvider } from '@/features/orderCreation/presentation/con
 import { OrderHistoryProvider } from '@/features/orderHistory/presentation/context/OrderHistoryProvider';
 import { OrderTrackingProvider } from '@/features/orderTracking/presentation/context/OrderTrackingProvider';
 import { NoticesProvider } from '@/features/notices/presentation/context/NoticesProvider';
+import { ReviewsProvider } from '@/features/reviews/presentation/context/ReviewsProvider';
 import { colors } from '@/core/theme/colors';
 import { useReducedMotion } from '@/shared/hooks/useReducedMotion';
 
@@ -36,6 +37,7 @@ export default function RootLayout() {
         <OrderHistoryProvider controller={runtime.orderHistory}>
         <OrderTrackingProvider controller={runtime.orderTracking}>
         <NoticesProvider controller={runtime.notices}>
+        <ReviewsProvider controller={runtime.reviews}>
         <StatusBar style="dark" />
         <Stack
           screenOptions={{
@@ -57,7 +59,9 @@ export default function RootLayout() {
           <Stack.Screen name="historial-pedidos" />
           <Stack.Screen name="seguimiento-pedido" />
           <Stack.Screen name="avisos" />
+          <Stack.Screen name="resenas" />
         </Stack>
+        </ReviewsProvider>
         </NoticesProvider>
         </OrderTrackingProvider>
         </OrderHistoryProvider>
