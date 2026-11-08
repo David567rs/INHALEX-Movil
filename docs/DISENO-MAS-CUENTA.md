@@ -64,7 +64,17 @@ Esta etapa no conecta Más con la API, no cambia autenticación o datos de clien
 - Revisión web con el servidor que el usuario ya tenía abierto: Más y sus cinco destinos; acordeón; correo largo a 320 px; textos legales y empresa a 390 px; Cuenta sin sesión, acceso al login y regresos; Favoritos → Cuenta → Favoritos. No se introdujeron credenciales ni se enviaron mensajes o llamadas.
 - Revisión independiente de arquitectura, accesibilidad estática y rutas. Se corrigió el regreso que podía acumular otra pantalla de Cuenta. TypeScript y lint se repitieron después de esa corrección.
 
-## Siguiente prueba en Expo Go — pendiente del usuario
+## Aceptación visual en Expo Go — reporte del usuario
+
+El usuario confirmó: «Amigo, ya revisé Más y sus apartados en Expo Go, los logos y las animaciones se ven bien. ¿Qué sigue para dejar esta sección completa?».
+
+Se acepta el diseño visual de Más y sus apartados, incluidos logotipos y animaciones, sobre el trabajo registrado hasta `bdfcd5a`. La fuente es su reporte; el agente no observó directamente el dispositivo. Las notas anteriores de revisión visual pendiente quedan superadas por esta confirmación. Este reporte no acredita todavía correo/teléfono, regreso de Cuenta desde cada tab, comportamiento sin sesión, Reducir movimiento ni aprobación final de los textos legales. No se modificó Trello.
+
+Se revisó el contrato existente: `GET /api/company-content` es público, pero carece de campos de Contacto y de la ampliación de Empresa, y representa los documentos como Markdown. Los valores iniciales del servidor incluyen textos antiguos y campos `[pendiente]`. Más continúa usando `LocalMoreRepository`. Una futura integración requerirá adaptar el contrato y actualizar el contenido de forma controlada; cambiar los defaults no actualiza automáticamente un documento existente en la base. No se consultó ni modificó la base de datos.
+
+El siguiente paso es aceptar navegación y Contacto en el dispositivo. Después, completar el contenido y preparar la integración de API como una etapa separada si se quiere administrar estos textos desde el sistema web. Los borradores legales y las tareas de publicación siguen pendientes; esta aceptación no autoriza publicar un PR ni iniciar servicios.
+
+## Siguientes pruebas funcionales en Expo Go — pendientes del usuario
 
 1. Recargar su propia instancia de Expo en la copia de David. Comprobar que el quinto tab dice Más.
 2. Abrir Cuenta desde el icono superior en cada tab y volver. Debe regresar al tab de origen, conservando sus datos y filtros.
@@ -73,4 +83,4 @@ Esta etapa no conecta Más con la API, no cambia autenticación o datos de clien
 5. En Contacto, comprobar que el correo y teléfono se leen completos y que sus botones abren la aplicación correspondiente. Cancelar allí; no es necesario enviar ni llamar.
 6. Revisar con sesión y sin sesión: el contenido de Más debe seguir disponible; los datos personales continúan protegidos en Cuenta. Comprobar también login/registro → Cuenta → regreso y el botón Atrás de Android.
 
-No marcar integración API, cumplimiento de Google Play, publicación ni revisión de PR con esta etapa. La aceptación del diseño en Expo Go todavía está pendiente.
+No marcar integración API, cumplimiento de Google Play, publicación ni revisión de PR con esta etapa. El diseño visual está aceptado; falta confirmar los recorridos funcionales anteriores y cerrar los textos para publicación.
