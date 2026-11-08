@@ -7,6 +7,8 @@ import { OrderTrackingEntry } from '@/features/orderTracking/presentation/compon
 import { NoticesEntry } from '@/features/notices/presentation/components/NoticesEntry';
 import { ReviewsEntry } from '@/features/reviews/presentation/components/ReviewsEntry';
 import { ReceiptEntry } from '@/features/orderReceipt/presentation/components/ReceiptEntry';
+import { AccountMenuItem } from '@/shared/components/AccountMenuItem';
+import { router } from 'expo-router';
 
 export function AccountMenu() {
   return <View style={styles.menu}>
@@ -27,6 +29,11 @@ export function AccountMenu() {
       <NoticesEntry />
       <View style={styles.divider} />
       <ReviewsEntry />
+    </View>
+    <Text accessibilityRole="header" style={styles.heading}>Privacidad</Text>
+    <View style={styles.group}>
+      <AccountMenuItem icon="shield-checkmark-outline" title="Eliminar cuenta" hint="Solicita la eliminación de tu cuenta y datos"
+        accessibilityLabel="Solicitar eliminación de cuenta" onPress={() => router.push('/eliminar-cuenta')} />
     </View>
   </View>;
 }

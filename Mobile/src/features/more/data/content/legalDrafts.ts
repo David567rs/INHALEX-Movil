@@ -38,8 +38,8 @@ export const legalDrafts: readonly MoreDocument[] = [
       },
       {
         "paragraphs": [
-          "El nombre del autor, las estrellas, el comentario y la fecha se muestran públicamente junto al producto. Otras personas pueden verlos sin iniciar sesión. La respuesta pública de reseñas no muestra tu correo ni la referencia de tu pedido; esos datos permanecen vinculados internamente para verificar la autoría y la compra.",
-          "Actualmente el nombre público se toma del perfil y, si falta, puede derivarse del texto anterior a la arroba del correo. Antes del lanzamiento debe eliminarse esa sustitución y mostrarse al usuario el nombre que se publicará. Esta corrección y el aviso previo a publicar son pendientes de implementación, no funciones ya disponibles."
+          "Al publicar una reseña, otras personas pueden consultar tu primer nombre o la identificación «Cliente INHALEX», tu calificación, comentario y fecha junto al producto, incluso sin iniciar sesión. La respuesta pública no muestra tu correo electrónico ni la referencia de tu compra; esos datos permanecen vinculados internamente para verificar la autoría y la compra.",
+          "Evita incluir datos de contacto o información personal de terceros en el comentario. La protección del nombre público no elimina los datos que escribas en el texto. Antes del lanzamiento deben completarse el aviso previo a publicar, la aceptación de las reglas de contenido y los mecanismos de reporte, bloqueo y moderación."
         ],
         "title": "Qué se publica cuando envías una reseña"
       },
@@ -67,7 +67,8 @@ export const legalDrafts: readonly MoreDocument[] = [
       },
       {
         "paragraphs": [
-          "La versión auditada no tiene una política general automatizada de eliminación ni una opción específica para eliminar la cuenta. Por tanto, no se anuncia una eliminación inmediata o automática. El correo anterior es el contacto de privacidad confirmado, pero el procedimiento de atención y borrado todavía requiere definición y prueba.",
+          "Puedes iniciar una solicitud desde «Eliminar cuenta», disponible en Cuenta y Más. La app verifica tu contraseña actual y registra una referencia. También se preparó una página web de solicitud, cuya dirección pública HTTPS debe habilitarse y comprobarse antes del lanzamiento. Recibir una referencia confirma la recepción de la solicitud, no que la cuenta ya haya sido eliminada.",
+          "El responsable de INHALEX atenderá las solicitudes mediante danielcruzhernandezinhalex@gmail.com. No envíes tu contraseña por correo: solo introdúcela en el formulario seguro de verificación. El responsable deberá comunicar el resultado y los datos que deban conservarse por una obligación aplicable. La recepción de la solicitud no cancela pedidos o devoluciones ni produce un borrado automático; el procesamiento y cierre verificable todavía están pendientes de completar.",
           "Criterio propuesto para adopción: conservar datos de cuenta mientras sean necesarios para prestar el servicio; al solicitar su eliminación, suprimir o disociar los datos que ya no deban mantenerse. Los registros indispensables para obligaciones legales o reclamaciones se conservarían con acceso restringido durante el plazo aplicable, sin reutilizarlos para otros fines. Deben fijarse los plazos por categoría, el tratamiento de reseñas públicas y la depuración de respaldos antes de publicar esta política."
         ],
         "title": "Conservación y eliminación"
@@ -80,7 +81,7 @@ export const legalDrafts: readonly MoreDocument[] = [
       },
       {
         "paragraphs": [
-          "Designar quién atiende privacidad; verificar proveedores, países y tratamiento de Mercado Pago; adoptar plazos de conservación; implementar y probar la solicitud de eliminación en la app y en una página web; definir el nombre público de las reseñas y los controles para menores. Publicar después una versión HTML accesible y coherente con Seguridad de los datos. La guía adjunta contiene la evidencia y fuentes utilizadas."
+          "Verificar proveedores, países y tratamiento de Mercado Pago; adoptar plazos de conservación; desplegar y probar las solicitudes de eliminación en la app y en la página HTTPS, completar su procesamiento y cierre; resolver moderación de reseñas y controles para menores. El responsable de atención y el nombre público mínimo de reseñas ya están definidos. Publicar una versión HTML definitiva y coherente con Seguridad de los datos después de cerrar los pendientes. La guía adjunta contiene la evidencia y fuentes utilizadas."
         ],
         "title": "Pendientes para convertir este borrador en aviso público"
       }

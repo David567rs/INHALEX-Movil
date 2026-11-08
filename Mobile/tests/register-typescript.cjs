@@ -5,8 +5,13 @@ const path = require('node:path');
 const ts = require('typescript');
 
 const sourceRoots = [
+  '../src/features/accountDeletion/domain',
+  '../src/features/accountDeletion/data',
+  '../src/features/accountDeletion/presentation/state',
   '../src/core',
   '../src/shared/data',
+  '../src/features/more/domain',
+  '../src/features/more/data',
   '../src/features/auth/domain',
   '../src/features/auth/data',
   '../src/features/catalog/domain',

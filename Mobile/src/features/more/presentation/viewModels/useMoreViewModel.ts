@@ -14,7 +14,8 @@ export function useMoreViewModel(loadContent: LoadMoreContent) {
     const currentRequest = ++request.current;
     return Promise.resolve().then(loadContent).then((nextContent) => {
       if (!mounted.current || currentRequest !== request.current) return;
-      setContent(nextContent);
+      setContent(nextContent.content);
+      setMessage(nextContent.warning);
     }, () => {
       if (!mounted.current || currentRequest !== request.current) return;
       setMessage('No pudimos abrir esta información. Inténtalo de nuevo.');
@@ -33,6 +34,7 @@ export function useMoreViewModel(loadContent: LoadMoreContent) {
   }, [requestContent]);
 
   function reload() {
+    if (isLoading) return;
     setIsLoading(true);
     setMessage(null);
     void requestContent();

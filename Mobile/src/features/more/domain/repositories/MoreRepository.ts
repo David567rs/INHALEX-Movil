@@ -1,6 +1,6 @@
-import type { MoreContent } from '../models/MoreContent';
+import type { MoreContentResult } from '../models/MoreContentResult';
 
 /** Public information; no account or credential is required. */
 export interface MoreRepository {
-  getContent(): Promise<MoreContent>;
+  getContent(): Promise<MoreContentResult>;
 }

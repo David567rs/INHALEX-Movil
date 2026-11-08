@@ -7,11 +7,12 @@ import { Reveal, SoftPressable } from '@/shared/components/Motion';
 import { ScreenState } from '@/shared/components/ScreenFeedback';
 import type { MoreContent, MoreDocument, MoreSectionId } from '../../domain/models/MoreContent';
 import type { LoadMoreContent } from '../../domain/useCases/loadMoreContent';
-import { MoreBackButton, MoreLoadState } from '../components/MoreControls';
+import { MoreBackButton, MoreLoadState, MoreRow } from '../components/MoreControls';
 import { MoreBrandHeader } from '../components/MoreBrandHeader';
 import { MoreEntrance } from '../components/MoreMotion';
 import { useMoreViewModel } from '../viewModels/useMoreViewModel';
 import { useMoreContactViewModel } from '../viewModels/useMoreContactViewModel';
+import { MoreRefresh } from '../components/MoreRefresh';
 
 const titles: Record<MoreSectionId, string> = {
   'preguntas-frecuentes': 'Preguntas frecuentes',
@@ -42,6 +43,8 @@ export function MoreInformationScreen({ section, loadContent }: { section: strin
       : !vm.content ? <MoreLoadState isLoading={vm.isLoading} message={vm.message} onRetry={vm.reload} />
         : <MoreEntrance key={validSection}>
           <MoreBrandHeader icon={sectionIcons[validSection]} />
+          <MoreRefresh loading={vm.isLoading} message={vm.message} onRefresh={vm.reload} />
+          {validSection === 'privacidad' ? <MoreRow title="Eliminar cuenta" description="Consulta o envía tu solicitud" icon="person-remove-outline" onPress={() => router.push('/eliminar-cuenta')} last /> : null}
           {validSection === 'preguntas-frecuentes' ? <>
             <Text style={styles.intro}>Encuentra una respuesta antes de elegir tu próximo aroma.</Text>
             <View style={styles.faqList}>

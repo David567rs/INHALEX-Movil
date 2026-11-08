@@ -8,6 +8,7 @@ import type { LoadMoreContent } from '../../domain/useCases/loadMoreContent';
 import { MoreLoadState, MoreRow } from '../components/MoreControls';
 import { FloatingBrandMark, MoreEntrance } from '../components/MoreMotion';
 import { useMoreViewModel } from '../viewModels/useMoreViewModel';
+import { MoreRefresh } from '../components/MoreRefresh';
 
 export function MoreScreen({ loadContent }: { loadContent: LoadMoreContent }) {
   const vm = useMoreViewModel(loadContent);
@@ -30,6 +31,7 @@ export function MoreScreen({ loadContent }: { loadContent: LoadMoreContent }) {
     </MoreEntrance>
 
     {!vm.content ? <MoreLoadState isLoading={vm.isLoading} message={vm.message} onRetry={vm.reload} /> : <>
+      <MoreRefresh loading={vm.isLoading} message={vm.message} onRefresh={vm.reload} />
       <MoreEntrance delay={40}>
         <Text accessibilityRole="header" style={styles.groupTitle}>Ayuda</Text>
         <View style={styles.group}>
@@ -52,7 +54,8 @@ export function MoreScreen({ loadContent }: { loadContent: LoadMoreContent }) {
         <Text accessibilityRole="header" style={styles.groupTitle}>Legal</Text>
         <View style={styles.group}>
           <MoreRow title="Política de privacidad" icon="shield-checkmark-outline" onPress={() => open('privacidad')} />
-          <MoreRow title="Términos y condiciones" icon="document-text-outline" onPress={() => open('terminos')} last />
+          <MoreRow title="Términos y condiciones" icon="document-text-outline" onPress={() => open('terminos')} />
+          <MoreRow title="Eliminar cuenta" description="Solicita la eliminación de tu cuenta y datos" icon="person-remove-outline" onPress={() => router.push('/eliminar-cuenta')} last />
         </View>
       </MoreEntrance>
     </>}
