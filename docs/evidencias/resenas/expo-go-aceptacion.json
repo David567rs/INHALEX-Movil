@@ -135,5 +135,30 @@
     "ordersModifiedByAgent": false,
     "trelloChangedByAgent": false,
     "trelloMarkConfirmedByUser": false
+  },
+  "readErrorAcceptance": {
+    "date": "2026-11-07",
+    "recordedOnHead": "7981d4049d220e983e9743a78e54d4ce55dbc820",
+    "report": "Amigo, Actualizar y Reintentar fallaron sin perder las reseñas. Reinicié el backend y Reintentar recuperó la lista y quitó el aviso",
+    "source": "Reporte textual del usuario en el chat; sin observación directa del teléfono por el agente",
+    "newChecklistCriteriaAccepted": [],
+    "partiallyVerifiedCriteria": [
+      8
+    ],
+    "acceptedScope": [
+      "Actualizar y Reintentar fallan conservando las reseñas",
+      "Tras reiniciar el backend, Reintentar recupera la lista y elimina el aviso"
+    ],
+    "limits": [
+      "Caso de lectura y recuperación; no acredita fallo de publicación ni conservación de su borrador",
+      "No se inspeccionó tráfico HTTP ni se observó el teléfono",
+      "Reapertura y revisión real de David siguen pendientes"
+    ],
+    "nextStep": "Confirmar otro producto en Por reseñar y probar fallo de Publicar, borrador conservado, bloqueo y Verificar reseñas; recuperar sin publicar automáticamente. Sin pendientes, preparar un escenario controlado por separado.",
+    "pendingProductAvailability": "Pendiente de respuesta del usuario",
+    "reviewPostedByAgent": false,
+    "servicesChangedByAgent": false,
+    "expoStartedByAgent": false,
+    "trelloChangedByAgent": false
   }
 }
