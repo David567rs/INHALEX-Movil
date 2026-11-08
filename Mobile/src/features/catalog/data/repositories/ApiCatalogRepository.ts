@@ -41,7 +41,10 @@ export class ApiCatalogRepository implements CatalogRepository {
   async list(input: CatalogListInput, options?: CatalogRequestOptions): Promise<CatalogPage> {
     try {
       const filter = input.category === undefined ? '' : `&category=${encodeURIComponent(input.category)}`;
-      const payload = await this.httpClient.request(`/products?page=${input.page}&limit=${input.limit}${filter}`, {
+      // The API interprets search as a RegExp; keep the user's words literal.
+      const literalSearch = input.search?.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const search = literalSearch ? `&search=${encodeURIComponent(literalSearch)}` : '';
+      const payload = await this.httpClient.request(`/products?page=${input.page}&limit=${input.limit}${filter}${search}`, {
         method: 'GET',
         authenticated: false,
         signal: options?.signal,

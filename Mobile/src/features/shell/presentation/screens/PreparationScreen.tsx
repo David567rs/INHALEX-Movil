@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { colors } from '@/core/theme/colors';
 import { AppScreen, ModuleCard } from '@/shared/components/AppScreen';
 import { SoftPressable } from '@/shared/components/Motion';
+import { FeedbackBanner } from '@/shared/components/ScreenFeedback';
 
 const sections = {
   catalogo: {
@@ -31,8 +32,8 @@ const sections = {
     title: 'Cuenta',
     eyebrow: 'Un momento para ti',
     icon: 'person-outline',
-    heading: 'Bienvenido a INHALEX',
-    description: 'Inicia sesión para acceder a tu cuenta o regístrate para comenzar tu experiencia con INHALEX.',
+    heading: 'Tu espacio INHALEX',
+    description: 'Guarda tus favoritos y consulta tus pedidos desde un solo lugar.',
   },
 } as const;
 
@@ -50,61 +51,91 @@ export function PreparationScreen({ section, notice, retry, isRetrying = false }
         <View style={styles.statusDot} />
         <Text style={styles.statusLabel}>EN PREPARACIÓN</Text>
       </View> : null}
-      {notice ? <View accessibilityLiveRegion="polite" style={styles.notice}>
-        <Text style={styles.noticeText}>{notice}</Text>
-        {retry ? <SoftPressable accessibilityRole="button" accessibilityState={{ disabled: isRetrying, busy: isRetrying }} disabled={isRetrying} onPress={retry} style={styles.retry}><Text style={styles.noticeText}>{isRetrying ? 'Eliminando…' : 'Reintentar eliminación'}</Text></SoftPressable> : null}
-      </View> : null}
-      <ModuleCard
-        icon={<Ionicons accessible={false} color={colors.primary} name={content.icon} size={29} />}
-        title={content.heading}
-        description={content.description}
-      />
-      <View style={styles.actions}>
-        {section === 'cuenta' ? (
-          <>
+      {notice ? <FeedbackBanner message={notice} onRetry={retry} busy={isRetrying}
+        retryLabel="Reintentar eliminación" busyLabel="Eliminando…" /> : null}
+      {section === 'cuenta' ? (
+        <>
+          <View style={styles.guestCard}>
+            <View accessible={false} style={styles.guestIcon}>
+              <Ionicons color={colors.primaryDark} name="person-outline" size={30} />
+            </View>
+            <Text accessibilityRole="header" style={styles.guestTitle}>{content.heading}</Text>
+            <Text style={styles.guestDescription}>{content.description}</Text>
+            <View style={styles.guestActions}>
+              <SoftPressable
+                accessibilityRole="button"
+                onPress={() => router.push('/sign-in')}
+                style={({ pressed }) => [styles.button, pressed && styles.pressed]}
+              >
+                <Text style={styles.buttonLabel}>Iniciar sesión</Text>
+                <Ionicons accessible={false} name="arrow-forward" size={19} color={colors.white} />
+              </SoftPressable>
+              <View style={styles.registerPrompt}>
+                <Text style={styles.promptLabel}>¿Primera vez aquí?</Text>
+                <SoftPressable
+                  accessibilityRole="button"
+                  onPress={() => router.push('/register')}
+                  style={({ pressed }) => [styles.textButton, pressed && styles.pressed]}
+                >
+                  <Text style={styles.secondaryLabel}>Crear cuenta</Text>
+                </SoftPressable>
+              </View>
+            </View>
+          </View>
+          <View style={styles.explore}>
             <SoftPressable
               accessibilityRole="button"
-              onPress={() => router.push('/sign-in')}
+              onPress={() => router.navigate('/catalogo')}
+              style={({ pressed }) => [styles.textButton, styles.exploreButton, pressed && styles.pressed]}
+            >
+              <Ionicons accessible={false} name="leaf-outline" size={18} color={colors.primary} />
+              <Text style={styles.exploreLabel}>Explorar catálogo</Text>
+            </SoftPressable>
+          </View>
+        </>
+      ) : (
+        <>
+          <ModuleCard
+            icon={<Ionicons accessible={false} color={colors.primary} name={content.icon} size={29} />}
+            title={content.heading}
+            description={content.description}
+          />
+          <View style={styles.actions}>
+            <SoftPressable
+              accessibilityRole="button"
+              onPress={() => router.navigate('/(tabs)')}
               style={({ pressed }) => [styles.button, pressed && styles.pressed]}
             >
-              <Ionicons accessible={false} name="log-in-outline" size={19} color={colors.white} />
-              <Text style={styles.buttonLabel}>Iniciar sesión</Text>
+              <Ionicons accessible={false} name="home-outline" size={19} color={colors.white} />
+              <Text style={styles.buttonLabel}>Volver al inicio</Text>
             </SoftPressable>
             <SoftPressable
               accessibilityRole="button"
-              onPress={() => router.push('/register')}
+              onPress={() => router.push('/experiencia')}
               style={({ pressed }) => [styles.secondaryButton, pressed && styles.pressed]}
             >
-              <Ionicons accessible={false} name="person-add-outline" size={19} color={colors.primaryDark} />
-              <Text style={styles.secondaryLabel}>Crear cuenta</Text>
+              <Text style={styles.secondaryLabel}>Conocer INHALEX</Text>
+              <Ionicons accessible={false} name="arrow-forward" size={18} color={colors.primaryDark} />
             </SoftPressable>
-          </>
-        ) : null}
-        <SoftPressable
-          accessibilityRole="button"
-          onPress={() => router.navigate('/(tabs)')}
-          style={({ pressed }) => [styles.button, pressed && styles.pressed]}
-        >
-          <Ionicons name="home-outline" size={19} color={colors.white} />
-          <Text style={styles.buttonLabel}>Volver al inicio</Text>
-        </SoftPressable>
-        <SoftPressable
-          accessibilityRole="button"
-          onPress={() => router.push('/experiencia')}
-          style={({ pressed }) => [styles.secondaryButton, pressed && styles.pressed]}
-        >
-          <Text style={styles.secondaryLabel}>Conocer INHALEX</Text>
-          <Ionicons name="arrow-forward" size={18} color={colors.primaryDark} />
-        </SoftPressable>
-      </View>
+          </View>
+        </>
+      )}
     </AppScreen>
   );
 }
 
 const styles = StyleSheet.create({
-  notice: { backgroundColor: colors.dangerSoft, borderRadius: 12, marginBottom: 18, padding: 12 },
-  noticeText: { color: colors.danger, fontSize: 13, lineHeight: 20 },
-  retry: { justifyContent: 'center', minHeight: 44 },
+  guestCard: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 24, borderWidth: 1, paddingHorizontal: 22, paddingVertical: 26 },
+  guestIcon: { alignItems: 'center', backgroundColor: colors.surfaceSoft, borderRadius: 20, height: 62, justifyContent: 'center', marginBottom: 18, width: 62 },
+  guestTitle: { color: colors.text, fontSize: 23, fontWeight: '700', lineHeight: 30, textAlign: 'center' },
+  guestDescription: { color: colors.textMuted, fontSize: 14, lineHeight: 22, marginTop: 10, maxWidth: 290, textAlign: 'center' },
+  guestActions: { marginTop: 26, width: '100%' },
+  registerPrompt: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 4, justifyContent: 'center', marginTop: 8 },
+  promptLabel: { color: colors.textMuted, fontSize: 13, lineHeight: 20 },
+  textButton: { alignItems: 'center', borderRadius: 12, justifyContent: 'center', minHeight: 48, paddingHorizontal: 6, paddingVertical: 10 },
+  explore: { alignItems: 'center', marginTop: 16 },
+  exploreButton: { flexDirection: 'row', gap: 8, paddingHorizontal: 14 },
+  exploreLabel: { color: colors.primary, flexShrink: 1, fontSize: 14, fontWeight: '600' },
   status: { alignItems: 'center', alignSelf: 'flex-start', backgroundColor: colors.surfaceSoft, borderRadius: 14, flexDirection: 'row', gap: 7, marginBottom: 18, paddingHorizontal: 12, paddingVertical: 8 },
   statusDot: { backgroundColor: colors.primary, borderRadius: 4, height: 6, width: 6 },
   statusLabel: { color: colors.primaryDark, fontSize: 10, fontWeight: '700', letterSpacing: 1 },

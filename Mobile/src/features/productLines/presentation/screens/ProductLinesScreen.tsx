@@ -4,6 +4,8 @@ import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, Text, View
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { Reveal, SoftPressable } from '@/shared/components/Motion';
+import { BackButton, ScreenHeader } from '@/shared/components/ScreenHeader';
+import { FeedbackBanner, ScreenState } from '@/shared/components/ScreenFeedback';
 import type { ListProductLines } from '../../domain/useCases/listProductLines';
 import { useProductLinesViewModel } from '../viewModels/useProductLinesViewModel';
 
@@ -21,22 +23,9 @@ export function ProductLinesScreen({ listLines }: { listLines: ListProductLines 
     <SafeAreaView edges={['top', 'left', 'right', 'bottom']} style={styles.safeArea}>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
         <Reveal>
-          <View style={styles.topBar}>
-            <Pressable accessibilityRole="button" accessibilityLabel="Volver al catálogo"
-              onPress={returnToCatalog} style={({ pressed }) => [styles.backButton, pressed && styles.pressed]}>
-              <Ionicons accessible={false} name="arrow-back" size={21} color={colors.primaryDark} />
-            </Pressable>
-            <Image accessibilityLabel="INHALEX, el respiro que alivia" resizeMode="contain"
-              source={require('../../../../../assets/home/brand.png')} style={styles.brand} />
-          </View>
-
-          <View style={styles.heading}>
-            <View style={styles.eyebrowRow}>
-              <Text style={styles.eyebrow}>LÍNEAS INHALEX</Text>
-            </View>
-            <Text accessibilityRole="header" style={styles.title}>Encuentra{'\n'}tu línea<Text style={styles.dot}>.</Text></Text>
-            <Text style={styles.description}>Una misma esencia, distintas formas de descubrirla. Explora los productos de cada línea.</Text>
-          </View>
+          <ScreenHeader title="Encuentra tu línea" eyebrow="Líneas INHALEX"
+            description="Explora los productos de cada línea."
+            leading={<BackButton label="Volver al catálogo" onPress={returnToCatalog} />} />
 
           <View style={styles.intro}>
             <View accessible={false} importantForAccessibility="no-hide-descendants" style={styles.botanical}>
@@ -61,22 +50,18 @@ export function ProductLinesScreen({ listLines }: { listLines: ListProductLines 
             {vm.refreshing ? <ActivityIndicator color={colors.primary} /> : <Ionicons accessible={false} name="refresh-outline" size={17} color={colors.primary} />}
             <Text style={styles.refreshText}>{vm.refreshing ? 'Actualizando…' : 'Actualizar líneas'}</Text>
           </Pressable>
-          {vm.error && vm.items.length > 0 && <Text accessibilityLiveRegion="polite" style={styles.notice}>
-            {vm.error} Se conservan las últimas líneas cargadas.
-          </Text>}
+          {vm.error && vm.items.length > 0 && <FeedbackBanner
+            message={`${vm.error} Se conservan las últimas líneas cargadas.`} />}
         </Reveal>
 
-        {vm.items.length === 0 && <View accessibilityLiveRegion="polite" style={styles.statePanel}>
-          {vm.status === 'loading' && <ActivityIndicator accessibilityLabel="Cargando líneas" color={colors.primary} size="large" />}
-          <Text accessibilityRole="header" style={styles.stateTitle}>{vm.status === 'loading' ? 'Estamos preparando tus líneas'
-            : vm.status === 'error' ? 'No pudimos cargar las líneas' : 'Nuevas líneas están por llegar'}</Text>
-          <Text style={styles.stateCopy}>{vm.status === 'loading' ? 'Un momento para descubrir la colección.'
-            : vm.status === 'error' ? vm.error : 'Por ahora no hay categorías disponibles. Puedes volver a consultar.'}</Text>
-          {vm.status !== 'loading' && <Pressable accessibilityRole="button" onPress={() => { void vm.refresh(); }}
-            style={({ pressed }) => [styles.retryButton, pressed && styles.pressed]}>
-            <Text style={styles.retryText}>{vm.status === 'error' ? 'Reintentar' : 'Volver a consultar'}</Text>
-          </Pressable>}
-        </View>}
+        {vm.items.length === 0 && <ScreenState busy={vm.status === 'loading'}
+          icon={vm.status === 'error' ? 'cloud-offline-outline' : 'leaf-outline'}
+          title={vm.status === 'loading' ? 'Cargando líneas…'
+            : vm.status === 'error' ? 'No pudimos cargar las líneas' : 'Nuevas líneas están por llegar'}
+          message={vm.status === 'loading' ? 'Un momento para descubrir la colección.'
+            : vm.status === 'error' ? vm.error ?? undefined : 'Por ahora no hay categorías disponibles. Puedes volver a consultar.'}
+          onAction={() => { void vm.refresh(); }}
+          actionLabel={vm.status === 'error' ? 'Reintentar' : 'Volver a consultar'} />}
         <View accessibilityRole="radiogroup" accessibilityLabel="Líneas de INHALEX" style={styles.lines}>
           {vm.items.map((line, index) => (
             <Reveal key={line.id} delay={Math.min(index, 4) * 40}>
@@ -129,26 +114,11 @@ export function ProductLinesScreen({ listLines }: { listLines: ListProductLines 
 
 const styles = StyleSheet.create({
   safeArea: { backgroundColor: colors.background, flex: 1 },
-  content: { alignSelf: 'center', flexGrow: 1, maxWidth: 600, paddingHorizontal: 22, paddingBottom: 22, width: '100%' },
-  topBar: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 },
-  backButton: { alignItems: 'center', backgroundColor: '#ECF3E7', borderColor: colors.border, borderRadius: 22, borderWidth: 1, height: 44, justifyContent: 'center', width: 44 },
-  brand: { height: 42, width: 139 },
-  heading: { marginTop: 30 },
-  eyebrowRow: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 12, justifyContent: 'space-between' },
-  eyebrow: { color: colors.primary, fontSize: 10, fontWeight: '700', letterSpacing: 1.7, lineHeight: 17 },
+  content: { alignSelf: 'center', flexGrow: 1, maxWidth: 600, padding: 22, width: '100%' },
   refreshButton: { alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', gap: 8, minHeight: 44, marginBottom: 10 },
   refreshText: { color: colors.primary, fontSize: 12, fontWeight: '600' },
   count: { color: colors.textMuted, fontSize: 11, lineHeight: 18, marginTop: 3 },
-  notice: { backgroundColor: '#F8EFE5', borderRadius: 12, color: '#79543B', fontSize: 12, lineHeight: 19, marginBottom: 14, padding: 12 },
-  statePanel: { alignItems: 'center', paddingHorizontal: 10, paddingVertical: 25 },
-  stateTitle: { color: colors.text, fontSize: 18, fontWeight: '600', lineHeight: 25, marginTop: 12, textAlign: 'center' },
-  stateCopy: { color: colors.textMuted, fontSize: 13, lineHeight: 21, marginTop: 9, textAlign: 'center' },
-  retryButton: { backgroundColor: colors.primaryDark, borderRadius: 12, minHeight: 48, marginTop: 18, paddingHorizontal: 20, paddingVertical: 13 },
-  retryText: { color: colors.white, fontSize: 13, fontWeight: '600' },
   disabled: { opacity: 0.45 },
-  title: { color: colors.text, fontSize: 37, fontWeight: '700', letterSpacing: -1.3, lineHeight: 43, marginTop: 12 },
-  dot: { color: colors.primary },
-  description: { color: colors.textMuted, fontSize: 13, lineHeight: 21, marginTop: 11, maxWidth: 380 },
   intro: { alignItems: 'center', backgroundColor: '#EAF1E5', borderColor: '#DDE8D5', borderRadius: 23, borderWidth: 1, flexDirection: 'row', gap: 17, marginTop: 24, paddingHorizontal: 21, paddingVertical: 22 },
   botanical: { alignItems: 'center', height: 73, justifyContent: 'center', width: 73 },
   botanicalCircle: { backgroundColor: '#DAE7D2', borderRadius: 37, height: 73, position: 'absolute', width: 73 },

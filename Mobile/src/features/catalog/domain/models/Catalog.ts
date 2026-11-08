@@ -8,6 +8,8 @@ export type CatalogProduct = Readonly<{
   image: string | null;
   inStock: boolean;
   originalPrice: number | null;
+  categoryId?: string;
+  presentation?: string | null;
 }>;
 
 export type CatalogPage = Readonly<{

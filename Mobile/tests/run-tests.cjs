@@ -22,6 +22,8 @@ const result = spawnSync(process.execPath, [
   path.join(__dirname, 'CatalogRepository.test.cjs'),
   path.join(__dirname, 'CatalogUseCase.test.cjs'),
   path.join(__dirname, 'CatalogController.test.cjs'),
+  path.join(__dirname, 'HomeController.test.cjs'),
+  path.join(__dirname, 'HomeCatalogContract.test.cjs'),
   path.join(__dirname, 'ProductLinesRepository.test.cjs'),
   path.join(__dirname, 'ProductLinesController.test.cjs'),
   path.join(__dirname, 'ProductDetailRepository.test.cjs'),

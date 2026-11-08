@@ -5,7 +5,12 @@ import { colors } from '@/core/theme/colors';
 import type { CatalogProduct } from '@/features/catalog/domain/models/Catalog';
 import { useFavoritesViewModel } from '../viewModels/useFavoritesViewModel';
 
-export function FavoriteProductButton({ product }: { product: CatalogProduct }) {
+export function FavoriteProductButton({ product, compact = false, showFeedback = true }: {
+  product: CatalogProduct;
+  compact?: boolean;
+  /** A collection may render the shared coordinator's feedback once outside its card overlays. */
+  showFeedback?: boolean;
+}) {
   const vm = useFavoritesViewModel();
   const saved = vm.products.some((favorite) => favorite.id === product.id);
   const pending = vm.pendingProductIds.includes(product.id);
@@ -41,25 +46,34 @@ export function FavoriteProductButton({ product }: { product: CatalogProduct }) 
     onPress = () => { void (saved ? vm.remove(product.id) : vm.add(product)); };
   }
 
-  const sessionHint = vm.status === 'session-expired' ? 'Tu sesión ya no está disponible. Vuelve a iniciar sesión.'
-    : vm.status === 'recovery-error' ? 'No pudimos comprobar tu sesión. Comprueba tu conexión e inténtalo de nuevo.' : null;
-
-  return <View style={styles.container}>
+  return <View style={[styles.container, compact && styles.compactContainer]}>
     <Pressable accessibilityRole="button" accessibilityLabel={accessibilityLabel}
       accessibilityState={{ disabled, busy, selected: vm.loaded && saved }} disabled={disabled} onPress={onPress}
-      style={({ pressed }) => [styles.button, saved && styles.savedButton, disabled && styles.disabled, pressed && styles.pressed]}>
+      style={({ pressed }) => [styles.button, saved && styles.savedButton, compact && styles.compactButton, disabled && styles.disabled, pressed && styles.pressed]}>
       {busy ? <ActivityIndicator color={colors.primaryDark} size="small" />
-        : <Ionicons accessible={false} name={saved ? 'heart' : 'heart-outline'} size={21} color={colors.primaryDark} />}
-      <Text accessibilityLiveRegion="polite" style={styles.label}>{label}</Text>
+        : <Ionicons accessible={false} name={saved ? 'heart' : 'heart-outline'} size={compact ? 27 : 21} color={colors.primaryDark} />}
+      {!compact && <Text accessibilityLiveRegion="polite" style={styles.label}>{label}</Text>}
     </Pressable>
+    {showFeedback && <FavoriteProductFeedback />}
+  </View>;
+}
+
+/** Keep feedback full width when a collection/detail places its heart beside a title. */
+export function FavoriteProductFeedback() {
+  const vm = useFavoritesViewModel();
+  const sessionHint = vm.status === 'session-expired' ? 'Tu sesión ya no está disponible. Vuelve a iniciar sesión.'
+    : vm.status === 'recovery-error' ? 'No pudimos comprobar tu sesión. Comprueba tu conexión e inténtalo de nuevo.' : null;
+  return <>
     {sessionHint && <Text accessibilityLiveRegion="polite" style={styles.hint}>{sessionHint}</Text>}
     {!sessionHint && vm.error && <Text accessibilityLiveRegion="polite" style={styles.error}>{vm.error}</Text>}
     {vm.mutationError && <Text accessibilityLiveRegion="polite" style={styles.error}>{vm.mutationError}</Text>}
-  </View>;
+  </>;
 }
 
 const styles = StyleSheet.create({
   container: { marginTop: 20 },
+  compactContainer: { marginTop: 0 },
+  compactButton: { backgroundColor: 'transparent', borderWidth: 0, borderRadius: 0, height: 44, minHeight: 44, width: 44, paddingHorizontal: 0, paddingVertical: 0 },
   button: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 16, borderWidth: 1, flexDirection: 'row', flexWrap: 'wrap', gap: 9, justifyContent: 'center', minHeight: 54, paddingHorizontal: 15, paddingVertical: 14 },
   savedButton: { backgroundColor: colors.surfaceSoft, borderColor: colors.primary },
   label: { color: colors.primaryDark, flexShrink: 1, fontSize: 13, fontWeight: '700', lineHeight: 22, textAlign: 'center' },

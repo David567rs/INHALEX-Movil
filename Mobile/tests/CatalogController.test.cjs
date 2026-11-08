@@ -136,3 +136,127 @@ test('a later page invalidated by collection changes restarts at the first page'
   assert.deepEqual(vm.getSnapshot().products.map((item) => item.id), ['current']);
   vm.stop();
 });
+
+test('inline search is submitted explicitly, trims its term and retains it for pagination and refresh', async () => {
+  const requested = [];
+  const vm = createCatalogController(async (input) => {
+    requested.push(input);
+    return page([`${input.search || 'all'}-${input.page}`], input.page, 21);
+  });
+  vm.start(); await tick();
+  vm.setSearchQuery('  Lavanda  ');
+  assert.equal(requested.length, 1);
+  assert.equal(vm.getSnapshot().appliedQuery, '');
+  await vm.submitSearch();
+  await vm.loadMore();
+  vm.setSearchQuery('Menta');
+  await vm.refresh();
+  assert.deepEqual(requested, [
+    { page: 1, limit: 20 },
+    { page: 1, limit: 20, search: 'Lavanda' },
+    { page: 2, limit: 20, search: 'Lavanda' },
+    { page: 1, limit: 20, search: 'Lavanda' },
+  ]);
+  assert.equal(vm.getSnapshot().searchQuery, 'Menta');
+  assert.equal(vm.getSnapshot().appliedQuery, 'Lavanda');
+  assert.deepEqual(vm.getSnapshot().products.map(({ id }) => id), ['Lavanda-1']);
+  vm.stop();
+});
+
+test('a new search aborts old pagination and never displays late products under the new term', async () => {
+  const oldPage = deferred(); const search = deferred(); let oldSignal;
+  const vm = createCatalogController(async (input, options) => {
+    if (input.search) return search.promise;
+    if (input.page === 2) { oldSignal = options.signal; return oldPage.promise; }
+    return page(['previous'], 1, 21);
+  });
+  vm.start(); await tick(); const more = vm.loadMore();
+  vm.setSearchQuery('Lavanda'); const submitted = vm.submitSearch();
+  assert.equal(oldSignal.aborted, true);
+  assert.deepEqual(vm.getSnapshot().products, []);
+  assert.equal(vm.getSnapshot().page, 0);
+  oldPage.resolve(page(['stale-page'], 2, 21)); await more;
+  assert.deepEqual(vm.getSnapshot().products, []);
+  search.resolve(page(['lavanda'])); await submitted;
+  assert.deepEqual(vm.getSnapshot().products.map(({ id }) => id), ['lavanda']);
+  vm.stop();
+});
+
+test('a second term supersedes a slow first search even if the transport ignores abort', async () => {
+  const first = deferred(); let firstSignal;
+  const vm = createCatalogController(async (input, options) => {
+    if (input.search === 'Lavanda') { firstSignal = options.signal; return first.promise; }
+    return page([input.search || 'all']);
+  });
+  vm.start(); await tick();
+  vm.setSearchQuery('Lavanda'); const stale = vm.submitSearch();
+  vm.setSearchQuery('Menta'); await vm.submitSearch();
+  assert.equal(firstSignal.aborted, true);
+  first.resolve(page(['lavanda'])); await stale;
+  assert.equal(vm.getSnapshot().appliedQuery, 'Menta');
+  assert.deepEqual(vm.getSnapshot().products.map(({ id }) => id), ['Menta']);
+  vm.stop();
+});
+
+test('clearing a submitted search restores the collection and ignores a late search error', async () => {
+  const search = deferred(); let searchSignal;
+  const vm = createCatalogController(async (input, options) => {
+    if (input.search) { searchSignal = options.signal; return search.promise; }
+    return page(['all']);
+  });
+  vm.start(); await tick();
+  vm.setSearchQuery('Lavanda'); const submitted = vm.submitSearch();
+  await vm.clearSearch();
+  assert.equal(searchSignal.aborted, true);
+  search.reject(new CatalogError('Obsolete failure', 'network')); await submitted;
+  assert.equal(vm.getSnapshot().searchQuery, '');
+  assert.equal(vm.getSnapshot().appliedQuery, '');
+  assert.equal(vm.getSnapshot().error, null);
+  assert.deepEqual(vm.getSnapshot().products.map(({ id }) => id), ['all']);
+  vm.stop();
+});
+
+test('deleting the input text restores all products in the same scoped category', async () => {
+  const requested = [];
+  const scopedList = async (input) => {
+    requested.push({ ...input, category: 'bienestar' });
+    return page(input.search ? [] : ['category-product']);
+  };
+  const vm = createCatalogController(scopedList);
+  vm.start(); await tick();
+  vm.setSearchQuery('sin coincidencias'); await vm.submitSearch();
+  assert.equal(vm.getSnapshot().status, 'ready');
+  assert.equal(vm.getSnapshot().total, 0);
+  vm.setSearchQuery(''); await tick();
+  assert.deepEqual(requested.at(-1), { page: 1, limit: 20, category: 'bienestar' });
+  assert.deepEqual(vm.getSnapshot().products.map(({ id }) => id), ['category-product']);
+  vm.stop();
+});
+
+test('search refresh failure preserves matching products and explicit retry clears the error', async () => {
+  let fail = false; const requested = [];
+  const vm = createCatalogController(async (input) => {
+    requested.push(input);
+    if (fail) throw new CatalogError('Revisa tu conexión.', 'network');
+    return page([input.search || 'all']);
+  });
+  vm.start(); await tick(); vm.setSearchQuery('Lavanda'); await vm.submitSearch();
+  fail = true; await vm.refresh();
+  assert.equal(vm.getSnapshot().appliedQuery, 'Lavanda');
+  assert.deepEqual(vm.getSnapshot().products.map(({ id }) => id), ['Lavanda']);
+  assert.equal(vm.getSnapshot().error, 'Revisa tu conexión.');
+  fail = false; await vm.refresh();
+  assert.equal(vm.getSnapshot().error, null);
+  assert.equal(requested.at(-1).search, 'Lavanda');
+  vm.stop();
+});
+
+test('search input is bounded and cannot trigger a request after the catalog is unmounted', async () => {
+  let calls = 0;
+  const vm = createCatalogController(async () => { calls++; return page(['all']); });
+  vm.start(); await tick();
+  vm.setSearchQuery('a'.repeat(110));
+  assert.equal(vm.getSnapshot().searchQuery.length, 100);
+  vm.stop(); await vm.submitSearch(); await vm.clearSearch();
+  assert.equal(calls, 1);
+});

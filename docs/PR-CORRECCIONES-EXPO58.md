@@ -1,4 +1,6 @@
 # PR #19: corregir arranque y acceso tras migrar a Expo SDK 58
+> Estado actualizado el 5 de noviembre de 2026: PR #19 aprobado por ZenaidaGR y fusionado en `develop` mediante merge commit `95842a6`, conservando los seis commits. La solicitud previa de dejarlo abierto que se reproduce abajo pertenece a la preparación histórica; el usuario autorizó después su fusión y la sincronización local. Reseñas y las mejoras visuales continúan en sus respectivas ramas.
+
 
 Estado al 5 de noviembre de 2026: el [PR #19](https://github.com/David567rs/INHALEX-Movil/pull/19) está abierto, sin draft, de David567rs hacia `develop`, con revisión solicitada a ZenaidaGR. HEAD de apertura: `08b05c2efb7ac0f45014551119cf5c04a09014f8`; base consultada: `2aa6d86fd3c247a438b3fc54a20b3c9c3b5e59f5`. Backend CI y Mobile CI aprobaron sobre ese HEAD; la nueva aprobación sigue pendiente. El PR #18 ya está cerrado y fusionado; el PR #19 no está fusionado y su apertura no autoriza integrarlo. Este registro no anticipa los checks del HEAD que incorporará el enlace documental: consultar los resultados actuales en el PR.
 

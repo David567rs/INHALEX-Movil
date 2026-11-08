@@ -1,12 +1,15 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { ActivityIndicator, FlatList, Image, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, FlatList, Image, Keyboard, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { Reveal } from '@/shared/components/Motion';
+import { ScreenHeader } from '@/shared/components/ScreenHeader';
+import { FeedbackBanner, ScreenState } from '@/shared/components/ScreenFeedback';
 import type { ListCatalog } from '../../domain/useCases/listCatalog';
 import type { CatalogProduct } from '../../domain/models/Catalog';
 import { CatalogProductCard } from '../components/CatalogProductCard';
+import { CatalogSearchField } from '../components/CatalogSearchField';
 import { useCatalogViewModel, type CatalogProductViewModel } from '../viewModels/useCatalogViewModel';
 
 export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
@@ -19,6 +22,8 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
   const availableWidth = Math.min(width - insets.left - insets.right, 600);
   const columns = vm.layout === 'grid' && availableWidth >= 360 && !largeText ? 2 : 1;
   const horizontal = vm.layout === 'list' && !largeText;
+  const searching = vm.appliedQuery.length > 0;
+  const cardWidth = Math.max(1, (availableWidth - 44 - (columns - 1) * 12) / columns);
 
   return (
     <SafeAreaView edges={['top', 'left', 'right']} style={styles.safeArea}>
@@ -28,6 +33,8 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
         keyExtractor={(product) => product.id}
         numColumns={columns}
         initialNumToRender={6}
+        keyboardDismissMode="on-drag"
+        keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
         refreshing={vm.refreshing}
         onRefresh={() => { void vm.refresh(); }}
@@ -53,19 +60,12 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
                   <Ionicons accessible={false} name="person-outline" size={20} color={colors.primaryDark} />
                 </Pressable>
               </View>
-              <View style={styles.heading}>
-                <Text style={styles.eyebrow}>CATÁLOGO INHALEX</Text>
-                <Text accessibilityRole="header" style={styles.title}>Un aroma para ti<Text style={styles.titleDot}>.</Text></Text>
-                <Text style={styles.description}>Pequeñas esencias para acompañar tu día.</Text>
+              <ScreenHeader title="Un aroma para ti" eyebrow="Catálogo INHALEX" />
+              <View style={styles.searchEntry}>
+                <CatalogSearchField value={vm.searchQuery} onChange={vm.setSearchQuery}
+                  onSubmit={() => { Keyboard.dismiss(); void vm.submitSearch(); }}
+                  onClear={() => { void vm.clearSearch(); }} />
               </View>
-              <Pressable accessibilityRole="button" accessibilityLabel="Abrir búsqueda de productos"
-                accessibilityHint="Busca productos por nombre o palabra clave"
-                onPress={() => router.push('/busqueda-productos')}
-                style={({ pressed }) => [styles.searchEntry, pressed && styles.pressed]}>
-                <Ionicons accessible={false} name="search-outline" size={21} color={colors.primary} />
-                <Text style={styles.searchEntryText}>Buscar productos</Text>
-                <Ionicons accessible={false} name="arrow-forward" size={18} color={colors.primary} />
-              </Pressable>
               <Pressable
                 accessibilityRole="button"
                 accessibilityLabel="Actualizar catálogo"
@@ -91,23 +91,23 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
               {categoryName !== undefined && <View style={styles.filterPanel}>
                 <Text accessibilityRole="header" style={styles.filterTitle}>{categoryName}</Text>
                 <Pressable accessibilityRole="button" accessibilityLabel="Ver todos los productos"
-                  onPress={() => router.replace('/(tabs)/catalogo')}
+                  onPress={() => router.replace({ pathname: '/(tabs)/catalogo', params: { category: '', lineName: '' } })}
                   style={({ pressed }) => [styles.clearFilter, pressed && styles.pressed]}>
                   <Text style={styles.clearFilterText}>Ver todos los productos</Text>
                   <Ionicons accessible={false} name="close-circle-outline" size={18} color={colors.primaryDark} />
                 </Pressable>
               </View>}
-              {vm.error && vm.products.length > 0 && <View accessibilityLiveRegion="polite" style={styles.notice}>
-                <Text style={styles.noticeText}>{vm.error} Se conserva la última colección cargada.</Text>
-              </View>}
+              {vm.error && vm.products.length > 0 && <FeedbackBanner
+                message={`${vm.error} Se conserva la última colección cargada.`} />}
             </Reveal>
             <Reveal delay={60} style={styles.inset}>
               <View style={[styles.collectionRow, largeText && styles.collectionRowStacked]}>
                 <View style={styles.collectionCopy}>
-                  <Text accessibilityRole="header" style={styles.collectionTitle}>{categoryName === undefined ? 'Nuestra colección' : 'Productos de esta línea'}</Text>
-                  <Text style={styles.collectionCount}>{vm.status === 'loading' ? 'Buscando tus próximos aromas…'
+                  <Text accessibilityRole="header" style={styles.collectionTitle}>{searching ? 'Resultados de búsqueda' : categoryName === undefined ? 'Nuestra colección' : 'Productos de esta línea'}</Text>
+                  {searching && <Text style={styles.queryLabel} numberOfLines={2}>para “{vm.appliedQuery}”</Text>}
+                  {(searching || vm.status !== 'ready') && <Text accessibilityLiveRegion="polite" style={styles.collectionCount}>{vm.status === 'loading' ? 'Buscando tus próximos aromas…'
                     : vm.status === 'error' ? 'La colección estará aquí al reconectar'
-                    : `${vm.total} ${vm.total === 1 ? 'producto' : 'productos'} para descubrir`}</Text>
+                    : `${vm.total} ${vm.total === 1 ? 'coincidencia' : 'coincidencias'}${categoryName === undefined ? '' : ' en esta línea'}`}</Text>}
                 </View>
                 <View accessibilityRole="radiogroup" accessibilityLabel="Presentación del catálogo" style={styles.layoutSwitch}>
                   {([
@@ -132,32 +132,29 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
           </>
         }
         renderItem={({ item, index }) => (
-          <Reveal delay={Math.min(index, 5) * 35} style={[styles.cardShell, columns === 1 && styles.singleCard]}>
-            <CatalogProductCard product={item} horizontal={horizontal} onPress={() => vm.openProduct(item.id)} />
+          <Reveal delay={Math.min(index, 5) * 35} style={[styles.cardShell, { width: cardWidth }, columns === 1 && styles.singleCard]}>
+            <CatalogProductCard product={item} horizontal={horizontal} concise onPress={() => vm.openProduct(item.id)} />
           </Reveal>
         )}
         ListEmptyComponent={
-          <View accessibilityLiveRegion="polite" style={styles.emptyState}>
-            {vm.status === 'loading'
-              ? <ActivityIndicator accessibilityLabel="Cargando productos" color={colors.primary} size="large" />
-              : <Ionicons accessible={false} name={vm.status === 'error' ? 'cloud-offline-outline' : 'leaf-outline'} color={colors.primary} size={34} />}
-            <Text accessibilityRole="header" style={styles.stateTitle}>{vm.status === 'loading' ? 'Un momento para descubrir'
-              : vm.status === 'error' ? 'No pudimos cargar la colección' : categoryName === undefined ? 'Nuevos aromas están por llegar' : 'Esta línea aún no tiene productos'}</Text>
-            <Text style={styles.stateCopy}>{vm.status === 'loading' ? 'Estamos preparando el catálogo para ti.'
-              : vm.status === 'error' ? vm.error : categoryName === undefined
+          <View style={styles.inset}>
+            <ScreenState busy={vm.status === 'loading'}
+              icon={vm.status === 'error' ? 'cloud-offline-outline' : searching ? 'search-outline' : 'leaf-outline'}
+              title={vm.status === 'loading' ? 'Cargando catálogo…'
+              : vm.status === 'error' ? 'No pudimos cargar la colección' : searching ? 'No encontramos coincidencias' : categoryName === undefined ? 'Nuevos aromas están por llegar' : 'Esta línea aún no tiene productos'}
+              message={vm.status === 'loading' ? 'Estamos preparando el catálogo para ti.'
+              : vm.status === 'error' ? vm.error ?? undefined : searching ? 'Prueba otro nombre o aroma, o limpia la búsqueda para ver la colección.' : categoryName === undefined
                 ? 'Por ahora no hay productos disponibles. Puedes volver a consultar en un momento.'
-                : 'Puedes consultar otra línea o volver a ver todos los productos.'}</Text>
-            {vm.status !== 'loading' && <Pressable accessibilityRole="button" onPress={() => { void vm.refresh(); }}
-              style={({ pressed }) => [styles.actionButton, pressed && styles.pressed]}>
-              <Text style={styles.actionText}>{vm.status === 'error' ? 'Reintentar' : 'Volver a consultar'}</Text>
-            </Pressable>}
+                : 'Puedes consultar otra línea o volver a ver todos los productos.'}
+              onAction={() => { void (searching && vm.status !== 'error' ? vm.clearSearch() : vm.refresh()); }}
+              actionLabel={vm.status === 'error' ? 'Reintentar' : searching ? 'Limpiar búsqueda' : 'Volver a consultar'} />
           </View>
         }
         ListFooterComponent={
           <View style={styles.footer}>
             {vm.products.length > 0 && <>
-              <Text style={styles.loadedCount}>{vm.products.length} de {vm.total} productos</Text>
-              {vm.moreError && <Text accessibilityLiveRegion="polite" style={styles.paginationError}>{vm.moreError}</Text>}
+              {vm.hasMore && <Text style={styles.loadedCount}>{vm.products.length} de {vm.total} productos</Text>}
+              {vm.moreError && <FeedbackBanner message={vm.moreError} />}
               {vm.hasMore && <Pressable accessibilityRole="button"
                 accessibilityState={{ disabled: vm.loadingMore || vm.refreshing, busy: vm.loadingMore }}
                 disabled={vm.loadingMore || vm.refreshing}
@@ -185,16 +182,10 @@ const styles = StyleSheet.create({
   list: { alignSelf: 'center', flex: 1, maxWidth: 600, width: '100%' },
   content: { paddingBottom: 28 },
   inset: { paddingHorizontal: 22 },
-  brandRow: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 },
+  brandRow: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, marginBottom: 20 },
   brand: { height: 44, width: 142 },
   account: { alignItems: 'center', backgroundColor: '#ECF3E7', borderColor: '#E0E9D9', borderRadius: 24, borderWidth: 1, height: 44, justifyContent: 'center', width: 44 },
-  heading: { marginTop: 28 },
-  eyebrow: { color: colors.primary, fontSize: 10, fontWeight: '700', letterSpacing: 1.7 },
-  title: { color: colors.text, fontSize: 31, fontWeight: '700', letterSpacing: -1, lineHeight: 38, marginTop: 7 },
-  titleDot: { color: colors.primary },
-  description: { color: colors.textMuted, fontSize: 13, lineHeight: 21, marginTop: 6 },
-  searchEntry: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 16, borderWidth: 1, flexDirection: 'row', gap: 12, marginTop: 19, minHeight: 56, paddingHorizontal: 16, paddingVertical: 12 },
-  searchEntryText: { color: colors.textMuted, flex: 1, fontSize: 14, minWidth: 0 },
+  searchEntry: { marginTop: 0 },
   refreshButton: { alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', gap: 8, marginTop: 10, minHeight: 44, paddingRight: 12 },
   refreshText: { color: colors.primary, fontSize: 12, fontWeight: '600' },
   linesEntry: { alignItems: 'center', backgroundColor: '#EAF1E5', borderColor: '#DDE8D5', borderRadius: 17, borderWidth: 1, flexDirection: 'row', gap: 12, marginTop: 12, minHeight: 76, padding: 14 },
@@ -206,28 +197,23 @@ const styles = StyleSheet.create({
   filterTitle: { color: colors.primaryDark, fontSize: 16, fontWeight: '700', lineHeight: 23 },
   clearFilter: { alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', gap: 8, minHeight: 44 },
   clearFilterText: { color: colors.primaryDark, flexShrink: 1, fontSize: 12, lineHeight: 19 },
-  notice: { backgroundColor: '#F8EFE5', borderRadius: 12, padding: 12, marginTop: 8 },
-  noticeText: { color: '#79543B', fontSize: 12, lineHeight: 19 },
   collectionRow: { alignItems: 'center', flexDirection: 'row', gap: 12, justifyContent: 'space-between', marginBottom: 17, marginTop: 28 },
   collectionRowStacked: { alignItems: 'flex-start', flexDirection: 'column' },
   collectionCopy: { flex: 1 },
   collectionTitle: { color: colors.text, fontSize: 18, fontWeight: '700', letterSpacing: -0.4, lineHeight: 24 },
   collectionCount: { color: colors.textMuted, fontSize: 11, lineHeight: 17, marginTop: 3 },
+  queryLabel: { color: colors.primaryDark, fontSize: 13, fontWeight: '600', lineHeight: 19, marginTop: 4 },
   layoutSwitch: { backgroundColor: '#EAF0E4', borderRadius: 13, flexDirection: 'row', padding: 3 },
   layoutButton: { alignItems: 'center', borderRadius: 10, height: 44, justifyContent: 'center', width: 44 },
   selectedLayout: { backgroundColor: colors.white },
   pressed: { opacity: 0.65 },
   row: { alignItems: 'stretch', gap: 12, paddingHorizontal: 22 },
-  cardShell: { flex: 1, marginBottom: 14 },
+  cardShell: { marginBottom: 14 },
   singleCard: { marginHorizontal: 22 },
-  emptyState: { alignItems: 'center', paddingHorizontal: 30, paddingVertical: 36 },
-  stateTitle: { color: colors.text, fontSize: 19, fontWeight: '700', lineHeight: 26, marginTop: 16, textAlign: 'center' },
-  stateCopy: { color: colors.textMuted, fontSize: 13, lineHeight: 21, marginTop: 9, textAlign: 'center' },
   actionButton: { alignItems: 'center', backgroundColor: colors.primaryDark, borderRadius: 14, flexDirection: 'row', gap: 9, justifyContent: 'center', marginTop: 20, minHeight: 48, paddingHorizontal: 22, paddingVertical: 12 },
   actionText: { color: colors.white, fontSize: 13, fontWeight: '700', textAlign: 'center' },
   moreButton: { marginBottom: 26, marginTop: 12 },
   loadedCount: { color: colors.textMuted, fontSize: 12, lineHeight: 18, marginBottom: 4, textAlign: 'center' },
-  paginationError: { color: '#8A4E3B', fontSize: 12, lineHeight: 19, marginTop: 8, textAlign: 'center' },
   footer: { alignItems: 'center', paddingHorizontal: 22, paddingTop: 14 },
   signature: { alignItems: 'center', flexDirection: 'row', gap: 14 },
   signatureLine: { backgroundColor: colors.border, height: 1, width: 42 },

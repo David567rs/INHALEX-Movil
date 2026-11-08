@@ -9,7 +9,7 @@ const listCatalog = createCatalogAction();
 
 export default function CatalogRoute() {
   const params = useLocalSearchParams<{ category?: string | string[]; lineName?: string | string[] }>();
-  const category = params.category === undefined ? undefined : typeof params.category === 'string' ? params.category : '';
+  const category = typeof params.category === 'string' && params.category.trim() ? params.category : undefined;
   const name = typeof params.lineName === 'string' ? params.lineName.trim().slice(0, 120) : '';
   const scopedList = useMemo<ListCatalog>(() => category === undefined ? listCatalog
     : (input, options) => listCatalog({ ...input, category }, options), [category]);

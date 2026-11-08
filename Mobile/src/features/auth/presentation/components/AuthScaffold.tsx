@@ -1,10 +1,11 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import type { PropsWithChildren, ReactNode } from 'react';
-import { Image, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { Image, Keyboard, Platform, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { Reveal } from '@/shared/components/Motion';
+import { FormKeyboardLayout } from '@/shared/components/FormKeyboardLayout';
 import { AuthBackdrop } from './AuthBackdrop';
 
 interface AuthScaffoldProps extends PropsWithChildren {
@@ -19,6 +20,7 @@ export function AuthScaffold({ title, subtitle, footer, children }: AuthScaffold
   const compact = height < 700 || width < 360 || fontScale > 1.25;
 
   function returnToAccount() {
+    Keyboard.dismiss();
     if (router.canGoBack()) router.back();
     else router.replace('/(tabs)/cuenta');
   }
@@ -26,15 +28,13 @@ export function AuthScaffold({ title, subtitle, footer, children }: AuthScaffold
   return (
     <SafeAreaView edges={['top', 'left', 'right', 'bottom']} style={styles.safeArea}>
       <AuthBackdrop compact={compact} mirrored />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : Platform.OS === 'android' ? 'height' : undefined}
-        style={styles.flex}
-      >
+      <FormKeyboardLayout>
         <ScrollView
+          style={styles.flex}
           contentContainerStyle={[styles.content, compact && styles.compactContent]}
           keyboardDismissMode="on-drag"
           keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator
         >
           <View style={styles.shell}>
             <Pressable
@@ -65,7 +65,7 @@ export function AuthScaffold({ title, subtitle, footer, children }: AuthScaffold
             {footer ? <Reveal delay={120} style={styles.footer}>{footer}</Reveal> : null}
           </View>
         </ScrollView>
-      </KeyboardAvoidingView>
+      </FormKeyboardLayout>
     </SafeAreaView>
   );
 }

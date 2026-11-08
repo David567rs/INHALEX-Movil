@@ -1,11 +1,14 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { useState } from 'react';
-import { ActivityIndicator, Image, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View, useWindowDimensions } from 'react-native';
+import { useRef, useState } from 'react';
+import { ActivityIndicator, Image, Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, View, useWindowDimensions, type TextInputInstance } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { getCatalogImage } from '@/features/catalog/presentation/assets/catalogImages';
 import { Reveal } from '@/shared/components/Motion';
+import { FormKeyboardLayout } from '@/shared/components/FormKeyboardLayout';
+import { BackButton, ScreenHeader } from '@/shared/components/ScreenHeader';
+import { FeedbackBanner, ScreenState } from '@/shared/components/ScreenFeedback';
 import type { OrderContactField } from '../../domain/models/OrderCreation';
 import { useOrderCreationViewModel } from '../viewModels/useOrderCreationViewModel';
 
@@ -20,53 +23,44 @@ const fields: readonly { key: OrderContactField; label: string; maxLength: numbe
 
 export function OrderCreationScreen() {
   const vm = useOrderCreationViewModel();
+  const contactInputs = useRef<Partial<Record<OrderContactField, TextInputInstance | null>>>({});
   const { width, fontScale } = useWindowDimensions();
   const stacked = width < 350 || fontScale > 1.25;
   const needsSession = vm.status === 'anonymous' || vm.status === 'expired';
   function returnToBag() {
+    Keyboard.dismiss();
     if (router.canGoBack()) router.back(); else router.replace('/(tabs)/bolsa');
   }
   async function signIn() { if (await vm.prepareSignIn()) router.push('/sign-in'); }
 
   return <SafeAreaView edges={['top', 'left', 'right', 'bottom']} style={styles.safeArea}>
-    <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
-        <View style={styles.topBar}>
-          <Pressable accessibilityRole="button" accessibilityLabel="Volver a Bolsa" onPress={returnToBag}
-            style={({ pressed }) => [styles.backButton, pressed && styles.pressed]}>
-            <Ionicons accessible={false} name="arrow-back" size={21} color={colors.primaryDark} />
-          </Pressable>
-          <Image accessibilityLabel="INHALEX, el respiro que alivia" resizeMode="contain"
-            source={require('../../../../../assets/home/brand.png')} style={styles.brand} />
-        </View>
-        <Reveal>
-          <Text style={styles.eyebrow}>CREACIÓN DE PEDIDO</Text>
-          <Text accessibilityRole="header" style={styles.title}>{vm.receipt ? 'Tu pedido' : 'Revisa tu pedido'}<Text style={styles.dot}>.</Text></Text>
-          <Text style={styles.intro}>{vm.receipt ? 'Un paso más cerca de tu próxima pausa.' : 'Cada detalle cuenta para tu próxima pausa.'}</Text>
-        </Reveal>
+    <FormKeyboardLayout>
+      <ScrollView style={styles.flex} contentContainerStyle={styles.content} showsVerticalScrollIndicator keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
+        <ScreenHeader title={vm.receipt ? 'Tu pedido' : 'Revisa tu pedido'}
+          leading={<BackButton label="Volver a Bolsa" onPress={returnToBag} />} />
 
-        {needsSession ? <StatusPanel title={vm.status === 'expired' ? 'Vuelve a iniciar sesión' : 'Tu pedido empieza contigo'}
-          copy="Inicia sesión para consultar tu bolsa y elegir una dirección de envío."
-          action={vm.openingSignIn ? 'Abriendo…' : 'Iniciar sesión'} busy={vm.openingSignIn} onAction={() => { void signIn(); }} />
-          : vm.status === 'recovery-error' ? <StatusPanel title="No pudimos comprobar tu sesión"
-            copy="Revisa tu conexión e intenta recuperar la sesión." action="Reintentar sesión" onAction={() => { void vm.restoreSession(); }} />
-          : vm.status === 'checking' ? <StatusPanel title="Comprobando tu sesión" copy="Estamos preparando el siguiente paso." busy />
+        {needsSession ? <ScreenState title={vm.status === 'expired' ? 'Vuelve a iniciar sesión' : 'Tu pedido empieza contigo'} icon="person-outline"
+          message="Inicia sesión para consultar tu bolsa y elegir una dirección de envío."
+          actionLabel={vm.openingSignIn ? 'Abriendo…' : 'Iniciar sesión'} actionBusy={vm.openingSignIn} onAction={() => { void signIn(); }} />
+          : vm.status === 'recovery-error' ? <ScreenState title="No pudimos comprobar tu sesión"
+            message="Revisa tu conexión e intenta recuperar la sesión." actionLabel="Reintentar sesión" onAction={() => { void vm.restoreSession(); }} />
+          : vm.status === 'checking' ? <ScreenState title="Comprobando tu sesión…" busy />
           : vm.receipt ? <Receipt vm={vm} onReturn={returnToBag} />
-          : vm.uncertain ? <StatusPanel title="La confirmación está pendiente"
-            copy="La solicitud pudo llegar a INHALEX. Reintentaremos la misma confirmación para evitar registrar el pedido dos veces."
-            message={vm.message} action={vm.recovering ? 'Recuperando…' : 'Reintentar confirmación'} busy={vm.recovering}
+          : vm.uncertain ? <ScreenState title="La confirmación está pendiente" icon="time-outline"
+            message={['La solicitud pudo llegar a INHALEX. Reintentaremos la misma confirmación para evitar registrar el pedido dos veces.', vm.message].filter(Boolean).join('\n')}
+            actionLabel={vm.recovering ? 'Recuperando…' : 'Reintentar confirmación'} actionBusy={vm.recovering}
             onAction={() => { void vm.retryConfirmation(); }} />
           : <>
-            {vm.message && <View accessibilityLiveRegion="polite" style={styles.notice}><Text style={styles.noticeCopy}>{vm.message}</Text></View>}
+            {vm.message && <FeedbackBanner message={vm.message} tone={vm.requiresRefresh || Object.keys(vm.fieldErrors).length > 0 ? 'error' : 'info'} />}
             <Pressable accessibilityRole="button" accessibilityLabel={vm.requiresRefresh ? 'Reintentar resumen del pedido' : 'Actualizar resumen del pedido'}
               accessibilityState={{ disabled: vm.busy, busy: vm.loading }} disabled={vm.busy}
               onPress={() => { void vm.refresh(); }} style={({ pressed }) => [styles.refreshButton, vm.busy && styles.disabled, pressed && styles.pressed]}>
               {vm.loading ? <ActivityIndicator color={colors.primary} size="small" /> : <Ionicons accessible={false} name="refresh-outline" size={17} color={colors.primaryDark} />}
               <Text style={styles.refreshText}>{vm.loading ? 'Actualizando…' : vm.requiresRefresh ? 'Reintentar' : 'Actualizar resumen'}</Text>
             </Pressable>
-            {!vm.context ? vm.loading ? <StatusPanel title="Preparando tu pedido" copy="Consultamos tu bolsa, tus direcciones y la disponibilidad actual." busy /> : null
-              : vm.context.cart.items.length === 0 ? <StatusPanel title="Tu pedido empieza en la bolsa"
-                copy="Elige tus aromas favoritos antes de preparar tu pedido." action="Explorar catálogo"
+            {!vm.context ? vm.loading ? <ScreenState title="Cargando tu pedido…" message="Consultamos tu bolsa, tus direcciones y la disponibilidad actual." busy /> : null
+              : vm.context.cart.items.length === 0 ? <ScreenState title="Tu pedido empieza en la bolsa" icon="bag-outline"
+                message="Elige tus aromas favoritos antes de preparar tu pedido." actionLabel="Explorar catálogo"
                 onAction={() => router.navigate('/(tabs)/catalogo')} />
               : <>
                 {vm.quote && <Reveal>
@@ -84,8 +78,8 @@ export function OrderCreationScreen() {
 
                 <Reveal delay={35}>
                   <SectionHeading number="02" title="Dirección de envío" detail="Elige dónde quieres recibir este pedido." />
-                  {vm.addresses.length === 0 ? <StatusPanel title="Un destino para tu selección"
-                    copy="Agrega una dirección de envío y vuelve para continuar." action="Agregar dirección"
+                  {vm.addresses.length === 0 ? <ScreenState title="Un destino para tu selección" icon="location-outline"
+                    message="Agrega una dirección de envío y vuelve para continuar." actionLabel="Agregar dirección"
                     onAction={() => router.push('/direcciones-envio')} />
                     : <View accessibilityRole="radiogroup" accessibilityLabel="Direcciones de envío" style={styles.addresses}>
                       {vm.addresses.map((address) => {
@@ -116,12 +110,19 @@ export function OrderCreationScreen() {
                   {vm.contact && <View style={styles.contact}>
                     <Text accessibilityRole="header" style={styles.contactTitle}>Contacto del pedido</Text>
                     <Text style={styles.help}>Confirma los datos que usaremos para comunicarnos contigo sobre este pedido.</Text>
-                    {fields.map((field) => <View key={field.key} style={styles.field}>
+                    {fields.map((field, index) => <View key={field.key} style={styles.field}>
                       <Text nativeID={`order-${field.key}-label`} style={styles.fieldLabel}>{field.label}</Text>
-                      <TextInput accessibilityLabel={field.label} aria-invalid={!!vm.fieldErrors[field.key]}
+                      <TextInput ref={(input) => { contactInputs.current[field.key] = input; }}
+                        accessibilityLabel={field.label} aria-invalid={!!vm.fieldErrors[field.key]}
                         editable={vm.canEdit} value={vm.contact?.[field.key] ?? ''} maxLength={field.maxLength}
                         keyboardType={field.keyboardType} autoCapitalize={field.key === 'customerEmail' ? 'none' : 'sentences'}
                         autoCorrect={field.key === 'customerName' || field.key === 'notes'} multiline={field.key === 'notes'}
+                        returnKeyType={field.key === 'notes' ? 'default' : 'next'}
+                        submitBehavior={field.key === 'notes' ? 'newline' : 'submit'}
+                        onSubmitEditing={field.key === 'notes' ? undefined : () => {
+                          const next = fields[index + 1];
+                          if (next) contactInputs.current[next.key]?.focus();
+                        }}
                         onChangeText={(value) => vm.editContact(field.key, value)}
                         style={[styles.input, field.key === 'notes' && styles.notesInput, !!vm.fieldErrors[field.key] && styles.invalidInput, !vm.canEdit && styles.disabled]} />
                       {vm.fieldErrors[field.key] && <Text accessibilityLiveRegion="polite" style={styles.fieldError}>{vm.fieldErrors[field.key]}</Text>}
@@ -143,7 +144,7 @@ export function OrderCreationScreen() {
                     </View>
                     <Pressable accessibilityRole="button" accessibilityLabel={vm.confirming ? 'Confirmando pedido' : 'Confirmar pedido'}
                       accessibilityState={{ disabled: !vm.canConfirm, busy: vm.confirming }} disabled={!vm.canConfirm}
-                      onPress={() => { void vm.confirm(); }} style={[styles.primaryButton, !vm.canConfirm && styles.disabled]}>
+                      onPress={() => { Keyboard.dismiss(); void vm.confirm(); }} style={[styles.primaryButton, !vm.canConfirm && styles.disabled]}>
                       {vm.confirming ? <ActivityIndicator color={colors.white} size="small" /> : null}
                       <Text style={styles.primaryText}>{vm.confirming ? 'Confirmando…' : 'Confirmar pedido'}</Text>
                       {!vm.confirming && <Ionicons accessible={false} name="arrow-forward" size={18} color={colors.white} />}
@@ -159,7 +160,7 @@ export function OrderCreationScreen() {
           <Ionicons accessible={false} name="arrow-back" size={17} color={colors.primaryDark} /><Text style={styles.returnText}>Volver a mi bolsa</Text>
         </Pressable>}
       </ScrollView>
-    </KeyboardAvoidingView>
+    </FormKeyboardLayout>
   </SafeAreaView>;
 }
 
@@ -172,7 +173,7 @@ function Receipt({ vm, onReturn }: { vm: ViewModel; onReturn(): void }) {
     <Text style={styles.receiptStatus}>{statusLabels[receipt.status]}</Text>
     <View style={styles.receiptDetails}><SummaryRow label="Unidades" value={String(receipt.totalItems)} />
       <SummaryRow label="Subtotal de productos" value={vm.receiptSubtotalLabel ?? ''} /></View>
-    {vm.message && <Text style={styles.noticeCopy}>{vm.message}</Text>}
+    {vm.message && <FeedbackBanner message={vm.message} tone="info" />}
     {(vm.cleanupPending || vm.uncertain) && <Pressable accessibilityRole="button"
       accessibilityLabel={vm.uncertain ? 'Recuperar confirmación' : 'Reintentar actualización de bolsa'}
       accessibilityState={{ disabled: vm.busy, busy: vm.recovering }} disabled={vm.busy}
@@ -184,20 +185,6 @@ function Receipt({ vm, onReturn }: { vm: ViewModel; onReturn(): void }) {
       <Text style={styles.primaryText}>Volver a mi bolsa</Text><Ionicons accessible={false} name="arrow-forward" size={18} color={colors.white} />
     </Pressable>
   </View></Reveal>;
-}
-
-function StatusPanel({ title, copy, action, message, busy, onAction }: {
-  title: string; copy: string; action?: string; message?: string | null; busy?: boolean; onAction?: () => void;
-}) {
-  return <View accessibilityLiveRegion="polite" style={styles.panel}>
-    {busy && <ActivityIndicator color={colors.primary} />}
-    <Text accessibilityRole="header" style={styles.panelTitle}>{title}</Text><Text style={styles.panelCopy}>{copy}</Text>
-    {message && <Text style={styles.noticeCopy}>{message}</Text>}
-    {action && onAction && <Pressable accessibilityRole="button" accessibilityLabel={action} disabled={busy}
-      accessibilityState={{ disabled: !!busy, busy: !!busy }} onPress={onAction} style={[styles.secondaryButton, busy && styles.disabled]}>
-      <Text style={styles.secondaryText}>{action}</Text>
-    </Pressable>}
-  </View>;
 }
 
 function SectionHeading({ number, title, detail }: { number: string; title: string; detail: string }) {
@@ -225,14 +212,9 @@ function OrderItem({ item, stacked }: { item: ViewModel['items'][number]; stacke
 const styles = StyleSheet.create({
   flex: { flex: 1 }, safeArea: { backgroundColor: colors.background, flex: 1 },
   content: { alignSelf: 'center', maxWidth: 620, padding: 22, paddingBottom: 32, width: '100%' },
-  topBar: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 26 },
-  backButton: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 16, borderWidth: 1, height: 48, justifyContent: 'center', width: 48 },
-  brand: { height: 41, width: 145 }, eyebrow: { color: colors.primary, fontSize: 10, fontWeight: '800', letterSpacing: 1.8, lineHeight: 18 },
-  title: { color: colors.text, fontSize: 34, fontWeight: '800', letterSpacing: -1.1, lineHeight: 42, marginTop: 5 }, dot: { color: colors.accent },
   intro: { color: colors.textMuted, fontSize: 14, lineHeight: 23, marginTop: 9 },
   refreshButton: { alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', gap: 8, marginTop: 17, minHeight: 44, paddingVertical: 9 },
   refreshText: { color: colors.primaryDark, fontSize: 12, fontWeight: '700', lineHeight: 21 },
-  notice: { backgroundColor: colors.warningSoft, borderRadius: 14, marginTop: 20, padding: 14 }, noticeCopy: { color: colors.text, fontSize: 12, lineHeight: 22 },
   sectionHeading: { alignItems: 'flex-start', flexDirection: 'row', gap: 12, marginBottom: 16, marginTop: 27 },
   step: { alignItems: 'center', backgroundColor: colors.surfaceSoft, borderColor: colors.border, borderRadius: 12, borderWidth: 1, justifyContent: 'center', minHeight: 37, minWidth: 37, padding: 7 },
   stepText: { color: colors.primaryDark, fontSize: 11, fontWeight: '800', lineHeight: 20 }, sectionCopy: { flex: 1, minWidth: 0 },
@@ -261,7 +243,6 @@ const styles = StyleSheet.create({
   totalTitle: { color: colors.primaryDark, fontSize: 13, fontWeight: '800', lineHeight: 22 }, totalHint: { color: colors.textMuted, fontSize: 10, lineHeight: 18, marginTop: 3 }, totalPrice: { color: colors.primaryDark, flexShrink: 1, fontSize: 23, fontWeight: '800', letterSpacing: -0.6, lineHeight: 32 },
   primaryButton: { alignItems: 'center', alignSelf: 'stretch', backgroundColor: colors.primaryDark, borderRadius: 14, flexDirection: 'row', flexWrap: 'wrap', gap: 10, justifyContent: 'center', minHeight: 54, padding: 14 }, primaryText: { color: colors.white, flexShrink: 1, fontSize: 13, fontWeight: '800', lineHeight: 22, textAlign: 'center' },
   confirmHint: { color: colors.textMuted, fontSize: 10, lineHeight: 18, marginTop: 12, textAlign: 'center' }, secondaryButton: { alignItems: 'center', alignSelf: 'stretch', backgroundColor: colors.surfaceSoft, borderColor: colors.border, borderRadius: 14, borderWidth: 1, flexDirection: 'row', flexWrap: 'wrap', gap: 8, justifyContent: 'center', marginTop: 20, minHeight: 52, padding: 14 }, secondaryText: { color: colors.primaryDark, flexShrink: 1, fontSize: 12, fontWeight: '800', lineHeight: 22, textAlign: 'center' },
-  panel: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 23, borderWidth: 1, marginTop: 22, padding: 24 }, panelTitle: { color: colors.text, fontSize: 23, fontWeight: '800', letterSpacing: -0.6, lineHeight: 32, marginTop: 9, textAlign: 'center' }, panelCopy: { color: colors.textMuted, fontSize: 13, lineHeight: 22, marginTop: 12, textAlign: 'center' },
   receipt: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 24, borderWidth: 1, gap: 18, marginTop: 24, padding: 23 }, receiptIcon: { alignItems: 'center', backgroundColor: colors.surfaceSoft, borderRadius: 38, height: 76, justifyContent: 'center', width: 76 }, receiptTitle: { color: colors.text, fontSize: 26, fontWeight: '800', letterSpacing: -0.6, lineHeight: 34, textAlign: 'center' },
   reference: { color: colors.primaryDark, fontSize: 17, fontWeight: '800', lineHeight: 27, textAlign: 'center' }, receiptStatus: { backgroundColor: colors.surfaceSoft, borderRadius: 9, color: colors.primaryDark, fontSize: 12, fontWeight: '700', lineHeight: 22, paddingHorizontal: 12, paddingVertical: 5 }, receiptDetails: { alignSelf: 'stretch', borderTopColor: colors.border, borderTopWidth: 1, marginTop: 6, paddingTop: 20 },
   returnButton: { alignItems: 'center', alignSelf: 'center', flexDirection: 'row', gap: 8, marginTop: 23, minHeight: 48, padding: 10 }, returnText: { color: colors.primaryDark, flexShrink: 1, fontSize: 12, fontWeight: '700', lineHeight: 21 }, disabled: { opacity: 0.55 }, pressed: { opacity: 0.75 },

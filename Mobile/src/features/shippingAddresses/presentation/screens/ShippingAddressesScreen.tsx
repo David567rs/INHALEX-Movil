@@ -1,10 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Image, Keyboard, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, View, type ScrollViewInstance } from 'react-native';
+import { ActivityIndicator, Keyboard, Pressable, ScrollView, StyleSheet, Text, View, type ScrollViewInstance } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { Reveal, SoftPressable } from '@/shared/components/Motion';
+import { FormKeyboardLayout } from '@/shared/components/FormKeyboardLayout';
+import { BackButton, ScreenHeader } from '@/shared/components/ScreenHeader';
+import { FeedbackBanner, ScreenState } from '@/shared/components/ScreenFeedback';
 
 import type { ShippingAddress } from '../../domain/models/ShippingAddress';
 import { ShippingAddressForm } from '../components/ShippingAddressForm';
@@ -65,6 +68,10 @@ export function ShippingAddressesScreen() {
   const canMutate = viewModel.status === 'ready' && viewModel.addresses !== null && !locked && !viewModel.requiresRefresh;
   const needsSession = viewModel.status === 'anonymous' || viewModel.status === 'expired';
   const needsRetry = viewModel.requiresRefresh || (!!viewModel.message && Object.keys(viewModel.fieldErrors).length === 0);
+  const feedback = [
+    viewModel.message,
+    viewModel.requiresRefresh ? `${viewModel.draft ? 'Tu borrador se conserva. ' : ''}Reintenta la carga para comprobar las direcciones guardadas antes de hacer otro cambio.` : null,
+  ].filter(Boolean).join('\n');
 
   useEffect(() => { scroll.current?.scrollTo({ y: 0, animated: false }); }, [viewModel.mode]);
   useEffect(() => { if (viewModel.message) scroll.current?.scrollTo({ y: 0, animated: false }); }, [viewModel.message]);
@@ -79,32 +86,19 @@ export function ShippingAddressesScreen() {
   }
 
   return <SafeAreaView edges={['top', 'left', 'right', 'bottom']} style={styles.screen}>
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : Platform.OS === 'android' ? 'height' : undefined} style={styles.screen}>
-      <ScrollView ref={scroll} contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
-        <View style={styles.topBar}>
-          <Pressable accessibilityRole="button" accessibilityLabel="Volver a Cuenta" onPress={back} style={({ pressed }) => [styles.backButton, pressed && styles.pressed]}>
-            <Ionicons accessible={false} name="arrow-back" size={22} color={colors.primaryDark} />
-          </Pressable>
-          <Image accessibilityLabel="INHALEX" source={require('../../../../../assets/home/brand.png')} resizeMode="contain" style={styles.brand} />
-          <View style={styles.topSpacer} />
-        </View>
-        <Reveal>
-          <View style={styles.eyebrowRow}><View style={styles.eyebrowLine} /><Text style={styles.eyebrow}>CERCA DE TI</Text></View>
-          <Text accessibilityRole="header" style={styles.title}>{isList ? 'Tus direcciones.' : viewModel.mode === 'create' ? 'Un nuevo destino.' : 'Cada detalle cuenta.'}</Text>
-          <Text style={styles.introduction}>{isList ? 'Un espacio para los lugares donde quieres recibir INHALEX.' : viewModel.mode === 'create' ? 'Agrega el lugar donde quieres recibir tu próxima entrega.' : 'Actualiza los datos de tu dirección.'}</Text>
-        </Reveal>
-        {needsSession ? <AddressStatus title={viewModel.status === 'expired' ? 'Vuelve a iniciar sesión' : 'Tus destinos, en tu cuenta'} message="Inicia sesión para consultar y guardar tus direcciones de envío."
-          action={viewModel.openingSignIn ? 'Abriendo…' : 'Iniciar sesión'} disabled={viewModel.openingSignIn} onAction={() => { void openSignIn(); }} />
-          : viewModel.status === 'recovery-error' ? <AddressStatus title="No pudimos comprobar tu sesión" message="Revisa tu conexión e intenta recuperar tu sesión." action="Reintentar sesión" onAction={() => { void viewModel.restoreSession(); }} />
-          : viewModel.addresses === null && (viewModel.status === 'checking' || viewModel.loading) ? <AddressStatus title={viewModel.status === 'checking' ? 'Comprobando tu sesión' : 'Preparando tus direcciones'} message="Un momento, estamos consultando tus datos." busy />
-          : viewModel.addresses === null ? <AddressStatus title="No pudimos cargar tus direcciones" message={viewModel.message || 'Comprueba tu conexión e inténtalo otra vez.'} action="Reintentar" disabled={!viewModel.canRefresh} onAction={() => { void viewModel.refresh(); }} /> : null}
+    <FormKeyboardLayout>
+      <ScrollView ref={scroll} style={styles.screen} contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" showsVerticalScrollIndicator>
+        <ScreenHeader title={isList ? 'Tus direcciones' : viewModel.mode === 'create' ? 'Nueva dirección' : 'Editar dirección'}
+          leading={<BackButton label="Volver a Cuenta" onPress={back} />} />
+        {needsSession ? <ScreenState title={viewModel.status === 'expired' ? 'Vuelve a iniciar sesión' : 'Tus destinos, en tu cuenta'} icon="location-outline" message="Inicia sesión para consultar y guardar tus direcciones de envío."
+          actionLabel={viewModel.openingSignIn ? 'Abriendo…' : 'Iniciar sesión'} actionBusy={viewModel.openingSignIn} onAction={() => { void openSignIn(); }} />
+          : viewModel.status === 'recovery-error' ? <ScreenState title="No pudimos comprobar tu sesión" message="Revisa tu conexión e intenta recuperar tu sesión." actionLabel="Reintentar sesión" onAction={() => { void viewModel.restoreSession(); }} />
+          : viewModel.addresses === null && (viewModel.status === 'checking' || viewModel.loading) ? <ScreenState title={viewModel.status === 'checking' ? 'Comprobando tu sesión…' : 'Cargando tus direcciones…'} busy />
+          : viewModel.addresses === null ? <ScreenState title="No pudimos cargar tus direcciones" message={viewModel.message || 'Comprueba tu conexión e inténtalo otra vez.'} actionLabel="Reintentar" actionDisabled={!viewModel.canRefresh} onAction={() => { void viewModel.refresh(); }} /> : null}
 
         {viewModel.addresses !== null && <>
-          {(viewModel.message || viewModel.requiresRefresh) && <View accessibilityLiveRegion="polite" style={styles.errorNotice}>
-            {!!viewModel.message && <Text style={styles.removeText}>{viewModel.message}</Text>}
-            {viewModel.requiresRefresh && <Text style={styles.removeText}>{viewModel.draft ? 'Tu borrador se conserva. ' : ''}Reintenta la carga para comprobar las direcciones guardadas antes de hacer otro cambio.</Text>}
-          </View>}
-          {!!viewModel.confirmation && <Text accessibilityLiveRegion="polite" style={styles.confirmation}>{viewModel.confirmation}</Text>}
+          {!!feedback && <FeedbackBanner message={feedback} />}
+          {!!viewModel.confirmation && <FeedbackBanner tone="success" message={viewModel.confirmation} />}
           <Pressable accessibilityRole="button" accessibilityLabel={needsRetry ? 'Reintentar carga de direcciones' : 'Actualizar direcciones'} disabled={!viewModel.canRefresh}
             accessibilityState={{ disabled: !viewModel.canRefresh, busy: viewModel.refreshing }} onPress={() => { setRemoveTarget(null); void viewModel.refresh(); }} style={[styles.refreshButton, !viewModel.canRefresh && styles.disabled]}>
             {viewModel.refreshing ? <ActivityIndicator color={colors.primary} /> : <Ionicons accessible={false} name="refresh-outline" size={17} color={colors.primary} />}
@@ -119,48 +113,25 @@ export function ShippingAddressesScreen() {
             confirming={removeTarget === address} onAskRemove={() => setRemoveTarget(address)} onCancelRemove={() => setRemoveTarget(null)}
             onRemove={() => { setRemoveTarget(null); void viewModel.remove(address.id); }} onSelect={() => { setRemoveTarget(null); void viewModel.select(address.id); }}
             onEdit={() => { setRemoveTarget(null); viewModel.openEdit(address.id); }} />)}</View>
-            : <View style={styles.emptyCard}>
-              <View style={styles.emptyIcon}><Ionicons accessible={false} name="location-outline" size={36} color={colors.primary} /></View>
-              <Text accessibilityRole="header" style={styles.emptyTitle}>Aún no tienes direcciones</Text>
-              <Text style={styles.emptyCopy}>Tu próxima entrega tendrá su lugar. Agrega una dirección para tenerla lista en tu cuenta.</Text>
-            </View>}
+            : <ScreenState title="Aún no tienes direcciones" icon="location-outline" message="Agrega una dirección para tenerla lista en tu cuenta." />}
           <SoftPressable accessibilityRole="button" accessibilityLabel="Nueva dirección" disabled={!viewModel.canCreate} accessibilityState={{ disabled: !viewModel.canCreate }} onPress={viewModel.openCreate} style={[styles.newButton, !viewModel.canCreate && styles.disabled]}>
             <Ionicons accessible={false} name="add-outline" size={21} color={colors.white} /><Text style={styles.newLabel}>Nueva dirección</Text>
           </SoftPressable>
           <Text style={styles.footerHint}>{viewModel.addresses.length >= 5 ? 'Llegaste al máximo de cinco direcciones. Puedes editar o quitar una.' : 'Puedes guardar hasta cinco direcciones. La principal queda seleccionada en tu cuenta.'}</Text>
         </Reveal> : <Reveal key={viewModel.mode} delay={30}>
-          <Text accessibilityRole="header" style={styles.formTitle}>{viewModel.mode === 'create' ? 'Nueva dirección' : 'Editar dirección'}</Text>
           {viewModel.draft && <ShippingAddressForm draft={viewModel.draft} mode={viewModel.mode === 'edit' ? 'edit' : 'create'} onChange={viewModel.updateField} onCancel={viewModel.cancelForm}
             onSave={() => { void viewModel.save(); }} onToggleDefault={viewModel.toggleDefault} errors={viewModel.fieldErrors} canSave={viewModel.canSave} locked={locked} saving={viewModel.saving}
             defaultLocked={viewModel.mode === 'edit' && !!viewModel.addresses.find((address) => address.id === viewModel.editingId)?.isDefault} />}
         </Reveal>}
         </>}
       </ScrollView>
-    </KeyboardAvoidingView>
+    </FormKeyboardLayout>
   </SafeAreaView>;
-}
-
-function AddressStatus({ title, message, action, onAction, busy = false, disabled = false }: {
-  title: string; message: string; action?: string; onAction?: () => void; busy?: boolean; disabled?: boolean;
-}) {
-  return <View style={styles.emptyCard} accessibilityLiveRegion="polite">
-    {busy && <ActivityIndicator color={colors.primary} />}
-    <Text accessibilityRole="header" style={styles.emptyTitle}>{title}</Text>
-    <Text style={styles.emptyCopy}>{message}</Text>
-    {action && <Pressable accessibilityRole="button" onPress={onAction} disabled={disabled} accessibilityState={{ disabled }} style={[styles.newButton, disabled && styles.disabled]}><Text style={styles.newLabel}>{action}</Text></Pressable>}
-  </View>;
 }
 
 const styles = StyleSheet.create({
   screen: { backgroundColor: colors.background, flex: 1 },
-  content: { alignSelf: 'center', maxWidth: 620, paddingBottom: 34, paddingHorizontal: 22, width: '100%' },
-  topBar: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 28, marginTop: 10 },
-  backButton: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 15, borderWidth: 1, height: 44, justifyContent: 'center', width: 44 },
-  brand: { height: 41, width: 136 }, topSpacer: { width: 44 },
-  eyebrowRow: { alignItems: 'center', flexDirection: 'row', gap: 8, marginBottom: 10 }, eyebrowLine: { backgroundColor: colors.accent, height: 2, width: 23 },
-  eyebrow: { color: colors.primary, fontSize: 10, fontWeight: '800', letterSpacing: 2, lineHeight: 18 },
-  title: { color: colors.primaryDark, fontSize: 35, fontWeight: '800', letterSpacing: -1.3, lineHeight: 43 },
-  introduction: { color: colors.textMuted, fontSize: 13, lineHeight: 22, marginBottom: 22, marginTop: 9 },
+  content: { alignSelf: 'center', maxWidth: 620, padding: 22, paddingBottom: 34, width: '100%' },
   sectionHeading: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 10, justifyContent: 'space-between', marginBottom: 14, marginTop: 25 },
   sectionTitle: { color: colors.text, fontSize: 20, fontWeight: '800', lineHeight: 28 }, count: { color: colors.textMuted, fontSize: 11, lineHeight: 19 },
   cards: { gap: 17 }, addressCard: { backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 24, borderWidth: 1, padding: 20 },
@@ -179,17 +150,10 @@ const styles = StyleSheet.create({
   selectButton: { alignItems: 'center', borderColor: colors.border, borderRadius: 12, borderWidth: 1, flexDirection: 'row', flexWrap: 'wrap', gap: 7, justifyContent: 'center', marginTop: 4, minHeight: 44, padding: 10 },
   selectedButton: { backgroundColor: colors.surfaceSoft },
   disabled: { opacity: 0.55 },
-  errorNotice: { backgroundColor: colors.dangerSoft, borderColor: colors.danger, borderRadius: 15, borderWidth: 1, gap: 6, marginBottom: 12, padding: 15 },
   removeNotice: { backgroundColor: colors.dangerSoft, borderRadius: 15, marginTop: 15, padding: 13 },
   removeText: { color: colors.danger, fontSize: 12, lineHeight: 20 },
-  confirmation: { backgroundColor: colors.surfaceSoft, borderRadius: 13, color: colors.primaryDark, fontSize: 13, lineHeight: 21, marginBottom: 12, padding: 15 },
   refreshButton: { alignItems: 'center', alignSelf: 'flex-end', flexDirection: 'row', gap: 7, justifyContent: 'center', minHeight: 44, marginBottom: 12, padding: 10 },
-  emptyCard: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 24, borderWidth: 1, paddingHorizontal: 24, paddingVertical: 32 },
-  emptyIcon: { alignItems: 'center', backgroundColor: colors.surfaceSoft, borderRadius: 28, height: 76, justifyContent: 'center', marginBottom: 20, width: 76 },
-  emptyTitle: { color: colors.primaryDark, fontSize: 22, fontWeight: '800', letterSpacing: -0.5, lineHeight: 30, textAlign: 'center' },
-  emptyCopy: { color: colors.textMuted, fontSize: 12, lineHeight: 21, marginTop: 10, textAlign: 'center' },
   newButton: { alignItems: 'center', backgroundColor: colors.primaryDark, borderRadius: 15, flexDirection: 'row', flexWrap: 'wrap', gap: 8, justifyContent: 'center', marginTop: 23, minHeight: 52, paddingHorizontal: 16, paddingVertical: 15 },
   newLabel: { color: colors.white, flexShrink: 1, fontSize: 13, fontWeight: '800', lineHeight: 22, textAlign: 'center' },
-  footerHint: { color: colors.textMuted, fontSize: 10, lineHeight: 18, marginTop: 14, textAlign: 'center' },
-  formTitle: { color: colors.primaryDark, fontSize: 22, fontWeight: '800', lineHeight: 30, marginBottom: 24 }, pressed: { opacity: 0.75 },
+  footerHint: { color: colors.textMuted, fontSize: 10, lineHeight: 18, marginTop: 14, textAlign: 'center' }, pressed: { opacity: 0.75 },
 });

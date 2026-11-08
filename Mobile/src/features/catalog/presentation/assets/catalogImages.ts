@@ -1,22 +1,22 @@
 import type { ImageSourcePropType } from 'react-native';
-/** Exact legacy web paths refer to original bundled artwork, never to the API host. */
+/** Original ingredient photography for collection cards; bottle portraits belong to product details. */
 const legacyImages: Readonly<Record<string, ImageSourcePropType>> = {
-  '/products/eucalipto.jpg': require('../../../../../assets/catalog/eucalipto.jpeg'),
-  '/products/lavanda.jpg': require('../../../../../assets/catalog/lavanda.jpeg'),
-  '/products/menta.jpg': require('../../../../../assets/catalog/menta.jpeg'),
-  '/products/manzanilla.jpg': require('../../../../../assets/catalog/manzanilla.jpeg'),
-  '/products/canela.jpg': require('../../../../../assets/catalog/canela.jpeg'),
-  '/products/rosas-castilla.jpg': require('../../../../../assets/catalog/rosas.jpeg'),
-  '/products/anis-estrella.jpg': require('../../../../../assets/catalog/anis.jpeg'),
-  '/products/bugambilia.jpg': require('../../../../../assets/catalog/bugambilia.jpeg'),
-  '/products/cafe.jpg': require('../../../../../assets/catalog/cafe.jpeg'),
-  '/products/copal.jpg': require('../../../../../assets/catalog/copal.jpeg'),
-  '/products/hierbabuena.jpg': require('../../../../../assets/catalog/hierbabuena.jpeg'),
-  '/products/jengibre.jpg': require('../../../../../assets/catalog/jengibre.jpeg'),
-  '/products/mirra-azafran.jpg': require('../../../../../assets/catalog/mirra.jpeg'),
-  '/products/toronjil.jpg': require('../../../../../assets/catalog/toronjil.jpeg'),
-  '/products/vaporub.jpg': require('../../../../../assets/catalog/vaporub.jpeg'),
-  '/products/romero.jpg': require('../../../../../assets/catalog/romero.jpg'),
+  '/products/eucalipto.jpg': require('../../../../../assets/products/eucalipto.jpg'),
+  '/products/lavanda.jpg': require('../../../../../assets/products/lavanda.jpg'),
+  '/products/menta.jpg': require('../../../../../assets/products/menta.jpg'),
+  '/products/manzanilla.jpg': require('../../../../../assets/products/manzanilla.jpg'),
+  '/products/canela.jpg': require('../../../../../assets/products/canela.jpg'),
+  '/products/rosas-castilla.jpg': require('../../../../../assets/products/rosas-castilla.jpg'),
+  '/products/anis-estrella.jpg': require('../../../../../assets/products/anis-estrella.jpg'),
+  '/products/bugambilia.jpg': require('../../../../../assets/products/bugambilia.jpg'),
+  '/products/cafe.jpg': require('../../../../../assets/products/cafe.jpg'),
+  '/products/copal.jpg': require('../../../../../assets/products/copal.jpg'),
+  '/products/hierbabuena.jpg': require('../../../../../assets/products/hierbabuena.jpg'),
+  '/products/jengibre.jpg': require('../../../../../assets/products/jengibre.jpg'),
+  '/products/mirra-azafran.jpg': require('../../../../../assets/products/mirra-azafran.jpg'),
+  '/products/toronjil.jpg': require('../../../../../assets/products/toronjil.jpg'),
+  '/products/vaporub.jpg': require('../../../../../assets/products/vaporub.jpg'),
+  '/products/romero.jpg': require('../../../../../assets/products/romero.jpg'),
 };
 
 export function getCatalogImage(image: string | null): ImageSourcePropType | null {
