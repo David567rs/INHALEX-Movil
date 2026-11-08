@@ -2,6 +2,8 @@
 
 Preparación del 7 de noviembre de 2026. Responsable David567rs; revisora solicitada ZenaidaGR. Rama `codex/recuperar-inicio` hacia `develop`, sin autorización de fusión. La base remota comprobada es `95842a654d576681fa49f7e1363d440a03282792` (PR #19).
 
+**PR publicado:** [#20 — Recuperar diseño de INHALEX y mejorar catálogo, Cuenta y formularios](https://github.com/David567rs/INHALEX-Movil/pull/20), abierto por David567rs con revisión solicitada y verificada a ZenaidaGR. Permanece abierto y sin fusionar. El enlace y la solicitud no equivalen a aprobación humana; consultar la CI del último HEAD publicado. Este registro es un commit documental separado de la aceptación y la preparación.
+
 ## Alcance final
 
 Se recuperan Inicio, vídeo e imágenes de la app original; se incorpora búsqueda dentro de Catálogo, tarjetas compactas de Favoritos/Bolsa, Detalle adaptable, Cuenta con desplazamiento único, formularios con manejo de teclado y mensajes compartidos. La implementación conserva MVVM, Repository y sus commits por etapa; no modifica `Server/`, paquetes, locks ni configuración de la app respecto de la base.
