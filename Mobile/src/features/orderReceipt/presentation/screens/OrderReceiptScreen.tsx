@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { ActivityIndicator, Image, Modal, Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
@@ -16,7 +16,7 @@ const receiptLabel = (order: ReceiptOrder) => order.receiptStatus === 'confirmed
   : order.receiptStatus === 'issue_reported' ? 'Con incidencia' : 'Por confirmar';
 const units = (count: number) => `${count} ${count === 1 ? 'unidad' : 'unidades'}`;
 
-export function OrderReceiptScreen() {
+export function OrderReceiptScreen({ developmentPanel }: { developmentPanel?: ReactNode } = {}) {
   const vm = useOrderReceiptViewModel();
   const order = vm.order;
   const confirmed = order?.receiptStatus === 'confirmed';
@@ -26,6 +26,7 @@ export function OrderReceiptScreen() {
     <AppScreen title="Confirmar recepción" eyebrow="Tus pedidos" includeBottomInset
       action={<BackButton onPress={() => order && !vm.busy ? vm.selectOrder(null)
         : router.canGoBack() ? router.back() : router.navigate('/(tabs)/cuenta')} />}>
+      {__DEV__ ? developmentPanel : null}
       {vm.status === 'checking' ? <LoadingState label="Comprobando tu sesión…" /> : gated ? <>
         <ScreenState icon="person-circle-outline" title="Tus pedidos, contigo"
           message={vm.error || 'Inicia sesión para consultar y confirmar la recepción de tus pedidos.'}
