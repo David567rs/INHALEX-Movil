@@ -4,7 +4,7 @@
 
 La conexión está implementada en `INHALEX-Movil-Zenaida`, rama `feature/resenas`, manteniendo MVVM y Repository. Zenaida desarrolla Reseñas y David (`David567rs`) revisará su futuro PR. Se conserva el historial y se continúa con commits por etapa.
 
-El usuario aceptó en Expo Go el formulario, las estrellas y el comentario. **Hay 5/10 criterios del checklist aceptados: crear el formulario, capturar calificación/comentario, validar campos requeridos, enviar la reseña a la API y mostrar confirmación de publicación.** El acceso y la reapertura de sesión ya se aceptaron en ambas copias durante la recuperación. Además, el 7 de noviembre confirmó las mejoras visuales integradas y la navegación Cuenta → Reseñas en la copia de Zenaida. Tras validar estrellas/comentario vacíos y `abc`, confirmó una publicación con mensaje de éxito, la reseña en Enviadas con las mismas estrellas/comentario, su permanencia al actualizar y la ausencia del producto en Por reseñar. Se aceptan los criterios 5 y 6 por ese reporte. Elegibilidad, casos negativos, errores y continuidad específica de Reseñas siguen pendientes. [Reporte textual de aceptación](evidencias/resenas/expo-go-aceptacion.json).
+El usuario aceptó en Expo Go el formulario, las estrellas y el comentario. **Hay 6/10 criterios del checklist aceptados (1 a 6): formulario, elegibilidad positiva, captura, validación de campos, publicación y confirmación.** El acceso y la reapertura de sesión ya se aceptaron en ambas copias durante la recuperación. Además, el 7 de noviembre confirmó las mejoras visuales integradas y la navegación Cuenta → Reseñas en la copia de Zenaida. Tras validar estrellas/comentario vacíos y `abc`, confirmó una publicación con mensaje de éxito, la reseña en Enviadas con las mismas estrellas/comentario, su permanencia al actualizar y la ausencia del producto en Por reseñar. Se aceptaron los criterios 5 y 6 por ese reporte. Después comprobó que la referencia corresponde al pedido Completado que contiene el producto y que Enviadas no permite volver a publicarlo. Se acepta el criterio 2 por ese caso positivo; el bloqueo visible de repetir la reseña es evidencia parcial del criterio 7. Los casos negativos de elegibilidad, errores y continuidad específica de Reseñas siguen pendientes. [Reporte textual de aceptación](evidencias/resenas/expo-go-aceptacion.json).
 
 Los PR #18, #19 y #20 están integrados en `develop`. La rama de Zenaida incorpora la base visual mediante el merge local `9bc231e`. Se mantiene un backend compartido; el usuario controla Expo y genera el QR. La IP y el puerto de Metro citados en registros anteriores son históricos: utilizar el QR actual de esta copia, sin arrancar otra instancia. [Registro de integración](INTEGRACION-VISUAL-RESENAS.md).
 
@@ -85,19 +85,31 @@ Con el producto pendiente, comprobar nombre y referencia, elegir una calificaci�
 
 En **Enviadas**, verificar el mismo producto, calificación y comentario. Pulsar **Actualizar reseñas** y comprobar que la reseña permanece y el producto ya no aparece en **Por reseñar**. El usuario confirmó estos resultados. Se aceptan **Enviar la reseña a la API** y **Mostrar confirmación de publicación** (5 y 6). El agente no observó el teléfono ni publicó la reseña. La permanencia al actualizar en la misma sesión no sustituye la prueba de reapertura: el controlador conserva temporalmente las publicaciones confirmadas.
 
-## Siguiente prueba: pedido elegible y acceso después de publicar
+## Prueba aceptada: pedido elegible y acceso después de publicar
 
 1. En **Enviadas**, anotar la referencia **Pedido …** de la reseña recién publicada.
 2. Volver a **Cuenta → Historial de pedidos**, localizar esa referencia y abrir **Ver resumen**. Comprobar que tenga estado **Completado** y contenga el producto reseñado.
 3. Regresar por **Cuenta → Reseñas → Enviadas**. Comprobar que la tarjeta sea de consulta y no ofrezca **Escribir reseña** ni **Publicar reseña** para ese producto.
 4. Revisar que el producto siga ausente de **Por reseñar**.
 
-No se necesita publicar otra reseña ni modificar pedidos. Esta prueba aún no está aceptada. El caso positivo de elegibilidad y el bloqueo visible de repetir la reseña se registrarán por separado de los casos negativos: no acreditan rechazo HTTP de duplicados, pedidos ajenos o no completados. Que un producto aparezca en un pedido Confirmado no basta para declararlo inelegible si también se compró antes en uno Completado. Después se comprobarán reapertura, errores y los casos negativos que falten.
+El usuario confirmó el pedido Completado y el producto, la referencia coincidente, la ausencia de acción para volver a publicar y la ausencia del producto en Por reseñar. Se acepta **Validar que el usuario pueda publicar la reseña** (2) por el caso positivo de compra elegible. El bloqueo de repetición en la interfaz es evidencia parcial de **Evitar reseñas cuando no corresponda** (7), que sigue pendiente de los casos negativos. No acredita rechazo HTTP de duplicados, pedidos ajenos o no completados. La fuente es el reporte del usuario, sin observación directa del teléfono por el agente.
 
-## Checklist de Trello: 5/10 aceptados
+## Siguiente prueba: producto de pedido no completado
+
+Primero confirmar si la cuenta tiene un producto que solo se haya comprado en pedidos **En revisión**, **Confirmado** o **Cancelado**, nunca en un pedido **Completado**. La disponibilidad está consultada al usuario y aún pendiente de respuesta. No se ha preparado ni ejecutado una prueba controlada.
+
+Si existe ese caso inequívoco:
+
+1. En **Cuenta → Historial de pedidos → Ver resumen**, identificar el producto y comprobar el estado no completado.
+2. Volver por **Cuenta → Reseñas**, pulsar **Actualizar reseñas** y abrir **Por reseñar**.
+3. Comprobar que ese producto no aparezca disponible para publicar.
+
+Esta prueba es de consulta: no exige crear compras, cambiar estados ni publicar. Si no hay un caso inequívoco, se prepara después un escenario controlado, con su aceptación por separado. Que un producto aparezca en un pedido Confirmado no basta para declararlo inelegible si también se compró antes en uno Completado. La ausencia del menú de Cuenta al cerrar sesión prueba aislamiento de acceso, pero no sustituye este caso de elegibilidad. Después siguen errores/reintento y reapertura/sesión.
+
+## Checklist de Trello: 6/10 aceptados
 
 - [x] Crear formulario de reseña.
-- [ ] Validar que el usuario pueda publicar la reseña.
+- [x] Validar que el usuario pueda publicar la reseña.
 - [x] Capturar calificación y comentario.
 - [x] Validar campos requeridos.
 - [x] Enviar la reseña a la API.
@@ -107,7 +119,7 @@ No se necesita publicar otra reseña ni modificar pedidos. Esta prueba aún no e
 - [ ] Probar la funcionalidad.
 - [ ] Revisar el código.
 
-Los cinco puntos aceptados proceden de los reportes del usuario. Los demás siguen pendientes de las pruebas guiadas y de revisión; disponer de código o pruebas automatizadas no equivale a aceptarlos en Expo Go. El agente no modificó Trello en esta etapa.
+Los seis puntos aceptados proceden de los reportes del usuario. Los demás siguen pendientes de las pruebas guiadas y de revisión; disponer de código o pruebas automatizadas no equivale a aceptarlos en Expo Go. El agente no modificó Trello en esta etapa.
 
 ## Evidencia técnica y trabajo pendiente
 
@@ -115,6 +127,6 @@ Al preparar este documento, la suite móvil completa terminó con **782 pruebas 
 
 La verificación final pasó: TypeScript, lint, Expo Doctor **20/20** y exportaciones Android (**1454 módulos**) y web (**1104 módulos**), después de retirar la ruta temporal de QA. La revisión web comprobó el acceso real sin sesión y su navegación al login. Un escenario aislado con sesión y Repository simulados comprobó lista elegible, selección, validación local, estrellas, comentario, publicación simulada, Enviadas y actualización; no hubo publicación en la base real. La pantalla de 356 px no desbordó horizontalmente. Las capturas están rotuladas como prueba controlada. [Resultados](evidencias/resenas/verificacion-api.json).
 
-Estas verificaciones pertenecen a la preparación de la API. La integración visual posterior pasó 813 pruebas, TypeScript y lint, y el usuario confirmó el acceso desde Cuenta. La validación de campos y el recorrido positivo de publicación ya se aceptaron mediante los reportes nativos descritos arriba. Elegibilidad, vacío, errores, recuperación, duplicados y continuidad propia de Reseñas se aceptarán paso a paso. Los 5/10 aceptados no cambian por las comprobaciones técnicas.
+Estas verificaciones pertenecen a la preparación de la API. La integración visual posterior pasó 813 pruebas, TypeScript y lint, y el usuario confirmó el acceso desde Cuenta. La validación de campos, publicación y elegibilidad positiva ya se aceptaron mediante los reportes nativos descritos arriba. Los casos negativos de elegibilidad, vacío, errores, recuperación y continuidad propia de Reseñas se aceptarán paso a paso; el bloqueo visible de repetir la reseña ya tiene evidencia parcial. Los 6/10 aceptados no cambian por las comprobaciones técnicas.
 
 Los PR técnicos y visuales ya integrados no completan la actividad de Reseñas. Su futuro PR tendrá a David como revisor cuando finalicen las pruebas funcionales. La aceptación de diseño, conexión y pruebas se documenta por etapas; no se reescriben los commits anteriores ni se comienza Confirmación de recepción en esta etapa.

@@ -6,12 +6,13 @@
   "designReport": "Amigo, ya abrió Reseñas en Expo Go y funcionan las estrellas y el comentario. Sigamos con la API en feature/resenas, manteniendo MVVM, Repository y commits por etapa.",
   "acceptedCriteria": [
     1,
+    2,
     3,
     4,
     5,
     6
   ],
-  "acceptedCount": "5/10",
+  "acceptedCount": "6/10",
   "loginIssueReported": true,
   "apiAcceptance": "Recorrido positivo de publicación aceptado por reporte del usuario; casos restantes pendientes",
   "trelloChangedByAgent": false,
@@ -72,6 +73,37 @@
       "Errores, recuperación, continuidad de Reseñas y revisión real siguen pendientes"
     ],
     "nextStep": "Comparar la referencia de la reseña con el pedido Completado en Historial y comprobar que Enviadas no ofrezca volver a publicar.",
+    "reviewPostedByAgent": false,
+    "expoStartedByAgent": false,
+    "trelloChangedByAgent": false,
+    "trelloMarkConfirmedByUser": false
+  },
+  "eligibilityAcceptance": {
+    "date": "2026-11-07",
+    "recordedOnHead": "83f61a0e2b7c6e927cecd0817ebf16ab49dd7ea1",
+    "report": "Amigo, la referencia coincide con un pedido Completado que contiene ese producto. En Enviadas no permite volver a publicarlo y sigue fuera de Por reseñar. ¿Qué marco en Trello y qué sigue?",
+    "source": "Reporte textual del usuario en el chat; sin observación directa del teléfono por el agente",
+    "newChecklistCriteriaAccepted": [
+      2
+    ],
+    "acceptedScope": [
+      "Referencia de la reseña coincide con el pedido Completado",
+      "El pedido contiene el producto reseñado",
+      "Enviadas no ofrece volver a publicar ese producto",
+      "Producto ausente de Por reseñar"
+    ],
+    "partialCriteria": [
+      {
+        "criterion": 7,
+        "scope": "Bloqueo visible de repetir una reseña ya enviada; casos negativos de elegibilidad pendientes"
+      }
+    ],
+    "limits": [
+      "No acredita rechazo HTTP de duplicados ni pedidos ajenos o no completados",
+      "La persistencia tras reapertura, errores y revisión real siguen pendientes"
+    ],
+    "nextStep": "Identificar un producto comprado solo en pedidos no completados para probar que no aparezca en Por reseñar; si no existe un caso inequívoco, preparar una prueba controlada cuando el usuario lo confirme.",
+    "negativeCaseAvailability": "Consultada al usuario; pendiente de respuesta",
     "reviewPostedByAgent": false,
     "expoStartedByAgent": false,
     "trelloChangedByAgent": false,
