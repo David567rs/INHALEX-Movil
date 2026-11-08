@@ -1,6 +1,10 @@
 # INHALEX Movil
 
-## Etapa vigente: API de Confirmación de recepción, 8 de noviembre de 2026
+## Etapa vigente: diseño de Más y acceso superior a Cuenta
+
+8 de noviembre de 2026. El usuario revisó los borradores informativos y autorizó **solo el diseño** en la copia de David, rama local `codex/diseno-mas-cuenta` desde `develop` `6e4cd77`. Mantener MVVM, Repository y commits separados por etapa. Más reemplaza el quinto tab; Cuenta queda en `/cuenta`, accesible desde el encabezado de los cinco tabs. Las FAQ provienen del sistema web original y los textos legales son los borradores revisados, todavía identificados como tales. Ver [diseño, fuentes y comprobaciones](docs/DISENO-MAS-CUENTA.md). El usuario controla Expo y backend; no iniciar ni detener servicios. No modificar la copia de Zenaida ni publicar PR en esta etapa. La revisión en Expo Go está pendiente. Los estados siguientes son históricos y no sustituyen este alcance.
+
+## Etapa anterior: API de Confirmación de recepción, 8 de noviembre de 2026
 
 **PR de recepción publicado, 8 de noviembre de 2026:** [PR #22](https://github.com/David567rs/INHALEX-Movil/pull/22), de David567rs, `feature/confirmacion-recepcion` → `develop`, abierto y sin fusionar. Se verificó por API la solicitud de revisión a **ZenaidaGR**. La aceptación funcional sigue en **8/9**; Revisar el código espera a Zenaida. Se conservan todos los commits. El usuario controla Expo y backend; no iniciar ni detener servicios. La copia de Zenaida permanece intacta. Alcance y comprobaciones: [PR de recepción](docs/PR-CONFIRMACION-RECEPCION.md).
 

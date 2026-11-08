@@ -1,6 +1,10 @@
 # Plan de trabajo de INHALEX Movil
 
-## Etapa vigente: Confirmación de recepción — conexión a la API
+## Etapa vigente: diseño de Más y acceso superior a Cuenta
+
+8 de noviembre de 2026. Diseño a cargo de David en `INHALEX-Movil`, rama local `codex/diseno-mas-cuenta`, desde `develop` `6e4cd77`. Más reúne ayuda, contacto, empresa y los borradores legales revisados; Cuenta pasa al acceso superior y conserva sus módulos. FAQ recuperadas del código del sistema web original. MVVM con Repository local, sin conectar una API de contenido ni empezar pagos o release. El usuario controla Expo y backend. La copia de Zenaida permanece intacta; sin publicación de rama ni PR. TypeScript, lint y 861 pruebas existentes aprobadas; comprobaciones web realizadas. La aceptación nativa del diseño sigue pendiente. [Alcance, fuentes y recorrido en Expo Go](DISENO-MAS-CUENTA.md).
+
+## Etapa anterior: Confirmación de recepción — conexión a la API
 
 **PR de recepción publicado, 8 de noviembre de 2026:** [PR #22](https://github.com/David567rs/INHALEX-Movil/pull/22), de David567rs, `feature/confirmacion-recepcion` → `develop`, abierto y sin fusionar. Se verificó por API la solicitud de revisión a **ZenaidaGR**. La aceptación funcional sigue en **8/9**; Revisar el código espera a Zenaida. Se conservan todos los commits. El usuario controla Expo y backend; no iniciar ni detener servicios. La copia de Zenaida permanece intacta. Alcance y comprobaciones: [PR de recepción](PR-CONFIRMACION-RECEPCION.md).
 
