@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import { useState, type ReactNode } from 'react';
+import { useState } from 'react';
 import { ActivityIndicator, Image, Modal, Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
@@ -16,21 +16,16 @@ const receiptLabel = (order: ReceiptOrder) => order.receiptStatus === 'confirmed
   : order.receiptStatus === 'issue_reported' ? 'Con incidencia' : 'Por confirmar';
 const units = (count: number) => `${count} ${count === 1 ? 'unidad' : 'unidades'}`;
 
-export function OrderReceiptScreen({ developmentPanel, onLeaveForTest }: {
-  developmentPanel?: ReactNode;
-  onLeaveForTest?: () => void;
-} = {}) {
+export function OrderReceiptScreen() {
   const vm = useOrderReceiptViewModel();
   const order = vm.order;
   const confirmed = order?.receiptStatus === 'confirmed';
   const issue = order?.receiptStatus === 'issue_reported';
   const gated = vm.status === 'anonymous' || vm.status === 'session-expired' || vm.status === 'recovery-error';
-  const openHistory = () => onLeaveForTest ? onLeaveForTest() : router.navigate('/historial-pedidos');
   return <>
     <AppScreen title="Confirmar recepción" eyebrow="Tus pedidos" includeBottomInset
       action={<BackButton onPress={() => order && !vm.busy ? vm.selectOrder(null)
-        : onLeaveForTest ? onLeaveForTest() : router.canGoBack() ? router.back() : router.navigate('/(tabs)/cuenta')} />}>
-      {__DEV__ ? developmentPanel : null}
+        : router.canGoBack() ? router.back() : router.navigate('/(tabs)/cuenta')} />}>
       {vm.status === 'checking' ? <LoadingState label="Comprobando tu sesión…" /> : gated ? <>
         <ScreenState icon="person-circle-outline" title="Tus pedidos, contigo"
           message={vm.error || 'Inicia sesión para consultar y confirmar la recepción de tus pedidos.'}
@@ -100,10 +95,10 @@ export function OrderReceiptScreen({ developmentPanel, onLeaveForTest }: {
             {!issue ? <Text style={styles.helper}>{vm.requiresRefresh ? 'Verifica la recepción para saber si tu confirmación quedó guardada.'
               : 'Si aún no lo recibes, puedes volver más tarde.'}</Text> : null}
           </>}
-          <ReceiptButton label={onLeaveForTest ? 'Salir de la prueba' : 'Volver a mis pedidos'} secondary onPress={openHistory} />
+          <ReceiptButton label="Volver a mis pedidos" secondary onPress={() => router.navigate('/historial-pedidos')} />
         </> : vm.orders ? vm.orders.length === 0 ? <ScreenState icon="cube-outline" title="No hay recepciones disponibles"
           message="Cuando tengas un pedido completado, podrás confirmar aquí que lo recibiste."
-          actionLabel="Ver mis pedidos" onAction={openHistory} /> : <>
+          actionLabel="Ver mis pedidos" onAction={() => router.navigate('/historial-pedidos')} /> : <>
           <Text accessibilityRole="header" style={styles.listHeading}>Elige tu pedido</Text>
           <Text style={styles.listNote}>Hasta 12 pedidos completados de tu cuenta.</Text>
           {vm.orders.map((item) => <Pressable key={item.id} accessibilityRole="button"

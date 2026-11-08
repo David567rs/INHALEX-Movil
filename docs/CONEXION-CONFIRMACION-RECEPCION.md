@@ -100,7 +100,7 @@ El usuario informó exactamente: «Amigo, Confirmar y Verificar fallaron sin per
 
 Respuesta sugerida: «Amigo, apareció Recepción confirmada, desapareció el botón y se conservó al actualizar. La referencia, las cantidades y los importes coinciden con Historial.»
 
-Los casos pendientes se guían por separado: vacío y reapertura/cierre de sesión según disponibilidad. El fallo al confirmar/verificación controlado ya fue aceptado; se retirará su acceso temporal en una etapa separada. No se marcan como aceptados anticipadamente. El PR y la revisión de Zenaida corresponden a una etapa posterior.
+Los casos pendientes se guían por separado: vacío y reapertura/cierre de sesión según disponibilidad. El fallo al confirmar/verificación controlado ya fue aceptado en `cc6be76`; su acceso temporal fue retirado en una etapa separada. No se marcan como aceptados anticipadamente. El PR y la revisión de Zenaida corresponden a una etapa posterior.
 
 ## Guía de elegibilidad (conservada como referencia)
 
@@ -145,3 +145,16 @@ La preparación pasó **866/866 pruebas móviles**, TypeScript, lint con 0 error
 Esta evidencia web y técnica no sustituye el reporte nativo del usuario. El checklist continúa **6/9**; **Manejar errores (7)** espera ese reporte junto con la lectura real aceptada. **Probar la funcionalidad (8)** y **Revisar el código (9)** siguen pendientes. La respuesta perdida después de guardar es otro escenario y no se acredita con este fallo previo a guardar. Después de la aceptación se retirarán el helper y su acceso temporal en otro commit, conservando la historia y antes de publicar o abrir PR. No se modifica Trello ni se inicia Expo o el backend por esta preparación.
 
 La preparación y sus pendientes descritos en el apartado anterior son históricos. El reporte nativo posterior registrado en la aceptación vigente completa Manejar errores (7), con el alcance ficticio declarado. La retirada del acceso temporal se registra por separado.
+
+## Retirada y siguiente comprobación nativa
+
+La aceptación está registrada en `cc6be76`. Se retiró el helper controlado y se restauró el flujo normal conservando los commits, la guía histórica y sus evidencias. Tras la retirada pasaron 861/861 pruebas móviles, TypeScript, lint y `git diff --check`; la entrada web normal mostró la protección sin sesión y ningún panel ficticio. El backend no cambió. Véase [el registro de retirada](PRUEBA-CONTROLADA-RECEPCION.md#retirada-verificada-8-de-noviembre-de-2026).
+
+El siguiente recorrido usa el pedido **real ya confirmado**, sin enviar otra confirmación:
+
+1. Cerrar Expo Go por completo y reabrir el proyecto existente de David. Entrar en Cuenta → Confirmación de recepción y abrir la misma referencia.
+2. Comprobar **Recepción confirmada**, fecha de confirmación, cantidades y subtotal; no debe ofrecer confirmar de nuevo. Pulsar **Actualizar recepciones** y verificar que se conserva.
+3. Cerrar sesión desde Cuenta: los datos personales y el acceso a recepción deben ocultarse. Si se vuelve a abrir la ruta sin sesión, debe pedir ingresar.
+4. Ingresar con la misma cuenta: recuperar el pedido confirmado, sin otro envío, y comprobar Actualizar recepciones.
+
+Después falta comprobar el estado vacío según disponibilidad de una cuenta sin pedidos Completados: **No hay recepciones disponibles**, permanencia al actualizar y **Ver mis pedidos** hacia Historial. No se borran ni cambian pedidos para provocar este estado. Si no existe esa cuenta, se acordará un caso aislado. **Probar la funcionalidad (8)** y **Revisar el código (9)** permanecen pendientes; esta retirada no los completa ni autoriza un PR.

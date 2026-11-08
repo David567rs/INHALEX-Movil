@@ -2,11 +2,11 @@
 
 ## Resultado posterior: aceptado por el usuario
 
-8 de noviembre de 2026. «Amigo, Confirmar y Verificar fallaron sin perder el pedido ficticio. Restablecer y verificar habilitaron Confirmar sin envío automático. Confirmé: quedaron 2 intentos y 1 recepción, se conservó al actualizar y salí. ¿Qué sigue?» Se acepta el comportamiento visible del caso ficticio en Expo Go, junto con la lectura real previa: **Manejar errores (7)**, avance **7/9**. La evidencia es el reporte del usuario; no hubo observación directa del teléfono por el agente ni escritura real en este caso. [Registro estructurado](evidencias/confirmacion-recepcion/aceptacion-error-confirmacion-controlada-expo-go.json). La retirada del helper seguirá en un commit separado.
+8 de noviembre de 2026. «Amigo, Confirmar y Verificar fallaron sin perder el pedido ficticio. Restablecer y verificar habilitaron Confirmar sin envío automático. Confirmé: quedaron 2 intentos y 1 recepción, se conservó al actualizar y salí. ¿Qué sigue?» Se acepta el comportamiento visible del caso ficticio en Expo Go, junto con la lectura real previa: **Manejar errores (7)**, avance **7/9**. La evidencia es el reporte del usuario; no hubo observación directa del teléfono por el agente ni escritura real en este caso. [Registro estructurado](evidencias/confirmacion-recepcion/aceptacion-error-confirmacion-controlada-expo-go.json). La aceptación quedó en `cc6be76`; el helper y su acceso ya se retiraron en una etapa separada. La guía siguiente es histórica y ya no ofrece un acceso disponible.
 
 ## Preparación y guía históricas
 
-Lo siguiente conserva las instrucciones y comprobaciones de la preparación; los pendientes de aceptación nativa de ese snapshot quedan resueltos por el reporte anterior. El acceso dejará de estar disponible tras retirar el helper.
+Lo siguiente conserva las instrucciones y comprobaciones de la preparación; los pendientes de aceptación nativa de ese snapshot quedan resueltos por el reporte anterior. El acceso temporal ya no está disponible.
 
 8 de noviembre de 2026. David, `INHALEX-Movil`, rama `feature/confirmacion-recepcion`. El usuario eligió esta alternativa porque no dispone de otro pedido Completado pendiente de recepción, de prueba o realmente recibido. El caso de lectura real y su recuperación ya fueron aceptados por su reporte en `39ce307`. Esta preparación no añade aceptación de Expo Go: el checklist permanece **6/9**, criterios 1 a 6; están pendientes Manejar errores (7), Probar la funcionalidad (8) y Revisar el código (9).
 
@@ -58,3 +58,11 @@ La evidencia estructurada está en [prueba-error-confirmacion-controlada.json](e
 El commit de aceptación previa es `39ce307`; el commit separado de implementación controlada es `9b6f9f5`. No se inició Expo, un backend u otro servicio, ni se modificaron pedidos reales, credenciales, dependencias, la copia de Zenaida o Trello por esta preparación. La comprobación final conservó el Metro `8081` con PID `33804` y el backend `3200` con PID `12968`; son un snapshot de esta verificación, no valores que deban reutilizarse sin inspección.
 
 Después del reporte nativo, registrar su alcance exacto sin convertir el caso ficticio en evidencia del backend. Luego retirar el helper, su acceso y sus adaptaciones temporales en un commit separado, conservando los commits y evidencias previas. Comprobar la pantalla normal y los controles técnicos que correspondan tras retirarlo, antes de publicar o abrir el PR para revisión real de Zenaida. La preparación, sus pruebas y la revisión técnica del agente no completan Revisar el código (9).
+
+## Retirada verificada, 8 de noviembre de 2026
+
+Después de la aceptación `cc6be76`, se retiraron los tres componentes/helpers temporales y sus cinco pruebas específicas. Se restauraron la ruta directa a `OrderReceiptScreen`, sus props normales y las listas del runner/loader de pruebas. Los ocho archivos afectados coinciden exactamente con su contenido anterior al commit controlado `9b6f9f5`; no se reescribió el historial. Los controladores, Repository, casos de uso y pruebas permanentes de recepción permanecen intactos.
+
+Pasaron `npm test` (861/861, 0 fallos), `npm run typecheck`, `npm run lint` y `git diff --check`. Las cinco pruebas retiradas explican la diferencia frente a las 866 de la preparación. No quedan referencias al helper en `Mobile/src` ni `Mobile/tests`.
+
+La comprobación de la ruta normal en `http://localhost:8081/confirmacion-recepcion`, usando el Metro existente, mostró **Confirmar recepción**, **Tus pedidos, contigo** e **Iniciar sesión**, sin panel ni pedido ficticio. No se observaron errores de consola; solo la advertencia web de Animated sobre su fallback JavaScript. Esto verifica la entrada anónima web, no sustituye la prueba nativa de sesión que sigue pendiente. No se iniciaron ni reiniciaron servicios, se modificaron pedidos reales, se publicó la rama o se abrió PR.

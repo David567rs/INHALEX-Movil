@@ -48,7 +48,6 @@ const sourceRoots = [
   '../src/features/notices/presentation/state',
   '../src/features/orderReceipt/domain',
   '../src/features/orderReceipt/data',
-  '../src/features/orderReceipt/development',
   '../src/features/orderReceipt/presentation/state',
   '../src/features/reviews/domain',
   '../src/features/reviews/data',
