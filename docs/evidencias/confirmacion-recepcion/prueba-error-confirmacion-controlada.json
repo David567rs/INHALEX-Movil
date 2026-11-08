@@ -1,0 +1,87 @@
+{
+  "fecha": "2026-11-08",
+  "copia": "INHALEX-Movil",
+  "rama": "feature/confirmacion-recepcion",
+  "etapa": "preparacion de prueba controlada de fallo al confirmar y verificacion",
+  "aceptacionLecturaRealCommit": "39ce307",
+  "implementacionControladaCommit": "9b6f9f5",
+  "motivo": "El usuario no dispone de otro pedido Completado pendiente de recepcion y eligio una prueba controlada",
+  "fuenteVerificacion": "ejecucion tecnica y QA web del agente principal; no observacion del telefono",
+  "montaje": {
+    "soloDesarrollo": true,
+    "guarda": "__DEV__",
+    "acceso": "Cuenta -> Confirmacion de recepcion -> Probar fallo de confirmacion",
+    "sesion": "ficticia, independiente y sin credenciales",
+    "repository": "en memoria",
+    "capasRealesReutilizadas": ["casos de uso", "controlador", "ViewModel", "pantalla"],
+    "httpDelCaso": false,
+    "almacenamientoDelCaso": false,
+    "lecturasNormalesAppExterior": "pueden ocurrir con la sesion real; no forman parte del caso ficticio",
+    "limpieza": "al salir de la prueba o perder foco de la ruta"
+  },
+  "pedidoFicticio": {
+    "referencia": "DEMO-RECEPCION-01",
+    "producto": "Lavanda de demostracion",
+    "presentacion": "10 ml",
+    "unidades": 2,
+    "precioUnitario": 60,
+    "subtotal": 120,
+    "moneda": "MXN"
+  },
+  "verificacionTecnica": {
+    "testsMoviles": { "aprobados": 866, "fallos": 0, "nuevosDelCasoControlado": 5 },
+    "typecheck": "correcto",
+    "lint": "correcto: 0 errores, 0 advertencias",
+    "gitDiffCheck": "correcto",
+    "revisionTecnica": "sin bloqueadores detectados",
+    "nuevaSuiteBackendEjecutada": false,
+    "exportacionNativaGenerada": false
+  },
+  "qaWeb": {
+    "servidor": "Metro 8081 ya abierto por el usuario",
+    "viewport": { "ancho": 390, "alto": 844 },
+    "entradaRealAnonimaObservada": true,
+    "falloAntesDeGuardarObservado": true,
+    "confirmarBloqueadoTrasFallo": true,
+    "verificarFallaConservandoPedido": true,
+    "restablecerSoloCambiaConexionSimulada": true,
+    "verificarHabilitaSinConfirmarAutomaticamente": true,
+    "confirmacionExplicitaObservada": true,
+    "contadoresSoloEnMemoria": {
+      "trasFallo": { "intentos": 1, "recepcionesGuardadas": 0 },
+      "trasRestablecerYVerificar": { "intentos": 1, "recepcionesGuardadas": 0 },
+      "trasConfirmacionExplicita": { "intentos": 2, "recepcionesGuardadas": 1 }
+    },
+    "actualizarConservaConfirmacionYContadores2_1": true,
+    "salirRegresaPantallaRealAnonima": true,
+    "reentrarReiniciaPendienteYContadores0_0": true,
+    "segundoCasoCerrado": true,
+    "erroresConsola": 0,
+    "advertenciaWeb": "Animated usa fallback JavaScript para useNativeDriver",
+    "capturaRevisada": "prueba-controlada-confirmada-web.png"
+  },
+  "aceptacionExpoGo": "pendiente del reporte del usuario",
+  "criteriosAceptadosAcumulados": [1, 2, 3, 4, 5, 6],
+  "criteriosPendientes": [7, 8, 9],
+  "checklist": "6/9",
+  "criterio7": "espera reporte nativo de fallo al confirmar y verificacion, junto con la lectura real ya aceptada",
+  "serviciosIniciadosPorAgente": false,
+  "serviciosReiniciadosPorAgente": false,
+  "snapshotServiciosConservados": {
+    "metro": { "puerto": 8081, "pid": 33804 },
+    "backend": { "puerto": 3200, "pid": 12968 },
+    "alcance": "valores observados al terminar esta verificacion; requieren nueva inspeccion antes de reutilizarse"
+  },
+  "pedidosRealesModificados": false,
+  "trelloModificado": false,
+  "ramaPublicada": false,
+  "noAcreditado": [
+    "Aceptacion nativa de Expo Go",
+    "Fallo de escritura contra el backend real",
+    "Conteos HTTP, de escrituras, notas o notificaciones reales",
+    "Respuesta perdida despues de guardar mediante este caso manual",
+    "Almacenamiento fisico",
+    "Revision del codigo por Zenaida"
+  ],
+  "retirada": "despues de la aceptacion, retirar helper y acceso temporal en otro commit antes de publicar o abrir PR, conservando historia y evidencias"
+}
