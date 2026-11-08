@@ -11,9 +11,10 @@
     4,
     5,
     6,
-    7
+    7,
+    8
   ],
-  "acceptedCount": "7/10",
+  "acceptedCount": "8/10",
   "loginIssueReported": true,
   "apiAcceptance": "Recorrido positivo de publicación aceptado por reporte del usuario; casos restantes pendientes",
   "trelloChangedByAgent": false,
@@ -160,5 +161,33 @@
     "servicesChangedByAgent": false,
     "expoStartedByAgent": false,
     "trelloChangedByAgent": false
+  },
+  "publicationErrorAcceptance": {
+    "date": "2026-11-07",
+    "recordedOnHead": "e87900a53cbaa60f9feecfdd9d8baf1151b47281",
+    "report": "Amigo, fallaron Publicar y Verificar reseñas sin perder las estrellas ni el comentario. Reinicié el backend y Verificar reseñas habilitó Publicar, conservó el borrador y no lo envió automáticamente.",
+    "source": "Reporte textual del usuario en el chat; sin observación directa del teléfono por el agente",
+    "newChecklistCriteriaAccepted": [
+      8
+    ],
+    "acceptedScope": [
+      "Fallo de Publicar y Verificar reseñas sin perder estrellas ni comentario",
+      "Tras reiniciar el backend, Verificar reseñas habilita Publicar y conserva el borrador",
+      "La recuperación no envía automáticamente la reseña",
+      "Completa Manejar errores junto con readErrorAcceptance"
+    ],
+    "limits": [
+      "No se inspeccionó tráfico HTTP ni se observó el dispositivo",
+      "No acredita respuesta perdida después de guardar ni pruebas nativas de 409, 401 o 403",
+      "La conservación del borrador se comprobó dentro del formulario, no al salir o reabrir",
+      "Reapertura y revisión real de David siguen pendientes"
+    ],
+    "nextStep": "Usar una reseña ya enviada para comprobar reapertura, ocultación de datos personales y menú al cerrar sesión, retorno con la misma cuenta y Actualizar reseñas sin duplicados.",
+    "reviewPostedByAgent": false,
+    "controlledScenarioPrepared": false,
+    "servicesChangedByAgent": false,
+    "expoStartedByAgent": false,
+    "trelloChangedByAgent": false,
+    "trelloMarkConfirmedByUser": false
   }
 }
