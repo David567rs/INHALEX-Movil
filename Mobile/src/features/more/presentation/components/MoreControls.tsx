@@ -21,7 +21,7 @@ export function MoreRow({ title, description, icon, onPress, last = false }: {
   last?: boolean;
 }) {
   return <SoftPressable accessibilityRole="button" accessibilityLabel={title}
-    onPress={onPress} style={({ pressed }) => [styles.row, !last && styles.divider, pressed && styles.pressed]}>
+    onPress={onPress} style={({ pressed }) => [styles.row, !last && styles.divider, pressed && styles.rowPressed]}>
     <View accessible={false} style={styles.icon}>
       <Ionicons name={icon} size={22} color={colors.primaryDark} />
     </View>
@@ -29,7 +29,9 @@ export function MoreRow({ title, description, icon, onPress, last = false }: {
       <Text style={styles.rowTitle}>{title}</Text>
       {description ? <Text style={styles.rowDescription}>{description}</Text> : null}
     </View>
-    <Ionicons accessible={false} name="chevron-forward" size={18} color={colors.primary} />
+    <View accessible={false} style={styles.chevron}>
+      <Ionicons name="chevron-forward" size={16} color={colors.primary} />
+    </View>
   </SoftPressable>;
 }
 
@@ -48,7 +50,9 @@ const styles = StyleSheet.create({
   back: { alignItems: 'center', backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 16, borderWidth: 1, height: 48, justifyContent: 'center', width: 48 },
   row: { alignItems: 'center', flexDirection: 'row', gap: 13, minHeight: 76, paddingHorizontal: 16, paddingVertical: 16 },
   divider: { borderBottomColor: colors.border, borderBottomWidth: StyleSheet.hairlineWidth },
-  icon: { alignItems: 'center', backgroundColor: colors.surfaceSoft, borderRadius: 14, height: 44, justifyContent: 'center', width: 44 },
+  icon: { alignItems: 'center', backgroundColor: colors.surfaceSoft, borderColor: '#E0ECDF', borderRadius: 15, borderWidth: 1, height: 44, justifyContent: 'center', width: 44 },
+  chevron: { alignItems: 'center', borderColor: colors.border, borderRadius: 10, borderWidth: StyleSheet.hairlineWidth, height: 26, justifyContent: 'center', width: 26 },
+  rowPressed: { backgroundColor: colors.surfaceSoft },
   rowCopy: { flex: 1, minWidth: 0 },
   rowTitle: { color: colors.text, fontSize: 15, fontWeight: '700', lineHeight: 22 },
   rowDescription: { color: colors.textMuted, fontSize: 12, lineHeight: 19, marginTop: 3 },

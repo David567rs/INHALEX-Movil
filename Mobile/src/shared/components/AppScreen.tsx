@@ -11,21 +11,24 @@ interface AppScreenProps extends PropsWithChildren {
   action?: ReactNode;
   trailing?: ReactNode;
   includeBottomInset?: boolean;
+  animateContent?: boolean;
 }
 
-export function AppScreen({ title, eyebrow, action, trailing, includeBottomInset = false, children }: AppScreenProps) {
+export function AppScreen({ title, eyebrow, action, trailing, includeBottomInset = false, animateContent = true, children }: AppScreenProps) {
+  const content = <>
+    <ScreenHeader title={title} eyebrow={eyebrow} leading={action ?? <Image
+      accessibilityLabel="INHALEX"
+      resizeMode="contain"
+      source={require('../../../assets/inhalex-mark.png')}
+      style={styles.mark}
+    />} trailing={trailing} />
+    {children}
+  </>;
+
   return (
     <SafeAreaView edges={includeBottomInset ? ['top', 'left', 'right', 'bottom'] : ['top', 'left', 'right']} style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <Reveal>
-          <ScreenHeader title={title} eyebrow={eyebrow} leading={action ?? <Image
-              accessibilityLabel="INHALEX"
-              resizeMode="contain"
-              source={require('../../../assets/inhalex-mark.png')}
-              style={styles.mark}
-            />} trailing={trailing} />
-          {children}
-        </Reveal>
+        {animateContent ? <Reveal>{content}</Reveal> : <View>{content}</View>}
       </ScrollView>
     </SafeAreaView>
   );

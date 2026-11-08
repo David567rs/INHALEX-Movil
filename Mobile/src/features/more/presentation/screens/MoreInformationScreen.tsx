@@ -8,6 +8,8 @@ import { ScreenState } from '@/shared/components/ScreenFeedback';
 import type { MoreContent, MoreDocument, MoreSectionId } from '../../domain/models/MoreContent';
 import type { LoadMoreContent } from '../../domain/useCases/loadMoreContent';
 import { MoreBackButton, MoreLoadState } from '../components/MoreControls';
+import { MoreBrandHeader } from '../components/MoreBrandHeader';
+import { MoreEntrance } from '../components/MoreMotion';
 import { useMoreViewModel } from '../viewModels/useMoreViewModel';
 import { useMoreContactViewModel } from '../viewModels/useMoreContactViewModel';
 
@@ -19,18 +21,27 @@ const titles: Record<MoreSectionId, string> = {
   terminos: 'Términos y condiciones',
 };
 
+const sectionIcons: Record<MoreSectionId, keyof typeof Ionicons.glyphMap> = {
+  'preguntas-frecuentes': 'help-circle-outline',
+  contacto: 'chatbubble-ellipses-outline',
+  empresa: 'leaf-outline',
+  privacidad: 'shield-checkmark-outline',
+  terminos: 'document-text-outline',
+};
+
 export function MoreInformationScreen({ section, loadContent }: { section: string; loadContent: LoadMoreContent }) {
   const vm = useMoreViewModel(loadContent);
   const validSection = Object.prototype.hasOwnProperty.call(titles, section) ? section as MoreSectionId : null;
   const document = vm.content?.documents.find((item) => item.id === validSection);
 
   return <AppScreen title={validSection ? titles[validSection] : 'Información'} eyebrow="INHALEX"
-    action={<MoreBackButton />} includeBottomInset>
+    action={<MoreBackButton />} includeBottomInset animateContent={false}>
     {!validSection ? <ScreenState title="Esta sección no está disponible"
       message="Encuentra nuestras opciones de ayuda e información en Más."
       actionLabel="Volver a Más" onAction={() => router.replace('/(tabs)/mas')} />
       : !vm.content ? <MoreLoadState isLoading={vm.isLoading} message={vm.message} onRetry={vm.reload} />
-        : <>
+        : <MoreEntrance key={validSection}>
+          <MoreBrandHeader icon={sectionIcons[validSection]} />
           {validSection === 'preguntas-frecuentes' ? <>
             <Text style={styles.intro}>Encuentra una respuesta antes de elegir tu próximo aroma.</Text>
             <View style={styles.faqList}>
@@ -41,7 +52,9 @@ export function MoreInformationScreen({ section, loadContent }: { section: strin
                     accessibilityState={{ expanded }} onPress={() => vm.toggleFaq(faq.id)}
                     style={({ pressed }) => [styles.faqQuestion, pressed && styles.pressed]}>
                     <Text style={styles.faqTitle}>{faq.question}</Text>
-                    <Ionicons accessible={false} name={expanded ? 'remove' : 'add'} size={21} color={colors.primary} />
+                    <View accessible={false} style={[styles.faqToggle, expanded && styles.faqToggleOpen]}>
+                      <Ionicons accessible={false} name={expanded ? 'remove' : 'add'} size={19} color={expanded ? colors.white : colors.primary} />
+                    </View>
                   </SoftPressable>
                   {expanded ? <Reveal><Text selectable style={styles.faqAnswer}>{faq.answer}</Text></Reveal> : null}
                 </View>;
@@ -65,7 +78,7 @@ export function MoreInformationScreen({ section, loadContent }: { section: strin
             : <ScreenState title="Documento no disponible" message="Puedes consultar tus dudas desde Contacto."
               actionLabel="Ir a Contacto" onAction={() => router.push({ pathname: '/informacion/[section]', params: { section: 'contacto' } })} />
             : null}
-        </>}
+        </MoreEntrance>}
   </AppScreen>;
 }
 
@@ -111,9 +124,9 @@ function ContactContent({ contact }: { contact: MoreContent['contact'] }) {
 function CompanyContent({ company }: { company: MoreContent['company'] }) {
   return <>
     <View style={styles.companyLead}>
-      <Ionicons accessible={false} name="leaf-outline" size={30} color={colors.primaryDark} />
+      <View pointerEvents="none" accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={styles.companyHalo} />
       <Text accessibilityRole="header" style={styles.companyName}>{company.name}</Text>
-      <Text selectable style={styles.body}>{company.description}</Text>
+      <Text selectable style={styles.companyDescription}>{company.description}</Text>
     </View>
     <View style={styles.stack}>
       <View style={styles.card}>
@@ -128,7 +141,7 @@ function CompanyContent({ company }: { company: MoreContent['company'] }) {
         <SectionTitle icon="sunny-outline" title="Nuestra visión" />
         <Text selectable style={styles.body}>{company.vision}</Text>
       </View>
-      <View style={styles.card}>
+      <View style={[styles.card, styles.innovationCard]}>
         <SectionTitle icon="phone-portrait-outline" title="Innovación tecnológica" />
         <Text selectable style={styles.body}>{company.innovation.description}</Text>
         {company.innovation.benefits.map((benefit) => <View key={benefit.title} style={styles.value}>
@@ -167,7 +180,9 @@ function DocumentContent({ document }: { document: MoreDocument }) {
 
 function SectionTitle({ icon, title }: { icon: keyof typeof Ionicons.glyphMap; title: string }) {
   return <View style={styles.sectionHeading}>
-    <Ionicons accessible={false} name={icon} size={22} color={colors.primary} />
+    <View accessible={false} style={styles.sectionIcon}>
+      <Ionicons accessible={false} name={icon} size={21} color={colors.primary} />
+    </View>
     <Text accessibilityRole="header" style={styles.sectionTitle}>{title}</Text>
   </View>;
 }
@@ -176,13 +191,16 @@ const styles = StyleSheet.create({
   intro: { color: colors.textMuted, fontSize: 14, lineHeight: 23, marginBottom: 22 },
   stack: { gap: 14 },
   card: { backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 22, borderWidth: 1, padding: 20 },
-  sectionHeading: { alignItems: 'center', flexDirection: 'row', gap: 10, marginBottom: 13 },
+  sectionHeading: { alignItems: 'center', flexDirection: 'row', gap: 12, marginBottom: 15 },
+  sectionIcon: { alignItems: 'center', backgroundColor: colors.surfaceSoft, borderRadius: 13, height: 40, justifyContent: 'center', width: 40 },
   sectionTitle: { color: colors.text, flexShrink: 1, fontSize: 18, fontWeight: '700', lineHeight: 26 },
   smallTitle: { color: colors.text, fontSize: 16, fontWeight: '700', lineHeight: 24 },
   body: { color: colors.textMuted, fontSize: 14, lineHeight: 24 },
   faqList: { gap: 10 },
   faq: { backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 19, borderWidth: 1, overflow: 'hidden' },
   faqOpen: { borderColor: '#AACAAE' },
+  faqToggle: { alignItems: 'center', backgroundColor: colors.surfaceSoft, borderRadius: 11, height: 30, justifyContent: 'center', width: 30 },
+  faqToggleOpen: { backgroundColor: colors.primaryDark },
   faqQuestion: { alignItems: 'center', flexDirection: 'row', gap: 14, minHeight: 64, padding: 18 },
   faqTitle: { color: colors.text, flex: 1, minWidth: 0, fontSize: 15, fontWeight: '600', lineHeight: 23 },
   faqAnswer: { color: colors.textMuted, fontSize: 14, lineHeight: 24, paddingBottom: 20, paddingHorizontal: 18 },
@@ -196,8 +214,11 @@ const styles = StyleSheet.create({
   actionLabel: { color: colors.white, flexShrink: 1, fontSize: 14, fontWeight: '700', lineHeight: 22 },
   outlineAction: { alignItems: 'center', backgroundColor: colors.surfaceSoft, borderRadius: 15, flexDirection: 'row', gap: 10, justifyContent: 'center', minHeight: 50, paddingHorizontal: 16, paddingVertical: 14 },
   outlineActionLabel: { color: colors.primaryDark, flexShrink: 1, fontSize: 14, fontWeight: '700', lineHeight: 22 },
-  companyLead: { backgroundColor: colors.surfaceSoft, borderRadius: 24, gap: 12, marginBottom: 20, padding: 22 },
-  companyName: { color: colors.primaryDark, fontSize: 23, fontWeight: '700', letterSpacing: -0.4, lineHeight: 31 },
+  companyLead: { backgroundColor: colors.primaryDark, borderColor: '#34794D', borderRadius: 24, borderWidth: 1, gap: 12, marginBottom: 20, overflow: 'hidden', padding: 22 },
+  companyHalo: { borderColor: 'rgba(191,233,199,0.16)', borderRadius: 110, borderWidth: 20, height: 220, position: 'absolute', right: -100, top: -110, width: 220 },
+  companyName: { color: colors.white, fontSize: 23, fontWeight: '700', letterSpacing: -0.4, lineHeight: 31 },
+  companyDescription: { color: '#E0EEE2', fontSize: 14, lineHeight: 25 },
+  innovationCard: { backgroundColor: '#F2F9F4', borderColor: '#CADFCE' },
   value: { borderTopColor: colors.border, borderTopWidth: StyleSheet.hairlineWidth, gap: 6, marginTop: 12, paddingTop: 16 },
   documentMeta: { gap: 12, marginBottom: 22 },
   status: { alignItems: 'center', alignSelf: 'flex-start', backgroundColor: colors.surfaceSoft, borderRadius: 12, flexDirection: 'row', gap: 8, paddingHorizontal: 12, paddingVertical: 9 },
