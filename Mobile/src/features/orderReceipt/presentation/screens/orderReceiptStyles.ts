@@ -1,16 +1,14 @@
 import { StyleSheet } from 'react-native';
 import { colors } from '@/core/theme/colors';
 
-export const receiptPreviewStyles = StyleSheet.create({
-  preview: { backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1, borderRadius: 18, padding: 14, marginBottom: 18 },
-  previewHeading: { alignItems: 'center', flexDirection: 'row', gap: 7, marginBottom: 3 },
-  previewTitle: { color: colors.primaryDark, fontSize: 12, fontWeight: '700', lineHeight: 20 },
+export const orderReceiptStyles = StyleSheet.create({
   caption: { color: colors.textMuted, fontSize: 12, lineHeight: 20 },
-  scenes: { flexDirection: 'row', flexWrap: 'wrap', gap: 7, marginTop: 12 },
-  scene: { alignItems: 'center', justifyContent: 'center', minHeight: 44, borderRadius: 12, backgroundColor: colors.background, paddingHorizontal: 12, paddingVertical: 8 },
-  sceneSelected: { backgroundColor: colors.primaryDark },
-  sceneLabel: { color: colors.primaryDark, fontSize: 12, fontWeight: '600', lineHeight: 20 },
-  sceneLabelSelected: { color: colors.white },
+  listHeading: { color: colors.text, fontSize: 18, fontWeight: '800', lineHeight: 26, marginTop: 12 },
+  listNote: { color: colors.textMuted, fontSize: 12, lineHeight: 20, marginTop: 4, marginBottom: 16 },
+  listRow: { backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1, borderRadius: 20, padding: 16, marginBottom: 12 },
+  listFooter: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, justifyContent: 'space-between', alignItems: 'center', marginTop: 12 },
+  link: { color: colors.primaryDark, fontSize: 13, fontWeight: '700', lineHeight: 21 },
+  photoFallback: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.surfaceSoft, borderRadius: 12 },
   intro: { flexDirection: 'row', alignItems: 'flex-start', gap: 12, paddingVertical: 12, marginBottom: 12 },
   introIcon: { alignItems: 'center', justifyContent: 'center', backgroundColor: colors.surfaceSoft, height: 54, width: 54, borderRadius: 18 },
   flexCopy: { flex: 1, minWidth: 0 },
