@@ -571,6 +571,14 @@ export class OrdersService {
           _id: order._id,
           status: OrderStatus.COMPLETED,
           ...this.buildCustomerOrderFilters(user),
+          // Null also matches legacy documents without a receipt state.
+          customerReceiptStatus: {
+            $in: [
+              OrderCustomerReceiptStatus.PENDING,
+              OrderCustomerReceiptStatus.NOT_REQUIRED,
+              null,
+            ],
+          },
         },
         {
           $set: {
@@ -593,6 +601,20 @@ export class OrdersService {
       .exec();
 
     if (!updatedOrder) {
+      const currentOrder = await this.findOwnedCompletedOrderOrThrow(id, user);
+      const currentStatus =
+        this.getEffectiveCustomerReceiptStatus(currentOrder);
+
+      if (currentStatus === OrderCustomerReceiptStatus.CONFIRMED) {
+        return this.mapCustomerReceiptOrder(currentOrder);
+      }
+
+      if (currentStatus === OrderCustomerReceiptStatus.ISSUE_REPORTED) {
+        throw new ConflictException(
+          'Este pedido ya tiene una incidencia de entrega registrada. El equipo la revisara desde reportes.',
+        );
+      }
+
       throw new ConflictException(
         'No pudimos confirmar la recepcion porque el pedido cambio. Recarga la cuenta e intenta de nuevo.',
       );
