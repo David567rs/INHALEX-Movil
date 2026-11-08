@@ -2,7 +2,7 @@
 
 ## Etapa vigente: Confirmación de recepción — conexión a la API
 
-**Preparación del PR autorizada, 8 de noviembre de 2026:** David567rs publicará `feature/confirmacion-recepcion` hacia `develop` para revisión de ZenaidaGR, conservando todos los commits y sin fusionar. La aceptación funcional sigue en **8/9**; Revisar el código espera a Zenaida. El usuario controla Expo y backend; no iniciar ni detener servicios. La copia de Zenaida permanece intacta. Alcance y comprobaciones: [PR de recepción](PR-CONFIRMACION-RECEPCION.md).
+**PR de recepción publicado, 8 de noviembre de 2026:** [PR #22](https://github.com/David567rs/INHALEX-Movil/pull/22), de David567rs, `feature/confirmacion-recepcion` → `develop`, abierto y sin fusionar. Se verificó por API la solicitud de revisión a **ZenaidaGR**. La aceptación funcional sigue en **8/9**; Revisar el código espera a Zenaida. Se conservan todos los commits. El usuario controla Expo y backend; no iniciar ni detener servicios. La copia de Zenaida permanece intacta. Alcance y comprobaciones: [PR de recepción](PR-CONFIRMACION-RECEPCION.md).
 
 Los estados de no publicación y los pendientes de etapas anteriores que aparecen abajo son históricos. Esta autorización vigente permite publicar y solicitar revisión; no permite fusionar.
 

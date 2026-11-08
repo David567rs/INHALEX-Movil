@@ -1,5 +1,7 @@
 # PR de Confirmación de recepción
 
+[PR #22](https://github.com/David567rs/INHALEX-Movil/pull/22) abierto por David567rs hacia `develop`, con revisión solicitada a ZenaidaGR y sin fusionar. Backend CI y Mobile CI terminaron correctamente sobre `2933643`; la CI del commit documental que enlaza el PR se comprueba aparte. [Registro de publicación](evidencias/confirmacion-recepcion/publicacion-pr22.json).
+
 ## Actividad y alcance
 
 David567rs propone `feature/confirmacion-recepcion` hacia `develop`; ZenaidaGR realizará la revisión. Los criterios funcionales de Trello están aceptados **8/9**. Solo **Revisar el código** permanece pendiente. El usuario autorizó publicar y abrir este PR el 8 de noviembre de 2026, conservando los commits y sin fusionarlo ni arrancar Expo.
