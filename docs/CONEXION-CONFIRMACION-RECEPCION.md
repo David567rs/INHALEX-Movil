@@ -1,6 +1,6 @@
 # Confirmación de recepción: conexión a la API
 
-8 de noviembre de 2026. Implementación de David en `INHALEX-Movil`, rama `feature/confirmacion-recepcion`, desde `develop` `0f619021b4de5d5436b0f43c122d9cba6b306da3`. El usuario aceptó el diseño en Expo Go y autorizó esta etapa. Se mantiene el diseño aprobado y el historial de commits; la aceptación de la API en el teléfono sigue pendiente.
+8 de noviembre de 2026. Implementación de David en `INHALEX-Movil`, rama `feature/confirmacion-recepcion`, desde `develop` `0f619021b4de5d5436b0f43c122d9cba6b306da3`. El usuario aceptó el diseño en Expo Go y autorizó esta etapa. Se mantiene el diseño aprobado y el historial de commits. El primer caso correcto de la API ya fue aceptado por reporte del usuario; los escenarios restantes siguen pendientes.
 
 ## Comportamiento y arquitectura
 
@@ -61,21 +61,23 @@ Evidencia visual ficticia: [diálogo](evidencias/confirmacion-recepcion/api-dial
 
 El agente no arrancó Expo, no generó QR, no reinició ni detuvo servicios, no confirmó pedidos reales, no cambió dependencias ni la copia de Zenaida y no publicó la rama, abrió PR ni modificó Trello.
 
-## Trello y primera prueba en Expo Go
+## Trello: aceptación vigente
 
-El diseño aceptado permite marcar únicamente **Mostrar opción de confirmar recepción** por ahora. Los otros ocho criterios siguen pendientes de sus comprobaciones nativas o revisión:
+El usuario reportó el 8 de noviembre de 2026: «Amigo, apareció Recepción confirmada, desapareció el botón y se conservó al actualizar. La referencia, cantidades e importes coinciden con Historial. ¿Qué marco en Trello y qué sigue?»
+
+Se aceptan los criterios 3, 5 y 6, además del diseño previamente aceptado (1): **4/9**. Actualizar el estado del pedido se entiende como actualizar su recepción; el estado general sigue siendo Completado. La fuente es el reporte del usuario, sin observación directa del teléfono, inspección de HTTP o conteo de escrituras en la base. No se infiere que probó la cancelación del diálogo, la fecha mostrada, el doble toque, un pedido no elegible o los errores. Evidencia: [aceptacion-api-expo-go.json](evidencias/confirmacion-recepcion/aceptacion-api-expo-go.json). El registro de verificación técnica anterior conserva su estado histórico.
 
 - [x] Mostrar opción de confirmar recepción
 - [ ] Validar que el pedido pueda ser confirmado
-- [ ] Enviar confirmación a la API
+- [x] Enviar confirmación a la API
 - [ ] Evitar confirmaciones duplicadas
-- [ ] Actualizar el estado del pedido
-- [ ] Mostrar mensaje de confirmación
+- [x] Actualizar el estado del pedido
+- [x] Mostrar mensaje de confirmación
 - [ ] Manejar errores
 - [ ] Probar la funcionalidad
 - [ ] Revisar el código
 
-Primero validar un caso correcto:
+## Guía del primer caso (conservada como referencia)
 
 1. Recargar el Expo ya abierto de David e iniciar sesión con la cuenta de prueba.
 2. Entrar en **Cuenta → Confirmación de recepción** y seleccionar un pedido completado pendiente de recepción. Si no hay uno disponible, informar ese resultado para preparar el caso siguiente.
@@ -87,3 +89,14 @@ Primero validar un caso correcto:
 Respuesta sugerida: «Amigo, apareció Recepción confirmada, desapareció el botón y se conservó al actualizar. La referencia, las cantidades y los importes coinciden con Historial.»
 
 Después se guiarán por separado los casos de pedido no elegible y vacío, doble toque, fallo de lectura, fallo al confirmar/verificación y reapertura/cierre de sesión. No se marcan como aceptados anticipadamente. El PR y la revisión de Zenaida corresponden a una etapa posterior.
+
+## Siguiente prueba: pedidos elegibles
+
+1. En Historial, pulsar Actualizar historial e identificar la referencia reciente de un pedido propio Cancelado, En revisión o Confirmado. No cambiar su estado para esta prueba.
+2. Volver a Cuenta → Confirmación de recepción y pulsar Actualizar recepciones. Ese pedido no debe aparecer como opción para confirmar; la sección solo consulta pedidos Completados.
+3. Abrir de nuevo el pedido cuya recepción ya se confirmó. Debe conservar Recepción confirmada y no ofrecer otro envío.
+4. Si no hay un pedido no completado disponible, informar ese resultado antes de preparar un caso controlado.
+
+Esta comprobación verifica el comportamiento visible de elegibilidad y la ausencia de repetición desde la UI. No prueba por sí sola autorización de pedidos ajenos, concurrencia o respuesta perdida; esos alcances no se atribuyen al usuario.
+
+La colección está limitada a los 12 pedidos completados más recientes. La ausencia de un pedido antiguo no demuestra por sí sola un bloqueo por estado, ni se exige que aparezcan todos los pedidos completados.
