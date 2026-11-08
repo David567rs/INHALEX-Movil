@@ -4,9 +4,9 @@
 
 La conexión está implementada en `INHALEX-Movil-Zenaida`, rama `feature/resenas`, manteniendo MVVM y Repository. Zenaida desarrolla Reseñas y David (`David567rs`) revisará su futuro PR. Se conserva el historial y se continúa con commits por etapa.
 
-El usuario aceptó en Expo Go el formulario, las estrellas y el comentario. **Solo hay 2/10 criterios aceptados: crear el formulario y capturar calificación/comentario.** La consulta y publicación mediante la API requieren todavía aceptación en el dispositivo. El problema de inicio de sesión se está verificando por separado; haber abierto el diseño no demuestra que el acceso con una cuenta ya funcione. [Reporte textual de aceptación](evidencias/resenas/expo-go-aceptacion.json).
+El usuario aceptó en Expo Go el formulario, las estrellas y el comentario. **Hay 2/10 criterios del checklist aceptados: crear el formulario y capturar calificación/comentario.** El acceso y la reapertura de sesión ya se aceptaron en ambas copias durante la recuperación. Además, el 7 de noviembre confirmó las mejoras visuales integradas y la navegación Cuenta → Reseñas en la copia de Zenaida. Anteriormente informó que puede consultar sus reseñas enviadas; esto no acredita todavía una nueva publicación ni sus validaciones en esta etapa. [Reporte textual de aceptación](evidencias/resenas/expo-go-aceptacion.json).
 
-El backend local se restableció en el puerto `3200` y Metro de Zenaida usa `8083`, con la IP de la laptop `192.168.1.78` en esta sesión. El inicio de sesión físico sigue pendiente. Esta dirección puede cambiar al conectar la laptop a otra red.
+Los PR #18, #19 y #20 están integrados en `develop`. La rama de Zenaida incorpora la base visual mediante el merge local `9bc231e`. Se mantiene un backend compartido; el usuario controla Expo y genera el QR. La IP y el puerto de Metro citados en registros anteriores son históricos: utilizar el QR actual de esta copia, sin arrancar otra instancia. [Registro de integración](INTEGRACION-VISUAL-RESENAS.md).
 
 ## Contrato real del backend
 
@@ -55,18 +55,29 @@ Los DTO no llegan directamente a la View. El mapper conserva únicamente campos 
 - Una publicación confirmada queda protegida frente a una lectura posterior desactualizada que vuelva a incluir el producto como pendiente, durante la misma sesión del controlador.
 - Los fallos de red, tiempo de espera, respuestas inválidas, `400/422`, `404`, `429` y errores de servidor tienen mensajes controlados. No hay reintentos automáticos de escritura ni una garantía adicional de idempotencia en el cliente: la restricción definitiva de duplicados corresponde al servidor.
 
-## Primera prueba real en Expo Go
+## Recorrido de consulta y publicación en Expo Go
 
 Esta prueba es manual. La cuenta y sus credenciales se introducen en el teléfono; no se necesitan contraseñas en el chat.
 
-1. Mantén la laptop y el teléfono en una red que permita comunicarse. Abre el proyecto de **Zenaida** servido por Metro en `exp://192.168.1.78:8083`, usando Expo Go compatible con SDK 58. El backend de esta sesión está en `http://192.168.1.78:3200/api`.
-2. En **Cuenta**, inicia sesión. Si aparece un error, detén esta prueba y reporta el texto exacto del aviso; el acceso físico aún no está aceptado.
+1. Mantén la laptop y el teléfono en una red que permita comunicarse. Usa el proyecto de **Zenaida** y el QR que genera el usuario, con Expo Go compatible con SDK 58 y el backend compartido disponible.
+2. Conserva tu sesión en **Cuenta**. Si aparece un error nuevo, reporta el texto exacto antes de continuar; el acceso ya aceptado no garantiza la conexión actual.
 3. Abre **Cuenta → Reseñas**. Comprueba que **Por reseñar** y **Enviadas** muestran únicamente los productos y reseñas de tu cuenta. Pulsa **Actualizar reseñas**.
 4. Si hay un producto pendiente, selecciónalo y comprueba nombre, presentación y referencia. Elige de 1 a 5 estrellas y escribe un comentario de al menos 4 caracteres.
 5. Cuando quieras registrar esa reseña real, pulsa una vez **Publicar reseña**. Espera **«Tu reseña se publicó correctamente.»** y consulta el producto en **Enviadas** con las mismas estrellas y comentario.
 6. Pulsa **Actualizar reseñas** y comprueba que la reseña permanece y que el producto ya no se ofrece en **Por reseñar**.
 
 Si no hay productos elegibles, **Ver mis pedidos** permite consultar los pedidos disponibles. No cambies un pedido real a Completado solamente para forzar la prueba: en ese caso se prepara después un escenario controlado. La prueba de errores se realiza en una etapa posterior, después de aceptar esta primera consulta y publicación.
+
+## Siguiente prueba: campos requeridos antes de publicar
+
+Antes del paso de publicación válida del recorrido anterior, confirmar si hay algún producto disponible en **Por reseñar**. Si está vacío, reportarlo y preparar un escenario controlado; no borrar reseñas ni alterar pedidos reales.
+
+1. Abrir un producto pendiente e identificar su nombre y referencia.
+2. Sin seleccionar estrellas y con el comentario vacío, pulsar **Publicar reseña**. Deben aparecer **«Selecciona una calificación de 1 a 5 estrellas.»** y **«Escribe un comentario de 4 a 700 caracteres.»**.
+3. Seleccionar cinco estrellas y escribir `abc`. Pulsar **Publicar reseña** de nuevo: debe permanecer el error de comentario, sin éxito de publicación ni traslado a Enviadas.
+4. Corregir a una opinión real de al menos cuatro caracteres y conservar el borrador sin pulsar Publicar todavía. Los espacios de los extremos no cuentan para cumplir el mínimo.
+
+El controlador valida antes de invocar la publicación. El campo limita la entrada a 700 caracteres. El criterio **Validar campos requeridos** permanece pendiente hasta el reporte del usuario; la revisión del código no sustituye esta prueba en Expo Go.
 
 ## Checklist de Trello: 2/10 aceptados
 
@@ -89,6 +100,6 @@ Al preparar este documento, la suite móvil completa terminó con **782 pruebas 
 
 La verificación final pasó: TypeScript, lint, Expo Doctor **20/20** y exportaciones Android (**1454 módulos**) y web (**1104 módulos**), después de retirar la ruta temporal de QA. La revisión web comprobó el acceso real sin sesión y su navegación al login. Un escenario aislado con sesión y Repository simulados comprobó lista elegible, selección, validación local, estrellas, comentario, publicación simulada, Enviadas y actualización; no hubo publicación en la base real. La pantalla de 356 px no desbordó horizontalmente. Las capturas están rotuladas como prueba controlada. [Resultados](evidencias/resenas/verificacion-api.json).
 
-El acceso físico, la consulta/publicación real, validaciones en Expo Go, vacío, errores, recuperación, duplicados y reapertura/sesión se aceptarán paso a paso con el usuario. Los 2/10 aceptados no cambian por estas verificaciones técnicas.
+Estas verificaciones pertenecen a la preparación de la API. La integración visual posterior pasó 813 pruebas, TypeScript y lint, y el usuario confirmó el acceso desde Cuenta. La publicación real, validaciones en Expo Go, vacío, errores, recuperación, duplicados y continuidad propia de Reseñas se aceptarán paso a paso. Los 2/10 aceptados no cambian por las comprobaciones técnicas.
 
-El [PR técnico #18 de Expo SDK 58](https://github.com/David567rs/INHALEX-Movil/pull/18) sigue pendiente de revisión de Zenaida e integración a `develop`. Debe cerrarse ese paso antes de preparar el futuro PR de Reseñas, cuyo revisor será David. La aceptación de diseño y la conexión se documentan por separado; no se reescriben los commits anteriores ni se comienza Confirmación de recepción en esta etapa.
+Los PR técnicos y visuales ya integrados no completan la actividad de Reseñas. Su futuro PR tendrá a David como revisor cuando finalicen las pruebas funcionales. La aceptación de diseño, conexión y pruebas se documenta por etapas; no se reescriben los commits anteriores ni se comienza Confirmación de recepción en esta etapa.

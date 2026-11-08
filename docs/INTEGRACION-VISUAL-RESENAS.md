@@ -29,3 +29,7 @@ Se respaldaron los historiales y los archivos locales protegidos antes de sincro
 - Verificación estática del acceso de Cuenta, ruta y provider de Reseñas.
 
 Estas comprobaciones no son una nueva aceptación en Expo Go. Falta que el usuario verifique el nuevo diseño en la copia de Zenaida y continúe las pruebas funcionales pendientes de Reseñas. No se publicó la rama `feature/resenas` ni se abrió otro PR durante esta sincronización. La implementación sigue a cargo de Zenaida y su futuro revisor será David567rs.
+
+## Aceptación posterior en Expo Go: acceso desde Cuenta
+
+El 7 de noviembre de 2026 el usuario reportó: «Amigo, ya veo las mejoras visuales en la copia de Zenaida y puedo abrir Reseñas desde Cuenta. Sigamos con las pruebas de Reseñas paso a paso.». Se acepta que ve las mejoras visuales y puede abrir Reseñas desde Cuenta sobre la copia integrada. Es evidencia textual del usuario, sin observación directa del dispositivo por el agente. Esta aceptación sustituye únicamente el pendiente de diseño/acceso indicado arriba; publicación, validaciones y demás pruebas funcionales siguen pendientes. El checklist de Reseñas conserva 2/10 y Trello no fue modificado. El reporte se guarda en [la evidencia de aceptación](evidencias/resenas/expo-go-aceptacion.json).

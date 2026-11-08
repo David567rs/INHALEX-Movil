@@ -4,9 +4,26 @@
   "date": "2026-11-04",
   "source": "Reporte textual del usuario en el chat; sin observación del dispositivo por el agente",
   "designReport": "Amigo, ya abrió Reseñas en Expo Go y funcionan las estrellas y el comentario. Sigamos con la API en feature/resenas, manteniendo MVVM, Repository y commits por etapa.",
-  "acceptedCriteria": [1, 3],
+  "acceptedCriteria": [
+    1,
+    3
+  ],
   "acceptedCount": "2/10",
   "loginIssueReported": true,
   "apiAcceptance": "Pendiente",
-  "trelloChangedByAgent": false
+  "trelloChangedByAgent": false,
+  "integrationAcceptance": {
+    "date": "2026-11-07",
+    "testedCommit": "9bc231e06ee74408a7e46f4dc7260271ddb74380",
+    "report": "Amigo, ya veo las mejoras visuales en la copia de Zenaida y puedo abrir Reseñas desde Cuenta. Sigamos con las pruebas de Reseñas paso a paso.",
+    "source": "Reporte textual del usuario en el chat; sin observación directa del teléfono por el agente",
+    "acceptedScope": [
+      "Mejoras visuales visibles en la copia de Zenaida",
+      "Navegación Cuenta → Reseñas"
+    ],
+    "newChecklistCriteriaAccepted": [],
+    "nextStep": "Comprobar disponibilidad en Por reseñar y validar el formulario antes de publicar",
+    "expoStartedByAgent": false,
+    "trelloChangedByAgent": false
+  }
 }
