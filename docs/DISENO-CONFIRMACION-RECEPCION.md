@@ -28,4 +28,43 @@ Tras aceptar el diseño en Expo Go puede marcarse únicamente **Mostrar opción 
 
 ## Verificación
 
-Pendiente de implementar y comprobar. El reporte del usuario en Expo Go se registrará por separado de la comprobación técnica y web.
+Implementación local en `12b5aed`, precedida por el commit de preparación `ef8c964`. El 8 de noviembre de 2026 pasaron TypeScript (`npm run typecheck`), lint (`npm run lint`) y `git diff --check`. La revisión de arquitectura no encontró problemas bloqueantes. No se añadieron dependencias ni cambios al backend.
+
+Se comprobó la ruta `/confirmacion-recepcion` usando el Metro que el usuario ya tenía abierto en `8081`, con viewport web de 360 × 800: ejemplos Pendiente, Confirmada, Con incidencia y Sin pedidos; apertura y cancelación del diálogo; confirmación simulada; botón deshabilitado con incidencia; navegación al Historial y reinicio al ejemplo pendiente después de recargar. La consola web no registró errores durante esta comprobación. La captura del diálogo se conserva en `docs/evidencias/confirmacion-recepcion/diseno-dialogo-web.jpg`; no es una captura de Expo Go.
+
+La revisión nativa sigue pendiente. El botón Atrás de Android, el desplazamiento real y la aceptación visual en Expo Go se comprobarán con el usuario. Esta etapa no prueba la API, la autorización real de pedidos, la idempotencia ni los errores de red.
+
+## Estructura implementada
+
+- Ruta delgada: `Mobile/src/app/confirmacion-recepcion.tsx`.
+- Composición: `Mobile/src/bootstrap/createReceiptPreview.ts`.
+- Módulo: `Mobile/src/features/orderReceipt`, con modelo y contrato de lectura en `domain`, ejemplos fijos en `data` y pantalla/ViewModel en `presentation`.
+- Acceso: Cuenta → Confirmación de recepción, mediante `ReceiptEntry` dentro de `AccountMenu`.
+- Pedido ficticio `DEMO-008`, Lavanda y Menta con imágenes locales existentes, tres unidades y subtotal de $180.00 MXN. No se utilizan datos de la cuenta.
+- El diálogo pide una segunda acción y permite cancelar o cerrar. Confirmar cambia únicamente el estado del ViewModel en memoria. Recargar reinicia el ejemplo.
+- La ruta puede abrirse directamente para revisar el diseño; no expone información personal. La protección de sesión se incorpora al conectar datos reales.
+
+Se reutilizan el tema verde, `AppScreen`, encabezado, navegación y recursos de la app ya pulida. La app original no contiene una pantalla de recepción que pueda recuperarse literalmente; esta vista adapta los patrones actuales de Historial y Seguimiento. El contenido y la acción principal comparten un solo desplazamiento. El diálogo dispone de su propio desplazamiento para pantallas pequeñas.
+
+## Contrato observado para la siguiente etapa
+
+Inspección de código únicamente, sin ejecutar confirmaciones:
+
+- `GET /api/orders/me/receipt-confirmations` consulta pedidos completados de la cuenta autenticada (actualmente hasta 12).
+- `PATCH /api/orders/:id/receipt/confirm` confirma la recepción de un pedido propio completado; no requiere cuerpo.
+- El estado de recepción (`pending`, `confirmed`, `issue_reported`) es independiente de `status: completed`. Confirmar recepción no inventa un nuevo estado general «Entregado».
+- El backend devuelve referencia, productos, unidades, subtotal y fechas de recepción. No devuelve dirección en este contrato; el diseño no inventa una.
+- La próxima etapa deberá comprobar sesión, pertenencia del pedido, estado válido, repetición, respuesta perdida y recuperación. Revisar especialmente la condición atómica de la escritura: la comprobación previa de recepción confirmada, por sí sola, no garantiza que dos peticiones concurrentes eviten efectos secundarios repetidos.
+
+Nada de este contrato está conectado al nuevo módulo durante la etapa de diseño. No se añade un flujo de reporte de incidencia; solo se representa visualmente el estado existente.
+
+## Revisión del usuario en Expo Go
+
+1. En la copia de David, recargar la app que ya está abierta y entrar en **Cuenta → Confirmación de recepción**.
+2. En **Pendiente**, revisar imágenes, referencia, unidades y subtotal. Desplazarse hasta las acciones.
+3. Pulsar **Confirmar recepción** y después **Todavía no**: debe conservar el ejemplo pendiente.
+4. Reabrir el diálogo y pulsar **Sí, recibí mi pedido**: aparece la confirmación de ejemplo y desaparece la acción de confirmar.
+5. Revisar **Con incidencia** (acción deshabilitada) y **Sin pedidos** (mensaje y acceso al Historial).
+6. Probar cerrar el diálogo con su X y con Atrás de Android; volver a Cuenta y comprobar que los controles siguen alcanzables.
+
+Solo después de la aceptación visual se registra un commit documental separado y se comienza la conexión a la API, cuando el usuario la solicite. La revisión de Zenaida y el PR pertenecen a una etapa posterior.
