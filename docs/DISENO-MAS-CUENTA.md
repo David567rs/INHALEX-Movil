@@ -29,6 +29,24 @@ La actividad de desarrollo y comercialización de inhaladores aromáticos de uso
 
 Los textos y los nuevos campos siguen en el Repository local y el modelo de dominio; la vista solo los presenta en tarjetas. No se cambiaron los documentos legales originales, la copia de Zenaida ni la web. TypeScript, lint y `git diff --check` se verificaron para esta ampliación; su lectura final en Expo Go queda pendiente del usuario. El agente no arrancó Expo.
 
+## Pulido de marca y movimiento — 8 de noviembre de 2026
+
+Se reutilizan los recursos originales de INHALEX: el símbolo de la marca en la cabecera de Más y el logotipo completo en Preguntas frecuentes, Contacto, Empresa, Privacidad y Términos. Las tarjetas incorporan superficies blancas, bordes suaves, halos decorativos y controles de iconos consistentes. Empresa tiene una presentación verde y una tarjeta diferenciada para innovación tecnológica. Los adornos no capturan pulsaciones ni se anuncian al lector de pantalla.
+
+Las entradas usan desplazamiento vertical de 8 puntos y opacidad durante 320 ms, con retrasos breves de hasta 140 ms entre grupos. El símbolo flotante recorre 4 puntos durante dos ciclos, unos 7,2 segundos; después queda quieto. Las animaciones respetan Reducir movimiento y se detienen al perder foco, pasar a segundo plano o desmontar la pantalla. Mientras se desconoce la preferencia de accesibilidad, el contenido permanece visible y estático: no se oculta al terminar la consulta. La primera apertura también conserva la transición nativa de navegación existente; las entradas de contenido se repiten al recuperar foco con la preferencia conocida.
+
+`AppScreen` permite omitir su animación general únicamente en estas vistas para evitar entradas superpuestas. Su comportamiento predeterminado se conserva para el resto de la app. No se añadieron dependencias ni se modificaron dominio, Repository, autenticación, contenido legal o servicios.
+
+Comprobaciones de este pulido:
+
+- TypeScript, lint y `git diff --check`: correctos.
+- Revisión independiente de layout, accesibilidad y ciclo de las animaciones: sin defectos concretos detectados.
+- Revisión web sobre el servidor ya abierto por el usuario: Más y sus cinco apartados, acordeón, logotipos cargados, correo largo completo, Cuenta y regreso. Sin desbordamiento horizontal en anchos efectivos de 291 y 355 px.
+- Sin errores de consola en esos recorridos. React Native Web muestra el aviso de uso del controlador JavaScript para las animaciones nativas; la comprobación web no valida su comportamiento en Android.
+- Las 861 pruebas indicadas abajo corresponden a la etapa inicial de diseño; no se repitieron para estos cambios de presentación.
+
+Pendiente: el usuario debe recargar su Expo Go, recorrer Más y sus apartados, comprobar que la flotación se detiene y revisar Reducir movimiento. El agente no arrancó Expo, no cambió procesos ni publicó la rama. Los cambios se conservan en un commit de implementación y otro documental.
+
 ## MVVM y Repository
 
 `MoreContent` y `MoreRepository` definen el contrato de dominio. `LocalMoreRepository` entrega el contenido incluido en la app mediante `loadMoreContent`, compuesto en `createMoreAction`. Las rutas inyectan el caso de uso. `useMoreViewModel` administra carga, recuperación y acordeón; las vistas presentan el estado. El dominio no importa React Native ni HTTP.
