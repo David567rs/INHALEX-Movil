@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '@/core/theme/colors';
 import { AppScreen } from '@/shared/components/AppScreen';
+import { BackButton } from '@/shared/components/ScreenHeader';
 import { FeedbackBanner } from '@/shared/components/ScreenFeedback';
 import { PreparationScreen } from '@/features/shell/presentation/screens/PreparationScreen';
 import type { LoginUser } from '../../domain/models/Login';
@@ -10,21 +11,22 @@ import type { AuthSession, AuthSessionState } from '../../domain/session/AuthSes
 import { useAccountViewModel } from '../viewModels/useAccountViewModel';
 import { SessionStatusScreen } from './SessionStatusScreen';
 
-/** Session summary and navigation share one scroll area above the tab bar. */
-export function AccountScreen({ user, signOut, status, message, restore, children }: {
+/** Session summary and navigation share one scroll area. */
+export function AccountScreen({ user, signOut, status, message, restore, onBack, children }: {
   user: LoginUser | null;
   signOut: AuthSession['signOut'];
   status: AuthSessionState['status'];
   message: string | null;
   restore: AuthSession['restore'];
+  onBack: () => void;
   children?: ReactNode;
 }) {
   const viewModel = useAccountViewModel(signOut);
-  if (status === 'checking' || status === 'recovery-error') return <SessionStatusScreen checking={status === 'checking'} message={message} onRetry={restore} onSignOut={viewModel.logout} />;
-  if (!user) return <PreparationScreen section="cuenta" notice={viewModel.message ?? message} retry={viewModel.message ? viewModel.logout : undefined} isRetrying={viewModel.isSigningOut} />;
+  if (status === 'checking' || status === 'recovery-error') return <SessionStatusScreen checking={status === 'checking'} message={message} onRetry={restore} onSignOut={viewModel.logout} onBack={onBack} />;
+  if (!user) return <PreparationScreen section="cuenta" notice={viewModel.message ?? message} retry={viewModel.message ? viewModel.logout : undefined} isRetrying={viewModel.isSigningOut} onBack={onBack} />;
 
   return (
-    <AppScreen title="Cuenta" eyebrow="Un momento para ti">
+    <AppScreen title="Cuenta" eyebrow="Un momento para ti" includeBottomInset action={<BackButton onPress={onBack} />}>
       <View style={styles.profile}>
         <View accessible={false} aria-hidden style={styles.avatar}>
           <Ionicons name="person-outline" size={27} color={colors.primaryDark} />

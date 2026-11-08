@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { FeedbackBanner, ScreenState } from '@/shared/components/ScreenFeedback';
 import { ScreenHeader } from '@/shared/components/ScreenHeader';
+import { AccountButton } from '@/features/shell/presentation/components/AccountButton';
 import { Reveal, SoftPressable } from '@/shared/components/Motion';
 import { CartItemCard } from '../components/CartItemCard';
 import { useCartViewModel } from '../viewModels/useCartViewModel';
@@ -28,7 +29,7 @@ export function CartScreen() {
         onRefresh={() => { if (vm.canRefresh) refresh(); }} colors={[colors.primary]} tintColor={colors.primary} /> : undefined}>
       <Reveal>
         <ScreenHeader title="Tu bolsa" eyebrow="Tu próxima pausa"
-          description="Tus aromas elegidos, un paso más cerca de ti." />
+          description="Tus aromas elegidos, un paso más cerca de ti." trailing={<AccountButton />} />
       </Reveal>
 
       {vm.checkoutLocked && <FeedbackBanner tone="info" message="Estamos confirmando tu pedido. Tu bolsa se actualizará al terminar." />}

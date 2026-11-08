@@ -5,6 +5,7 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { colors } from '@/core/theme/colors';
 import { Reveal } from '@/shared/components/Motion';
 import { ScreenHeader } from '@/shared/components/ScreenHeader';
+import { AccountButton } from '@/features/shell/presentation/components/AccountButton';
 import { FeedbackBanner, ScreenState } from '@/shared/components/ScreenFeedback';
 import type { ListCatalog } from '../../domain/useCases/listCatalog';
 import type { CatalogProduct } from '../../domain/models/Catalog';
@@ -51,14 +52,7 @@ export function CatalogScreen({ listCatalog, categoryName, onSelectProduct }: {
                   resizeMode="contain"
                   style={styles.brand}
                 />
-                <Pressable
-                  accessibilityRole="button"
-                  accessibilityLabel="Ir a mi cuenta"
-                  onPress={() => router.navigate('/(tabs)/cuenta')}
-                  style={({ pressed }) => [styles.account, pressed && styles.pressed]}
-                >
-                  <Ionicons accessible={false} name="person-outline" size={20} color={colors.primaryDark} />
-                </Pressable>
+                <AccountButton />
               </View>
               <ScreenHeader title="Un aroma para ti" eyebrow="Catálogo INHALEX" />
               <View style={styles.searchEntry}>
@@ -184,7 +178,6 @@ const styles = StyleSheet.create({
   inset: { paddingHorizontal: 22 },
   brandRow: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, marginBottom: 20 },
   brand: { height: 44, width: 142 },
-  account: { alignItems: 'center', backgroundColor: '#ECF3E7', borderColor: '#E0E9D9', borderRadius: 24, borderWidth: 1, height: 44, justifyContent: 'center', width: 44 },
   searchEntry: { marginTop: 0 },
   refreshButton: { alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', gap: 8, marginTop: 10, minHeight: 44, paddingRight: 12 },
   refreshText: { color: colors.primary, fontSize: 12, fontWeight: '600' },

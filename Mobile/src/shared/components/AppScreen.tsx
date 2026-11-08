@@ -9,10 +9,11 @@ interface AppScreenProps extends PropsWithChildren {
   title: string;
   eyebrow?: string;
   action?: ReactNode;
+  trailing?: ReactNode;
   includeBottomInset?: boolean;
 }
 
-export function AppScreen({ title, eyebrow, action, includeBottomInset = false, children }: AppScreenProps) {
+export function AppScreen({ title, eyebrow, action, trailing, includeBottomInset = false, children }: AppScreenProps) {
   return (
     <SafeAreaView edges={includeBottomInset ? ['top', 'left', 'right', 'bottom'] : ['top', 'left', 'right']} style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
@@ -22,7 +23,7 @@ export function AppScreen({ title, eyebrow, action, includeBottomInset = false, 
               resizeMode="contain"
               source={require('../../../assets/inhalex-mark.png')}
               style={styles.mark}
-            />} />
+            />} trailing={trailing} />
           {children}
         </Reveal>
       </ScrollView>

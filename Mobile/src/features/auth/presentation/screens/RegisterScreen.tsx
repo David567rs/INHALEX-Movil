@@ -44,7 +44,7 @@ export function RegisterScreen({ registerUser }: { registerUser: RegisterUser })
           <Text style={styles.successText}>{viewModel.registeredUser.firstName}, tu cuenta fue creada correctamente.</Text>
           <Text style={styles.successEmail}>{viewModel.registeredUser.email}</Text>
         </View>
-        <Pressable accessibilityRole="button" onPress={() => router.replace('/(tabs)/cuenta')} style={({ pressed }) => [styles.createButton, pressed && styles.pressed]}>
+        <Pressable accessibilityRole="button" onPress={() => router.dismissTo('/cuenta')} style={({ pressed }) => [styles.createButton, pressed && styles.pressed]}>
           <Text style={styles.createLabel}>Volver a Cuenta</Text>
           <Ionicons accessible={false} name="arrow-forward" color={colors.white} size={19} />
         </Pressable>

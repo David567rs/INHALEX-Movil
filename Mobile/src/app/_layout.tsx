@@ -49,6 +49,8 @@ export default function RootLayout() {
           }}
         >
           <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="cuenta" />
+          <Stack.Screen name="informacion/[section]" />
           <Stack.Screen name="experiencia" />
           <Stack.Screen name="register" />
           <Stack.Screen name="sign-in" />

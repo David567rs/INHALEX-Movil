@@ -1,5 +1,6 @@
 import { useRef, useState, type ComponentRef } from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import { AccountButton } from '@/features/shell/presentation/components/AccountButton';
 import { router, useIsFocused } from 'expo-router';
 import { Image, Keyboard, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -52,7 +53,7 @@ export function HomeView({ firstName, focused = true, listCatalog, listProductLi
         <Reveal style={styles.inset}>
           <View style={styles.header}>
             <Image accessibilityLabel="INHALEX, el respiro que alivia" resizeMode="contain" source={require('../../../../../assets/home/brand.png')} style={styles.logo} />
-            <Pressable accessibilityLabel="Ir a mi cuenta" accessibilityRole="button" onPress={() => router.navigate('/(tabs)/cuenta')} style={({ pressed }) => [styles.account, pressed && styles.pressed]}><Ionicons name="person-outline" size={20} color={colors.primaryDark} /></Pressable>
+            <AccountButton />
           </View>
           <View style={styles.welcome}><Text style={styles.welcomeEyebrow}>UN MOMENTO PARA TI</Text><Text accessibilityRole="header" style={styles.welcomeTitle}>Hola, {firstName}<Text style={styles.greetingDot}>.</Text></Text></View>
           <CatalogSearch value={vm.searchQuery} onChange={vm.setSearchQuery} onSubmit={() => { void vm.submitSearch(); explore(); }} />
@@ -120,7 +121,6 @@ const styles = StyleSheet.create({
   inset: { paddingHorizontal: 22 },
   header: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 },
   logo: { height: 44, width: 142 },
-  account: { alignItems: 'center', backgroundColor: '#ECF3E7', borderColor: '#E0E9D9', borderRadius: 24, borderWidth: 1, height: 44, justifyContent: 'center', width: 44 },
   pressed: { opacity: 0.7 },
   welcome: { marginBottom: 17, marginTop: 25 },
   welcomeEyebrow: { color: colors.textMuted, fontSize: 10, fontWeight: '600', letterSpacing: 1.7 },

@@ -2,6 +2,7 @@ import { router } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '@/core/theme/colors';
 import { AppScreen } from '@/shared/components/AppScreen';
+import { BackButton } from '@/shared/components/ScreenHeader';
 import { LoadingState, ScreenState } from '@/shared/components/ScreenFeedback';
 
 interface SessionStatusScreenProps {
@@ -9,12 +10,13 @@ interface SessionStatusScreenProps {
   message: string | null;
   onRetry?: () => Promise<void>;
   onSignOut?: () => Promise<void>;
+  onBack?: () => void;
 }
 
 /** Presents restoration state without ever receiving a stored credential. */
-export function SessionStatusScreen({ checking, message, onRetry, onSignOut }: SessionStatusScreenProps) {
+export function SessionStatusScreen({ checking, message, onRetry, onSignOut, onBack }: SessionStatusScreenProps) {
   return (
-    <AppScreen title="Cuenta" eyebrow="Un momento para ti">
+    <AppScreen title="Cuenta" eyebrow="Un momento para ti" includeBottomInset action={onBack ? <BackButton onPress={onBack} /> : undefined}>
       {checking ? <LoadingState label="Comprobando tu sesión" message="Estamos verificando tu acceso a INHALEX." />
         : <ScreenState title="Retomemos con calma" icon="cloud-offline-outline"
             message={message ?? 'No pudimos comprobar tu sesión. Puedes reintentar o iniciar sesión de nuevo.'}

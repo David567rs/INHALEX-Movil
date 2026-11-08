@@ -22,7 +22,7 @@ export function AuthScaffold({ title, subtitle, footer, children }: AuthScaffold
   function returnToAccount() {
     Keyboard.dismiss();
     if (router.canGoBack()) router.back();
-    else router.replace('/(tabs)/cuenta');
+    else router.replace('/cuenta');
   }
 
   return (
