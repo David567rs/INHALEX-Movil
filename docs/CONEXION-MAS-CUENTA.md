@@ -82,7 +82,9 @@ El usuario abrió «Eliminar cuenta» desde Más como visitante, leyó la explic
 
 El usuario confirmó que el botón del formulario quedó deshabilitado con la contraseña vacía y con la palabra incorrecta. Pudo desplazar el formulario con el teclado abierto y, al regresar, los campos estaban vacíos. [Aceptación del formulario de Eliminar cuenta](evidencias/mas-cuenta/aceptacion-eliminar-cuenta-formulario-expo-go.json).
 
-La prueba actual es intentar el envío con una contraseña incorrecta en una cuenta de prueba sin solicitudes previas. La app debe mostrar un aviso y pedir «Verificar solicitud». La consulta debe permitir usar de nuevo el formulario cuando la sesión siga vigente y la cuenta carezca de una solicitud registrada.
+El usuario confirmó que el envío con contraseña incorrecta fue rechazado. «Verificar solicitud» quitó el aviso y devolvió el formulario vacío, sin recibo. [Aceptación del rechazo de contraseña](evidencias/mas-cuenta/aceptacion-eliminar-cuenta-rechazo-expo-go.json).
+
+La prueba actual es registrar una solicitud válida con esa cuenta de prueba. El recibo debe decir «Solicitud recibida» y «Pendiente de atención». Al pulsar «Actualizar estado», debe conservarse la misma referencia.
 
 1. El usuario actualiza o reinicia su backend cuando decida cargar las rutas nuevas y recarga su propia sesión de Expo. Abrir Más y pulsar Actualizar información. Revisar Empresa, FAQ, Contacto, Privacidad y Términos; las FAQ deben abrir/cerrar y los textos deben coincidir con los aprobados.
 2. En Contacto, pulsar el icono de copiar de cada tarjeta y pegar en una nota local: verificar correo completo, teléfono y domicilio. La palomita y el aviso «Copiado» deben aparecer durante unos dos segundos y desaparecer solos, también al copiar el domicilio tras desplazarse. Repetir la copia debe renovar la confirmación sin mover las tarjetas ni bloquear los controles. Confirmar también el regreso desde correo y marcador sin enviar ni llamar. Probar Cuenta desde la cabecera de los cinco tabs y regresar al origen.

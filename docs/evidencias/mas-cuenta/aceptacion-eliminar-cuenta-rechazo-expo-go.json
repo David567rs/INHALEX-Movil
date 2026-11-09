@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-08",
+  "branch": "codex/diseno-mas-cuenta",
+  "source": "Reporte del usuario sobre su prueba en Expo Go",
+  "report": "Amigo, rechazó la contraseña incorrecta. «Verificar solicitud» quitó el aviso y dejó el formulario vacío, sin registrar una solicitud.",
+  "accepted": [
+    "Rechazar la contraseña incorrecta al intentar el envío",
+    "Quitar el aviso al pulsar Verificar solicitud",
+    "Dejar el formulario vacío y sin recibo después de verificar"
+  ],
+  "next": "Registrar una solicitud válida con la cuenta de prueba y comprobar el recibo y su referencia al actualizar"
+}
