@@ -20,6 +20,7 @@ import {
 } from './email-verification/email-verification-rate-limit.schema';
 import { EmailVerificationRateLimitService } from './email-verification/email-verification-rate-limit.service';
 import { EmailVerificationService } from './email-verification/email-verification.service';
+import { createGmailRegistrationCodeSender } from './email-verification/gmail-registration-code-sender';
 import {
   REGISTRATION_CODE_SENDER,
   unavailableRegistrationCodeSender,
@@ -63,7 +64,10 @@ import {
     EmailVerificationRateLimitService,
     {
       provide: REGISTRATION_CODE_SENDER,
-      useValue: unavailableRegistrationCodeSender,
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) =>
+        createGmailRegistrationCodeSender((key) => config.get<string>(key)) ??
+        unavailableRegistrationCodeSender,
     },
   ],
   exports: [AuthService, JwtAuthGuard, JwtModule],
