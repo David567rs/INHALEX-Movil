@@ -78,7 +78,9 @@ El usuario confirmó que, al fallar una actualización de Más, vio el aviso y p
 
 El usuario abrió «Nuestra empresa» con la API local detenida. Pudo leer el contenido incluido en la app y vio el aviso correspondiente. Al recuperar la API y pulsar «Reintentar actualización», desapareció el aviso. [Aceptación del contenido incluido](evidencias/mas-cuenta/aceptacion-respaldo-expo-go.json).
 
-La prueba actual es abrir «Eliminar cuenta» desde Más como visitante, comprobar la información pública y pulsar «Ir a Cuenta» para llegar al acceso de inicio de sesión.
+El usuario abrió «Eliminar cuenta» desde Más como visitante, leyó la explicación y vio el correo de contacto. «Ir a Cuenta» abrió la pantalla con «Iniciar sesión». [Aceptación de Eliminar cuenta como visitante](evidencias/mas-cuenta/aceptacion-eliminar-cuenta-visitante-expo-go.json).
+
+La prueba actual es abrir el formulario con una cuenta de prueba sin solicitudes previas, comprobar el teclado y verificar que el botón exige una contraseña y la palabra «ELIMINAR». Este recorrido termina al volver y comprobar que los campos se limpiaron. El envío se comprueba en una prueba aparte.
 
 1. El usuario actualiza o reinicia su backend cuando decida cargar las rutas nuevas y recarga su propia sesión de Expo. Abrir Más y pulsar Actualizar información. Revisar Empresa, FAQ, Contacto, Privacidad y Términos; las FAQ deben abrir/cerrar y los textos deben coincidir con los aprobados.
 2. En Contacto, pulsar el icono de copiar de cada tarjeta y pegar en una nota local: verificar correo completo, teléfono y domicilio. La palomita y el aviso «Copiado» deben aparecer durante unos dos segundos y desaparecer solos, también al copiar el domicilio tras desplazarse. Repetir la copia debe renovar la confirmación sin mover las tarjetas ni bloquear los controles. Confirmar también el regreso desde correo y marcador sin enviar ni llamar. Probar Cuenta desde la cabecera de los cinco tabs y regresar al origen.
