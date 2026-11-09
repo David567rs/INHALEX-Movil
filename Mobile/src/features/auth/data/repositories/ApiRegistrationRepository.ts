@@ -11,6 +11,8 @@ import { mapRegisteredUser } from '../mappers/mapRegisteredUser';
 type RegistrationOperation = 'request-code' | 'register';
 
 const INVALID_CODE_RESPONSE = 'El código es incorrecto, venció o ya se usó. Solicita otro si lo necesitas.';
+// Gmail allows 10 seconds for token renewal and another 10 for delivery.
+const CODE_REQUEST_TIMEOUT_MS = 30_000;
 
 function mapRegistrationError(error: unknown, operation: RegistrationOperation): RegistrationError {
   const requestingCode = operation === 'request-code';
@@ -101,6 +103,7 @@ export class ApiRegistrationRepository implements RegistrationRepository {
         method: 'POST',
         authenticated: false,
         signal: options?.signal,
+        timeoutMs: CODE_REQUEST_TIMEOUT_MS,
         body: { email },
       });
       return mapRegistrationChallenge(payload);

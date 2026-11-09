@@ -72,6 +72,36 @@ test('code request maps an invalid email, rate limits and transport failures to 
   });
 });
 
+test('a slow code request can return its challenge after the default HTTP timeout', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  let respond;
+  const repo = repository(() => new Promise((resolve) => { respond = resolve; }), { requestTimeoutMs: 15_000 });
+  const result = repo.requestCode(input().email).then(
+    (value) => ({ value }),
+    (error) => ({ error }),
+  );
+
+  t.mock.timers.tick(20_000);
+  respond(jsonResponse(challenge, 202));
+  assert.deepEqual(await result, { value: challenge });
+});
+
+test('a code request still times out if the backend never responds', async (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  let requestSignal;
+  const repo = repository((_url, options) => {
+    requestSignal = options.signal;
+    return new Promise(() => {});
+  });
+  const rejected = assert.rejects(repo.requestCode(input().email), isRegistrationError('timeout'));
+
+  t.mock.timers.tick(29_999);
+  assert.equal(requestSignal.aborted, false);
+  t.mock.timers.tick(1);
+  await rejected;
+  assert.equal(requestSignal.aborted, true);
+});
+
 test('verified registration posts only allowed fields, keeps leading zeros and drops tokens', async () => {
   let call;
   const repo = repository(async (url, options) => {
