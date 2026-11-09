@@ -8,10 +8,12 @@
     "Abrir telefono con numero correcto"
   ],
   "reportedIssue": "La seleccion de texto no permitio al usuario copiar los datos",
+  "followUpRequest": "que dé un pequeño mensaje de copiado, y luego se quite, así como otras apps",
   "implementedCorrection": [
     "Icono de copia por correo, telefono y domicilio, con area tactil de 48 px",
     "Copia el dato completo solo tras un toque explicito; no lee el portapapeles",
     "Palomita breve y anuncio accesible solo tras escritura confirmada",
+    "Aviso flotante Copiado durante 2.2 segundos, sin desplazar tarjetas ni bloquear controles",
     "Aviso cuando la escritura devuelve false o falla",
     "Mensajes de apertura actualizados para indicar el icono de copia"
   ],
@@ -24,7 +26,7 @@
     "Copiar y pegar correo completo",
     "Copiar y pegar telefono completo",
     "Copiar y pegar domicilio completo",
-    "Confirmacion visual, repeticion de copia y lector de pantalla",
+    "Confirmacion visual Copiado y palomita, desaparicion automatica, repeticion de copia y lector de pantalla",
     "Regreso desde aplicaciones externas"
   ],
   "agentActions": "Correccion local y registro por etapas; sin iniciar o detener servicios, enviar correo, llamar, modificar Zenaida, publicar rama o abrir PR"

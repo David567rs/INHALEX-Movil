@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import type { ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { AppScreen } from '@/shared/components/AppScreen';
 import { Reveal, SoftPressable } from '@/shared/components/Motion';
@@ -33,10 +34,13 @@ const sectionIcons: Record<MoreSectionId, keyof typeof Ionicons.glyphMap> = {
 
 export function MoreInformationScreen({ section, loadContent }: { section: string; loadContent: LoadMoreContent }) {
   const vm = useMoreViewModel(loadContent);
+  const contactActions = useMoreContactViewModel();
+  const insets = useSafeAreaInsets();
   const validSection = Object.prototype.hasOwnProperty.call(titles, section) ? section as MoreSectionId : null;
   const document = vm.content?.documents.find((item) => item.id === validSection);
 
-  return <AppScreen title={validSection ? titles[validSection] : 'Información'} eyebrow="INHALEX"
+  return <View style={styles.screen}>
+    <AppScreen title={validSection ? titles[validSection] : 'Información'} eyebrow="INHALEX"
     action={<MoreBackButton />} includeBottomInset animateContent={false}>
     {!validSection ? <ScreenState title="Esta sección no está disponible"
       message="Encuentra nuestras opciones de ayuda e información en Más."
@@ -75,7 +79,7 @@ export function MoreInformationScreen({ section, loadContent }: { section: strin
             </View>
           </> : null}
 
-          {validSection === 'contacto' ? <ContactContent contact={vm.content.contact} /> : null}
+          {validSection === 'contacto' ? <ContactContent contact={vm.content.contact} actions={contactActions} /> : null}
           {validSection === 'empresa' ? <CompanyContent company={vm.content.company} /> : null}
           {validSection === 'privacidad' || validSection === 'terminos' ? document
             ? <DocumentContent document={document} />
@@ -83,11 +87,23 @@ export function MoreInformationScreen({ section, loadContent }: { section: strin
               actionLabel="Ir a Contacto" onAction={() => router.push({ pathname: '/informacion/[section]', params: { section: 'contacto' } })} />
             : null}
         </MoreEntrance>}
-  </AppScreen>;
+    </AppScreen>
+    {validSection === 'contacto' && contactActions.copiedField ? <View pointerEvents="none"
+      accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants"
+      style={[styles.copyToastContainer, { bottom: Math.max(insets.bottom, 12) + 12 }]}>
+      <Reveal style={styles.copyToast}>
+        <Ionicons accessible={false} name="checkmark-circle-outline" size={18} color={colors.white} />
+        <Text style={styles.copyToastText}>Copiado</Text>
+      </Reveal>
+    </View> : null}
+  </View>;
 }
 
-function ContactContent({ contact }: { contact: MoreContent['contact'] }) {
-  const { message, opening, openContact, copying, copiedField, copyContact } = useMoreContactViewModel();
+function ContactContent({ contact, actions }: {
+  contact: MoreContent['contact'];
+  actions: ReturnType<typeof useMoreContactViewModel>;
+}) {
+  const { message, opening, openContact, copying, copiedField, copyContact } = actions;
 
   return <>
     <Text style={styles.intro}>Dudas sobre un aroma, tu cuenta o un pedido. Elige cómo prefieres contactarnos.</Text>
@@ -218,6 +234,7 @@ function SectionTitle({ icon, title, action }: { icon: keyof typeof Ionicons.gly
 }
 
 const styles = StyleSheet.create({
+  screen: { backgroundColor: colors.background, flex: 1 },
   intro: { color: colors.textMuted, fontSize: 14, lineHeight: 23, marginBottom: 22 },
   stack: { gap: 14 },
   card: { backgroundColor: colors.surface, borderColor: colors.border, borderRadius: 22, borderWidth: 1, padding: 20 },
@@ -241,6 +258,9 @@ const styles = StyleSheet.create({
   contactHeadingText: { flex: 1, minWidth: 0 },
   copyAction: { alignItems: 'center', borderRadius: 12, height: 48, justifyContent: 'center', width: 48 },
   copyPressed: { backgroundColor: colors.surfaceSoft },
+  copyToastContainer: { alignItems: 'center', left: 22, position: 'absolute', right: 22, zIndex: 1 },
+  copyToast: { alignItems: 'center', backgroundColor: colors.primaryDark, borderRadius: 24, flexDirection: 'row', gap: 8, maxWidth: '100%', paddingHorizontal: 18, paddingVertical: 11 },
+  copyToastText: { color: colors.white, flexShrink: 1, fontSize: 14, fontWeight: '600', lineHeight: 20 },
   contactNotice: { backgroundColor: colors.warningSoft, borderRadius: 16, marginBottom: 16, padding: 16 },
   contactNoticeText: { color: colors.text, fontSize: 14, lineHeight: 23 },
   action: { alignItems: 'center', backgroundColor: colors.primaryDark, borderRadius: 15, flexDirection: 'row', gap: 10, justifyContent: 'center', minHeight: 50, paddingHorizontal: 16, paddingVertical: 14 },
