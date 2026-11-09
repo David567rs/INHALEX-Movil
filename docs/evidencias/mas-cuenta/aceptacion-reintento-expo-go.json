@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-08",
+  "branch": "codex/diseno-mas-cuenta",
+  "source": "Reporte del usuario sobre su prueba en Expo Go",
+  "report": "Amigo, apareció el aviso y pude seguir leyendo las preguntas frecuentes. Al recuperar el backend y reintentar, desapareció el aviso y volvió «Actualizar información».",
+  "accepted": [
+    "Mostrar un aviso cuando falla la actualización de Más",
+    "Mantener las preguntas frecuentes disponibles durante el fallo",
+    "Quitar el aviso y restaurar Actualizar información al reintentar con el backend disponible"
+  ],
+  "next": "Abrir Nuestra empresa con la API detenida y comprobar el contenido incluido y su aviso"
+}
