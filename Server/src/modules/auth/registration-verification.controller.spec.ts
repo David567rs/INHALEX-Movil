@@ -204,7 +204,8 @@ describe('Registration verification HTTP routes', () => {
         transform: true,
       }),
     );
-    await app.init();
+    // Keep one listener open for the concurrent SuperTest requests.
+    await app.listen(0, '127.0.0.1');
   });
 
   beforeEach(() => {
