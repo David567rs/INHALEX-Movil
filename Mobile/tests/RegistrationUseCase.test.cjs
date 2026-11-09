@@ -1,7 +1,7 @@
 const assert = require('node:assert/strict');
 const { test } = require('node:test');
 const { RegistrationError } = require('../src/features/auth/domain/errors/RegistrationError.ts');
-const { createRegisterUser } = require('../src/features/auth/domain/useCases/registerUser.ts');
+const { createRegisterUser, createRequestRegistrationCode } = require('../src/features/auth/domain/useCases/registerUser.ts');
 
 const validForm = (overrides = {}) => ({
   firstName: 'María', lastName: 'Pérez', email: 'maria@example.com', phone: '5512345678',
@@ -10,13 +10,54 @@ const validForm = (overrides = {}) => ({
 const registered = {
   id: 'user-id', firstName: 'María', lastName: 'Pérez', email: 'maria@example.com', phone: '5512345678',
 };
+const challengeId = 'd7428ef9-7eb9-4df2-a07a-c9165e6ab613';
+const verification = Object.freeze({ challengeId, code: '024681' });
+
+test('requesting a code validates the normalized email and forwards cancellation options', async () => {
+  const options = { signal: new AbortController().signal };
+  const challenge = { challengeId, expiresInSeconds: 600, resendAfterSeconds: 60 };
+  const calls = [];
+  const request = createRequestRegistrationCode({ requestCode: async (...args) => {
+    calls.push(args);
+    return challenge;
+  } });
+  assert.equal(await request('  MARIA+aromas@EXAMPLE.COM  ', options), challenge);
+  assert.deepEqual(calls, [['maria+aromas@example.com', options]]);
+  for (const email of ['', 'invalid', `${'İ'.repeat(32)}@example.com`]) {
+    await assert.rejects(request(email), (error) => {
+      assert.ok(error instanceof RegistrationError);
+      assert.equal(error.kind, 'validation');
+      assert.ok(error.fieldErrors.email);
+      return true;
+    });
+  }
+  const controller = new AbortController();
+  controller.abort();
+  await assert.rejects(request('maria@example.com', { signal: controller.signal }),
+    (error) => error instanceof RegistrationError && error.kind === 'cancelled');
+  assert.equal(calls.length, 1);
+});
+
+test('unexpected code-request errors are converted to safe domain messages', async () => {
+  const request = createRequestRegistrationCode({ requestCode: async () => {
+    throw new Error('private infrastructure detail');
+  } });
+  await assert.rejects(request('maria@example.com'), (error) => {
+    assert.ok(error instanceof RegistrationError);
+    assert.equal(error.kind, 'unknown');
+    assert.match(error.message, /solicitar el código/);
+    assert.ok(!error.message.includes('private'));
+    assert.equal(error.cause, undefined);
+    return true;
+  });
+});
 
 test('the use case revalidates invalid forms and never invokes the repository', async () => {
   let calls = 0;
   const register = createRegisterUser({ register: async () => { calls++; return registered; } });
   for (const form of [validForm({ email: 'invalid' }), validForm({ confirmPassword: 'different' }),
     validForm({ firstName: '', phone: '123' }), validForm({ password: 'weak', confirmPassword: 'weak' })]) {
-    await assert.rejects(register(form), (error) => {
+    await assert.rejects(register(form, verification), (error) => {
       assert.ok(error instanceof RegistrationError);
       assert.equal(error.kind, 'validation');
       assert.ok(Object.keys(error.fieldErrors).length > 0);
@@ -26,11 +67,13 @@ test('the use case revalidates invalid forms and never invokes the repository', 
   assert.equal(calls, 0);
 });
 
-test('the use case normalizes only five request fields and preserves the exact password and original form', async () => {
+test('the use case normalizes the form and preserves the exact password, code and original form', async () => {
   let request;
+  let passedVerification;
   let passedOptions;
-  const register = createRegisterUser({ register: async (input, options) => {
+  const register = createRegisterUser({ register: async (input, proof, options) => {
     request = input;
+    passedVerification = proof;
     passedOptions = options;
     return registered;
   } });
@@ -40,12 +83,13 @@ test('the use case normalizes only five request fields and preserves the exact p
   }));
   const before = { ...form };
   const options = { signal: new AbortController().signal };
-  assert.equal(await register(form, options), registered);
+  assert.equal(await register(form, { ...verification, email: 'ignore@example.com' }, options), registered);
   assert.deepEqual(request, {
     firstName: 'María', lastName: 'Pérez', email: 'maria+aromas@example.com', phone: '5512345678',
     password: ' Aa1!abc',
   });
   assert.equal(passedOptions, options);
+  assert.deepEqual(passedVerification, verification);
   assert.deepEqual(form, before);
   assert.equal(Object.hasOwn(request, 'confirmPassword'), false);
 });
@@ -53,7 +97,7 @@ test('the use case normalizes only five request fields and preserves the exact p
 test('normalization cannot bypass validation when lowercasing expands a UTF-8 email beyond its byte limit', async () => {
   let calls = 0;
   const register = createRegisterUser({ register: async () => { calls++; return registered; } });
-  await assert.rejects(register(validForm({ email: `${'İ'.repeat(32)}@example.com` })), (error) => {
+  await assert.rejects(register(validForm({ email: `${'İ'.repeat(32)}@example.com` }), verification), (error) => {
     assert.ok(error instanceof RegistrationError);
     assert.equal(error.kind, 'validation');
     assert.ok(error.fieldErrors.email);
@@ -67,7 +111,7 @@ test('the use case does not invoke the repository when cancellation happened bef
   const register = createRegisterUser({ register: async () => { calls++; return registered; } });
   const controller = new AbortController();
   controller.abort();
-  await assert.rejects(register(validForm(), { signal: controller.signal }), (error) => {
+  await assert.rejects(register(validForm(), verification, { signal: controller.signal }), (error) => {
     assert.ok(error instanceof RegistrationError);
     assert.equal(error.kind, 'cancelled');
     return true;
@@ -75,17 +119,28 @@ test('the use case does not invoke the repository when cancellation happened bef
   assert.equal(calls, 0);
 });
 
+test('invalid or missing verification never invokes the registration repository', async () => {
+  let calls = 0;
+  const register = createRegisterUser({ register: async () => { calls++; return registered; } });
+  for (const proof of [undefined, { ...verification, challengeId: 'invalid' },
+    { ...verification, code: 24681 }, { ...verification, code: '02468' }, { ...verification, code: '02468a' }]) {
+    await assert.rejects(register(validForm(), proof),
+      (error) => error instanceof RegistrationError && error.kind === 'invalid-code');
+  }
+  assert.equal(calls, 0);
+});
+
 test('known repository domain errors are preserved without retrying', async () => {
   let calls = 0;
   const duplicate = new RegistrationError('Este correo ya está registrado.', 'duplicate-email', { email: 'Correo registrado.' });
   const register = createRegisterUser({ register: async () => { calls++; throw duplicate; } });
-  await assert.rejects(register(validForm()), (error) => error === duplicate);
+  await assert.rejects(register(validForm(), verification), (error) => error === duplicate);
   assert.equal(calls, 1);
 });
 
 test('unexpected repository errors are converted to safe domain errors without retaining internals', async () => {
   const register = createRegisterUser({ register: async () => { throw new Error('private infrastructure detail'); } });
-  await assert.rejects(register(validForm()), (error) => {
+  await assert.rejects(register(validForm(), verification), (error) => {
     assert.ok(error instanceof RegistrationError);
     assert.equal(error.kind, 'unknown');
     assert.ok(!error.message.includes('private'));

@@ -1,13 +1,50 @@
 import { RegistrationError } from '../errors/RegistrationError';
-import type { RegisteredUser, RegistrationInput } from '../models/Registration';
+import type {
+  RegisteredUser, RegistrationChallenge, RegistrationInput, RegistrationVerification,
+} from '../models/Registration';
 import type { RegistrationOptions, RegistrationRepository } from '../repositories/RegistrationRepository';
-import { validateRegistration } from '../validation/registrationValidation';
+import {
+  isRegistrationChallengeId, validateRegistration, validateRegistrationEmail,
+} from '../validation/registrationValidation';
 import type { RegistrationForm } from '../validation/registrationValidation';
 
-export type RegisterUser = (form: RegistrationForm, options?: RegistrationOptions) => Promise<RegisteredUser>;
+export type RegisterUser = (
+  form: RegistrationForm,
+  verification: RegistrationVerification,
+  options?: RegistrationOptions,
+) => Promise<RegisteredUser>;
+
+export type RequestRegistrationCode = (
+  email: string, options?: RegistrationOptions,
+) => Promise<RegistrationChallenge>;
+
+export type RegistrationActions = {
+  requestCode: RequestRegistrationCode;
+  registerUser: RegisterUser;
+};
+
+export function createRequestRegistrationCode(repository: RegistrationRepository): RequestRegistrationCode {
+  return async (email, options) => {
+    const normalizedEmail = email.trim().toLowerCase();
+    const emailError = validateRegistrationEmail(normalizedEmail);
+    if (emailError) {
+      throw new RegistrationError(emailError, 'validation', { email: emailError });
+    }
+    if (options?.signal?.aborted) {
+      throw new RegistrationError('Se canceló la solicitud del código.', 'cancelled');
+    }
+
+    try {
+      return await repository.requestCode(normalizedEmail, options);
+    } catch (error) {
+      if (error instanceof RegistrationError) throw error;
+      throw new RegistrationError('No pudimos solicitar el código. Inténtalo más tarde.', 'unknown');
+    }
+  };
+}
 
 export function createRegisterUser(repository: RegistrationRepository): RegisterUser {
-  return async (form, options) => {
+  return async (form, verification, options) => {
     const input: RegistrationInput = {
       firstName: form.firstName.trim(),
       lastName: form.lastName.trim(),
@@ -23,9 +60,16 @@ export function createRegisterUser(repository: RegistrationRepository): Register
     if (options?.signal?.aborted) {
       throw new RegistrationError('Se canceló la solicitud de registro.', 'cancelled');
     }
+    if (!isRegistrationChallengeId(verification?.challengeId)
+      || typeof verification.code !== 'string' || !/^[0-9]{6}$/.test(verification.code)) {
+      throw new RegistrationError('Ingresa los seis dígitos del código de verificación.', 'invalid-code');
+    }
 
     try {
-      return await repository.register(input, options);
+      return await repository.register(input, {
+        challengeId: verification.challengeId,
+        code: verification.code,
+      }, options);
     } catch (error) {
       if (error instanceof RegistrationError) throw error;
       throw new RegistrationError('No pudimos confirmar el registro. Intenta de nuevo más tarde.', 'unknown');

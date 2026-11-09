@@ -4,7 +4,7 @@ import { HttpClient } from '../core/network/HttpClient';
 import type { AccessTokenProvider, FetchImplementation } from '../core/network/HttpClient';
 import { ApiRegistrationRepository } from '../features/auth/data/repositories/ApiRegistrationRepository';
 import { RegistrationError } from '../features/auth/domain/errors/RegistrationError';
-import { createRegisterUser, type RegisterUser } from '../features/auth/domain/useCases/registerUser';
+import { createRegisterUser, createRequestRegistrationCode, type RegistrationActions } from '../features/auth/domain/useCases/registerUser';
 import { ApiLoginRepository } from '../features/auth/data/repositories/ApiLoginRepository';
 import { createSessionTokenStore } from '../features/auth/data/storage/createSessionTokenStore';
 import { LoginError } from '../features/auth/domain/errors/LoginError';
@@ -78,9 +78,13 @@ export function createApplicationServices(options: ApplicationServicesOptions = 
     fetch: options.fetch,
     getAccessToken: options.getAccessToken,
   });
-  const registerUser = createRegisterUser(new ApiRegistrationRepository(httpClient));
+  const registrationRepository = new ApiRegistrationRepository(httpClient);
+  const registration: RegistrationActions = {
+    requestCode: createRequestRegistrationCode(registrationRepository),
+    registerUser: createRegisterUser(registrationRepository),
+  };
   const loginUser = createLoginUser(new ApiLoginRepository(httpClient));
-  return Object.freeze({ environment, httpClient, registerUser, loginUser });
+  return Object.freeze({ environment, httpClient, registration, loginUser });
 }
 
 /** Lazy API composition: an empty store never needs environment configuration or HTTP. */
@@ -339,16 +343,22 @@ export function createApplicationRuntime(options: Omit<ApplicationServicesOption
 }
 
 /** Defer configuration until submission so navigation never depends on the API. */
-export function createRegistrationAction(options: ApplicationServicesOptions = {}): RegisterUser {
-  let action: RegisterUser | undefined;
-  return async (form, requestOptions) => {
-    if (!action) {
+export function createRegistrationActions(options: ApplicationServicesOptions = {}): RegistrationActions {
+  let actions: RegistrationActions | undefined;
+  function getActions() {
+    if (!actions) {
       try {
-        action = createApplicationServices(options).registerUser;
+        actions = createApplicationServices(options).registration;
       } catch {
         throw new RegistrationError('El registro no está disponible en este momento. Inténtalo más tarde.', 'configuration');
       }
     }
-    return action(form, requestOptions);
+    return actions;
+  }
+
+  return {
+    requestCode: async (email, requestOptions) => getActions().requestCode(email, requestOptions),
+    registerUser: async (form, verification, requestOptions) =>
+      getActions().registerUser(form, verification, requestOptions),
   };
 }

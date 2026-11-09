@@ -1,7 +1,14 @@
-import type { RegisteredUser, RegistrationInput } from '../models/Registration';
+import type {
+  RegisteredUser, RegistrationChallenge, RegistrationInput, RegistrationVerification,
+} from '../models/Registration';
 
 export type RegistrationOptions = { signal?: AbortSignal };
 
 export interface RegistrationRepository {
-  register(input: RegistrationInput, options?: RegistrationOptions): Promise<RegisteredUser>;
+  requestCode(email: string, options?: RegistrationOptions): Promise<RegistrationChallenge>;
+  register(
+    input: RegistrationInput,
+    verification: RegistrationVerification,
+    options?: RegistrationOptions,
+  ): Promise<RegisteredUser>;
 }
