@@ -86,7 +86,11 @@ El usuario confirmó que el envío con contraseña incorrecta fue rechazado. «V
 
 El usuario confirmó que la solicitud válida de la cuenta de prueba mostró «Solicitud recibida» con el estado «Pendiente de atención». Al pulsar «Actualizar estado» se conservó la misma referencia. [Aceptación del recibo de solicitud](evidencias/mas-cuenta/aceptacion-eliminar-cuenta-recibo-expo-go.json).
 
-La prueba actual es comprobar la visibilidad del recibo según la sesión. Al cerrar sesión, «Eliminar cuenta» desde Más debe mostrar la información pública. Al ingresar de nuevo con la misma cuenta de prueba, debe aparecer el recibo pendiente con la referencia anterior.
+El usuario confirmó que el recibo se ocultó al cerrar sesión. Después de ingresar con la misma cuenta de prueba, volvió el recibo pendiente con la referencia anterior. [Aceptación de la visibilidad del recibo según la sesión](evidencias/mas-cuenta/aceptacion-eliminar-cuenta-sesion-expo-go.json).
+
+Se repitieron 17 pruebas móviles y 28 del servicio y del formulario web de eliminación. Pasaron los 45 casos con dependencias simuladas, entre ellos el doble toque, la referencia estable ante inserciones concurrentes, la verificación tras un resultado incierto y la conservación del recibo cuando falla la consulta. La comprobación de la cola con datos de prueba y la del formulario en un navegador siguen en el recorrido de aceptación.
+
+La prueba actual es consultar el estado del recibo ya visible mientras la API local está detenida. Debe aparecer un aviso y conservarse la referencia. Al recuperar la API, «Actualizar estado» debe quitar el aviso y mantener el recibo.
 
 1. El usuario actualiza o reinicia su backend cuando decida cargar las rutas nuevas y recarga su propia sesión de Expo. Abrir Más y pulsar Actualizar información. Revisar Empresa, FAQ, Contacto, Privacidad y Términos; las FAQ deben abrir/cerrar y los textos deben coincidir con los aprobados.
 2. En Contacto, pulsar el icono de copiar de cada tarjeta y pegar en una nota local: verificar correo completo, teléfono y domicilio. La palomita y el aviso «Copiado» deben aparecer durante unos dos segundos y desaparecer solos, también al copiar el domicilio tras desplazarse. Repetir la copia debe renovar la confirmación sin mover las tarjetas ni bloquear los controles. Confirmar también el regreso desde correo y marcador sin enviar ni llamar. Probar Cuenta desde la cabecera de los cinco tabs y regresar al origen.
