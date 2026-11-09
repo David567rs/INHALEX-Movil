@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-08",
+  "branch": "codex/diseno-mas-cuenta",
+  "source": "Reporte del usuario sobre su prueba en Expo Go",
+  "report": "Amigo, Cuenta abrió desde las cinco pestañas y Volver me regresó a la correcta. En Catálogo se conservó la categoría seleccionada.",
+  "tabs": ["Inicio", "Catálogo", "Favoritos", "Bolsa", "Más"],
+  "accepted": [
+    "Abrir Cuenta desde el icono superior de cada pestaña",
+    "Volver a la pestaña de origen",
+    "Conservar la categoría seleccionada en Catálogo"
+  ],
+  "next": "Verificar que Más conserva la información al fallar una actualización y se recupera al reintentar"
+}

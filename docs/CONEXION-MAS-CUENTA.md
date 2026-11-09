@@ -72,7 +72,9 @@ El 8 de noviembre de 2026 el usuario confirmó: «Amigo, copié y pegué los tre
 
 El usuario también confirmó en Expo Go que las respuestas de Preguntas frecuentes se leen completas, solo queda una abierta y se puede cerrar. Al actualizar se conserva la respuesta abierta. Desde «Contactar a INHALEX» pudo abrir Contacto y regresar a Preguntas frecuentes. El registro conserva su reporte. [Aceptación de Preguntas frecuentes](evidencias/mas-cuenta/aceptacion-faq-expo-go.json).
 
-La prueba actual es abrir Cuenta desde el encabezado de Inicio, Catálogo, Favoritos, Bolsa y Más. Al volver desde Cuenta, la app debe mostrar el mismo tab. En Catálogo, comprobar también que se conserva el filtro seleccionado.
+El usuario confirmó que pudo abrir Cuenta desde el encabezado de Inicio, Catálogo, Favoritos, Bolsa y Más y que «Volver» lo llevó a la pestaña de origen en cada caso. En Catálogo se conservó la categoría seleccionada. [Aceptación de la navegación a Cuenta](evidencias/mas-cuenta/aceptacion-navegacion-cuenta-expo-go.json).
+
+La prueba actual es actualizar Más cuando su API local deja de responder. Se espera que los apartados sigan disponibles con la última información consultada y que el aviso desaparezca al pulsar «Reintentar actualización» después de recuperar la API.
 
 1. El usuario actualiza o reinicia su backend cuando decida cargar las rutas nuevas y recarga su propia sesión de Expo. Abrir Más y pulsar Actualizar información. Revisar Empresa, FAQ, Contacto, Privacidad y Términos; las FAQ deben abrir/cerrar y los textos deben coincidir con los aprobados.
 2. En Contacto, pulsar el icono de copiar de cada tarjeta y pegar en una nota local: verificar correo completo, teléfono y domicilio. La palomita y el aviso «Copiado» deben aparecer durante unos dos segundos y desaparecer solos, también al copiar el domicilio tras desplazarse. Repetir la copia debe renovar la confirmación sin mover las tarjetas ni bloquear los controles. Confirmar también el regreso desde correo y marcador sin enviar ni llamar. Probar Cuenta desde la cabecera de los cinco tabs y regresar al origen.
