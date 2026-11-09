@@ -56,7 +56,9 @@ El lint general se diagnosticó con salida JSON: ninguno de los archivos nuevos/
 
 Las pruebas de las nuevas rutas HTTP, autenticación, cola, formulario público y clientes usan dependencias simuladas. No se creó una solicitud real, no se modificó MongoDB, no se borró una cuenta y no se inició Expo o un servidor persistente. Los tests HTTP usan instancias de Nest aisladas que se cierran al terminar. La revisión de arquitectura y contenido fue independiente; no sustituye ver la interfaz nueva en el teléfono.
 
-## Recorrido de aceptación pendiente, paso a paso
+## Aceptación en Expo Go y recorrido restante
+
+El 8 de noviembre de 2026 el usuario informó: «Más actualizó sin errores y pude abrir Empresa, Preguntas frecuentes, Contacto, Privacidad y Términos». Se acepta la actualización visible y la apertura de esos cinco apartados según su reporte. No equivale a inspección HTTP ni confirma todavía acordeones, enlaces externos, copia de datos, errores de conexión o eliminación. Registro: [aceptación de carga y apartados](evidencias/mas-cuenta/aceptacion-carga-expo-go.json). El siguiente paso es Contacto.
 
 1. El usuario actualiza o reinicia su backend cuando decida cargar las rutas nuevas y recarga su propia sesión de Expo. Abrir Más y pulsar Actualizar información. Revisar Empresa, FAQ, Contacto, Privacidad y Términos; las FAQ deben abrir/cerrar y los textos deben coincidir con los aprobados.
 2. Desde Contacto, comprobar correo y teléfono abriendo el compositor/marcador y regresar sin enviar ni llamar. El correo y domicilio completos deben poder seleccionarse. Probar Cuenta desde la cabecera de los cinco tabs y regresar al origen.
