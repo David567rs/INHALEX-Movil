@@ -20,4 +20,21 @@ Diseño inicial del flujo para registros nuevos. La app y la web comparten `POST
 
 Probar el alta con código correcto, incorrecto, vencido y reutilizado. Comprobar que el reenvío invalida el código anterior, el cambio de correo exige otro código y el fallo del proveedor permite recuperarse. Antes de activar el requisito, comprobar registro en móvil y web, inicio de sesión de cuentas existentes y el contrato que consume Alexa.
 
+## Contrato del backend
+
+| Ruta | Entrada | Respuesta |
+| --- | --- | --- |
+| `POST /api/auth/register/verification` | `email` | `202` con `challengeId`, `expiresInSeconds` y `resendAfterSeconds` |
+| `POST /api/auth/register/verified` | Campos del registro más `challengeId` y `code` | `201` con `accessToken`, `user` y cookie de sesión |
+
+Para reenviar se usa la primera ruta y se conserva el nuevo `challengeId`. MongoDB reserva un intento antes de comprobar el código y marca un reto válido como consumido con una actualización condicional. Se guarda `emailVerifiedAt` al crear el usuario. Si el alta se interrumpe después del consumo, se puede intentar iniciar sesión si la cuenta se creó, o solicitar otro código si el correo sigue libre. El índice único de correo protege el alta ante carreras entre registros.
+
+El límite es de cinco intentos por reto, un minuto entre envíos al mismo correo y, en una ventana de una hora, cinco solicitudes de código por correo y treinta por IP de conexión. Se cuentan las solicitudes aunque el envío posterior falle. Los retos y contadores vencidos se limpian mediante índices TTL, y el servidor comprueba el vencimiento sin esperar a la limpieza.
+
+La configuración de esta etapa usa un remitente simulado dentro de las pruebas. El remitente de ejecución responde `503` hasta conectar un proveedor. `EMAIL_VERIFICATION_SECRET` debe ser aleatorio, de al menos 32 caracteres e independiente de `JWT_SECRET`. La app y la web pueden integrar las rutas nuevas mientras `/api/auth/register` sigue disponible. El requisito para todos los registros queda para una activación coordinada.
+
+## Verificación local
+
+La compilación del servidor y sus 191 pruebas pasaron. El recorrido HTTP de registro verificado usa un remitente y almacenamiento simulados. Comprueba que solo el remitente recibe el código, el rechazo por correo distinto o código inválido, el vencimiento, el reenvío, el límite de intentos, dos confirmaciones simultáneas, la invalidación del reto si falla el envío y la compatibilidad del registro anterior. El siguiente paso de integración es conectar el remitente y comprobar el flujo en un entorno de pruebas con MongoDB.
+
 Referencia de seguridad: [OWASP, validación y verificación de correo](https://cheatsheetseries.owasp.org/cheatsheets/Email_Validation_and_Verification_Cheat_Sheet.html#email-ownership-verification).
