@@ -14,6 +14,7 @@ export type RegistrationErrors = Partial<Record<RegistrationField, string>>;
 
 const NAME_PATTERN = /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü' -]+$/;
 const PHONE_PATTERN = /^[0-9]{10,15}$/;
+const CHALLENGE_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 // Match the symbol set used by RegisterDto's IsStrongPassword validator.
 // An ASCII space counts as a symbol there; other Unicode characters are not banned.
 const PASSWORD_SYMBOL_PATTERN = /[-#!$@£%^&*()_+|~=`{}\[\]:";'<>?,.\/\\ ]/;
@@ -38,12 +39,21 @@ export function getPasswordChecks(password: string) {
   };
 }
 
+export function validateRegistrationEmail(email: string): string | undefined {
+  const trimmed = email.trim();
+  if (!trimmed) return 'El correo electrónico es obligatorio.';
+  if (!isEmail(trimmed)) return 'Ingresa un correo electrónico válido.';
+}
+
+export function isRegistrationChallengeId(value: unknown): value is string {
+  return typeof value === 'string' && CHALLENGE_ID_PATTERN.test(value);
+}
+
 /** Prevalidate the form without changing any entered values or creating an account. */
 export function validateRegistration(form: RegistrationForm): RegistrationErrors {
   const errors: RegistrationErrors = {};
   const firstName = form.firstName.trim();
   const lastName = form.lastName.trim();
-  const email = form.email.trim();
   const phone = form.phone.trim();
 
   if (!firstName) {
@@ -62,11 +72,8 @@ export function validateRegistration(form: RegistrationForm): RegistrationErrors
     errors.lastName = 'Usa letras, espacios, apóstrofos o guiones en el apellido.';
   }
 
-  if (!email) {
-    errors.email = 'El correo electrónico es obligatorio.';
-  } else if (!isEmail(email)) {
-    errors.email = 'Ingresa un correo electrónico válido.';
-  }
+  const emailError = validateRegistrationEmail(form.email);
+  if (emailError) errors.email = emailError;
 
   if (!phone) {
     errors.phone = 'El número telefónico es obligatorio.';

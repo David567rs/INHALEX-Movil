@@ -12,6 +12,8 @@
     "start:dev": "node -r ts-node/register -r tsconfig-paths/register src/scripts/ensure-dev-port.ts && node --watch -r ts-node/register -r tsconfig-paths/register src/main.ts",
     "start:debug": "node --inspect-brk -r ts-node/register -r tsconfig-paths/register src/main.ts",
     "start:prod": "node -r newrelic dist/main",
+    "gmail:authorize": "node scripts/authorize-gmail.cjs",
+    "gmail:send-test": "node --env-file=.env.gmail.local -r ts-node/register src/scripts/send-gmail-test.ts",
     "seed:products": "ts-node -r tsconfig-paths/register src/scripts/seed-products.ts",
     "sync:product-copy": "ts-node -r tsconfig-paths/register src/scripts/sync-product-copy.ts",
     "sync:synthetic-review-copy": "ts-node -r tsconfig-paths/register src/scripts/sync-synthetic-review-copy.ts",
