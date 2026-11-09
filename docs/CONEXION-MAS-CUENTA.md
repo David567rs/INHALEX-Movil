@@ -12,7 +12,7 @@
 - El recibo indica **Solicitud recibida / Pendiente de atención**. Una solicitud repetida conserva la referencia. No se anuncia ni se ejecuta una eliminación inmediata.
 - Las reseñas públicas muestran solamente el primer nombre o «Cliente INHALEX»; ya no se usa el prefijo del correo como nombre alternativo. La normalización al leer también cubre nombres antiguos almacenados, sin migrar registros reales.
 
-Correo y teléfono siguen abriendo la aplicación correspondiente solo por acción del usuario; no se envían mensajes ni se realizan llamadas automáticamente. Si no hay aplicación disponible, los datos permanecen seleccionables. El domicilio se puede copiar; no se incorporó apertura de mapas.
+Correo y teléfono siguen abriendo la aplicación correspondiente solo por acción del usuario; no se envían mensajes ni se realizan llamadas automáticamente. Cada tarjeta de Contacto ofrece ahora un icono discreto para copiar el correo, teléfono o domicilio completos. La selección de texto se conserva como alternativa. No se incorporó apertura de mapas.
 
 ## Contrato y arquitectura
 
@@ -21,6 +21,8 @@ La fuente editorial incluida en `Mobile/src/features/more/data/content` genera u
 El snapshot móvil está separado del documento web antiguo de MongoDB. No se sobrescribe la información existente del sistema original. El formulario administrativo antiguo **no edita este snapshot**: para actualizarlo se cambia la fuente revisada, se incrementa la revisión, se regenera y se despliega el backend por el flujo habitual. No existe aquí un nuevo editor de contenido.
 
 `createMoreAction` compone el caso de uso con el Repository de API. El ViewModel administra carga, avisos, actualización y acordeón; la vista no conoce HTTP. Las páginas HTML usan el mismo snapshot y escapan su texto.
+
+`useMoreContactViewModel` administra las acciones del dispositivo: abrir correo o marcador y escribir un dato público al portapapeles mediante `expo-clipboard` compatible con SDK 58. Solo copia tras pulsar el icono; nunca lee el portapapeles. La confirmación depende de que la escritura resulte correcta. Una respuesta `false` o una excepción muestran aviso, y el temporizador de confirmación se limpia al desmontar.
 
 El módulo de eliminación tiene contrato de dominio, Repository HTTP, controlador de estado independiente de React, Provider y pantalla. La composición usa la sesión de autorización existente, sin exponer el JWT a las vistas. Al cerrar o cambiar sesión se cancela la operación y se ocultan los datos anteriores; las respuestas tardías no se aplican a otra sesión. La contraseña no se conserva en snapshots ni almacenamiento y el formulario la limpia al enviar o perder el foco.
 
@@ -34,7 +36,7 @@ Responsable: INHALEX S.A.S. de C.V. Contacto: `danielcruzhernandezinhalex@gmail.
 
 Los documentos siguen identificados **Texto en revisión**. Las solicitudes se registran y se consultan, pero no hay borrado, anonimización, desactivación, correo automático, pantalla operativa ni endpoint de cierre. El responsable debe revisar la cola mediante el acceso administrativo descrito en la guía. Falta definir conservación y ejecutar un proceso revisado de atención y cierre. Guardar una solicitud no prueba que alguien la haya atendido.
 
-Los originales DOCX, documentos de la web, pedidos, cuentas y datos de clientes no se modificaron. Mercado Pago y el cálculo comercial del envío no se implementan en esta etapa. La copia de Zenaida, los servicios abiertos y los archivos de dependencias se conservan.
+Los originales DOCX, documentos de la web, pedidos, cuentas y datos de clientes no se modificaron. Mercado Pago y el cálculo comercial del envío no se implementan en esta etapa. La copia de Zenaida y los servicios abiertos se conservan. La corrección de Contacto añade únicamente `expo-clipboard` a las dependencias móviles y su archivo de bloqueo.
 
 ## Verificación técnica
 
@@ -60,8 +62,12 @@ Las pruebas de las nuevas rutas HTTP, autenticación, cola, formulario público 
 
 El 8 de noviembre de 2026 el usuario informó: «Más actualizó sin errores y pude abrir Empresa, Preguntas frecuentes, Contacto, Privacidad y Términos». Se acepta la actualización visible y la apertura de esos cinco apartados según su reporte. No equivale a inspección HTTP ni confirma todavía acordeones, enlaces externos, copia de datos, errores de conexión o eliminación. Registro: [aceptación de carga y apartados](evidencias/mas-cuenta/aceptacion-carga-expo-go.json). El siguiente paso es Contacto.
 
+Después, el usuario confirmó que el correo abrió con el destinatario correcto y el teléfono mostró el número. Reportó que no podía copiar los datos y pidió un icono discreto. Se añadieron iconos de copia de 20 px con área táctil de 48 px, en la cabecera de cada tarjeta para conservar el ancho del texto. Tras copiar, se muestra una palomita durante 2.2 segundos y se anuncia el resultado al lector de pantalla. Los mensajes de fallo de apertura ahora remiten al icono de copia.
+
+La corrección pasó TypeScript, lint móvil y revisión del diff. Se instaló `expo-clipboard ~58.0.4` mediante `npx --no-install expo install expo-clipboard`, según la [documentación de Clipboard para SDK 58](https://docs.expo.dev/versions/v58.0.0/sdk/clipboard/). No se inició ni reinició Expo o backend. **La copia mediante iconos todavía requiere confirmación en el teléfono**; esta revisión no vuelve a ejecutar ni modifica los resultados históricos de la tabla anterior. Registro: [aceptación parcial y corrección de Contacto](evidencias/mas-cuenta/aceptacion-contacto-expo-go.json).
+
 1. El usuario actualiza o reinicia su backend cuando decida cargar las rutas nuevas y recarga su propia sesión de Expo. Abrir Más y pulsar Actualizar información. Revisar Empresa, FAQ, Contacto, Privacidad y Términos; las FAQ deben abrir/cerrar y los textos deben coincidir con los aprobados.
-2. Desde Contacto, comprobar correo y teléfono abriendo el compositor/marcador y regresar sin enviar ni llamar. El correo y domicilio completos deben poder seleccionarse. Probar Cuenta desde la cabecera de los cinco tabs y regresar al origen.
+2. En Contacto, pulsar el icono de copiar de cada tarjeta y pegar en una nota local: verificar correo completo, teléfono y domicilio. La palomita debe aparecer brevemente y permitir repetir la copia. Confirmar también el regreso desde correo y marcador sin enviar ni llamar. Probar Cuenta desde la cabecera de los cinco tabs y regresar al origen.
 3. Con el backend detenido por el usuario, actualizar Más: debe conservar información y mostrar aviso. Recuperar el backend y reintentar: el aviso debe desaparecer. Verificar también una apertura fría sin API: aparece contenido incluido con aviso.
 4. Sin sesión, abrir Más → Eliminar cuenta: debe mostrar información pública y acceso a Cuenta, sin datos de otra persona. Con sesión, comprobar carga, teclado, regreso y contraseña vacía. No registrar una solicitud con una cuenta personal para probar.
 5. Con una cuenta de prueba expresamente destinada a esta operación, comprobar contraseña incorrecta, solicitud válida, recibo pendiente, doble toque, actualización, cierre y reapertura de sesión. El responsable debe verificar su aparición en la cola. La eliminación real no es parte de esta prueba.

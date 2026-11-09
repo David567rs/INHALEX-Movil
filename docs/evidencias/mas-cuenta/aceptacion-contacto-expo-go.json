@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-08",
+  "branch": "codex/diseno-mas-cuenta",
+  "source": "Reporte del usuario en Expo Go; sin observacion directa del telefono",
+  "report": "Amigo, el correo abrió con el destinatario correcto, el teléfono mostró el número, pero no puedo copiar nada, pon un icono de copiar texto pero discreto porfa",
+  "accepted": [
+    "Abrir correo con destinatario correcto",
+    "Abrir telefono con numero correcto"
+  ],
+  "reportedIssue": "La seleccion de texto no permitio al usuario copiar los datos",
+  "implementedCorrection": [
+    "Icono de copia por correo, telefono y domicilio, con area tactil de 48 px",
+    "Copia el dato completo solo tras un toque explicito; no lee el portapapeles",
+    "Palomita breve y anuncio accesible solo tras escritura confirmada",
+    "Aviso cuando la escritura devuelve false o falla",
+    "Mensajes de apertura actualizados para indicar el icono de copia"
+  ],
+  "localVerification": {
+    "typecheck": "passed",
+    "mobileLint": "passed",
+    "clipboardPackage": "expo-clipboard 58.0.4, instalado con Expo para SDK 58"
+  },
+  "pendingNativeAcceptance": [
+    "Copiar y pegar correo completo",
+    "Copiar y pegar telefono completo",
+    "Copiar y pegar domicilio completo",
+    "Confirmacion visual, repeticion de copia y lector de pantalla",
+    "Regreso desde aplicaciones externas"
+  ],
+  "agentActions": "Correccion local y registro por etapas; sin iniciar o detener servicios, enviar correo, llamar, modificar Zenaida, publicar rama o abrir PR"
+}
