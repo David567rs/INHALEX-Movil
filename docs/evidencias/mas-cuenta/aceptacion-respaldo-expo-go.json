@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-08",
+  "branch": "codex/diseno-mas-cuenta",
+  "source": "Reporte del usuario sobre su prueba en Expo Go",
+  "report": "Amigo, Nuestra empresa abrió con el backend detenido. Pude leer el contenido y apareció el aviso de la versión incluida. Al recuperar el backend y reintentar, desapareció el aviso.",
+  "accepted": [
+    "Abrir Nuestra empresa con el backend detenido",
+    "Leer el contenido incluido en la app y ver el aviso correspondiente",
+    "Quitar el aviso al reintentar después de recuperar el backend"
+  ],
+  "next": "Comprobar la información pública de Eliminar cuenta y el acceso a Cuenta sin sesión"
+}

@@ -76,7 +76,9 @@ El usuario confirmó que pudo abrir Cuenta desde el encabezado de Inicio, Catál
 
 El usuario confirmó que, al fallar una actualización de Más, vio el aviso y pudo seguir leyendo Preguntas frecuentes. Tras recuperar la API local y reintentar, el aviso desapareció y volvió el botón «Actualizar información». [Aceptación de error y reintento](evidencias/mas-cuenta/aceptacion-reintento-expo-go.json).
 
-La prueba actual es abrir «Nuestra empresa» con la API local detenida y comprobar el aviso «Mostramos la versión incluida en la app». Cada apertura de este apartado inicia su propia consulta, de modo que se puede comprobar el respaldo en la sesión de Expo Go que ya está abierta.
+El usuario abrió «Nuestra empresa» con la API local detenida. Pudo leer el contenido incluido en la app y vio el aviso correspondiente. Al recuperar la API y pulsar «Reintentar actualización», desapareció el aviso. [Aceptación del contenido incluido](evidencias/mas-cuenta/aceptacion-respaldo-expo-go.json).
+
+La prueba actual es abrir «Eliminar cuenta» desde Más como visitante, comprobar la información pública y pulsar «Ir a Cuenta» para llegar al acceso de inicio de sesión.
 
 1. El usuario actualiza o reinicia su backend cuando decida cargar las rutas nuevas y recarga su propia sesión de Expo. Abrir Más y pulsar Actualizar información. Revisar Empresa, FAQ, Contacto, Privacidad y Términos; las FAQ deben abrir/cerrar y los textos deben coincidir con los aprobados.
 2. En Contacto, pulsar el icono de copiar de cada tarjeta y pegar en una nota local: verificar correo completo, teléfono y domicilio. La palomita y el aviso «Copiado» deben aparecer durante unos dos segundos y desaparecer solos, también al copiar el domicilio tras desplazarse. Repetir la copia debe renovar la confirmación sin mover las tarjetas ni bloquear los controles. Confirmar también el regreso desde correo y marcador sin enviar ni llamar. Probar Cuenta desde la cabecera de los cinco tabs y regresar al origen.
