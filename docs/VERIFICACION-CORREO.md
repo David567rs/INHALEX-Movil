@@ -29,7 +29,9 @@ Probar el alta con código correcto, incorrecto, vencido y reutilizado. Comproba
 
 Para reenviar se usa la primera ruta y se conserva el nuevo `challengeId`. MongoDB reserva un intento antes de comprobar el código y marca un reto válido como consumido con una actualización condicional. Se guarda `emailVerifiedAt` al crear el usuario. Si el alta se interrumpe después del consumo, se puede intentar iniciar sesión si la cuenta se creó, o solicitar otro código si el correo sigue libre. El índice único de correo protege el alta ante carreras entre registros.
 
-El límite es de cinco intentos por reto, un minuto entre envíos al mismo correo y, en una ventana de una hora, cinco solicitudes de código por correo y treinta por IP de conexión. Se cuentan las solicitudes aunque el envío posterior falle. Los retos y contadores vencidos se limpian mediante índices TTL, y el servidor comprueba el vencimiento sin esperar a la limpieza.
+Cada código vence a los diez minutos y admite cinco intentos de validación. Se permite un envío por minuto y hasta cinco intentos de envío por correo en una ventana de una hora. El servidor reserva la cuota al emitir el nuevo código. Una solicitud rechazada por el intervalo conserva el código vigente y su cuota. Si falla el proveedor, el intento cuenta y el servidor libera el intervalo para permitir un reintento. El límite por IP es de treinta solicitudes por hora e incluye los reenvíos rechazados por el intervalo. El servidor comprueba el vencimiento del código independientemente de la limpieza de los registros por TTL.
+
+La app espera hasta treinta segundos al solicitar o reenviar un código. Esto cubre la renovación de la autorización y la entrega por Gmail, que pueden tardar hasta diez segundos cada una. Las demás solicitudes conservan su tiempo de espera habitual.
 
 Las pruebas de registro usan un remitente simulado. En ejecución, el backend usa Gmail API cuando está seleccionado el proveedor y están presentes sus credenciales. La ruta de solicitud de código devuelve `503` si el remitente está sin configurar. `EMAIL_VERIFICATION_SECRET` debe ser aleatorio, de al menos 32 caracteres e independiente de `JWT_SECRET`. La app y la web pueden integrar las rutas nuevas mientras `/api/auth/register` sigue disponible. El requisito para todos los registros queda para una activación coordinada. [Guía de autorización y primer envío](GMAIL-PRIMER-ENVIO.md).
 
@@ -69,5 +71,9 @@ En un teléfono físico vinculado al backend temporal de `codex/verificacion-cor
 | Consumo del código | Se encontró un solo reto con `consumedAt` registrado. |
 
 Al cerrar la prueba, se detuvo la instancia del puerto `3221` y se eliminó su base temporal. El backend habitual respondió `ok` en el puerto `3200`.
+
+## Pruebas de cuota y tiempo de espera
+
+Con MongoDB temporal y correo simulado, una ráfaga de cinco solicitudes concurrentes produjo un solo envío y dejó cuatro disponibles en la ventana. Al alcanzar el límite, el último código siguió vigente y se pudo consumir una sola vez. En las pruebas móviles, una respuesta a los veinte segundos entregó el reto y una solicitud sin respuesta venció a los treinta.
 
 Referencia de seguridad: [OWASP, validación y verificación de correo](https://cheatsheetseries.owasp.org/cheatsheets/Email_Validation_and_Verification_Cheat_Sheet.html#email-ownership-verification).
