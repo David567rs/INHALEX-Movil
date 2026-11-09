@@ -55,6 +55,19 @@ El usuario confirmó que recibió el código por Gmail, lo introdujo y vio **Cor
 
 El primer intento, observado en Chrome desde `localhost:8083`, quedó bloqueado en la comprobación previa de CORS. Se habilitó ese origen únicamente en la instancia temporal del puerto `3221` y la comprobación previa respondió HTTP `204`.
 
-El reporte del alta satisfactoria no identifica el cliente usado. La aceptación en un teléfono físico con Expo Go queda pendiente de confirmación.
+El reporte de esa primera alta no identificó el cliente usado. La aceptación en el teléfono físico se documenta a continuación.
+
+## Prueba del registro en Expo Go del 9 de noviembre de 2026
+
+En un teléfono físico vinculado al backend temporal de `codex/verificacion-correo`, el usuario confirmó que recibió el código por Gmail, lo introdujo en Expo Go y vio **Correo verificado**.
+
+| Comprobación | Resultado |
+| --- | --- |
+| Solicitud desde el teléfono vinculado | `POST /api/auth/register/verification` respondió HTTP `202`. |
+| Alta desde Expo Go | `POST /api/auth/register/verified` respondió HTTP `201`. |
+| Persistencia en MongoDB temporal | La consulta de solo lectura encontró una sola cuenta y confirmó que `emailVerifiedAt` era una fecha con valor `2026-11-09T23:15:06.018Z`. |
+| Consumo del código | Se encontró un solo reto con `consumedAt` registrado. |
+
+Al cerrar la prueba, se detuvo la instancia del puerto `3221` y se eliminó su base temporal. El backend habitual respondió `ok` en el puerto `3200`.
 
 Referencia de seguridad: [OWASP, validación y verificación de correo](https://cheatsheetseries.owasp.org/cheatsheets/Email_Validation_and_Verification_Cheat_Sheet.html#email-ownership-verification).
