@@ -1,6 +1,6 @@
 # Verificación de correo al registrarse
 
-Diseño inicial del flujo para registros nuevos. La app y la web comparten `POST /api/auth/register`, que hoy crea la cuenta, devuelve `accessToken` y `user` y establece la cookie. La web usa esa respuesta para iniciar sesión automáticamente. La app muestra la cuenta creada y ofrece volver a Cuenta. El requisito de verificación se activará cuando los clientes que usan el registro puedan completar el nuevo recorrido.
+La app móvil solicita el código y completa el alta mediante las rutas de registro verificado. Después muestra la cuenta creada y ofrece volver a Cuenta. El registro anterior, `POST /api/auth/register`, sigue disponible para los clientes que todavía lo usan. El requisito de verificación en el servidor se activará cuando esos clientes puedan completar el nuevo recorrido.
 
 ## Recorrido en la app
 
@@ -35,6 +35,10 @@ Las pruebas de registro usan un remitente simulado. En ejecución, el backend us
 
 ## Verificación local
 
-La compilación del servidor y sus 191 pruebas pasaron en la etapa del backend con correo simulado. El recorrido HTTP de registro verificado usa un remitente y almacenamiento simulados. Comprueba que solo el remitente recibe el código, el rechazo por correo distinto o código inválido, el vencimiento, el reenvío, el límite de intentos, dos confirmaciones simultáneas, la invalidación del reto si falla el envío y la compatibilidad del registro anterior. Quedan la prueba de entrega desde el Gmail de contacto y la prueba del registro con MongoDB aislado.
+La compilación del servidor y sus 191 pruebas pasaron en la etapa del backend con correo simulado. En la prueba posterior con Gmail y MongoDB aislado, el backend entregó un código real, creó una sola cuenta y guardó `emailVerifiedAt`. Rechazó usar el código con otro correo y volver a usarlo después del alta. La base temporal se eliminó al terminar.
+
+En móvil, el Repository usa las rutas verificadas y el ViewModel conserva el borrador en memoria, controla el reenvío y descarta el desafío si cambia el correo. Si un reenvío queda sin confirmación, solicita un nuevo código antes de habilitar el alta. Pasaron las 868 pruebas móviles, TypeScript y lint. Una prueba local del ViewModel con operaciones simuladas comprobó el rechazo de un código incorrecto, el vencimiento, el cambio de correo, el reenvío fallido y su recuperación, y la protección contra el doble toque.
+
+La prueba en el teléfono requiere que la app apunte a un backend de esta rama con el proveedor de correo configurado. Desde **Crear cuenta**, completa el formulario, pulsa **Enviar código** e introduce el código recibido. El resultado esperado es **Correo verificado**, con acceso a **Volver a Cuenta**.
 
 Referencia de seguridad: [OWASP, validación y verificación de correo](https://cheatsheetseries.owasp.org/cheatsheets/Email_Validation_and_Verification_Cheat_Sheet.html#email-ownership-verification).
