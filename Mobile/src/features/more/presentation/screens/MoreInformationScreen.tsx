@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import type { ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { colors } from '@/core/theme/colors';
 import { AppScreen } from '@/shared/components/AppScreen';
@@ -86,7 +87,7 @@ export function MoreInformationScreen({ section, loadContent }: { section: strin
 }
 
 function ContactContent({ contact }: { contact: MoreContent['contact'] }) {
-  const { message, opening, openContact } = useMoreContactViewModel();
+  const { message, opening, openContact, copying, copiedField, copyContact } = useMoreContactViewModel();
 
   return <>
     <Text style={styles.intro}>Dudas sobre un aroma, tu cuenta o un pedido. Elige cómo prefieres contactarnos.</Text>
@@ -95,7 +96,10 @@ function ContactContent({ contact }: { contact: MoreContent['contact'] }) {
     </View> : null}
     <View style={styles.stack}>
       <View style={styles.card}>
-        <SectionTitle icon="mail-outline" title="Escríbenos" />
+        <SectionTitle icon="mail-outline" title="Escríbenos" action={
+          <CopyContactButton label="Copiar correo" copiedLabel="Correo copiado" copied={copiedField === 'email'}
+            copying={copying} onCopy={() => { void copyContact(contact.email, 'email'); }} />
+        } />
         <Text selectable style={styles.contactValue}>{contact.email}</Text>
         <SoftPressable accessibilityRole="button" accessibilityLabel="Abrir aplicación de correo"
           accessibilityState={{ disabled: opening, busy: opening }} disabled={opening}
@@ -106,7 +110,10 @@ function ContactContent({ contact }: { contact: MoreContent['contact'] }) {
         </SoftPressable>
       </View>
       <View style={styles.card}>
-        <SectionTitle icon="call-outline" title="Por teléfono" />
+        <SectionTitle icon="call-outline" title="Por teléfono" action={
+          <CopyContactButton label="Copiar teléfono" copiedLabel="Teléfono copiado" copied={copiedField === 'phone'}
+            copying={copying} onCopy={() => { void copyContact(contact.phone, 'phone'); }} />
+        } />
         <Text selectable style={styles.contactValue}>{contact.phone}</Text>
         <SoftPressable accessibilityRole="button" accessibilityLabel="Abrir aplicación de teléfono"
           accessibilityState={{ disabled: opening, busy: opening }} disabled={opening}
@@ -117,11 +124,30 @@ function ContactContent({ contact }: { contact: MoreContent['contact'] }) {
         </SoftPressable>
       </View>
       <View style={styles.card}>
-        <SectionTitle icon="location-outline" title="Domicilio de contacto" />
+        <SectionTitle icon="location-outline" title="Domicilio de contacto" action={
+          <CopyContactButton label="Copiar domicilio" copiedLabel="Domicilio copiado" copied={copiedField === 'address'}
+            copying={copying} onCopy={() => { void copyContact(contact.address, 'address'); }} />
+        } />
         <Text selectable style={styles.body}>{contact.address}</Text>
       </View>
     </View>
   </>;
+}
+
+function CopyContactButton({ label, copiedLabel, copied, copying, onCopy }: {
+  label: string;
+  copiedLabel: string;
+  copied: boolean;
+  copying: boolean;
+  onCopy: () => void;
+}) {
+  return <SoftPressable accessibilityRole="button" accessibilityLabel={copied ? copiedLabel : label}
+    accessibilityHint="Copia el dato completo al portapapeles" accessibilityState={{ disabled: copying, busy: copying }}
+    disabled={copying} onPress={onCopy}
+    style={({ pressed }) => [styles.copyAction, copying && styles.disabled, pressed && styles.copyPressed]}>
+    <Ionicons accessible={false} name={copied ? 'checkmark' : 'copy-outline'} size={20}
+      color={copied ? colors.primaryDark : colors.textMuted} />
+  </SoftPressable>;
 }
 
 function CompanyContent({ company }: { company: MoreContent['company'] }) {
@@ -181,12 +207,13 @@ function DocumentContent({ document }: { document: MoreDocument }) {
   </>;
 }
 
-function SectionTitle({ icon, title }: { icon: keyof typeof Ionicons.glyphMap; title: string }) {
+function SectionTitle({ icon, title, action }: { icon: keyof typeof Ionicons.glyphMap; title: string; action?: ReactNode }) {
   return <View style={styles.sectionHeading}>
     <View accessible={false} style={styles.sectionIcon}>
       <Ionicons accessible={false} name={icon} size={21} color={colors.primary} />
     </View>
-    <Text accessibilityRole="header" style={styles.sectionTitle}>{title}</Text>
+    <Text accessibilityRole="header" style={[styles.sectionTitle, action ? styles.contactHeadingText : null]}>{title}</Text>
+    {action}
   </View>;
 }
 
@@ -211,6 +238,9 @@ const styles = StyleSheet.create({
   textAction: { alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', gap: 9, minHeight: 48, paddingVertical: 12 },
   textActionLabel: { color: colors.primaryDark, flexShrink: 1, fontSize: 14, fontWeight: '700', lineHeight: 21 },
   contactValue: { color: colors.text, flexShrink: 1, fontSize: 15, lineHeight: 25, marginBottom: 20, maxWidth: '100%', minWidth: 0 },
+  contactHeadingText: { flex: 1, minWidth: 0 },
+  copyAction: { alignItems: 'center', borderRadius: 12, height: 48, justifyContent: 'center', width: 48 },
+  copyPressed: { backgroundColor: colors.surfaceSoft },
   contactNotice: { backgroundColor: colors.warningSoft, borderRadius: 16, marginBottom: 16, padding: 16 },
   contactNoticeText: { color: colors.text, fontSize: 14, lineHeight: 23 },
   action: { alignItems: 'center', backgroundColor: colors.primaryDark, borderRadius: 15, flexDirection: 'row', gap: 10, justifyContent: 'center', minHeight: 50, paddingHorizontal: 16, paddingVertical: 14 },
