@@ -41,4 +41,20 @@ En móvil, el Repository usa las rutas verificadas y el ViewModel conserva el bo
 
 La prueba en el teléfono requiere que la app apunte a un backend de esta rama con el proveedor de correo configurado. Desde **Crear cuenta**, completa el formulario, pulsa **Enviar código** e introduce el código recibido. El resultado esperado es **Correo verificado**, con acceso a **Volver a Cuenta**.
 
+## Resultado del alta con Gmail del 9 de noviembre de 2026
+
+El usuario confirmó que recibió el código por Gmail, lo introdujo y vio **Correo verificado**. Los registros del backend de `codex/verificacion-correo` y una consulta de solo lectura a su MongoDB temporal confirmaron el alta.
+
+| Comprobación | Resultado |
+| --- | --- |
+| Solicitud de código | `POST /api/auth/register/verification` respondió HTTP `202`. |
+| Confirmación del registro | `POST /api/auth/register/verified` respondió HTTP `201`. |
+| Cuenta guardada | La base temporal contenía una sola cuenta, correspondiente al correo de prueba. |
+| Correo verificado | MongoDB guardó `emailVerifiedAt` como fecha con el valor `2026-11-09T06:28:10.648Z`. |
+| Código de un solo uso | Se encontró un reto consumido, con `consumedAt` registrado. |
+
+El primer intento, observado en Chrome desde `localhost:8083`, quedó bloqueado en la comprobación previa de CORS. Se habilitó ese origen únicamente en la instancia temporal del puerto `3221` y la comprobación previa respondió HTTP `204`.
+
+El reporte del alta satisfactoria no identifica el cliente usado. La aceptación en un teléfono físico con Expo Go queda pendiente de confirmación.
+
 Referencia de seguridad: [OWASP, validación y verificación de correo](https://cheatsheetseries.owasp.org/cheatsheets/Email_Validation_and_Verification_Cheat_Sheet.html#email-ownership-verification).
