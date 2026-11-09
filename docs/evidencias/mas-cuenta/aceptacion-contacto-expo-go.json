@@ -5,7 +5,12 @@
   "report": "Amigo, el correo abrió con el destinatario correcto, el teléfono mostró el número, pero no puedo copiar nada, pon un icono de copiar texto pero discreto porfa",
   "accepted": [
     "Abrir correo con destinatario correcto",
-    "Abrir telefono con numero correcto"
+    "Abrir telefono con numero correcto",
+    "Copiar y pegar correo completo",
+    "Copiar y pegar telefono completo",
+    "Copiar y pegar domicilio completo",
+    "Aviso Copiado visible y desaparicion automatica",
+    "Aviso Copiado correcto al desplazarse y repetir la copia"
   ],
   "reportedIssue": "La seleccion de texto no permitio al usuario copiar los datos",
   "followUpRequest": "que dé un pequeño mensaje de copiado, y luego se quite, así como otras apps",
@@ -22,12 +27,17 @@
     "mobileLint": "passed",
     "clipboardPackage": "expo-clipboard 58.0.4, instalado con Expo para SDK 58"
   },
+  "copyAcceptance": {
+    "date": "2026-11-08",
+    "source": "Reporte del usuario en Expo Go; sin observacion directa del telefono ni lectura del portapapeles por el agente",
+    "report": "Amigo, copié y pegué los tres datos completos. «Copiado» aparece y desaparece bien, también al desplazarme y repetir la copia. Sigamos con las preguntas frecuentes.",
+    "limits": "No confirma lector de pantalla, movimiento reducido, fallo de escritura ni una medicion exacta de la duracion del aviso"
+  },
   "pendingNativeAcceptance": [
-    "Copiar y pegar correo completo",
-    "Copiar y pegar telefono completo",
-    "Copiar y pegar domicilio completo",
-    "Confirmacion visual Copiado y palomita, desaparicion automatica, repeticion de copia y lector de pantalla",
+    "Palomita del icono y anuncio mediante lector de pantalla",
+    "Movimiento reducido y fallo de escritura del portapapeles",
     "Regreso desde aplicaciones externas"
   ],
+  "next": "Probar apertura, cierre y lectura completa de los acordeones de Preguntas frecuentes",
   "agentActions": "Correccion local y registro por etapas; sin iniciar o detener servicios, enviar correo, llamar, modificar Zenaida, publicar rama o abrir PR"
 }
