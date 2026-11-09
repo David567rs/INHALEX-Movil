@@ -25,8 +25,19 @@ import {
 const CODE_TTL_MINUTES = 10;
 const RESEND_DELAY_SECONDS = 60;
 const MAX_ATTEMPTS = 5;
+const SENDS_PER_EMAIL = 5;
+const EMAIL_SEND_WINDOW_MS = 60 * 60_000;
 const INVALID_CODE =
   'El código es incorrecto, venció o ya se usó. Solicita otro si lo necesitas.';
+
+function unexpiredCode(now: Date) {
+  return {
+    $or: [
+      { codeExpiresAt: { $gt: now } },
+      { codeExpiresAt: { $exists: false }, expiresAt: { $gt: now } },
+    ],
+  };
+}
 
 @Injectable()
 export class EmailVerificationService {
@@ -48,10 +59,10 @@ export class EmailVerificationService {
     }
 
     const email = rawEmail.trim().toLowerCase();
-    await this.rateLimit.assertSendAllowed(email, clientIp);
+    await this.rateLimit.assertOriginAllowed(clientIp);
 
-    const now = Date.now();
-    const expiresAt = new Date(now + CODE_TTL_MINUTES * 60_000);
+    const now = new Date();
+    const codeExpiresAt = new Date(now.getTime() + CODE_TTL_MINUTES * 60_000);
     const challengeId = randomUUID();
     const code = randomInt(0, 1_000_000).toString().padStart(6, '0');
     const _id = this.digest(secret, ['registration-email', email]);
@@ -62,17 +73,88 @@ export class EmailVerificationService {
       code,
     ]);
 
+    const nextCode = {
+      challengeId,
+      codeDigest,
+      remainingAttempts: MAX_ATTEMPTS,
+      resendAt: new Date(now.getTime() + RESEND_DELAY_SECONDS * 1_000),
+      codeExpiresAt,
+    };
+    const readyToResend = { _id, resendAt: { $lte: now } };
+    // Updating the challenge and its quota together keeps rejected resends
+    // from spending a slot or replacing the last code.
+    const reserved = await this.challenges
+      .updateOne(
+        {
+          ...readyToResend,
+          sendWindowExpiresAt: { $gt: now },
+          sendsInWindow: { $lt: SENDS_PER_EMAIL },
+        },
+        {
+          $set: nextCode,
+          $inc: { sendsInWindow: 1 },
+          $max: { expiresAt: codeExpiresAt },
+          $unset: { consumedAt: 1 },
+        },
+      )
+      .exec();
+    if (reserved.matchedCount === 0) {
+      await this.startSendWindow(readyToResend, nextCode, now);
+    }
+
+    try {
+      await this.sender.send(email, code, CODE_TTL_MINUTES);
+    } catch {
+      // Release the cooldown for retry while retaining the spent send slot.
+      // A later resend may already have replaced this challenge.
+      await this.challenges
+        .updateOne(
+          { _id, challengeId },
+          { $set: { remainingAttempts: 0, resendAt: new Date() } },
+        )
+        .exec()
+        .catch(() => undefined);
+      throw new ServiceUnavailableException(
+        'No pudimos enviar el código. Inténtalo de nuevo.',
+      );
+    }
+
+    return {
+      challengeId,
+      expiresInSeconds: CODE_TTL_MINUTES * 60,
+      resendAfterSeconds: RESEND_DELAY_SECONDS,
+    };
+  }
+
+  private async startSendWindow(
+    readyToResend: { _id: string; resendAt: { $lte: Date } },
+    nextCode: Pick<
+      EmailVerificationChallenge,
+      | 'challengeId'
+      | 'codeDigest'
+      | 'remainingAttempts'
+      | 'resendAt'
+      | 'codeExpiresAt'
+    >,
+    now: Date,
+  ): Promise<void> {
+    const sendWindowExpiresAt = new Date(now.getTime() + EMAIL_SEND_WINDOW_MS);
     try {
       await this.challenges
         .updateOne(
-          { _id, resendAt: { $lte: new Date(now) } },
+          {
+            ...readyToResend,
+            $or: [
+              { sendWindowExpiresAt: { $lte: now } },
+              { sendWindowExpiresAt: { $exists: false } },
+            ],
+          },
           {
             $set: {
-              challengeId,
-              codeDigest,
-              remainingAttempts: MAX_ATTEMPTS,
-              resendAt: new Date(now + RESEND_DELAY_SECONDS * 1_000),
-              expiresAt,
+              ...nextCode,
+              sendWindowExpiresAt,
+              sendsInWindow: 1,
+              expiresAt: sendWindowExpiresAt,
             },
             $unset: { consumedAt: 1 },
           },
@@ -87,31 +169,12 @@ export class EmailVerificationService {
         error.code === 11000
       ) {
         throw new HttpException(
-          'Espera un minuto antes de pedir otro código.',
+          'Aún no puedes pedir otro código. Espera antes de volver a intentarlo.',
           HttpStatus.TOO_MANY_REQUESTS,
         );
       }
       throw error;
     }
-
-    try {
-      await this.sender.send(email, code, CODE_TTL_MINUTES);
-    } catch {
-      // Invalidate only this code. A later resend may already have replaced it.
-      await this.challenges
-        .deleteOne({ _id, challengeId })
-        .exec()
-        .catch(() => undefined);
-      throw new ServiceUnavailableException(
-        'No pudimos enviar el código. Inténtalo de nuevo.',
-      );
-    }
-
-    return {
-      challengeId,
-      expiresInSeconds: CODE_TTL_MINUTES * 60,
-      resendAfterSeconds: RESEND_DELAY_SECONDS,
-    };
   }
 
   async consume(
@@ -129,7 +192,7 @@ export class EmailVerificationService {
       .findOneAndUpdate(
         {
           ...filter,
-          expiresAt: { $gt: new Date() },
+          ...unexpiredCode(new Date()),
           remainingAttempts: { $gt: 0 },
         },
         { $inc: { remainingAttempts: -1 } },
@@ -155,7 +218,7 @@ export class EmailVerificationService {
     const verifiedAt = new Date();
     const result = await this.challenges
       .updateOne(
-        { ...filter, expiresAt: { $gt: verifiedAt } },
+        { ...filter, ...unexpiredCode(verifiedAt) },
         { $set: { consumedAt: verifiedAt } },
       )
       .exec();

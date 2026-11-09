@@ -24,13 +24,10 @@ describe('EmailVerificationRateLimitService', () => {
 
   afterEach(() => jest.useRealTimers());
 
-  it('checks both limits and can start a new window over an expired bucket', async () => {
-    updateOne
-      .mockReturnValueOnce(result(1))
-      .mockReturnValueOnce(result(0))
-      .mockReturnValueOnce(result(1));
+  it('checks the origin limit and can start a new window over an expired bucket', async () => {
+    updateOne.mockReturnValueOnce(result(0)).mockReturnValueOnce(result(1));
 
-    await service.assertSendAllowed('demo@example.test', '192.0.2.1');
+    await service.assertOriginAllowed('192.0.2.1');
 
     const now = new Date('2026-01-01T10:00:00Z');
     const hashedId = expect.stringMatching(/^[a-f0-9]{64}$/) as unknown;
@@ -47,15 +44,6 @@ describe('EmailVerificationRateLimitService', () => {
       2,
       {
         _id: hashedId,
-        expiresAt: { $gt: now },
-        count: { $lt: 5 },
-      },
-      { $inc: { count: 1 } },
-    );
-    expect(updateOne).toHaveBeenNthCalledWith(
-      3,
-      {
-        _id: hashedId,
         expiresAt: { $lte: now },
       },
       { $set: { count: 1, expiresAt: new Date('2026-01-01T11:00:00Z') } },
@@ -67,38 +55,35 @@ describe('EmailVerificationRateLimitService', () => {
     updateOne
       .mockReturnValueOnce(result(0))
       .mockReturnValueOnce(failure({ code: 11000 }))
-      .mockReturnValueOnce(result(1))
       .mockReturnValueOnce(result(1));
 
     await expect(
-      service.assertSendAllowed('demo@example.test', '192.0.2.1'),
+      service.assertOriginAllowed('192.0.2.1'),
     ).resolves.toBeUndefined();
-    expect(updateOne).toHaveBeenCalledTimes(4);
+    expect(updateOne).toHaveBeenCalledTimes(3);
   });
 
-  it('blocks a full IP bucket without spending the recipient quota', async () => {
+  it('blocks a full IP bucket', async () => {
     updateOne
       .mockReturnValueOnce(result(0))
       .mockReturnValueOnce(failure({ code: 11000 }))
       .mockReturnValueOnce(result(0));
 
     await expect(
-      service.assertSendAllowed('demo@example.test', '192.0.2.1'),
+      service.assertOriginAllowed('192.0.2.1'),
     ).rejects.toMatchObject({
       status: HttpStatus.TOO_MANY_REQUESTS,
     });
     expect(updateOne).toHaveBeenCalledTimes(3);
   });
 
-  it('propagates storage failures and stops before checking the recipient quota', async () => {
+  it('propagates storage failures', async () => {
     const error = new Error('Storage unavailable');
     updateOne
       .mockReturnValueOnce(result(0))
       .mockReturnValueOnce(failure(error));
 
-    await expect(
-      service.assertSendAllowed('demo@example.test', '192.0.2.1'),
-    ).rejects.toBe(error);
+    await expect(service.assertOriginAllowed('192.0.2.1')).rejects.toBe(error);
     expect(updateOne).toHaveBeenCalledTimes(2);
   });
 });

@@ -21,6 +21,15 @@ export class EmailVerificationChallenge {
   expiresAt: Date;
 
   @Prop({ type: Date })
+  codeExpiresAt?: Date;
+
+  @Prop({ type: Date })
+  sendWindowExpiresAt?: Date;
+
+  @Prop({ type: Number })
+  sendsInWindow?: number;
+
+  @Prop({ type: Date })
   consumedAt?: Date;
 }
 

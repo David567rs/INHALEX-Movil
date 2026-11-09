@@ -26,17 +26,51 @@ const registration = {
   password: 'RegistrationTest!42',
 };
 
-type ChallengeFilter = {
-  _id: string;
+type DateCondition = { $gt: Date } | { $lte: Date } | { $exists: false };
+
+type ChallengeConditions = {
+  $or?: ChallengeConditions[];
   challengeId?: string;
   consumedAt?: { $exists: false };
-  expiresAt?: { $gt: Date };
+  expiresAt?: DateCondition;
+  codeExpiresAt?: DateCondition;
   remainingAttempts?: { $gt: number };
-  resendAt?: { $lte: Date };
+  resendAt?: DateCondition;
+  sendWindowExpiresAt?: DateCondition;
+  sendsInWindow?: { $lt: number };
 };
+
+type ChallengeFilter = ChallengeConditions & { _id: string };
 
 function query<T>(value: T) {
   return { exec: () => Promise.resolve(value) };
+}
+
+function matchesDate(value: Date | undefined, condition?: DateCondition) {
+  if (!condition) return true;
+  if ('$exists' in condition) return value === undefined;
+  if (!value) return false;
+  return '$gt' in condition ? value > condition.$gt : value <= condition.$lte;
+}
+
+function matches(
+  record: EmailVerificationChallenge,
+  filter: ChallengeConditions,
+): boolean {
+  return (
+    (!filter.challengeId || record.challengeId === filter.challengeId) &&
+    (!filter.consumedAt || !record.consumedAt) &&
+    matchesDate(record.expiresAt, filter.expiresAt) &&
+    matchesDate(record.codeExpiresAt, filter.codeExpiresAt) &&
+    matchesDate(record.resendAt, filter.resendAt) &&
+    matchesDate(record.sendWindowExpiresAt, filter.sendWindowExpiresAt) &&
+    (!filter.remainingAttempts ||
+      record.remainingAttempts > filter.remainingAttempts.$gt) &&
+    (!filter.sendsInWindow ||
+      (record.sendsInWindow !== undefined &&
+        record.sendsInWindow < filter.sendsInWindow.$lt)) &&
+    (!filter.$or || filter.$or.some((branch) => matches(record, branch)))
+  );
 }
 
 function createChallengeStore() {
@@ -44,18 +78,7 @@ function createChallengeStore() {
 
   function find(filter: ChallengeFilter) {
     const record = records.get(filter._id);
-    if (
-      !record ||
-      (filter.challengeId && record.challengeId !== filter.challengeId) ||
-      (filter.consumedAt && record.consumedAt) ||
-      (filter.expiresAt && record.expiresAt <= filter.expiresAt.$gt) ||
-      (filter.remainingAttempts &&
-        record.remainingAttempts <= filter.remainingAttempts.$gt) ||
-      (filter.resendAt && record.resendAt > filter.resendAt.$lte)
-    ) {
-      return undefined;
-    }
-    return record;
+    return record && matches(record, filter) ? record : undefined;
   }
 
   return {
@@ -66,6 +89,8 @@ function createChallengeStore() {
         update: {
           $set: Partial<Omit<EmailVerificationChallenge, '_id'>>;
           $unset?: { consumedAt: 1 };
+          $inc?: { sendsInWindow: number };
+          $max?: { expiresAt: Date };
         },
         options?: { upsert: true },
       ) {
@@ -80,15 +105,24 @@ function createChallengeStore() {
               ),
           };
         }
-        if (!found && !options?.upsert) return query({ modifiedCount: 0 });
+        if (!found && !options?.upsert)
+          return query({ matchedCount: 0, modifiedCount: 0 });
         const next = {
           ...found,
           ...update.$set,
           _id: filter._id,
         } as EmailVerificationChallenge;
         if (update.$unset?.consumedAt) delete next.consumedAt;
+        if (update.$inc)
+          next.sendsInWindow =
+            (next.sendsInWindow ?? 0) + update.$inc.sendsInWindow;
+        if (update.$max && next.expiresAt < update.$max.expiresAt)
+          next.expiresAt = update.$max.expiresAt;
         records.set(filter._id, next);
-        return query({ modifiedCount: found ? 1 : 0 });
+        return query({
+          matchedCount: found ? 1 : 0,
+          modifiedCount: found ? 1 : 0,
+        });
       },
       findOneAndUpdate(
         filter: ChallengeFilter,
@@ -99,10 +133,6 @@ function createChallengeStore() {
         const original = { ...found };
         found.remainingAttempts += update.$inc.remainingAttempts;
         return query(original);
-      },
-      deleteOne(filter: ChallengeFilter) {
-        const removed = !!find(filter) && records.delete(filter._id);
-        return query({ deletedCount: removed ? 1 : 0 });
       },
     },
   };
@@ -156,7 +186,7 @@ describe('Registration verification HTTP routes', () => {
         },
         {
           provide: EmailVerificationRateLimitService,
-          useValue: { assertSendAllowed: () => Promise.resolve() },
+          useValue: { assertOriginAllowed: () => Promise.resolve() },
         },
         {
           provide: getModelToken(EmailVerificationChallenge.name),
@@ -255,12 +285,25 @@ describe('Registration verification HTTP routes', () => {
   it('rejects an expired code even while the challenge record is still present', async () => {
     const { challengeId, code } = await issueCode();
     const [challenge] = challenges.records.values();
-    challenge.expiresAt = new Date(0);
+    challenge.codeExpiresAt = new Date(0);
 
     await post('/verified')
       .send({ ...registration, challengeId, code })
       .expect(400);
     expect(users.create).not.toHaveBeenCalled();
+  });
+
+  it('can still consume an unexpired challenge issued by the previous schema', async () => {
+    const { challengeId, code } = await issueCode();
+    const [challenge] = challenges.records.values();
+    delete challenge.codeExpiresAt;
+    delete challenge.sendWindowExpiresAt;
+    delete challenge.sendsInWindow;
+    challenge.expiresAt = new Date(Date.now() + 60_000);
+
+    await post('/verified')
+      .send({ ...registration, challengeId, code })
+      .expect(201);
   });
 
   it('allows only one account creation when two confirmations arrive together', async () => {
@@ -289,10 +332,19 @@ describe('Registration verification HTTP routes', () => {
 
   it('enforces resend cooldown and invalidates the previous challenge', async () => {
     const previous = await issueCode();
-    await post('/verification').send({ email: registration.email }).expect(429);
+    const rejected = await Promise.all(
+      Array.from({ length: 5 }, () =>
+        post('/verification').send({ email: registration.email }),
+      ),
+    );
+    expect(rejected.map(({ status }) => status)).toEqual([
+      429, 429, 429, 429, 429,
+    ]);
     expect(sender.send).toHaveBeenCalledTimes(1);
 
     const [challenge] = challenges.records.values();
+    expect(challenge.challengeId).toBe(previous.challengeId);
+    expect(challenge.sendsInWindow).toBe(1);
     challenge.resendAt = new Date(0);
     const resend = await post('/verification')
       .send({ email: registration.email })
@@ -309,6 +361,35 @@ describe('Registration verification HTTP routes', () => {
       })
       .expect(400);
     expect(users.create).not.toHaveBeenCalled();
+  });
+
+  it('limits actual delivery attempts per email and preserves the last code at the limit', async () => {
+    const send = () =>
+      post('/verification').send({ email: registration.email });
+    const first = await Promise.all([send(), send(), send()]);
+    expect(first.map(({ status }) => status).sort()).toEqual([202, 429, 429]);
+
+    for (let sends = 1; sends < 5; sends++) {
+      const [challenge] = challenges.records.values();
+      challenge.resendAt = new Date(0);
+      await send().expect(202);
+    }
+    const [last] = challenges.records.values();
+    const [, code] = sender.send.mock.calls[4];
+    last.resendAt = new Date(0);
+    await send().expect(429);
+    expect(sender.send).toHaveBeenCalledTimes(5);
+    expect(last.sendsInWindow).toBe(5);
+    await post('/verified')
+      .send({ ...registration, challengeId: last.challengeId, code })
+      .expect(201);
+
+    const [previousWindow] = challenges.records.values();
+    previousWindow.sendWindowExpiresAt = new Date(0);
+    await send().expect(202);
+    const [newWindow] = challenges.records.values();
+    expect(newWindow.sendsInWindow).toBe(1);
+    expect(sender.send).toHaveBeenCalledTimes(6);
   });
 
   it('blocks even the correct code after five incorrect attempts', async () => {
@@ -347,13 +428,21 @@ describe('Registration verification HTTP routes', () => {
     expect(users.create).not.toHaveBeenCalled();
   });
 
-  it('invalidates the challenge if simulated delivery fails', async () => {
+  it('invalidates failed delivery but allows retry without refunding the quota', async () => {
     sender.send.mockRejectedValueOnce(new Error('Simulated delivery failure'));
     const response = await post('/verification')
       .send({ email: registration.email })
       .expect(503);
     expect(response.body).not.toHaveProperty('challengeId');
-    expect(challenges.records.size).toBe(0);
+    const [failed] = challenges.records.values();
+    const [, code] = sender.send.mock.calls[0];
+    expect(failed.sendsInWindow).toBe(1);
+    await post('/verified')
+      .send({ ...registration, challengeId: failed.challengeId, code })
+      .expect(400);
+    await post('/verification').send({ email: registration.email }).expect(202);
+    const [retried] = challenges.records.values();
+    expect(retried.sendsInWindow).toBe(2);
     expect(users.create).not.toHaveBeenCalled();
   });
 });

@@ -5,7 +5,6 @@ import { Model } from 'mongoose';
 import { EmailVerificationRateLimitBucket } from './email-verification-rate-limit.schema';
 
 const SEND_WINDOW_MS = 60 * 60 * 1000;
-const SENDS_PER_EMAIL = 5;
 const SENDS_PER_IP = 30;
 
 @Injectable()
@@ -15,33 +14,17 @@ export class EmailVerificationRateLimitService {
     private readonly buckets: Model<EmailVerificationRateLimitBucket>,
   ) {}
 
-  async assertSendAllowed(email: string, clientIp: string): Promise<void> {
-    const now = new Date();
+  async assertOriginAllowed(clientIp: string): Promise<void> {
     const ip = clientIp
       .trim()
       .toLowerCase()
       .replace(/^::ffff:/, '');
-    // An exhausted origin cannot spend a recipient's quota.
-    await this.reserve('ip', ip, SENDS_PER_IP, now);
-    await this.reserve(
-      'email',
-      email.trim().toLowerCase(),
-      SENDS_PER_EMAIL,
-      now,
-    );
-  }
-
-  private async reserve(
-    scope: 'ip' | 'email',
-    value: string,
-    limit: number,
-    now: Date,
-  ): Promise<void> {
-    const _id = createHash('sha256').update(`${scope}:${value}`).digest('hex');
+    const now = new Date();
+    const _id = createHash('sha256').update(`ip:${ip}`).digest('hex');
     const activeBucket = {
       _id,
       expiresAt: { $gt: now },
-      count: { $lt: limit },
+      count: { $lt: SENDS_PER_IP },
     };
     const increment = { $inc: { count: 1 } };
     const incremented = await this.buckets
