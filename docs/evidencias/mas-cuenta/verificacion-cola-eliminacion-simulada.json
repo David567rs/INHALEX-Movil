@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-09",
+  "branch": "codex/diseno-mas-cuenta",
+  "revision": "76fcb2963331497f70cb97d567b4fa4d1aeca5fb",
+  "scope": "Instancia HTTP de Nest aislada con controladores, servicio, JWT y guardas reales. Cuentas ficticias y almacenamiento en memoria.",
+  "route": "/api/admin/account-deletion",
+  "statuses": {
+    "withoutSession": 401,
+    "customer": 403,
+    "admin": 200,
+    "adminRoleRemoved": 403
+  },
+  "receipt": {
+    "queueMatches": 1,
+    "status": "pending",
+    "sameReferenceAndDateAfterConcurrentWebRequests": true,
+    "accountRemainedActive": true
+  },
+  "automatedChecks": { "suitesPassed": 3, "testsPassed": 37 },
+  "pendingBeforePublication": "Comprobar la cola con una cuenta administradora y datos de prueba en el entorno de destino."
+}
