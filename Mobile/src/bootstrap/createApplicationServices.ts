@@ -61,6 +61,9 @@ import { OrderReceiptError } from '../features/orderReceipt/domain/errors/OrderR
 import type { OrderReceiptActions } from '../features/orderReceipt/domain/repositories/OrderReceiptRepository';
 import { buildOrderReceiptActions } from '../features/orderReceipt/domain/useCases/orderReceiptActions';
 import { createOrderReceiptController } from '../features/orderReceipt/presentation/state/createOrderReceiptController';
+import { ApiAccountDeletionRepository } from '../features/accountDeletion/data/ApiAccountDeletionRepository';
+import { createAccountDeletionController } from '../features/accountDeletion/presentation/state/createAccountDeletionController';
+import type { AccountDeletionRepository } from '../features/accountDeletion/domain/AccountDeletion';
 
 export interface ApplicationServicesOptions {
   environment?: Environment;
@@ -338,8 +341,23 @@ export function createApplicationRuntime(options: Omit<ApplicationServicesOption
     list: (requestOptions) => getReceiptActions().list(requestOptions),
     confirm: (id, requestOptions) => getReceiptActions().confirm(id, requestOptions),
   });
+  let deletionRepository: AccountDeletionRepository | undefined;
+  function getDeletionRepository() {
+    if (!deletionRepository) {
+      const environment = options.environment ?? readEnvironment();
+      deletionRepository = new ApiAccountDeletionRepository(new HttpClient({
+        baseUrl: environment.apiUrl, isDevelopment: environment.isDevelopment,
+        requestTimeoutMs: environment.requestTimeoutMs, fetch: options.fetch, getAccessToken: auth.getAccessToken,
+      }));
+    }
+    return deletionRepository;
+  }
+  const accountDeletion = createAccountDeletionController(auth.authorizationSession, {
+    get: (signal) => getDeletionRepository().get(signal),
+    request: (input, signal) => getDeletionRepository().request(input, signal),
+  });
   // No transport, recovery key or credential is exposed to the React tree.
-  return Object.freeze({ session: auth.session, favorites, cart, profile, shippingAddresses, orderCreation, orderHistory, orderTracking, notices, reviews, orderReceipt });
+  return Object.freeze({ session: auth.session, favorites, cart, profile, shippingAddresses, orderCreation, orderHistory, orderTracking, notices, reviews, orderReceipt, accountDeletion });
 }
 
 /** Defer configuration until submission so navigation never depends on the API. */

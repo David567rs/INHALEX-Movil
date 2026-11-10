@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-08",
+  "branch": "codex/diseno-mas-cuenta",
+  "source": "Reporte del usuario sobre su prueba en Expo Go",
+  "report": "Amigo, sin sesión pude leer la información y ver el correo en Eliminar cuenta. «Ir a Cuenta» me llevó a la pantalla con «Iniciar sesión».",
+  "accepted": [
+    "Leer la explicación pública de Eliminar cuenta como visitante",
+    "Ver el correo de contacto como visitante",
+    "Abrir Cuenta con la opción Iniciar sesión desde Ir a Cuenta"
+  ],
+  "next": "Comprobar el formulario y la validación de campos en Expo Go con una cuenta de prueba"
+}

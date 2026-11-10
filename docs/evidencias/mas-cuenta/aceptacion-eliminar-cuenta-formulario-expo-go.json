@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-08",
+  "branch": "codex/diseno-mas-cuenta",
+  "source": "Reporte del usuario sobre su prueba en Expo Go",
+  "report": "Amigo, el botón se bloqueó con la contraseña vacía y con la palabra incorrecta. Pude desplazar el formulario con el teclado abierto y los campos se limpiaron al volver a entrar.",
+  "accepted": [
+    "Mantener Solicitar eliminación deshabilitado con la contraseña vacía",
+    "Mantener Solicitar eliminación deshabilitado con la palabra incorrecta",
+    "Desplazar el formulario con el teclado abierto",
+    "Mostrar ambos campos vacíos al volver a entrar"
+  ],
+  "next": "Comprobar el rechazo de una contraseña incorrecta y el resultado de Verificar solicitud con la cuenta de prueba"
+}

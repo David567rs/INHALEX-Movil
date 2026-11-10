@@ -9,7 +9,7 @@ const tabs = [
   { name: 'catalogo', title: 'Catálogo', focusedIcon: 'leaf', outlineIcon: 'leaf-outline' },
   { name: 'favoritos', title: 'Favoritos', focusedIcon: 'heart', outlineIcon: 'heart-outline' },
   { name: 'bolsa', title: 'Bolsa', focusedIcon: 'bag', outlineIcon: 'bag-outline' },
-  { name: 'cuenta', title: 'Cuenta', focusedIcon: 'person', outlineIcon: 'person-outline' },
+  { name: 'mas', title: 'Más', focusedIcon: 'ellipsis-horizontal', outlineIcon: 'ellipsis-horizontal' },
 ] as const satisfies readonly {
   name: string;
   title: string;

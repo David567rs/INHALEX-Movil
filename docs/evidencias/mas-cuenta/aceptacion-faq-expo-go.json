@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-08",
+  "branch": "codex/diseno-mas-cuenta",
+  "source": "Reporte del usuario sobre su prueba en Expo Go",
+  "report": "Amigo, las respuestas se leen completas, solo queda una abierta y puedo cerrarla. Actualizar funciona y conserva la respuesta. Contactar abrió Contacto y pude volver a Preguntas frecuentes.",
+  "accepted": [
+    "Leer las respuestas completas",
+    "Mantener una sola pregunta abierta y poder cerrarla",
+    "Conservar la respuesta abierta al actualizar",
+    "Abrir Contacto y regresar a Preguntas frecuentes"
+  ],
+  "next": "Abrir Cuenta desde cada tab y comprobar el regreso al tab de origen"
+}

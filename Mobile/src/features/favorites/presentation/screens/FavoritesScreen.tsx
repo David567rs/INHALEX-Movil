@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { colors } from '@/core/theme/colors';
 import { FeedbackBanner, ScreenState } from '@/shared/components/ScreenFeedback';
 import { ScreenHeader } from '@/shared/components/ScreenHeader';
+import { AccountButton } from '@/features/shell/presentation/components/AccountButton';
 import { Reveal } from '@/shared/components/Motion';
 import { FavoriteCard } from '../components/FavoriteCard';
 import { useFavoritesViewModel } from '../viewModels/useFavoritesViewModel';
@@ -31,7 +32,7 @@ export function FavoritesScreen() {
           onRefresh={() => { if (vm.canRefresh) refresh(); }} colors={[colors.primary]} tintColor={colors.primary} /> : undefined}>
         <Reveal>
           <ScreenHeader title="Tus favoritos" eyebrow="Tus imprescindibles"
-            description="Los aromas que van contigo, en un solo lugar." />
+            description="Los aromas que van contigo, en un solo lugar." trailing={<AccountButton />} />
         </Reveal>
 
         {needsSession ? <ScreenState icon="heart-outline" title={vm.status === 'session-expired' ? 'Vuelve a iniciar sesión' : 'Tu selección te espera'}

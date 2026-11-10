@@ -5,6 +5,7 @@ import { colors } from '@/core/theme/colors';
 import { AppScreen, ModuleCard } from '@/shared/components/AppScreen';
 import { SoftPressable } from '@/shared/components/Motion';
 import { FeedbackBanner } from '@/shared/components/ScreenFeedback';
+import { BackButton } from '@/shared/components/ScreenHeader';
 
 const sections = {
   catalogo: {
@@ -37,16 +38,17 @@ const sections = {
   },
 } as const;
 
-export function PreparationScreen({ section, notice, retry, isRetrying = false }: {
+export function PreparationScreen({ section, notice, retry, isRetrying = false, onBack }: {
   section: keyof typeof sections;
   notice?: string | null;
   retry?: () => void;
   isRetrying?: boolean;
+  onBack?: () => void;
 }) {
   const content = sections[section];
 
   return (
-    <AppScreen title={content.title} eyebrow={content.eyebrow}>
+    <AppScreen title={content.title} eyebrow={content.eyebrow} includeBottomInset={section === 'cuenta'} action={onBack ? <BackButton onPress={onBack} /> : undefined}>
       {section !== 'cuenta' ? <View style={styles.status}>
         <View style={styles.statusDot} />
         <Text style={styles.statusLabel}>EN PREPARACIÓN</Text>

@@ -70,6 +70,6 @@ import {
         unavailableRegistrationCodeSender,
     },
   ],
-  exports: [AuthService, JwtAuthGuard, JwtModule],
+  exports: [AuthService, AuthSecurityService, JwtAuthGuard, JwtModule],
 })
 export class AuthModule {}

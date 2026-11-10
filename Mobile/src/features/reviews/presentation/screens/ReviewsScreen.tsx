@@ -22,7 +22,7 @@ export function ReviewsScreen() {
     dismissKeyboard();
     if (selected) vm.selectProduct(null);
     else if (router.canGoBack()) router.back();
-    else router.replace('/(tabs)/cuenta');
+    else router.replace('/cuenta');
   }
   return <SafeAreaView edges={['top', 'left', 'right', 'bottom']} style={styles.safeArea}>
     <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : Platform.OS === 'android' ? 'height' : undefined}>

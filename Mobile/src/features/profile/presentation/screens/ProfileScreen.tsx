@@ -31,7 +31,7 @@ export function ProfileScreen() {
 
   function returnToAccount() {
     Keyboard.dismiss();
-    router.navigate('/(tabs)/cuenta');
+    router.navigate('/cuenta');
   }
 
   return <SafeAreaView edges={['top', 'left', 'right', 'bottom']} style={styles.safeArea}>

@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-09",
+  "branch": "codex/diseno-mas-cuenta",
+  "source": "Reporte del usuario sobre la prueba del formulario en el navegador con el backend local",
+  "route": "/api/account-deletion",
+  "accepted": [
+    "Rechazar una contraseña incorrecta",
+    "Mostrar Solicitud recibida con la misma referencia del recibo de Expo Go al usar las credenciales correctas de la cuenta de prueba",
+    "Limpiar los campos del formulario tras la confirmación"
+  ],
+  "next": "Consultar la cola administrativa y verificar una única entrada pendiente para esa referencia"
+}

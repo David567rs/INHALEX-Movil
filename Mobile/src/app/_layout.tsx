@@ -16,6 +16,7 @@ import { OrderTrackingProvider } from '@/features/orderTracking/presentation/con
 import { NoticesProvider } from '@/features/notices/presentation/context/NoticesProvider';
 import { ReviewsProvider } from '@/features/reviews/presentation/context/ReviewsProvider';
 import { OrderReceiptProvider } from '@/features/orderReceipt/presentation/context/OrderReceiptProvider';
+import { AccountDeletionProvider } from '@/features/accountDeletion/presentation/context/AccountDeletionProvider';
 import { colors } from '@/core/theme/colors';
 import { useReducedMotion } from '@/shared/hooks/useReducedMotion';
 
@@ -40,6 +41,7 @@ export default function RootLayout() {
         <NoticesProvider controller={runtime.notices}>
         <ReviewsProvider controller={runtime.reviews}>
         <OrderReceiptProvider controller={runtime.orderReceipt}>
+        <AccountDeletionProvider controller={runtime.accountDeletion}>
         <StatusBar style="dark" />
         <Stack
           screenOptions={{
@@ -49,6 +51,9 @@ export default function RootLayout() {
           }}
         >
           <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="cuenta" />
+          <Stack.Screen name="eliminar-cuenta" />
+          <Stack.Screen name="informacion/[section]" />
           <Stack.Screen name="experiencia" />
           <Stack.Screen name="register" />
           <Stack.Screen name="sign-in" />
@@ -64,6 +69,7 @@ export default function RootLayout() {
           <Stack.Screen name="resenas" />
           <Stack.Screen name="confirmacion-recepcion" />
         </Stack>
+        </AccountDeletionProvider>
         </OrderReceiptProvider>
         </ReviewsProvider>
         </NoticesProvider>

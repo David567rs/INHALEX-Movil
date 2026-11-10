@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-09",
+  "branch": "codex/diseno-mas-cuenta",
+  "revision": "7442b1cdd0f89bad86949b1863a252e0d3d63b7c",
+  "source": "Reporte del usuario sobre su prueba en Expo Go con el backend local",
+  "accepted": [
+    "Mostrar un aviso al actualizar el estado con el backend detenido y conservar la referencia del recibo existente",
+    "Quitar el aviso al actualizar después de reiniciar el backend y conservar la misma referencia"
+  ],
+  "next": "Probar el formulario web local con la misma cuenta de prueba y comparar la referencia con el recibo de Expo Go"
+}

@@ -19,7 +19,7 @@ export function OrderHistoryScreen() {
   const checking = vm.status === 'checking';
   const gated = vm.status === 'anonymous' || vm.status === 'session-expired' || vm.status === 'recovery-error';
   return <AppScreen title="Mis pedidos" eyebrow="Tu historia con INHALEX" includeBottomInset
-    action={<BackButton label="Volver a Cuenta" onPress={() => router.replace('/(tabs)/cuenta')} />}>
+    action={<BackButton label="Volver a Cuenta" onPress={() => router.dismissTo('/cuenta')} />}>
     <Reveal><View style={styles.hero}>
       <View style={styles.heroCopy}>
         <Text style={styles.overline}>HISTORIAL DE PEDIDOS</Text>

@@ -1,7 +1,10 @@
 import { BadRequestException } from '@nestjs/common';
 import { Types } from 'mongoose';
+import { UserRole } from '../users/enums/user-role.enum';
 import { ProductReviewStatus } from './schemas/product-review.schema';
 import { ReviewsService } from './reviews.service';
+
+type ReviewServiceDependencies = ConstructorParameters<typeof ReviewsService>;
 
 function buildReview(productId: string, suffix: number) {
   return {
@@ -22,8 +25,17 @@ function buildReview(productId: string, suffix: number) {
 
 describe('ReviewsService pagination', () => {
   let service: ReviewsService;
-  let productReviewModel: any;
-  let findQuery: any;
+  let productReviewModel: {
+    find: jest.Mock;
+    countDocuments: jest.Mock;
+    aggregate: jest.Mock;
+  };
+  let findQuery: {
+    sort: jest.Mock;
+    skip: jest.Mock;
+    limit: jest.Mock;
+    exec: jest.Mock;
+  };
 
   beforeEach(() => {
     findQuery = {
@@ -45,7 +57,13 @@ describe('ReviewsService pagination', () => {
       }),
     };
 
-    service = new ReviewsService(productReviewModel, {}, {}, {}, {});
+    service = new ReviewsService(
+      productReviewModel as unknown as ReviewServiceDependencies[0],
+      {} as ReviewServiceDependencies[1],
+      {} as ReviewServiceDependencies[2],
+      {} as ReviewServiceDependencies[3],
+      {} as ReviewServiceDependencies[4],
+    );
   });
 
   it('devuelve metadatos y el bloque solicitado sin alterar el promedio global', async () => {
@@ -101,6 +119,41 @@ describe('ReviewsService pagination', () => {
     expect(response.limit).toBe(20);
   });
 
+  it.each([
+    ['Ana María López', 'privado@example.com', 'Ana'],
+    ['  María-José  García ', 'privado@example.com', 'María-José'],
+    ['ANA', 'ana@example.com', 'Cliente INHALEX'],
+    ['nombre.apellido', 'nombre.apellido@example.com', 'Cliente INHALEX'],
+    ['privado@example.com', 'privado@example.com', 'Cliente INHALEX'],
+    ['Ana privado@example.com', 'privado@example.com', 'Cliente INHALEX'],
+    ['', 'privado@example.com', 'Cliente INHALEX'],
+    [undefined, 'privado@example.com', 'Cliente INHALEX'],
+    ['Cliente INHALEX', 'privado@example.com', 'Cliente INHALEX'],
+  ])(
+    'protege el autor de una reseña antigua (%s) al publicarla en la consulta',
+    async (userName, userEmail, expectedName) => {
+      const productId = new Types.ObjectId().toString();
+      const storedReview = {
+        ...buildReview(productId, 1),
+        userId: 'private-user-id',
+        userName,
+        userEmail,
+      };
+      findQuery.exec.mockResolvedValue([storedReview]);
+
+      const response = await service.listProductReviews(productId);
+
+      expect(response.items[0]).toEqual({
+        id: storedReview.id,
+        userName: expectedName,
+        rating: storedReview.rating,
+        comment: storedReview.comment,
+        createdAt: storedReview.createdAt.toISOString(),
+      });
+      expect(storedReview.userName).toBe(userName);
+    },
+  );
+
   it('rechaza identificadores de producto inválidos', async () => {
     await expect(
       service.listProductReviews('producto-invalido', { page: 1, limit: 8 }),
@@ -108,4 +161,78 @@ describe('ReviewsService pagination', () => {
 
     expect(productReviewModel.find).not.toHaveBeenCalled();
   });
+});
+
+describe('ReviewsService public author on creation', () => {
+  it.each([
+    [{ firstName: 'Lucía', name: 'Nombre completo privado' }, 'Lucía'],
+    [{ name: 'Ana María López' }, 'Ana'],
+    [{ name: 'persona' }, 'Cliente INHALEX'],
+    [{ name: 'persona@example.com' }, 'Cliente INHALEX'],
+    [{ name: '   ' }, 'Cliente INHALEX'],
+    [null, 'Cliente INHALEX'],
+  ])(
+    'guarda solo el nombre público seguro (%j)',
+    async (storedUser, expected) => {
+      const productId = new Types.ObjectId().toString();
+      const query = (value: unknown) => ({
+        select: jest.fn().mockReturnThis(),
+        sort: jest.fn().mockReturnThis(),
+        exec: jest.fn().mockResolvedValue(value),
+      });
+      const reviewModel = {
+        findOne: jest.fn().mockReturnValue(query(null)),
+        create: jest.fn((data: Record<string, unknown>) =>
+          Promise.resolve({ ...data, id: 'created-review' }),
+        ),
+        aggregate: jest.fn().mockResolvedValue([]),
+      };
+      const orderModel = {
+        findOne: jest.fn().mockReturnValue(
+          query({
+            id: 'completed-order',
+            reference: 'ORD-PRIVATE',
+            items: [
+              {
+                productId,
+                productName: 'Lavanda',
+                productSlug: 'lavanda',
+                image: '/lavanda.png',
+              },
+            ],
+          }),
+        ),
+      };
+      const service = new ReviewsService(
+        reviewModel as unknown as ReviewServiceDependencies[0],
+        orderModel as unknown as ReviewServiceDependencies[1],
+        {} as ReviewServiceDependencies[2],
+        {
+          findById: jest.fn().mockResolvedValue(storedUser),
+        } as unknown as ReviewServiceDependencies[3],
+        {
+          createForUser: jest.fn().mockResolvedValue(undefined),
+        } as unknown as ReviewServiceDependencies[4],
+      );
+
+      const response = await service.createReview(
+        {
+          sub: 'private-user',
+          email: 'persona@example.com',
+          role: UserRole.USER,
+        },
+        { productId, rating: 5, comment: 'Buen producto.' },
+      );
+
+      expect(reviewModel.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          userName: expected,
+          userId: 'private-user',
+          userEmail: 'persona@example.com',
+          orderReference: 'ORD-PRIVATE',
+        }),
+      );
+      expect(response.userName).toBe(expected);
+    },
+  );
 });

@@ -337,7 +337,40 @@ export class ReviewsService {
 
   private async resolveUserName(user: JwtPayload): Promise<string> {
     const storedUser = await this.usersService.findById(user.sub);
-    return storedUser?.name?.trim() || user.email.split('@')[0] || 'Cliente';
+    return this.toPublicAuthorName(
+      storedUser?.firstName?.trim() || storedUser?.name,
+      user.email,
+    );
+  }
+
+  private toPublicAuthorName(name?: string, email?: string): string {
+    const neutralName = 'Cliente INHALEX';
+    const normalizedName = (name ?? '').normalize('NFKC').trim();
+    const emailPrefix = (email ?? '')
+      .normalize('NFKC')
+      .trim()
+      .toLowerCase()
+      .split('@')[0];
+
+    // Older reviews may contain a full name or the former email-prefix fallback.
+    if (
+      !normalizedName ||
+      normalizedName === neutralName ||
+      normalizedName.toLowerCase() === emailPrefix
+    ) {
+      return neutralName;
+    }
+
+    const nameParts = normalizedName.split(/\s+/u);
+    const validNamePart = /^[\p{L}\p{M}]+(?:['’-][\p{L}\p{M}]+)*$/u;
+    if (
+      nameParts[0].length > 40 ||
+      !nameParts.every((part) => validNamePart.test(part))
+    ) {
+      return neutralName;
+    }
+
+    return nameParts[0];
   }
 
   private mapReview(review: ProductReviewDocument): ProductReviewResponse {
@@ -362,7 +395,7 @@ export class ReviewsService {
   ): PublicProductReviewResponse {
     return {
       id: review.id,
-      userName: review.userName,
+      userName: this.toPublicAuthorName(review.userName, review.userEmail),
       rating: review.rating,
       comment: review.comment,
       createdAt: review.createdAt?.toISOString(),

@@ -25,7 +25,7 @@ export function OrderReceiptScreen() {
   return <>
     <AppScreen title="Confirmar recepción" eyebrow="Tus pedidos" includeBottomInset
       action={<BackButton onPress={() => order && !vm.busy ? vm.selectOrder(null)
-        : router.canGoBack() ? router.back() : router.navigate('/(tabs)/cuenta')} />}>
+        : router.canGoBack() ? router.back() : router.navigate('/cuenta')} />}>
       {vm.status === 'checking' ? <LoadingState label="Comprobando tu sesión…" /> : gated ? <>
         <ScreenState icon="person-circle-outline" title="Tus pedidos, contigo"
           message={vm.error || 'Inicia sesión para consultar y confirmar la recepción de tus pedidos.'}

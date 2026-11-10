@@ -5,8 +5,10 @@ const { spawnSync } = require('node:child_process');
 const result = spawnSync(process.execPath, [
   '--test',
   '--require', path.join(__dirname, 'register-typescript.cjs'),
+  path.join(__dirname, 'AccountDeletion.test.cjs'),
   path.join(__dirname, 'resolveApiUrl.test.cjs'),
   path.join(__dirname, 'HttpClient.test.cjs'),
+  path.join(__dirname, 'MoreRepository.test.cjs'),
   path.join(__dirname, 'RegistrationValidation.test.cjs'),
   path.join(__dirname, 'LoginValidation.test.cjs'),
   path.join(__dirname, 'LoginRepository.test.cjs'),

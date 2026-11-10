@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-08",
+  "branch": "codex/diseno-mas-cuenta",
+  "source": "Reporte del usuario sobre su prueba en Expo Go",
+  "report": "Amigo, el recibo se ocultó al cerrar sesión. Al volver a entrar con la cuenta de prueba, apareció el mismo recibo pendiente con la misma referencia.",
+  "accepted": [
+    "Ocultar el recibo al cerrar sesión",
+    "Recuperar el estado pendiente y la misma referencia al ingresar con la cuenta de prueba"
+  ],
+  "targetedAutomatedChecks": {
+    "scope": "Dependencias simuladas",
+    "mobileAccountDeletion": { "passed": 17, "failed": 0 },
+    "serverAccountDeletionServiceAndPublicPage": { "passed": 28, "failed": 0 }
+  },
+  "next": "Comprobar que una consulta fallida conserva el recibo visible y que Actualizar estado recupera la consulta"
+}

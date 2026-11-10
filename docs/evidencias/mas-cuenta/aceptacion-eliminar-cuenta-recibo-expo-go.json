@@ -1,0 +1,11 @@
+{
+  "date": "2026-11-08",
+  "branch": "codex/diseno-mas-cuenta",
+  "source": "Reporte del usuario sobre su prueba en Expo Go",
+  "report": "Amigo, apareció «Solicitud recibida» y quedó pendiente de atención. Al actualizar, conservó la misma referencia.",
+  "accepted": [
+    "Mostrar Solicitud recibida con estado Pendiente de atención",
+    "Conservar la referencia al pulsar Actualizar estado"
+  ],
+  "next": "Comprobar que el recibo se oculta al cerrar sesión y vuelve con la misma referencia al ingresar con la cuenta de prueba"
+}
