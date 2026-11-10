@@ -88,11 +88,13 @@ El usuario confirmó que la solicitud válida de la cuenta de prueba mostró «S
 
 El usuario confirmó que el recibo se ocultó al cerrar sesión. Después de ingresar con la misma cuenta de prueba, volvió el recibo pendiente con la referencia anterior. [Aceptación de la visibilidad del recibo según la sesión](evidencias/mas-cuenta/aceptacion-eliminar-cuenta-sesion-expo-go.json).
 
-Se repitieron 17 pruebas móviles y 28 del servicio y del formulario web de eliminación. Pasaron los 45 casos con dependencias simuladas, entre ellos el doble toque, la referencia estable ante inserciones concurrentes, la verificación tras un resultado incierto y la conservación del recibo cuando falla la consulta. La comprobación de la cola con datos de prueba y la del formulario en un navegador siguen en el recorrido de aceptación.
+Se repitieron 17 pruebas móviles y 28 del servicio y del formulario web de eliminación. Pasaron los 45 casos con dependencias simuladas, entre ellos el doble toque, la referencia estable ante inserciones concurrentes, la verificación tras un resultado incierto y la conservación del recibo cuando falla la consulta.
 
 Después de integrar `develop` en `7442b1c`, el usuario confirmó en Expo Go que «Actualizar estado» mostró un aviso con el backend detenido y conservó la referencia del recibo. Al reiniciar el backend y volver a actualizar, el aviso desapareció y se mantuvo la misma referencia. [Aceptación de recuperación del recibo](evidencias/mas-cuenta/aceptacion-eliminar-cuenta-reintento-expo-go.json).
 
-Sigue el formulario local en navegador con la misma cuenta de prueba. La confirmación debe mostrar la referencia del recibo existente. Después queda comprobar la cola administrativa.
+El usuario confirmó que el formulario web local rechazó la contraseña incorrecta. Con la contraseña correcta mostró «Solicitud recibida», conservó la referencia del recibo de Expo Go y limpió los campos. [Aceptación del formulario web](evidencias/mas-cuenta/aceptacion-eliminar-cuenta-formulario-web.json).
+
+Queda comprobar que la cola administrativa muestre una sola entrada pendiente para esa referencia con una sesión de administrador del backend local.
 
 1. El usuario actualiza o reinicia su backend cuando decida cargar las rutas nuevas y recarga su propia sesión de Expo. Abrir Más y pulsar Actualizar información. Revisar Empresa, FAQ, Contacto, Privacidad y Términos; las FAQ deben abrir/cerrar y los textos deben coincidir con los aprobados.
 2. En Contacto, pulsar el icono de copiar de cada tarjeta y pegar en una nota local: verificar correo completo, teléfono y domicilio. La palomita y el aviso «Copiado» deben aparecer durante unos dos segundos y desaparecer solos, también al copiar el domicilio tras desplazarse. Repetir la copia debe renovar la confirmación sin mover las tarjetas ni bloquear los controles. Confirmar también el regreso desde correo y marcador sin enviar ni llamar. Probar Cuenta desde la cabecera de los cinco tabs y regresar al origen.
