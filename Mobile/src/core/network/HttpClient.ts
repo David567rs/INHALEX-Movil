@@ -17,11 +17,19 @@ export interface HttpRequestOptions<T = unknown> {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   body?: unknown;
   signal?: AbortSignal;
+  timeoutMs?: number;
   authenticated?: boolean;
   /** Only order confirmation POSTs need this bounded, transport-owned header. */
   idempotencyKey?: string;
   /** A data adapter can validate its DTO and return the mapped result. */
   parse?: (payload: unknown) => T;
+}
+
+function validateTimeoutMs(timeoutMs: number): number {
+  if (!Number.isInteger(timeoutMs) || timeoutMs <= 0 || timeoutMs > 2_147_483_647) {
+    throw new ApiError('El tiempo máximo de la solicitud no es válido.', 'invalid-request');
+  }
+  return timeoutMs;
 }
 
 function waitWithAbort<T>(operation: Promise<T>, signal: AbortSignal): Promise<T> {
@@ -85,16 +93,14 @@ export class HttpClient {
       isDevelopment: options.isDevelopment ?? false,
       platform: 'transport',
     }).apiUrl;
-    this.timeoutMs = options.requestTimeoutMs ?? 15_000;
-    if (!Number.isInteger(this.timeoutMs) || this.timeoutMs <= 0) {
-      throw new ApiError('El tiempo máximo de la solicitud debe ser un entero positivo.', 'invalid-request');
-    }
+    this.timeoutMs = validateTimeoutMs(options.requestTimeoutMs ?? 15_000);
     this.fetchImplementation = options.fetch ?? ((url, init) => globalThis.fetch(url, init));
     this.getAccessToken = options.getAccessToken;
   }
 
   async request<T = unknown>(path: string, options: HttpRequestOptions<T> = {}): Promise<T> {
     const url = requestUrl(this.baseUrl, path);
+    const timeoutMs = options.timeoutMs === undefined ? this.timeoutMs : validateTimeoutMs(options.timeoutMs);
     const hasBody = options.body !== undefined;
     const method = options.method ?? 'GET';
     if (options.idempotencyKey !== undefined && (method !== 'POST'
@@ -120,7 +126,7 @@ export class HttpClient {
     const timeoutId = setTimeout(() => {
       timedOut = true;
       controller.abort();
-    }, this.timeoutMs);
+    }, timeoutMs);
 
     try {
       if (controller.signal.aborted) throw new Error('Request aborted');

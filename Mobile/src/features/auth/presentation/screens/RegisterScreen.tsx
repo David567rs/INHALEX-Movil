@@ -8,11 +8,11 @@ import { FormField } from '../components/FormField';
 import { PasswordRequirements } from '../components/PasswordRequirements';
 import { useRegisterViewModel } from '../viewModels/useRegisterViewModel';
 import type { RegistrationField } from '../../domain/validation/registrationValidation';
-import type { RegisterUser } from '../../domain/useCases/registerUser';
+import type { RegistrationActions } from '../../domain/useCases/registerUser';
 
 /** Renders state and delegates registration to the ViewModel. */
-export function RegisterScreen({ registerUser }: { registerUser: RegisterUser }) {
-  const viewModel = useRegisterViewModel(registerUser);
+export function RegisterScreen({ actions }: { actions: RegistrationActions }) {
+  const viewModel = useRegisterViewModel(actions);
   const firstNameInput = useRef<TextInputInstance>(null);
   const lastNameInput = useRef<TextInputInstance>(null);
   const emailInput = useRef<TextInputInstance>(null);
@@ -30,13 +30,24 @@ export function RegisterScreen({ registerUser }: { registerUser: RegisterUser })
   async function submitForm() {
     setFocusRequest(null);
     Keyboard.dismiss();
-    const firstInvalidField = await viewModel.submit();
+    const firstInvalidField = await viewModel.sendCode();
     if (firstInvalidField) setFocusRequest({ field: firstInvalidField });
+  }
+
+  function verifyCode() {
+    Keyboard.dismiss();
+    void viewModel.verifyCode();
+  }
+
+  function changeEmail() {
+    Keyboard.dismiss();
+    viewModel.changeEmail();
+    setFocusRequest({ field: 'email' });
   }
 
   if (viewModel.registeredUser) {
     return (
-      <AuthScaffold title="Tu cuenta está lista" subtitle="Gracias por ser parte de INHALEX.">
+      <AuthScaffold key="success" title="Correo verificado" subtitle="Tu cuenta de INHALEX está lista.">
         <View accessibilityLiveRegion="polite" style={styles.successContent}>
           <View style={styles.successIcon}>
             <Ionicons accessible={false} name="checkmark-circle-outline" size={44} color={colors.success} />
@@ -52,24 +63,109 @@ export function RegisterScreen({ registerUser }: { registerUser: RegisterUser })
     );
   }
 
-  return (
-    <AuthScaffold
-      title="Crear cuenta"
-      subtitle="Tu bienestar empieza aquí."
-      footer={
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>¿Ya tienes una cuenta?</Text>
+  const footer = (
+    <View style={styles.footer}>
+      <Text style={styles.footerText}>¿Ya tienes una cuenta?</Text>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityState={{ disabled: viewModel.isSubmitting }}
+        disabled={viewModel.isSubmitting}
+        onPress={() => router.replace('/sign-in')}
+        style={({ pressed }) => [styles.loginLink, pressed && styles.pressed, viewModel.isSubmitting && styles.submitting]}
+      >
+        <Text style={styles.loginLabel}>Inicia sesión</Text>
+      </Pressable>
+    </View>
+  );
+
+  const notice = viewModel.message ? (
+    <View accessibilityLiveRegion="polite" style={[styles.notice, styles.invalidNotice]}>
+      <Ionicons accessible={false} name="alert-circle-outline" size={19} color={colors.danger} />
+      <Text style={styles.noticeLabel}>{viewModel.message}</Text>
+    </View>
+  ) : null;
+
+  if (viewModel.verificationEmail) {
+    const confirmDisabled = viewModel.isSubmitting || viewModel.isCodeExpired || viewModel.needsNewCode;
+    const resendDisabled = viewModel.isSubmitting || viewModel.resendInSeconds > 0;
+    const confirming = viewModel.pendingAction === 'verify';
+    const resending = viewModel.pendingAction === 'resend';
+    const verificationError = viewModel.needsNewCode
+      ? 'Solicita un código nuevo para confirmar el correo.'
+      : viewModel.isCodeExpired ? 'El código venció. Solicita uno nuevo.' : viewModel.codeError;
+    const resendLabel = viewModel.resendInSeconds > 0
+      ? `Reenviar en ${viewModel.resendInSeconds} s`
+      : 'Reenviar código';
+
+    return (
+      <AuthScaffold
+        key="verification"
+        title="Confirma tu correo"
+        subtitle="Escribe el código de seis dígitos que enviamos a tu correo."
+        footer={footer}
+      >
+        <View style={styles.verificationAddress}>
+          <Ionicons accessible={false} name="mail-outline" size={20} color={colors.primary} />
+          <Text style={styles.verificationEmail}>{viewModel.verificationEmail}</Text>
+        </View>
+        <FormField
+          label="Código de verificación"
+          icon="key-outline"
+          placeholder="000000"
+          value={viewModel.code}
+          error={verificationError}
+          editable={!confirmDisabled}
+          onChangeText={viewModel.updateCode}
+          autoCapitalize="none"
+          autoCorrect={false}
+          inputMode="numeric"
+          autoComplete="one-time-code"
+          returnKeyType="done"
+          onSubmitEditing={verifyCode}
+        />
+        {notice}
+        <Pressable
+          accessibilityRole="button"
+          accessibilityState={{ disabled: confirmDisabled, busy: confirming }}
+          disabled={confirmDisabled}
+          onPress={verifyCode}
+          style={({ pressed }) => [styles.createButton, pressed && styles.pressed, confirmDisabled && styles.submitting]}
+        >
+          <Text style={styles.createLabel}>{confirming ? 'Confirmando…' : 'Confirmar correo'}</Text>
+          {confirming ? <ActivityIndicator accessible={false} color={colors.white} size="small" /> : null}
+        </Pressable>
+        <View style={styles.verificationActions}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityState={{ disabled: resendDisabled, busy: resending }}
+            disabled={resendDisabled}
+            onPress={() => void viewModel.sendCode()}
+            style={({ pressed }) => [styles.loginLink, pressed && styles.pressed]}
+          >
+            <Text style={[styles.loginLabel, resendDisabled && styles.disabledLabel]}>
+              {resending ? 'Reenviando…' : resendLabel}
+            </Text>
+          </Pressable>
           <Pressable
             accessibilityRole="button"
             accessibilityState={{ disabled: viewModel.isSubmitting }}
             disabled={viewModel.isSubmitting}
-            onPress={() => router.replace('/sign-in')}
-            style={({ pressed }) => [styles.loginLink, pressed && styles.pressed, viewModel.isSubmitting && styles.submitting]}
+            onPress={changeEmail}
+            style={({ pressed }) => [styles.loginLink, pressed && styles.pressed]}
           >
-            <Text style={styles.loginLabel}>Inicia sesión</Text>
+            <Text style={[styles.loginLabel, viewModel.isSubmitting && styles.disabledLabel]}>Cambiar correo</Text>
           </Pressable>
         </View>
-      }
+      </AuthScaffold>
+    );
+  }
+
+  return (
+    <AuthScaffold
+      key="form"
+      title="Crear cuenta"
+      subtitle="Tu bienestar empieza aquí."
+      footer={footer}
     >
       <FormField
         ref={firstNameInput} label="Nombre" icon="person-outline" placeholder="Tu nombre"
@@ -119,26 +215,15 @@ export function RegisterScreen({ registerUser }: { registerUser: RegisterUser })
         onChangeText={(value) => viewModel.updateField('confirmPassword', value)} onBlur={() => viewModel.touchField('confirmPassword')}
         autoComplete="new-password" textContentType="newPassword" returnKeyType="done" onSubmitEditing={submitForm}
       />
-      {viewModel.message ? (
-        <View
-          accessibilityLiveRegion="polite"
-          style={[styles.notice, styles.invalidNotice]}
-        >
-          <Ionicons accessible={false} name="alert-circle-outline" size={19} color={colors.danger} />
-          <Text style={styles.noticeLabel}>
-            {viewModel.message}
-          </Text>
-        </View>
-      ) : null}
+      {notice}
       <Pressable
-        accessibilityLabel={viewModel.isSubmitting ? 'Creando cuenta' : 'Crear cuenta'}
         accessibilityRole="button"
         accessibilityState={{ disabled: viewModel.isSubmitting, busy: viewModel.isSubmitting }}
         disabled={viewModel.isSubmitting}
         onPress={submitForm}
         style={({ pressed }) => [styles.createButton, pressed && styles.pressed, viewModel.isSubmitting && styles.submitting]}
       >
-        <Text accessibilityLiveRegion="polite" style={styles.createLabel}>{viewModel.isSubmitting ? 'Creando cuenta…' : 'Crear cuenta'}</Text>
+        <Text accessibilityLiveRegion="polite" style={styles.createLabel}>{viewModel.isSubmitting ? 'Enviando código…' : 'Enviar código'}</Text>
         {viewModel.isSubmitting ? <ActivityIndicator accessible={false} color={colors.white} size="small" /> : <Ionicons accessible={false} name="arrow-forward" color={colors.white} size={19} />}
       </Pressable>
     </AuthScaffold>
@@ -153,6 +238,9 @@ const styles = StyleSheet.create({
   successIcon: { alignItems: 'center', backgroundColor: colors.surfaceSoft, borderRadius: 40, height: 80, justifyContent: 'center', width: 80 },
   successText: { color: colors.text, fontSize: 16, lineHeight: 24, textAlign: 'center' },
   successEmail: { color: colors.textMuted, fontSize: 14, lineHeight: 21, textAlign: 'center' },
+  verificationAddress: { alignItems: 'center', backgroundColor: colors.surfaceSoft, borderRadius: 12, flexDirection: 'row', gap: 10, marginBottom: 22, padding: 12 },
+  verificationEmail: { color: colors.primaryDark, flex: 1, fontSize: 14, fontWeight: '600', lineHeight: 20 },
+  verificationActions: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 4, justifyContent: 'space-between', marginTop: 8 },
   createButton: { alignItems: 'center', backgroundColor: colors.primaryDark, borderRadius: 16, flexDirection: 'row', gap: 9, justifyContent: 'center', minHeight: 56, paddingHorizontal: 16, paddingVertical: 14 },
   pressed: { opacity: 0.8 },
   submitting: { opacity: 0.8 },
@@ -161,4 +249,5 @@ const styles = StyleSheet.create({
   footerText: { color: colors.textMuted, fontSize: 13 },
   loginLink: { alignItems: 'center', borderRadius: 12, justifyContent: 'center', minHeight: 44, paddingHorizontal: 8 },
   loginLabel: { color: colors.primary, fontSize: 14, fontWeight: '700' },
+  disabledLabel: { color: colors.textMuted },
 });

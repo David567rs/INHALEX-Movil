@@ -13,3 +13,14 @@ export type RegisteredUser = {
   email: string;
   phone: string;
 };
+
+export type RegistrationChallenge = {
+  challengeId: string;
+  expiresInSeconds: number;
+  resendAfterSeconds: number;
+};
+
+export type RegistrationVerification = {
+  challengeId: string;
+  code: string;
+};
