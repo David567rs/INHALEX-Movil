@@ -2,7 +2,7 @@
   "expo": {
     "name": "INHALEX",
     "slug": "inhalex-movil",
-    "version": "0.1.0",
+    "version": "1.0.0-rc.1",
     "platforms": ["android", "web"],
     "scheme": "inhalex",
     "orientation": "portrait",
