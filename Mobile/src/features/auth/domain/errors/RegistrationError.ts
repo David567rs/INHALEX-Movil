@@ -1,7 +1,7 @@
 import type { RegistrationErrors } from '../validation/registrationValidation';
 
 export type RegistrationErrorKind = 'validation' | 'duplicate-email' | 'invalid-code' | 'rate-limit' | 'network'
-  | 'timeout' | 'cancelled' | 'server' | 'invalid-response' | 'unknown' | 'configuration';
+  | 'timeout' | 'cancelled' | 'server' | 'invalid-response' | 'unknown' | 'configuration' | 'connection-unavailable';
 
 export class RegistrationError extends Error {
   readonly kind: RegistrationErrorKind;

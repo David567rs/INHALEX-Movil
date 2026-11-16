@@ -33,6 +33,7 @@ export function useRegisterViewModel({ requestCode, registerUser }: Registration
   const [hasValidated, setHasValidated] = useState(false);
   const [serverErrors, setServerErrors] = useState<RegistrationErrors>({});
   const [message, setMessage] = useState<string | null>(null);
+  const [isWaitingForApi, setIsWaitingForApi] = useState(false);
   const [pendingAction, setPendingAction] = useState<RegistrationAction | null>(null);
   const [verification, setVerification] = useState<VerificationStep | null>(null);
   const [code, setCode] = useState('');
@@ -103,6 +104,7 @@ export function useRegisterViewModel({ requestCode, registerUser }: Registration
       if (mounted.current && request.current === controller) {
         request.current = null;
         setPendingAction(null);
+        setIsWaitingForApi(false);
       }
     }
   }
@@ -122,16 +124,23 @@ export function useRegisterViewModel({ requestCode, registerUser }: Registration
     }
 
     const email = verification?.email ?? form.email.trim().toLowerCase();
+    let sendStartedAt = startedAt;
     const error = await runRequest(
       verification ? 'resend' : 'send',
-      (signal) => requestCode(email, { signal }),
+      (signal) => requestCode(email, {
+        signal,
+        onWaitingForApi: (waiting) => {
+          if (!waiting) sendStartedAt = Date.now();
+          if (mounted.current && request.current?.signal === signal) setIsWaitingForApi(waiting);
+        },
+      }),
       (challenge) => {
         const receivedAt = Date.now();
         setNow(receivedAt);
         setVerification({
           email,
           challengeId: challenge.challengeId,
-          expiresAt: startedAt + challenge.expiresInSeconds * 1000,
+          expiresAt: sendStartedAt + challenge.expiresInSeconds * 1000,
           resendAt: receivedAt + challenge.resendAfterSeconds * 1000,
         });
         setCode('');
@@ -201,6 +210,7 @@ export function useRegisterViewModel({ requestCode, registerUser }: Registration
   return {
     form, errors, message, registeredUser, pendingAction, code, codeError,
     isSubmitting: pendingAction !== null,
+    isWaitingForApi,
     verificationEmail: verification?.email,
     needsNewCode: verification?.challengeId === null,
     isCodeExpired: verification !== null && now >= verification.expiresAt,

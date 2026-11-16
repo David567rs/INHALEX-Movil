@@ -17,6 +17,7 @@ export function useLoginViewModel(signIn: AuthSession['signIn']) {
   const [hasValidated, setHasValidated] = useState(false);
   const [serverErrors, setServerErrors] = useState<LoginErrors>({});
   const [message, setMessage] = useState<string | null>(null);
+  const [isWaitingForApi, setIsWaitingForApi] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const request = useRef<AbortController | null>(null);
   const mounted = useRef(false);
@@ -63,7 +64,12 @@ export function useLoginViewModel(signIn: AuthSession['signIn']) {
     setMessage(null);
     setIsSubmitting(true);
     try {
-      await signIn(form, { signal: controller.signal });
+      await signIn(form, {
+        signal: controller.signal,
+        onWaitingForApi: (waiting) => {
+          if (mounted.current && request.current === controller) setIsWaitingForApi(waiting);
+        },
+      });
       if (!mounted.current || request.current !== controller) return;
       setForm(createEmptyLoginForm());
       setTouched({});
@@ -85,9 +91,10 @@ export function useLoginViewModel(signIn: AuthSession['signIn']) {
       if (mounted.current && request.current === controller) {
         request.current = null;
         setIsSubmitting(false);
+        setIsWaitingForApi(false);
       }
     }
   }
 
-  return { form, errors, message, isSubmitting, updateField, touchField, submit };
+  return { form, errors, message, isSubmitting, isWaitingForApi, updateField, touchField, submit };
 }

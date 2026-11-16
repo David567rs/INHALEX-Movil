@@ -1,7 +1,9 @@
+import { Platform } from 'react-native';
 import { readEnvironment } from '../core/config/environment';
 import type { Environment } from '../core/config/environment';
 import { HttpClient } from '../core/network/HttpClient';
 import type { AccessTokenProvider, FetchImplementation } from '../core/network/HttpClient';
+import { createAuthApiReadiness } from '../features/auth/data/createAuthApiReadiness';
 import { ApiRegistrationRepository } from '../features/auth/data/repositories/ApiRegistrationRepository';
 import { RegistrationError } from '../features/auth/domain/errors/RegistrationError';
 import { createRegisterUser, createRequestRegistrationCode, type RegistrationActions } from '../features/auth/domain/useCases/registerUser';
@@ -81,12 +83,15 @@ export function createApplicationServices(options: ApplicationServicesOptions = 
     fetch: options.fetch,
     getAccessToken: options.getAccessToken,
   });
-  const registrationRepository = new ApiRegistrationRepository(httpClient);
+  const waitForAuthApi = Platform.OS === 'android' && !environment.isDevelopment
+    ? createAuthApiReadiness(httpClient)
+    : undefined;
+  const registrationRepository = new ApiRegistrationRepository(httpClient, waitForAuthApi);
   const registration: RegistrationActions = {
     requestCode: createRequestRegistrationCode(registrationRepository),
     registerUser: createRegisterUser(registrationRepository),
   };
-  const loginUser = createLoginUser(new ApiLoginRepository(httpClient));
+  const loginUser = createLoginUser(new ApiLoginRepository(httpClient, waitForAuthApi));
   return Object.freeze({ environment, httpClient, registration, loginUser });
 }
 

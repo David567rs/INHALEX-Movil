@@ -16,6 +16,8 @@ export function LoginScreen({ signIn, sessionMessage, retrySession }: {
   retrySession?: AuthSession['restore'];
 }) {
   const viewModel = useLoginViewModel(signIn);
+  const submitLabel = viewModel.isWaitingForApi ? 'Conectando con INHALEX…'
+    : viewModel.isSubmitting ? 'Iniciando sesión…' : 'Iniciar sesión';
   const emailInput = useRef<TextInputInstance>(null);
   const passwordInput = useRef<TextInputInstance>(null);
   const [focusRequest, setFocusRequest] = useState<{ field: LoginField } | null>(null);
@@ -88,13 +90,13 @@ export function LoginScreen({ signIn, sessionMessage, retrySession }: {
       ) : null}
       <Pressable
         accessibilityRole="button"
-        accessibilityLabel={viewModel.isSubmitting ? 'Iniciando sesión' : 'Iniciar sesión'}
+        accessibilityLabel={submitLabel}
         accessibilityState={{ disabled: viewModel.isSubmitting, busy: viewModel.isSubmitting }}
         disabled={viewModel.isSubmitting}
         onPress={submit}
         style={({ pressed }) => [styles.loginButton, (pressed || viewModel.isSubmitting) && styles.pressed]}
       >
-        <Text style={styles.loginLabel}>{viewModel.isSubmitting ? 'Iniciando sesión…' : 'Iniciar sesión'}</Text>
+        <Text accessibilityLiveRegion="polite" style={styles.loginLabel}>{submitLabel}</Text>
         {viewModel.isSubmitting ? <ActivityIndicator color={colors.white} size="small" /> : <Ionicons accessible={false} name="arrow-forward" color={colors.white} size={19} />}
       </Pressable>
     </AuthScaffold>

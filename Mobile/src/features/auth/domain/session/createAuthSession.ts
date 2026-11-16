@@ -168,7 +168,7 @@ export function createAuthSession(login: LoginUserAction, store: SessionTokenSto
     const isCurrent = () => !controller.signal.aborted && generation === attempt;
 
     try {
-      const result = await login(form, { signal: controller.signal });
+      const result = await login(form, { ...options, signal: controller.signal });
       if (!isCurrent()) throw cancelled();
       const user = publicUser(result.user);
 

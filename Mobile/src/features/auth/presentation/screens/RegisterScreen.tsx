@@ -13,6 +13,8 @@ import type { RegistrationActions } from '../../domain/useCases/registerUser';
 /** Renders state and delegates registration to the ViewModel. */
 export function RegisterScreen({ actions }: { actions: RegistrationActions }) {
   const viewModel = useRegisterViewModel(actions);
+  const sendLabel = viewModel.isWaitingForApi ? 'Conectando con INHALEX…'
+    : viewModel.isSubmitting ? 'Enviando código…' : 'Enviar código';
   const firstNameInput = useRef<TextInputInstance>(null);
   const lastNameInput = useRef<TextInputInstance>(null);
   const emailInput = useRef<TextInputInstance>(null);
@@ -143,7 +145,7 @@ export function RegisterScreen({ actions }: { actions: RegistrationActions }) {
             style={({ pressed }) => [styles.loginLink, pressed && styles.pressed]}
           >
             <Text style={[styles.loginLabel, resendDisabled && styles.disabledLabel]}>
-              {resending ? 'Reenviando…' : resendLabel}
+              {viewModel.isWaitingForApi ? 'Conectando…' : resending ? 'Reenviando…' : resendLabel}
             </Text>
           </Pressable>
           <Pressable
@@ -223,7 +225,7 @@ export function RegisterScreen({ actions }: { actions: RegistrationActions }) {
         onPress={submitForm}
         style={({ pressed }) => [styles.createButton, pressed && styles.pressed, viewModel.isSubmitting && styles.submitting]}
       >
-        <Text accessibilityLiveRegion="polite" style={styles.createLabel}>{viewModel.isSubmitting ? 'Enviando código…' : 'Enviar código'}</Text>
+        <Text accessibilityLiveRegion="polite" style={styles.createLabel}>{sendLabel}</Text>
         {viewModel.isSubmitting ? <ActivityIndicator accessible={false} color={colors.white} size="small" /> : <Ionicons accessible={false} name="arrow-forward" color={colors.white} size={19} />}
       </Pressable>
     </AuthScaffold>

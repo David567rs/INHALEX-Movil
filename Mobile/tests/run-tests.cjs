@@ -8,6 +8,7 @@ const result = spawnSync(process.execPath, [
   path.join(__dirname, 'AccountDeletion.test.cjs'),
   path.join(__dirname, 'resolveApiUrl.test.cjs'),
   path.join(__dirname, 'HttpClient.test.cjs'),
+  path.join(__dirname, 'AuthApiReadiness.test.cjs'),
   path.join(__dirname, 'MoreRepository.test.cjs'),
   path.join(__dirname, 'RegistrationValidation.test.cjs'),
   path.join(__dirname, 'LoginValidation.test.cjs'),

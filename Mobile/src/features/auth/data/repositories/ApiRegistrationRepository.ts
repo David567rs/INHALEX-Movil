@@ -6,6 +6,7 @@ import type {
 } from '../../domain/models/Registration';
 import type { RegistrationOptions, RegistrationRepository } from '../../domain/repositories/RegistrationRepository';
 import { isRegistrationChallengeId } from '../../domain/validation/registrationValidation';
+import { AuthApiUnavailableError, type WaitForAuthApi } from '../createAuthApiReadiness';
 import { mapRegisteredUser } from '../mappers/mapRegisteredUser';
 
 type RegistrationOperation = 'request-code' | 'register';
@@ -91,14 +92,14 @@ function mapRegistrationChallenge(payload: unknown): RegistrationChallenge {
 }
 
 export class ApiRegistrationRepository implements RegistrationRepository {
-  private readonly httpClient: HttpClient;
-
-  constructor(httpClient: HttpClient) {
-    this.httpClient = httpClient;
-  }
+  constructor(
+    private readonly httpClient: HttpClient,
+    private readonly waitForApi?: WaitForAuthApi,
+  ) {}
 
   async requestCode(email: string, options?: RegistrationOptions): Promise<RegistrationChallenge> {
     try {
+      if (this.waitForApi) await this.waitForApi(options);
       const payload = await this.httpClient.request('/auth/register/verification', {
         method: 'POST',
         authenticated: false,
@@ -108,6 +109,9 @@ export class ApiRegistrationRepository implements RegistrationRepository {
       });
       return mapRegistrationChallenge(payload);
     } catch (error) {
+      if (error instanceof AuthApiUnavailableError) {
+        throw new RegistrationError('INHALEX aún no está disponible. Intenta solicitar el código en un momento.', 'connection-unavailable');
+      }
       throw mapRegistrationError(error, 'request-code');
     }
   }

@@ -3,6 +3,7 @@ import type { HttpClient } from '../../../../core/network/HttpClient';
 import { LoginError } from '../../domain/errors/LoginError';
 import type { LoginInput, LoginSession } from '../../domain/models/Login';
 import type { LoginOptions, LoginRepository } from '../../domain/repositories/LoginRepository';
+import { AuthApiUnavailableError, type WaitForAuthApi } from '../createAuthApiReadiness';
 import { mapLoginSession } from '../mappers/mapLoginSession';
 
 function mapLoginError(error: unknown): LoginError {
@@ -42,14 +43,14 @@ function mapLoginError(error: unknown): LoginError {
 }
 
 export class ApiLoginRepository implements LoginRepository {
-  private readonly httpClient: HttpClient;
-
-  constructor(httpClient: HttpClient) {
-    this.httpClient = httpClient;
-  }
+  constructor(
+    private readonly httpClient: HttpClient,
+    private readonly waitForApi?: WaitForAuthApi,
+  ) {}
 
   async login(input: LoginInput, options?: LoginOptions): Promise<LoginSession> {
     try {
+      if (this.waitForApi) await this.waitForApi(options);
       const payload = await this.httpClient.request('/auth/login', {
         method: 'POST',
         authenticated: false,
@@ -58,6 +59,9 @@ export class ApiLoginRepository implements LoginRepository {
       });
       return mapLoginSession(payload);
     } catch (error) {
+      if (error instanceof AuthApiUnavailableError) {
+        throw new LoginError('INHALEX aún no está disponible. Intenta iniciar sesión nuevamente en un momento.', 'network');
+      }
       throw mapLoginError(error);
     }
   }
